@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
   const links = document.querySelectorAll('.gallery .image');
   const lightbox = document.getElementById('lightbox');
@@ -9,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   links.forEach(link => {
     link.addEventListener('click', (e) => {
-      e.preventDefault();
+      e.preventDefault(); // IMPORTANT : empêche la redirection ou scroll
       currentRoom = link.dataset.room;
       currentIndex = 0;
       showLightbox();
@@ -19,6 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function showLightbox() {
     lightboxImg.src = `images/gallery/fulls/${currentRoom}/${currentIndex + 1}.jpg`;
     lightbox.style.display = 'flex';
+    lightbox.style.opacity = '1';
+    lightbox.style.position = 'fixed';
+    lightbox.style.zIndex = '9999';
   }
 
   window.closeLightbox = function () {
