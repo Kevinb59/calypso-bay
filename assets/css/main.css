@@ -3784,7 +3784,7 @@ input, select, textarea {
 
 	.stars i {
 	  color: #f2b01e; /* Doré */
-	  font-size: 0.85em; /* Plus petit */
+	  font-size: 0.5em; /* Plus petit */
 	  margin-right: 2px;
 	  vertical-align: middle;
 	}
