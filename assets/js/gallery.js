@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let currentRoom = '';
   let currentIndex = 0;
-  let totalImages = 99; // sera déterminé dynamiquement
+  let totalImages = 99;
 
   links.forEach(link => {
     link.addEventListener('click', (e) => {
@@ -36,13 +36,13 @@ document.addEventListener('DOMContentLoaded', () => {
     lightbox.style.position = 'fixed';
     lightbox.style.zIndex = '9999';
 
-    // Empêche le scroll horizontal de la page
-    document.body.style.overflow = 'hidden';
+    // Bloque tous les événements du site sauf lightbox
+    document.body.classList.add('no-scroll');
   }
 
   window.closeLightbox = function () {
     lightbox.style.display = 'none';
-    document.body.style.overflow = ''; // Réactive le scroll
+    document.body.classList.remove('no-scroll');
   };
 
   window.nextImage = function () {
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   lightboxImg.addEventListener('click', closeLightbox);
 
-  // Navigation clavier (PC)
+  // Navigation clavier
   document.addEventListener('keydown', (e) => {
     if (lightbox.style.display === 'flex') {
       if (e.key === 'ArrowLeft') prevImage();
