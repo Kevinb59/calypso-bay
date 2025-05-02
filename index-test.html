@@ -1,0 +1,52 @@
+
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Calypso Bay - Bouillante</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  </head>
+  <body class="is-preload">
+    <div id="page-wrapper">
+      <div id="wrapper">
+
+        <!-- Panel Galerie -->
+        <section class="panel">
+          <div class="intro color2">
+            <h2 class="major">Galerie photos</h2>
+            <p>Découvrez la villa en images, pièce par pièce.</p>
+          </div>
+          <div class="gallery">
+            <img src="images/gallery/thumbs/01.jpg" data-room="salon" data-index="0" alt="Salon 1">
+            <img src="images/gallery/thumbs/02.jpg" data-room="salon" data-index="1" alt="Salon 2">
+            <img src="images/gallery/thumbs/03.jpg" data-room="cuisine" data-index="0" alt="Cuisine 1">
+            <img src="images/gallery/thumbs/04.jpg" data-room="cuisine" data-index="1" alt="Cuisine 2">
+            <img src="images/gallery/thumbs/05.jpg" data-room="chambre1" data-index="0" alt="Chambre 1-1">
+            <img src="images/gallery/thumbs/06.jpg" data-room="chambre1" data-index="1" alt="Chambre 1-2">
+          </div>
+        </section>
+
+        <!-- Lightbox -->
+        <div id="lightbox" class="lightbox" style="display:none;">
+          <span class="close" onclick="closeLightbox()">&times;</span>
+          <img id="lightbox-img" src="" alt="">
+          <div class="nav">
+            <i class="fas fa-chevron-circle-left" onclick="prevImage()"></i>
+            <i class="fas fa-chevron-circle-right" onclick="nextImage()"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/gallery.js"></script>
+  </body>
+</html>
