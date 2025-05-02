@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let currentRoom = '';
   let currentIndex = 0;
-  let totalImages = 99; // valeur max arbitraire, sera déterminée dynamiquement
+  let totalImages = 99; // sera déterminé dynamiquement
 
   links.forEach(link => {
     link.addEventListener('click', (e) => {
@@ -35,10 +35,14 @@ document.addEventListener('DOMContentLoaded', () => {
     lightbox.style.opacity = '1';
     lightbox.style.position = 'fixed';
     lightbox.style.zIndex = '9999';
+
+    // Empêche le scroll horizontal de la page
+    document.body.style.overflow = 'hidden';
   }
 
   window.closeLightbox = function () {
     lightbox.style.display = 'none';
+    document.body.style.overflow = ''; // Réactive le scroll
   };
 
   window.nextImage = function () {
@@ -58,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   function detectTotalImages(room) {
-    // On teste de 01 à 99, puis on s’arrête au premier fichier manquant
     return new Promise(resolve => {
       let i = 1;
       function testNext() {
@@ -94,4 +97,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   lightboxImg.addEventListener('click', closeLightbox);
+
+  // Navigation clavier (PC)
+  document.addEventListener('keydown', (e) => {
+    if (lightbox.style.display === 'flex') {
+      if (e.key === 'ArrowLeft') prevImage();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'Escape') closeLightbox();
+    }
+  });
 });
