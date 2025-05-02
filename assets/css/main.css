@@ -3704,3 +3704,10 @@ input, select, textarea {
 	  pointer-events: none;
 	  z-index: 2;
 	}
+
+	.lightbox {
+	  background: rgba(0, 0, 0, 0.95);
+	  justify-content: center;
+	  align-items: center;
+	  flex-direction: column;
+	}
