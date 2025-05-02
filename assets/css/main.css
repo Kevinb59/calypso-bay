@@ -3781,3 +3781,10 @@ input, select, textarea {
 	body.no-scroll .lightbox * {
 	  pointer-events: auto;
 	}
+
+	.stars i {
+	  color: #f2b01e; /* Doré */
+	  font-size: 0.85em; /* Plus petit */
+	  margin-right: 2px;
+	  vertical-align: middle;
+	}
