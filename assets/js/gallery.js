@@ -1,16 +1,17 @@
 
 document.addEventListener('DOMContentLoaded', () => {
-  const thumbnails = document.querySelectorAll('.gallery img');
+  const links = document.querySelectorAll('.gallery .image');
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img');
 
   let currentRoom = '';
   let currentIndex = 0;
 
-  thumbnails.forEach(img => {
-    img.addEventListener('click', () => {
-      currentRoom = img.dataset.room;
-      currentIndex = parseInt(img.dataset.index);
+  links.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      currentRoom = link.dataset.room;
+      currentIndex = 0;
       showLightbox();
     });
   });
@@ -30,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch(nextPath, { method: 'HEAD' })
       .then(res => {
         if (res.ok) lightboxImg.src = nextPath;
-        else currentIndex--; // stop if image doesn't exist
+        else currentIndex--;
       });
   };
 
@@ -40,17 +41,15 @@ document.addEventListener('DOMContentLoaded', () => {
     lightboxImg.src = `images/gallery/fulls/${currentRoom}/${currentIndex + 1}.jpg`;
   };
 
-  // Swipe mobile
   let startX = 0;
   lightbox.addEventListener('touchstart', e => {
     startX = e.touches[0].clientX;
   });
   lightbox.addEventListener('touchend', e => {
     let endX = e.changedTouches[0].clientX;
-    if (startX - endX > 50) window.nextImage();
-    else if (endX - startX > 50) window.prevImage();
+    if (startX - endX > 50) nextImage();
+    else if (endX - startX > 50) prevImage();
   });
 
-  // Click to close
-  lightboxImg.addEventListener('click', window.closeLightbox);
+  lightboxImg.addEventListener('click', closeLightbox);
 });
