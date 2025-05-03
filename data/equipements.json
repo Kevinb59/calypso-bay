@@ -96,22 +96,22 @@
   },
   "exterieur": {
     "icon": "🌴",
-    "label": "Extérieur",
+    "label": "Extérieurs/Jardin",
     "items": [
-      "Mobilier extérieur",
-      "Repas en plein air",
-      "Barbecue",
-      "Piscine privée",
-      "Entrée privée"
+      "Pelouse",
+      "Fleuris",
+      "Verdoyant",
+      "Avec vue",
+      "Sans vis-à-vis"
     ]
   },
   "services": {
     "icon": "🧾",
     "label": "Services",
     "items": [
-      "Wi-Fi",
-      "Logement fumeur",
-      "Parking gratuit sur place"
+      "Wi-Fi gratuit (21Mb/s | Streaming HD & Appels visio)",
+      "Livraison de courses (en supplément)",
+      "Coffre-fort"
     ]
     },
   "parking": {
