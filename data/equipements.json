@@ -41,6 +41,15 @@
       "Table basse"
     ]
   },
+  "repas": {
+    "icon": "🍴",
+    "label": "Espace repas",
+    "items": [
+      "En extérieur",
+      "Table 6 personnes",
+      "Avec vue"
+    ]
+  },
   "piscine": {
     "icon": "🏊",
     "label": "Piscine",
