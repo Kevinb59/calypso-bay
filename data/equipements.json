@@ -31,6 +31,16 @@
       "Douches"
     ]
   },
+  "salon": {
+    "icon": "🛋️",
+    "label": "Salon",
+    "items": [
+      "2 canapés 2 places",
+      "Télévision à écran plat",
+      "Ventilateur de plafond",
+      "Table basse"
+    ]
+  },
   "piscine": {
     "icon": "🏊",
     "label": "Piscine",
