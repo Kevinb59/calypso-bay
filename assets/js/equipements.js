@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       // Création du bouton (grands boutons du thème)
       const btn = document.createElement("a");
       btn.href = "#";
-      btn.className = "button small"; // <- pas 'small'
+      btn.className = "button"; // <- pas 'small'
       btn.innerHTML = `${category.icon} ${category.label}`;
       btn.addEventListener("click", (e) => {
         e.preventDefault();
