@@ -3836,4 +3836,9 @@ input, select, textarea {
 
 	.themysion {
 	  font-family: 'Themysion', cursive;
+	  font-size: 3.2rem; /* augmente la taille */
+	  line-height: 1.2;
+	  display: block; /* pour forcer le retour à la ligne si nécessaire */
+	  margin-top: 0.5rem;
 	}
+
