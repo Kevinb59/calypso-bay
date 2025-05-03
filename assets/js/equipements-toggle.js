@@ -1,12 +1,19 @@
 document.addEventListener("DOMContentLoaded", function () {
-  document.querySelectorAll(".toggle-content").forEach(el => {
-    el.style.display = "none"; // tout fermé par défaut
-  });
+  const buttons = document.querySelectorAll(".toggle-btn");
 
-  document.querySelectorAll(".toggle-btn").forEach((button) => {
+  buttons.forEach((button) => {
     button.addEventListener("click", () => {
-      const content = button.nextElementSibling;
-      content.style.display = content.style.display === "block" ? "none" : "block";
+      const currentContent = button.nextElementSibling;
+
+      // Ferme tous les autres contenus
+      document.querySelectorAll(".toggle-content").forEach((content) => {
+        if (content !== currentContent) {
+          content.style.display = "none";
+        }
+      });
+
+      // Bascule l'affichage du bouton cliqué
+      currentContent.style.display = currentContent.style.display === "block" ? "none" : "block";
     });
   });
 });
