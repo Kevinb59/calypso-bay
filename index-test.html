@@ -19,6 +19,7 @@
       }
       .popup-content {
         background: #fff;
+        color: #111;
         padding: 2em;
         border-radius: 8px;
         max-width: 500px;
@@ -26,7 +27,12 @@
         max-height: 80vh;
         overflow-y: auto;
         position: relative;
-        color: #333;
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.3);
+      }
+      .popup-content h3 {
+        margin-bottom: 1rem;
+        font-weight: bold;
+        color: #111;
       }
       .close-popup {
         position: absolute;
@@ -34,12 +40,14 @@
         right: 15px;
         font-size: 1.5em;
         cursor: pointer;
+        color: #111;
       }
     </style>
   </head>
   <body class="is-preload">
     <div id="page-wrapper">
       <div id="wrapper">
+
         <!-- Équipements -->
         <section class="panel color1">
           <div class="inner">
@@ -47,12 +55,13 @@
               <h2 class="major">🏠 Équipements de la villa</h2>
               <p>Explorez les différentes catégories d'équipements en cliquant sur un bouton :</p>
             </header>
-            <div id="equipment-buttons" class="actions" style="flex-wrap: wrap; justify-content: center; display: flex; gap: 1rem;"></div>
+            <div id="equipment-buttons" class="actions" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;"></div>
           </div>
         </section>
 
         <!-- Conteneur des popups -->
         <div id="popup-container"></div>
+
       </div>
     </div>
 
