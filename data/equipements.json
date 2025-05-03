@@ -122,5 +122,12 @@
       "Gratuit",
       "Jusqu'à 3 voitures"
     ]
+    },
+  "accessibilite": {
+    "icon": "♿",
+    "label": "Accessibilité",
+    "items": [
+      "Logement de plain-pied"
+    ]
   }
 }
