@@ -89,6 +89,15 @@
       "Logement fumeur",
       "Parking gratuit sur place"
     ]
+    },
+  "parking": {
+    "icon": "🅿️",
+    "label": "Parking",
+    "items": [
+      "Privé",
+      "Gratuit",
+      "Jusqu'à 3 voitures"
+    ]
   }
 }
 
