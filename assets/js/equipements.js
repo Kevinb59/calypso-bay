@@ -1,21 +1,21 @@
 document.addEventListener("DOMContentLoaded", function () {
-  fetch('https://raw.githubusercontent.com/TON_UTILISATEUR_GITHUB/TON_REPO/main/equipements.json')
-    .then(response => response.json())
+  fetch("data/equipements.json")
+    .then(res => res.json())
     .then(data => {
-      const container = document.querySelector(".inner div");
+      const btnContainer = document.getElementById("equipement-buttons");
       const body = document.body;
 
       for (const key in data) {
         const cat = data[key];
 
-        // Bouton
-        const button = document.createElement("button");
-        button.className = "equipment-btn";
-        button.dataset.category = key;
-        button.innerText = `${cat.icon} ${cat.label}`;
-        container.appendChild(button);
+        // Crée le bouton
+        const btn = document.createElement("button");
+        btn.className = "equipment-btn";
+        btn.dataset.category = key;
+        btn.innerText = `${cat.icon} ${cat.label}`;
+        btnContainer.appendChild(btn);
 
-        // Popup
+        // Crée le popup
         const popup = document.createElement("div");
         popup.className = "equipment-popup";
         popup.id = "popup-" + key;
@@ -24,12 +24,11 @@ document.addEventListener("DOMContentLoaded", function () {
             <span class="close-popup">&times;</span>
             <h3>${cat.icon} ${cat.label}</h3>
             <ul>${cat.items.map(item => `<li>${item}</li>`).join('')}</ul>
-          </div>
-        `;
+          </div>`;
         body.appendChild(popup);
       }
 
-      // Ajoute les listeners après génération
+      // Gestion ouverture popup
       document.querySelectorAll(".equipment-btn").forEach(btn => {
         btn.addEventListener("click", () => {
           const popup = document.getElementById("popup-" + btn.dataset.category);
@@ -37,16 +36,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       });
 
-      document.querySelectorAll(".close-popup").forEach(btn => {
-        btn.addEventListener("click", () => {
-          btn.closest(".equipment-popup").style.display = "none";
-        });
-      });
-
-      document.querySelectorAll(".equipment-popup").forEach(popup => {
-        popup.addEventListener("click", (e) => {
-          if (e.target === popup) popup.style.display = "none";
-        });
+      // Fermeture popups
+      document.addEventListener("click", (e) => {
+        if (e.target.classList.contains("close-popup") || e.target.classList.contains("equipment-popup")) {
+          document.querySelectorAll(".equipment-popup").forEach(p => p.style.display = "none");
+        }
       });
     });
 });
