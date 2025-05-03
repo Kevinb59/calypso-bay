@@ -22,13 +22,15 @@
   },
   "sdb": {
     "icon": "🛁",
-    "label": "Salle de bain",
+    "label": "Salles de bains",
     "items": [
       "Sèche-cheveux",
       "Produits de nettoyage",
       "Eau chaude",
       "Serviettes",
-      "Douches"
+      "Grandes douches",
+      "Pendoirs",
+      "Lavabos double vasques"
     ]
   },
   "salon": {
