@@ -1,0 +1,78 @@
+{
+  "cuisine": {
+    "icon": "🍽️",
+    "label": "Cuisine",
+    "items": [
+      "Table à manger",
+      "Machine à café",
+      "Produits ménagers",
+      "Grille-pain",
+      "Plaque de cuisson",
+      "Four",
+      "Sèche-linge",
+      "Ustensiles de cuisine",
+      "Bouilloire électrique",
+      "Cuisine",
+      "Lave-linge",
+      "Lave-vaisselle",
+      "Micro-ondes",
+      "Réfrigérateur"
+    ]
+  },
+  "sdb": {
+    "icon": "🛁",
+    "label": "Salle de bain",
+    "items": [
+      "Sèche-cheveux",
+      "Produits de nettoyage",
+      "Eau chaude"
+    ]
+  },
+  "linge": {
+    "icon": "🛏️",
+    "label": "Chambre & Linge",
+    "items": [
+      "Draps",
+      "Cintres",
+      "Oreillers et couvertures supplémentaires",
+      "Fer à repasser",
+      "Moustiquaire",
+      "Espaces de rangement"
+    ]
+  },
+  "divertissement": {
+    "icon": "📺",
+    "label": "Divertissement",
+    "items": [
+      "Télévision"
+    ]
+  },
+  "clim": {
+    "icon": "🌬️",
+    "label": "Climatisation",
+    "items": [
+      "Climatisation centrale",
+      "Ventilateur de plafond"
+    ]
+  },
+  "exterieur": {
+    "icon": "🌴",
+    "label": "Extérieur",
+    "items": [
+      "Mobilier extérieur",
+      "Repas en plein air",
+      "Barbecue",
+      "Piscine privée",
+      "Entrée privée"
+    ]
+  },
+  "services": {
+    "icon": "🧾",
+    "label": "Services",
+    "items": [
+      "Wi-Fi",
+      "Logement fumeur",
+      "Parking gratuit sur place"
+    ]
+  }
+}
