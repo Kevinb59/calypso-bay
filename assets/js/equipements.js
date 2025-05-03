@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       popup.innerHTML = `
         <div class="popup-content" style="
           background: #fff; color: #111; padding: 2em;
-          border-radius: 8px; max-width: 500px; width: 90%;
+          border-radius: 4px; max-width: 500px; width: 90%;
           max-height: 80vh; overflow-y: auto; position: relative;">
           <span class="close-popup" style="
             position: absolute; top: 10px; right: 15px;
