@@ -1,46 +1,49 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   fetch("data/equipements.json")
-    .then(res => res.json())
-    .then(data => {
-      const btnContainer = document.getElementById("equipement-buttons");
-      const body = document.body;
+    .then((response) => response.json())
+    .then((data) => {
+      const buttonContainer = document.getElementById("equipement-buttons");
+      const popupContainer = document.getElementById("popups-container");
 
-      for (const key in data) {
-        const cat = data[key];
-
+      data.forEach((categorie) => {
         // Crée le bouton
-        const btn = document.createElement("button");
-        btn.className = "equipment-btn";
-        btn.dataset.category = key;
-        btn.innerText = `${cat.icon} ${cat.label}`;
-        btnContainer.appendChild(btn);
+        const button = document.createElement("button");
+        button.className = "equipment-btn";
+        button.textContent = `${categorie.emoji} ${categorie.nom}`;
+        button.dataset.popupId = `popup-${categorie.id}`;
+        buttonContainer.appendChild(button);
 
-        // Crée le popup
+        // Crée la popup
         const popup = document.createElement("div");
         popup.className = "equipment-popup";
-        popup.id = "popup-" + key;
+        popup.id = `popup-${categorie.id}`;
         popup.innerHTML = `
           <div class="popup-content">
             <span class="close-popup">&times;</span>
-            <h3>${cat.icon} ${cat.label}</h3>
-            <ul>${cat.items.map(item => `<li>${item}</li>`).join('')}</ul>
-          </div>`;
-        body.appendChild(popup);
-      }
+            <h3>${categorie.emoji} ${categorie.nom}</h3>
+            <ul>${categorie.items.map(item => `<li>${item}</li>`).join("")}</ul>
+          </div>
+        `;
+        popupContainer.appendChild(popup);
 
-      // Gestion ouverture popup
-      document.querySelectorAll(".equipment-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const popup = document.getElementById("popup-" + btn.dataset.category);
-          if (popup) popup.style.display = "flex";
+        // Fermer en cliquant sur la croix
+        popup.querySelector(".close-popup").addEventListener("click", () => {
+          popup.style.display = "none";
+        });
+
+        // Fermer en cliquant en dehors du cadre
+        popup.addEventListener("click", (e) => {
+          if (e.target === popup) popup.style.display = "none";
+        });
+
+        // Affiche la popup au clic sur le bouton
+        button.addEventListener("click", () => {
+          document.querySelectorAll(".equipment-popup").forEach(p => p.style.display = "none");
+          popup.style.display = "flex";
         });
       });
-
-      // Fermeture popups
-      document.addEventListener("click", (e) => {
-        if (e.target.classList.contains("close-popup") || e.target.classList.contains("equipment-popup")) {
-          document.querySelectorAll(".equipment-popup").forEach(p => p.style.display = "none");
-        }
-      });
+    })
+    .catch((err) => {
+      console.error("Erreur lors du chargement des équipements :", err);
     });
 });
