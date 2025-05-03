@@ -80,6 +80,19 @@
       "Piscine d'eau salée"
     ]
   },
+  "terrasse": {
+    "icon": "🌞",
+    "label": "Terrasse",
+    "items": [
+      "Table 6 personnes",
+      "3 chaises longues",
+      "Barbecue",
+      "Piscine privée",
+      "Espace apéro",
+      "Méridienne exotique avec moustiquaire",
+      "Avec vue"
+    ]
+  },
   "exterieur": {
     "icon": "🌴",
     "label": "Extérieur",
