@@ -9,10 +9,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     for (const key in data) {
       const category = data[key];
 
-      // Création du bouton
+      // Création du bouton (grands boutons du thème)
       const btn = document.createElement("a");
       btn.href = "#";
-      btn.className = "button small";
+      btn.className = "button"; // <- pas 'small'
       btn.innerHTML = `${category.icon} ${category.label}`;
       btn.addEventListener("click", (e) => {
         e.preventDefault();
@@ -32,14 +32,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       popup.innerHTML = `
         <div class="popup-content" style="
-          background: #fff; color: #333; padding: 2em;
+          background: #fff; color: #111; padding: 2em;
           border-radius: 8px; max-width: 500px; width: 90%;
           max-height: 80vh; overflow-y: auto; position: relative;">
           <span class="close-popup" style="
             position: absolute; top: 10px; right: 15px;
             font-size: 1.5em; cursor: pointer;">&times;</span>
-          <h3>${category.icon} ${category.label}</h3>
-          <ul>${category.items.map(item => `<li>${item}</li>`).join("")}</ul>
+          <h3 style="margin-bottom: 1rem; font-weight: bold; color: #111;">
+            ${category.icon} ${category.label}
+          </h3>
+          <ul>
+            ${category.items.map(item => `<li>${item}</li>`).join("")}
+          </ul>
         </div>
       `;
 
