@@ -11,12 +11,13 @@
       "Four",
       "Sèche-linge",
       "Ustensiles de cuisine",
+      "Vaisselle et courverts",
       "Bouilloire électrique",
-      "Cuisine",
       "Lave-linge",
       "Lave-vaisselle",
       "Micro-ondes",
-      "Réfrigérateur"
+      "Réfrigérateur",
+      "Congélateur"
     ]
   },
   "sdb": {
@@ -28,6 +29,18 @@
       "Eau chaude",
       "Serviettes",
       "Douches"
+    ]
+  },
+  "piscine": {
+    "icon": "🏊",
+    "label": "Piscine",
+    "items": [
+      "Ouverte toute l'année",
+      "Piscine à débordement",
+      "Serviettes de piscine/plage",
+      "Piscine avec vue",
+      "Chaises longues",
+      "Piscine d'eau salée"
     ]
   },
   "linge": {
@@ -46,7 +59,7 @@
     "icon": "📺",
     "label": "Divertissement",
     "items": [
-      "Télévision"
+      "Télévision à écran plat"
     ]
   },
   "clim": {
