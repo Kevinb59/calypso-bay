@@ -50,6 +50,22 @@
       "Avec vue"
     ]
   },
+  "chambres": {
+    "icon": "🛏️",
+    "label": "Chambres",
+    "items": [
+      "2 lits queen size",
+      "2 lits simples",
+      "Avec vue",
+      "Climatisation",
+      "Armoires/Dressing",
+      "Salles de bain attenantes",
+      "Draps",
+      "Cintres",
+      "Oreillers et couvertures supplémentaires",
+      "Moustiquaires"
+    ]
+  },
   "piscine": {
     "icon": "🏊",
     "label": "Piscine",
@@ -60,33 +76,6 @@
       "Piscine avec vue",
       "Chaises longues",
       "Piscine d'eau salée"
-    ]
-  },
-  "linge": {
-    "icon": "🛏️",
-    "label": "Chambre & Linge",
-    "items": [
-      "Draps",
-      "Cintres",
-      "Oreillers et couvertures supplémentaires",
-      "Fer à repasser",
-      "Moustiquaire",
-      "Espaces de rangement"
-    ]
-  },
-  "divertissement": {
-    "icon": "📺",
-    "label": "Divertissement",
-    "items": [
-      "Télévision à écran plat"
-    ]
-  },
-  "clim": {
-    "icon": "🌬️",
-    "label": "Climatisation",
-    "items": [
-      "Climatisation centrale",
-      "Ventilateur de plafond"
     ]
   },
   "exterieur": {
