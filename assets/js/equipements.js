@@ -5,9 +5,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (page.includes("index-en")) lang = "en";
     else if (page.includes("index-de")) lang = "de";
 
-    let file = "equipements.json";
-    if (lang === "en") file = "equipements-en.json";
-    else if (lang === "de") file = "equipements-de.json";
+    let file = "data/equipements.json";
+    if (lang === "en") file = "data/equipements-en.json";
+    else if (lang === "de") file = "data/equipements-de.json";
 
     const res = await fetch(file);
     const data = await res.json();
