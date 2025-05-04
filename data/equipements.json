@@ -97,7 +97,7 @@
   },
   "exterieur": {
     "icon": "🌴",
-    "label": "Extérieurs/Jardin",
+    "label": "Extérieurs / Jardin",
     "items": [
       "Pelouse",
       "Fleuris",
@@ -108,11 +108,13 @@
   },
   "services": {
     "icon": "🧾",
-    "label": "Services",
+    "label": "Services / Sécurité",
     "items": [
       "Wi-Fi gratuit (21Mb/s | Streaming HD & Appels visio)",
       "Livraison de courses (en supplément)",
-      "Coffre-fort"
+      "Coffre-fort",
+      "Volets sécurisés",
+      "Jardin clôturé"
     ]
     },
   "parking": {
