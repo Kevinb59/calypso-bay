@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     let file = "data/equipements.json";
     if (lang === "en") file = "data/equipements-en.json";
     else if (lang === "de") file = "data/equipements-de.json";
+    console.log("Langue détectée :", lang);
+    console.log("Fichier chargé :", file);
 
     const res = await fetch(file);
     const data = await res.json();
@@ -33,13 +35,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       const popup = document.createElement("div");
       popup.className = "equipment-popup";
       popup.id = `popup-${key}`;
-      popup.style.cssText = \`
+      popup.style.cssText = `
         display: none; position: fixed; top: 0; left: 0;
         width: 100%; height: 100%; z-index: 9999;
         background: rgba(255,255,255,0.5); justify-content: center; align-items: center;
-      \`;
+      `;
 
-      popup.innerHTML = \`
+      popup.innerHTML = `
         <div class="popup-content" style="
           background: #fff; color: #111; padding: 2em;
           border-radius: 4px; max-width: 500px; width: 90%;
@@ -54,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             ${category.items.map(item => `<li>${item}</li>`).join("")}
           </ul>
         </div>
-      \`;
+      `;
 
       popup.querySelector(".close-popup").addEventListener("click", () => {
         popup.style.display = "none";
