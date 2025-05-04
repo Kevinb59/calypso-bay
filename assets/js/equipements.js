@@ -1,6 +1,15 @@
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-    const res = await fetch("data/equipements.json");
+    const page = window.location.pathname;
+    let lang = "fr";
+    if (page.includes("index-en")) lang = "en";
+    else if (page.includes("index-de")) lang = "de";
+
+    let file = "equipements.json";
+    if (lang === "en") file = "equipements-en-correct.json";
+    else if (lang === "de") file = "equipements-de.json";
+
+    const res = await fetch(file);
     const data = await res.json();
 
     const btnContainer = document.getElementById("equipment-buttons");
@@ -9,10 +18,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     for (const key in data) {
       const category = data[key];
 
-      // Création du bouton (grands boutons du thème)
+      // Création du bouton
       const btn = document.createElement("a");
       btn.href = "#";
-      btn.className = "button"; // <- pas 'small'
+      btn.className = "button";
       btn.innerHTML = `${category.icon} ${category.label}`;
       btn.addEventListener("click", (e) => {
         e.preventDefault();
@@ -24,13 +33,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       const popup = document.createElement("div");
       popup.className = "equipment-popup";
       popup.id = `popup-${key}`;
-      popup.style.cssText = `
+      popup.style.cssText = \`
         display: none; position: fixed; top: 0; left: 0;
         width: 100%; height: 100%; z-index: 9999;
         background: rgba(255,255,255,0.5); justify-content: center; align-items: center;
-      `;
+      \`;
 
-      popup.innerHTML = `
+      popup.innerHTML = \`
         <div class="popup-content" style="
           background: #fff; color: #111; padding: 2em;
           border-radius: 4px; max-width: 500px; width: 90%;
@@ -45,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             ${category.items.map(item => `<li>${item}</li>`).join("")}
           </ul>
         </div>
-      `;
+      \`;
 
       popup.querySelector(".close-popup").addEventListener("click", () => {
         popup.style.display = "none";
