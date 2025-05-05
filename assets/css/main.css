@@ -3863,20 +3863,21 @@ input, select, textarea {
 
 /* 📆 Cellules de jours */
 .calendar-cell {
-  width: 100%;
+  width: 80%; /* ← largeur réduite */
   aspect-ratio: 1 / 1;
   border-radius: 0.3rem;
-  padding: 0.1rem;
+  padding: 0;
   font-size: 0.65rem;
   font-weight: 600;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   text-align: center;
   box-sizing: border-box;
   background: transparent;
   transition: 0.2s ease;
+  margin: auto; /* ← centre la case dans la colonne */
 }
 
 /* ✅ Disponible : vert doux */
@@ -3900,7 +3901,7 @@ input, select, textarea {
 /* 📅 Numéro du jour en haut */
 .calendar-cell .day-label {
   font-size: 0.7rem;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.5rem;
   line-height: 1;
 }
 
