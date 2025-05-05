@@ -3866,7 +3866,7 @@ input, select, textarea {
   width: 100%; /* La case occupe toute la largeur de la colonne */
   aspect-ratio: 1 / 1; /* La case est un carré (1:1) */
   border-radius: 0.3rem; /* Coins légèrement arrondis */
-  padding: 0.15rem 0.2rem; /* Marge interne minimale (haut/bas + gauche/droite) */
+  padding: 0.05rem 0.05rem; /* Marge interne minimale (haut/bas + gauche/droite) */
   font-size: 0.65rem; /* Taille de texte par défaut */
   font-weight: 600; /* Texte en semi-gras */
   display: flex; /* Utilisation de flexbox pour aligner les éléments internes */
