@@ -3845,99 +3845,97 @@ input, select, textarea {
 
 /* 🟦 Cadre principal du calendrier */
 #calendar-grid {
-  display: grid;                                /* Utilise une grille pour organiser les jours */
-  grid-template-columns: repeat(7, auto);       /* 7 colonnes, taille automatique réduite */
-  justify-content: start;                       /* Aligne la grille à gauche */
-  gap: 0.15rem;                                  /* Espacement très faible entre les cases */
-  padding: 0.6rem;                               /* Marge interne réduite */
-  background: rgba(255, 255, 255, 0.05);         /* Fond transparent doux */
-  border-radius: 8px;                            /* Coins légèrement arrondis */
-  border: 1px solid rgba(255, 255, 255, 0.15);   /* Contour fin et clair */
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.08);/* Lueur légère autour */
-  backdrop-filter: blur(10px);                  /* Effet verre dépoli */
-  min-height: 350px;                            /* Hauteur minimale du calendrier */
-  max-width: 540px;                             /* Largeur maximale */
-  width: 100%;                                  /* Prend toute la largeur disponible */
-  margin-left: 0;                               /* Aligné à gauche */
-  margin-right: auto;                           /* Pas centré horizontalement */
+  display: grid; /* Grille */
+  grid-template-columns: repeat(7, min-content); /* Chaque colonne ne prend que la taille du contenu */
+  gap: 0.1rem; /* Espacement minimal */
+  padding: 0.5rem; /* Léger padding autour */
+  background: rgba(255, 255, 255, 0.05); /* Fond doux */
+  border-radius: 8px; /* Coins arrondis */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Liseré */
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.08); /* Lueur */
+  backdrop-filter: blur(10px); /* Effet verre */
+  width: fit-content; /* Ajuste la largeur au contenu */
+  margin-left: 0;
+  margin-right: auto;
 }
 
 /* 📆 Cellules de jours */
 .calendar-cell {
-  display: flex;                                /* Flexbox pour agencement vertical */
-  flex-direction: column;                       /* Empile les éléments verticalement */
-  justify-content: flex-start;                  /* Contenu collé en haut */
-  align-items: center;                          /* Centré horizontalement */
-  text-align: center;                           /* Texte centré */
-  padding: 0.05rem;                             /* Marges internes mini */
-  border-radius: 0.25rem;                       /* Coins très légèrement arrondis */
-  background: transparent;                      /* Fond géré par les classes d’état */
-  box-sizing: border-box;                       /* Padding inclus dans la taille */
-  font-size: 0.65rem;                           /* Texte petit mais lisible */
-  font-weight: 600;                             /* Texte en semi-gras */
-  transition: background 0.2s ease;             /* Douceur si animation */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  padding: 0.05rem;
+  border-radius: 0.2rem;
+  background: transparent;
+  box-sizing: border-box;
+  font-size: 0.65rem;
+  font-weight: 600;
+  width: 3.2rem; /* Largeur très compacte */
+  height: 3.2rem; /* Hauteur identique (carré) */
+  transition: background 0.2s ease;
 }
 
 /* ✅ Disponible */
 .available {
-  background-color: rgba(0, 255, 150, 0.12);     /* Vert translucide */
-  color: white;                                 /* Texte blanc vif */
+  background-color: rgba(0, 255, 150, 0.12);
+  color: white;
 }
 
 /* ❌ Réservé */
 .reserved {
-  background-color: rgba(255, 60, 60, 0.15);     /* Rouge translucide */
-  color: rgba(255, 60, 60, 0.95);               /* Texte rouge intense */
+  background-color: rgba(255, 60, 60, 0.15);
+  color: rgba(255, 60, 60, 0.95);
 }
 
 /* ⬜️ Indisponible */
 .unavailable {
-  background-color: rgba(255, 255, 255, 0.08);   /* Gris clair doux */
-  color: rgba(255, 255, 255, 0.7);              /* Texte gris clair */
+  background-color: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
 }
 
-/* 📅 Numéro du jour */
+/* 📅 Jour */
 .calendar-cell .day-label {
-  font-size: 0.7rem;                            /* Légèrement plus grand */
-  margin-bottom: 0.2rem;                        /* Petit espace au-dessus du prix */
-  line-height: 1;                               /* Hauteur compacte */
+  font-size: 0.7rem;
+  margin-bottom: 0.2rem;
+  line-height: 1;
 }
 
 /* 💰 Tarif */
 .calendar-cell .price-label {
-  font-size: 0.65rem;                           /* Taille discrète mais lisible */
-  font-weight: 500;                             /* Semi-gras */
-  color: inherit;                               /* Couleur héritée (selon l’état) */
-  line-height: 1;                               /* Compact */
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: inherit;
+  line-height: 1;
 }
 
-/* 🗓️ En-tête (mois + navigation) */
+/* 🗓️ En-tête */
 #calendar-header {
-  display: flex;                                /* Affichage horizontal */
-  justify-content: center;                      /* Centré horizontalement */
-  align-items: center;                          /* Centré verticalement */
-  gap: 1.5rem;                                   /* Espace entre les flèches et le texte */
-  margin-bottom: 1rem;                          /* Espacement avec le calendrier */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
-/* 🗓️ Mois affiché */
+/* 🗓️ Mois */
 #calendar-header h3 {
-  font-size: 1rem;                              /* Taille normale */
-  text-transform: capitalize;                   /* Majuscule sur le mois */
-  font-weight: 600;                             /* Semi-gras */
-  color: white;                                 /* Texte blanc */
-  margin: 0;                                    /* Supprime marge par défaut */
+  font-size: 1rem;
+  text-transform: capitalize;
+  font-weight: 600;
+  color: white;
+  margin: 0;
 }
 
-/* ⏪⏩ Flèches de navigation */
+/* ⏪⏩ Navigation */
 #calendar-header i {
-  font-size: 1rem;                              /* Taille réduite mais visible */
-  color: white;                                 /* Couleur blanche par défaut */
-  cursor: pointer;                              /* Curseur interactif */
-  transition: color 0.2s ease;                  /* Douceur au survol */
+  font-size: 1rem;
+  color: white;
+  cursor: pointer;
+  transition: color 0.2s ease;
 }
 
 #calendar-header i:hover {
-  color: #00ffaa;                               /* Vert clair au survol */
+  color: #00ffaa;
 }
-
