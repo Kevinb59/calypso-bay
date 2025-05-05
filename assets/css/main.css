@@ -3898,7 +3898,7 @@ input, select, textarea {
 /* 📅 Jour */
 .calendar-cell .day-label {
   font-size: 0.7rem;
-  margin-top: 0.5rem; /* ← règle précisément l’espace depuis le haut de la case */
+  margin-top: 0.35rem; /* ← règle précisément l’espace depuis le haut de la case */
   margin-bottom: 0.2rem;
   line-height: 1;
 }
