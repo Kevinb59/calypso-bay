@@ -3848,24 +3848,25 @@ input, select, textarea {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 0.3rem;
-  padding: 1.2rem;
+  padding: 1rem;
   background: rgba(255, 255, 255, 0.05);
-  border-radius: 6px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 0 12px rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
   min-height: 350px;
-  min-width: 480px;
-  max-width: 550px;
-  margin: auto;
+  max-width: 540px;
+  width: 100%;
+  margin-left: 0; /* alignement à gauche */
+  margin-right: auto;
 }
 
 /* 📆 Cellules de jours */
 .calendar-cell {
   width: 100%;
   aspect-ratio: 1 / 1;
-  border-radius: 0.35rem;
-  padding: 0.15rem;
+  border-radius: 0.3rem;
+  padding: 0.1rem;
   font-size: 0.65rem;
   font-weight: 600;
   display: flex;
@@ -3899,7 +3900,7 @@ input, select, textarea {
 /* 📅 Numéro du jour en haut */
 .calendar-cell .day-label {
   font-size: 0.7rem;
-  margin-bottom: 0.15rem;
+  margin-bottom: 0.35rem;
   line-height: 1;
 }
 
