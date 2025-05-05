@@ -3843,3 +3843,75 @@ input, select, textarea {
 	  margin-top: 0.5rem;
 	}
 
+	#calendar-grid {
+	  display: grid;
+	  grid-template-columns: repeat(7, 1fr);
+	  gap: 0.4rem;
+	}
+	
+	.calendar-cell {
+	  border-radius: 0.5rem;
+	  padding: 0.4rem;
+	  min-height: 50px;
+	  font-size: 0.75rem;
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: space-between;
+	  align-items: center;
+	  font-weight: bold;
+	  border: 1px solid rgba(255, 255, 255, 0.2);
+	  box-sizing: border-box;
+	}
+	
+	.calendar-cell .day-label {
+	  font-size: 0.85rem;
+	}
+	
+	.calendar-cell .price-label {
+	  font-size: 0.75rem;
+	}
+	
+	/* Non disponible : gris transparent, texte blanc vif */
+	.unavailable {
+	  background-color: rgba(255, 255, 255, 0.08);
+	  color: rgba(255, 255, 255, 0.9);
+	  border: 1px solid rgba(255, 255, 255, 0.3);
+	}
+	
+	/* Réservé : rouge transparent, texte rouge vif */
+	.reserved {
+	  background-color: rgba(255, 0, 0, 0.1);
+	  color: rgba(200, 0, 0, 0.95);
+	  border: 1px solid rgba(200, 0, 0, 0.4);
+	}
+	
+	/* Disponible : vert transparent, texte blanc vif */
+	.available {
+	  background-color: rgba(0, 255, 0, 0.1);
+	  color: white;
+	  border: 1px solid rgba(255, 255, 255, 0.5);
+	}
+	
+	/* En-tête du calendrier */
+	#calendar-header h3 {
+	  font-size: 1.1rem;
+	  text-transform: capitalize;
+	  font-weight: bold;
+	  letter-spacing: 0.5px;
+	}
+	
+	#calendar-header button {
+	  font-size: 1.2rem;
+	  margin: 0 1rem;
+	  padding: 0.25rem 0.5rem;
+	  border: 1px solid rgba(255, 255, 255, 0.3);
+	  border-radius: 0.3rem;
+	  color: white;
+	  background: rgba(255, 255, 255, 0.05);
+	  cursor: pointer;
+	  transition: 0.2s;
+	}
+	
+	#calendar-header button:hover {
+	  background: rgba(255, 255, 255, 0.15);
+	}
