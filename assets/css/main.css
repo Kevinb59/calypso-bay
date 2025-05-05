@@ -3848,70 +3848,76 @@ input, select, textarea {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 0.3rem;
-  padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 12px;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
-  min-height: 300px;
+  padding: 1.2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  min-height: 350px;
+  min-width: 480px;
+  max-width: 550px;
+  margin: auto;
 }
 
 /* 📆 Cellules de jours */
 .calendar-cell {
-  aspect-ratio: 1 / 1;
   width: 100%;
-  border-radius: 0.4rem;
-  padding: 0.2rem;
-  font-size: 0.7rem;
+  aspect-ratio: 1 / 1;
+  border-radius: 0.35rem;
+  padding: 0.15rem;
+  font-size: 0.65rem;
   font-weight: 600;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  box-sizing: border-box;
   text-align: center;
+  box-sizing: border-box;
   background: transparent;
   transition: 0.2s ease;
 }
 
-/* ✅ Jour dispo : fond vert transparent + texte blanc */
+/* ✅ Disponible : vert doux */
 .available {
   background-color: rgba(0, 255, 150, 0.12);
   color: white;
 }
 
-/* ❌ Réservé : fond rouge doux + texte rouge */
+/* ❌ Réservé : rouge doux */
 .reserved {
-  background-color: rgba(255, 60, 60, 0.12);
+  background-color: rgba(255, 60, 60, 0.15);
   color: rgba(255, 60, 60, 0.95);
 }
 
-/* ⬜️ Indisponible : fond blanc doux + texte gris */
+/* ⬜️ Indisponible : gris/blanc doux */
 .unavailable {
   background-color: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* 📅 Numéro du jour en haut */
 .calendar-cell .day-label {
-  font-size: 0.8rem;
-  margin-bottom: 0.2rem;
-}
-
-/* 💰 Prix en dessous */
-.calendar-cell .price-label {
   font-size: 0.7rem;
-  color: inherit;
-  font-weight: 500;
+  margin-bottom: 0.15rem;
+  line-height: 1;
 }
 
-/* 📌 En-tête mois + flèches */
+/* 💰 Tarif */
+.calendar-cell .price-label {
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: inherit;
+  line-height: 1;
+}
+
+/* 🗓️ En-tête du calendrier */
 #calendar-header {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1.5rem;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
 }
 
 #calendar-header h3 {
@@ -3922,7 +3928,7 @@ input, select, textarea {
   margin: 0;
 }
 
-/* 🔁 Icônes FontAwesome navigation */
+/* ⏪⏩ Icônes navigation */
 #calendar-header i {
   font-size: 1rem;
   color: white;
