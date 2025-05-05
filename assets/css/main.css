@@ -3845,89 +3845,88 @@ input, select, textarea {
 
 /* 🟦 Cadre principal du calendrier */
 #calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0.1rem;
-  padding: 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  min-height: 350px;
-  max-width: 540px;
-  width: 100%;
-  margin-left: 0; /* alignement à gauche */
-  margin-right: auto;
+  display: grid; /* Utilise une grille pour organiser les jours */
+  grid-template-columns: repeat(7, 1fr); /* 7 colonnes (1 par jour de la semaine) */
+  gap: 0.15rem; /* Espacement entre les cases */
+  padding: 1rem; /* Marge interne autour de la grille */
+  background: rgba(255, 255, 255, 0.05); /* Fond transparent doux */
+  border-radius: 8px; /* Coins arrondis du cadre principal */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Contour fin et clair */
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.08); /* Lueur autour du cadre */
+  backdrop-filter: blur(10px); /* Flou d’arrière-plan pour l’effet "glassmorphism" */
+  min-height: 350px; /* Hauteur minimale du calendrier */
+  max-width: 540px; /* Largeur maximale du calendrier */
+  width: 100%; /* Prend toute la largeur disponible */
+  margin-left: 0; /* Aligne le calendrier à gauche */
+  margin-right: auto; /* Empêche un centrage horizontal */
 }
 
 /* 📆 Cellules de jours */
 .calendar-cell {
-  width: 80%; /* ← largeur réduite */
-  aspect-ratio: 1 / 1;
-  border-radius: 0.3rem;
-  padding: 0;
-  font-size: 0.65rem;
-  font-weight: 600;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  box-sizing: border-box;
-  background: transparent;
-  transition: 0.2s ease;
-  margin: auto; /* ← centre la case dans la colonne */
+  width: 100%; /* La case occupe toute la largeur de la colonne */
+  aspect-ratio: 1 / 1; /* La case est un carré (1:1) */
+  border-radius: 0.3rem; /* Coins légèrement arrondis */
+  padding: 0.15rem 0.2rem; /* Marge interne minimale (haut/bas + gauche/droite) */
+  font-size: 0.65rem; /* Taille de texte par défaut */
+  font-weight: 600; /* Texte en semi-gras */
+  display: flex; /* Utilisation de flexbox pour aligner les éléments internes */
+  flex-direction: column; /* Éléments empilés verticalement */
+  justify-content: flex-start; /* Contenu aligné en haut de la case */
+  align-items: center; /* Centrage horizontal */
+  text-align: center; /* Texte centré */
+  box-sizing: border-box; /* Le padding est inclus dans la taille totale */
+  background: transparent; /* Fond vide par défaut (rempli par classes dynamiques) */
+  transition: 0.2s ease; /* Transition douce si des effets sont ajoutés */
 }
 
 /* ✅ Disponible : vert doux */
 .available {
-  background-color: rgba(0, 255, 150, 0.12);
-  color: white;
+  background-color: rgba(0, 255, 150, 0.12); /* Fond vert translucide */
+  color: white; /* Texte blanc */
 }
 
 /* ❌ Réservé : rouge doux */
 .reserved {
-  background-color: rgba(255, 60, 60, 0.15);
-  color: rgba(255, 60, 60, 0.95);
+  background-color: rgba(255, 60, 60, 0.15); /* Fond rouge translucide */
+  color: rgba(255, 60, 60, 0.95); /* Texte rouge vif */
 }
 
 /* ⬜️ Indisponible : gris/blanc doux */
 .unavailable {
-  background-color: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.08); /* Fond gris clair translucide */
+  color: rgba(255, 255, 255, 0.7); /* Texte gris clair */
 }
 
 /* 📅 Numéro du jour en haut */
 .calendar-cell .day-label {
-  font-size: 0.7rem;
-  margin-bottom: 0.5rem;
-  line-height: 1;
+  font-size: 0.7rem; /* Taille du numéro de jour */
+  margin-bottom: 0.5rem; /* Espacement vertical avec le prix */
+  line-height: 1; /* Hauteur de ligne normale */
 }
 
 /* 💰 Tarif */
 .calendar-cell .price-label {
-  font-size: 0.65rem;
-  font-weight: 500;
-  color: inherit;
-  line-height: 1;
+  font-size: 0.65rem; /* Taille du prix */
+  font-weight: 500; /* Semi-gras */
+  color: inherit; /* Utilise la couleur définie par la classe parente (dispo/réservé/etc.) */
+  line-height: 1; /* Hauteur de ligne compacte */
 }
 
 /* 🗓️ En-tête du calendrier */
 #calendar-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1.5rem;
-  margin-bottom: 1rem;
+  display: flex; /* Organisation en ligne (flèches + mois) */
+  justify-content: center; /* Centrage horizontal de l’ensemble */
+  align-items: center; /* Alignement vertical */
+  gap: 1.5rem; /* Espace entre les flèches et le titre */
+  margin-bottom: 1rem; /* Espace sous l’en-tête */
 }
 
 #calendar-header h3 {
-  font-size: 1rem;
-  text-transform: capitalize;
-  font-weight: 600;
-  color: white;
-  margin: 0;
+  font-size: 1rem; /* Taille du mois/année */
+  text-transform: capitalize; /* Première lettre en majuscule */
+  font-weight: 600; /* Semi-gras */
+  color: white; /* Texte blanc */
+  margin: 0; /* Supprime les marges par défaut du h3 */
 }
 
 /* ⏪⏩ Icônes navigation */
