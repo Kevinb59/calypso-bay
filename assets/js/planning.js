@@ -17,7 +17,7 @@ async function fetchPlanning() {
 }
 
 function renderCalendar(month, year) {
-  const monthNames = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+  const monthNames = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
   const grid = document.getElementById("calendar-grid");
   const title = document.getElementById("calendar-title");
 
@@ -26,50 +26,45 @@ function renderCalendar(month, year) {
 
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
-
   const offset = (firstDay === 0) ? 6 : firstDay - 1;
 
   for (let i = 0; i < offset; i++) {
-    const empty = document.createElement("div");
-    grid.appendChild(empty);
+    grid.appendChild(document.createElement("div"));
   }
 
   for (let day = 1; day <= daysInMonth; day++) {
     const cell = document.createElement("div");
-    cell.style.borderRadius = "0.5rem";
-    cell.style.border = "1px solid #ccc";
-    cell.style.textAlign = "center";
-    cell.style.padding = "0.5rem";
-    cell.style.minHeight = "60px";
-    cell.style.display = "flex";
-    cell.style.flexDirection = "column";
-    cell.style.justifyContent = "space-between";
-    cell.style.fontSize = "0.85rem";
-
+    cell.className = "calendar-cell";
     const displayDate = new Date(year, month, day);
-    const dayStr = displayDate.toLocaleDateString("fr-FR", { weekday: "short", day: "2-digit", month: "long", year: "numeric" });
-    const value = planningData[dayStr.toLowerCase()] || "";
+    const dayStr = displayDate.toLocaleDateString("fr-FR", {
+      weekday: "short", day: "2-digit", month: "long", year: "numeric"
+    }).toLowerCase();
 
-    const top = document.createElement("div");
-    top.style.fontWeight = "bold";
-    top.textContent = day;
+    const value = planningData[dayStr] || "";
+    const isReserved = value === "x";
+    const isAvailable = value && !isReserved;
+    const isUnavailable = !value;
 
-    const bottom = document.createElement("div");
-    bottom.style.marginTop = "0.3rem";
-
-    if (!value) {
-      bottom.textContent = "Non dispo";
-      bottom.style.color = "#aaa";
-    } else if (value === "x") {
-      bottom.textContent = "Réservé";
-      bottom.style.color = "#c0392b";
+    // Style par état
+    if (isReserved) {
+      cell.classList.add("reserved");
+    } else if (isAvailable) {
+      cell.classList.add("available");
     } else {
-      bottom.textContent = `${value} €`;
-      bottom.style.color = "#27ae60";
+      cell.classList.add("unavailable");
     }
 
-    cell.appendChild(top);
-    cell.appendChild(bottom);
+    const dayLabel = document.createElement("div");
+    dayLabel.className = "day-label";
+    dayLabel.textContent = day;
+
+    const priceLabel = document.createElement("div");
+    priceLabel.className = "price-label";
+    if (isAvailable) priceLabel.textContent = `${value} €`;
+
+    cell.appendChild(dayLabel);
+    if (isAvailable) cell.appendChild(priceLabel);
+
     grid.appendChild(cell);
   }
 }
