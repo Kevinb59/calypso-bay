@@ -3845,16 +3845,16 @@ input, select, textarea {
 
 /* 🟦 Cadre principal du calendrier */
 #calendar-grid {
-  display: grid; /* Grille */
-  grid-template-columns: repeat(7, min-content); /* Chaque colonne ne prend que la taille du contenu */
-  gap: 0.1rem; /* Espacement minimal */
-  padding: 0.5rem; /* Léger padding autour */
+  display: grid; /* Grille pour les jours */
+  grid-template-columns: repeat(7, min-content); /* 7 colonnes auto-ajustées */
+  gap: 0.1rem; /* Petit espacement entre les cases */
+  padding: 0.5rem; /* Marge interne */
   background: rgba(255, 255, 255, 0.05); /* Fond doux */
   border-radius: 8px; /* Coins arrondis */
-  border: 1px solid rgba(255, 255, 255, 0.15); /* Liseré */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Liseré léger */
   box-shadow: 0 0 12px rgba(255, 255, 255, 0.08); /* Lueur */
-  backdrop-filter: blur(10px); /* Effet verre */
-  width: fit-content; /* Ajuste la largeur au contenu */
+  backdrop-filter: blur(10px); /* Effet flouté */
+  width: fit-content; /* Largeur auto-ajustée */
   margin-left: 0;
   margin-right: auto;
 }
@@ -3872,8 +3872,8 @@ input, select, textarea {
   box-sizing: border-box;
   font-size: 0.65rem;
   font-weight: 600;
-  width: 2.5rem; /* Largeur très compacte */
-  height: 2.5rem; /* Hauteur identique (carré) */
+  width: 2.5rem;
+  height: 2.5rem;
   transition: background 0.2s ease;
 }
 
@@ -3895,10 +3895,10 @@ input, select, textarea {
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* 📅 Jour */
+/* 📅 Numéro du jour */
 .calendar-cell .day-label {
   font-size: 1rem;
-  margin-top: 0.2rem; /* ← règle précisément l’espace depuis le haut de la case */
+  margin-top: 0.2rem;
   margin-bottom: 0.3rem;
   line-height: 1;
 }
@@ -3911,48 +3911,44 @@ input, select, textarea {
   line-height: 1;
 }
 
-/* 🗓️ En-tête */
-#calendar-header {
+/* 📋 Noms des jours (Lun, Mar...) */
+.calendar-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  padding: 0.3rem 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  aspect-ratio: 1 / 1;
+  border-radius: 0.2rem;
 }
 
-/* 🗓️ Mois */
-#calendar-header h3 {
-  font-size: 1rem;
-  text-transform: capitalize;
-  font-weight: 600;
-  color: white;
-  margin: 0;
-}
-
-/* ⏪⏩ Navigation */
-#calendar-header i {
-  font-size: 1rem;
-  color: white;
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-
-#calendar-header i:hover {
-  color: #00ffaa;
-}
-
+/* 🗓️ En-tête principal */
 #calendar-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   margin-bottom: 1rem;
+  width: fit-content;
   max-width: 540px;
-  width: 100%;
   margin-left: 0;
   margin-right: auto;
 }
 
-#calendar-header h3 {
+/* 📅 Conteneur du mois + flèches */
+.calendar-header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  min-width: 230px; /* Assez large pour "Décembre 2025" */
+  max-width: 540px;
+}
+
+/* 🗓️ Titre du mois */
+#calendar-title {
   font-size: 1rem;
   font-weight: 600;
   text-transform: capitalize;
@@ -3960,6 +3956,7 @@ input, select, textarea {
   margin: 0;
 }
 
+/* ⏪⏩ Flèches */
 .nav-arrows {
   display: flex;
   gap: 0.4rem;
@@ -3974,17 +3971,4 @@ input, select, textarea {
 
 .nav-arrows i:hover {
   color: #00ffaa;
-}
-
-.calendar-label {
-  font-size: 0.65rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.7);
-  text-align: center;
-  padding: 0.3rem 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  aspect-ratio: 1 / 1;
-  border-radius: 0.2rem;
 }
