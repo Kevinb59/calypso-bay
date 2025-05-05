@@ -26,6 +26,21 @@
         <!-- Conteneur des popups -->
         <div id="popup-container"></div>
 
+        <section class="panel medium color2-alt">
+              <div class="intro color2">
+                    <h2 class="major">📅 Planning & Tarifs</h2>
+                    <p>Consultez les dates disponibles, les réservations et les tarifs. Navigation par mois.</p>
+              </div>
+              <div class="inner">
+                    <div id="calendar-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                          <button id="prev-month" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">◀</button>
+                          <h3 id="calendar-title" style="margin: 0;"></h3>
+                          <button id="next-month" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">▶</button>
+                    </div>
+                    <div id="calendar-grid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem;"></div>
+              </div>
+        </section>
+
       </div>
     </div>
 
@@ -35,5 +50,6 @@
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/equipements.js"></script>
+    <script src="assets/js/planning.js"></script>
   </body>
 </html>
