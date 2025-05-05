@@ -24,6 +24,15 @@ function renderCalendar(month, year) {
   title.textContent = `${monthNames[month]} ${year}`;
   grid.innerHTML = "";
 
+  // ✅ Ajouter les jours de la semaine dans la grille
+  const jours = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
+  jours.forEach(jour => {
+    const label = document.createElement("div");
+    label.className = "calendar-label";
+    label.textContent = jour;
+    grid.appendChild(label);
+  });
+  
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const offset = (firstDay === 0) ? 6 : firstDay - 1;
