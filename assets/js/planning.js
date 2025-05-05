@@ -1,0 +1,95 @@
+const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEDTcen1gulUUFxzIX3-Mr5fCJZsmlp83UPmXCP89mSgIwARJg9JgwbEGmg8f8HCm2c-WnsmaA-Kup/pub?gid=0&single=true&output=csv";
+
+let currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear();
+let planningData = {};
+
+async function fetchPlanning() {
+  const res = await fetch(csvUrl);
+  const text = await res.text();
+  const rows = text.trim().split("\n").slice(1).map(r => r.split(","));
+  rows.forEach(([rawDate, rawValue]) => {
+    const cleanDate = rawDate.trim().replace(/^"|"$/g, "");
+    const cleanValue = rawValue?.trim().toLowerCase();
+    planningData[cleanDate] = cleanValue;
+  });
+  renderCalendar(currentMonth, currentYear);
+}
+
+function renderCalendar(month, year) {
+  const monthNames = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+  const grid = document.getElementById("calendar-grid");
+  const title = document.getElementById("calendar-title");
+
+  title.textContent = `${monthNames[month]} ${year}`;
+  grid.innerHTML = "";
+
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  const offset = (firstDay === 0) ? 6 : firstDay - 1;
+
+  for (let i = 0; i < offset; i++) {
+    const empty = document.createElement("div");
+    grid.appendChild(empty);
+  }
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const cell = document.createElement("div");
+    cell.style.borderRadius = "0.5rem";
+    cell.style.border = "1px solid #ccc";
+    cell.style.textAlign = "center";
+    cell.style.padding = "0.5rem";
+    cell.style.minHeight = "60px";
+    cell.style.display = "flex";
+    cell.style.flexDirection = "column";
+    cell.style.justifyContent = "space-between";
+    cell.style.fontSize = "0.85rem";
+
+    const displayDate = new Date(year, month, day);
+    const dayStr = displayDate.toLocaleDateString("fr-FR", { weekday: "short", day: "2-digit", month: "long", year: "numeric" });
+    const value = planningData[dayStr.toLowerCase()] || "";
+
+    const top = document.createElement("div");
+    top.style.fontWeight = "bold";
+    top.textContent = day;
+
+    const bottom = document.createElement("div");
+    bottom.style.marginTop = "0.3rem";
+
+    if (!value) {
+      bottom.textContent = "Non dispo";
+      bottom.style.color = "#aaa";
+    } else if (value === "x") {
+      bottom.textContent = "Réservé";
+      bottom.style.color = "#c0392b";
+    } else {
+      bottom.textContent = `${value} €`;
+      bottom.style.color = "#27ae60";
+    }
+
+    cell.appendChild(top);
+    cell.appendChild(bottom);
+    grid.appendChild(cell);
+  }
+}
+
+document.getElementById("prev-month").addEventListener("click", () => {
+  currentMonth--;
+  if (currentMonth < 0) {
+    currentMonth = 11;
+    currentYear--;
+  }
+  renderCalendar(currentMonth, currentYear);
+});
+
+document.getElementById("next-month").addEventListener("click", () => {
+  currentMonth++;
+  if (currentMonth > 11) {
+    currentMonth = 0;
+    currentYear++;
+  }
+  renderCalendar(currentMonth, currentYear);
+});
+
+fetchPlanning();
