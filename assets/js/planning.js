@@ -1,3 +1,20 @@
+const page = window.location.pathname;
+let lang = "fr";
+if (page.includes("index-en")) lang = "en";
+else if (page.includes("index-de")) lang = "de";
+
+const monthNamesByLang = {
+  fr: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+  en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+  de: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]
+};
+
+const daysByLang = {
+  fr: ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"],
+  en: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+  de: ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
+};
+
 const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEDTcen1gulUUFxzIX3-Mr5fCJZsmlp83UPmXCP89mSgIwARJg9JgwbEGmg8f8HCm2c-WnsmaA-Kup/pub?gid=0&single=true&output=csv";
 
 let currentMonth = new Date().getMonth();
@@ -17,22 +34,19 @@ async function fetchPlanning() {
 }
 
 function renderCalendar(month, year) {
-  const monthNames = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
   const grid = document.getElementById("calendar-grid");
   const title = document.getElementById("calendar-title");
 
-  title.textContent = `${monthNames[month]} ${year}`;
+  title.textContent = `${monthNamesByLang[lang][month]} ${year}`;
   grid.innerHTML = "";
 
-  // ✅ Ajouter les jours de la semaine dans la grille
-  const jours = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
-  jours.forEach(jour => {
+  daysByLang[lang].forEach(jour => {
     const label = document.createElement("div");
     label.className = "calendar-label";
     label.textContent = jour;
     grid.appendChild(label);
   });
-  
+
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const offset = (firstDay === 0) ? 6 : firstDay - 1;
@@ -54,7 +68,6 @@ function renderCalendar(month, year) {
     const isAvailable = value && !isReserved;
     const isUnavailable = !value;
 
-    // Style par état
     if (isReserved) {
       cell.classList.add("reserved");
     } else if (isAvailable) {
@@ -73,7 +86,6 @@ function renderCalendar(month, year) {
 
     cell.appendChild(dayLabel);
     if (isAvailable) cell.appendChild(priceLabel);
-
     grid.appendChild(cell);
   }
 }
