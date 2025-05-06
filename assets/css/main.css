@@ -3849,7 +3849,7 @@ input, select, textarea {
   grid-template-columns: repeat(7, min-content); /* 7 colonnes auto-ajustées */
   gap: 0.1rem; /* Petit espacement entre les cases */
   padding: 0.5rem; /* Marge interne */
-  background: rgba(255, 255, 255, 0.05); /* Fond doux */
+  background: rgba(0, 0, 0, 0.05); /* Fond doux */
   border-radius: 8px; /* Coins arrondis */
   border: 1px solid rgba(255, 255, 255, 0.15); /* Liseré léger */
   box-shadow: 0 0 12px rgba(255, 255, 255, 0.08); /* Lueur */
