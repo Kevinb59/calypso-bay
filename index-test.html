@@ -151,79 +151,103 @@
 									</ul>
 								</div>
 								<div class="inner columns divided">
-									<div class="span-5">
-									  <!-- Toggle des formulaires -->
-									  <div id="form-toggle" class="toggle-container">
-									    <button id="btn-contact" class="toggle-button active">Contact</button>
-									    <button id="btn-reservation" class="toggle-button">Réservation</button>
-									  </div>
-									
-									  <!-- Formulaire de contact -->
-									  <div id="form-contact">
-									    <form method="post" action="#">
-									      <div class="fields">
-									        <div class="field half">
-									          <label for="name">Nom</label>
-									          <input type="text" name="name" id="name" />
-									        </div>
-									        <div class="field half">
-									          <label for="email">Email</label>
-									          <input type="email" name="email" id="email" />
-									        </div>
-									        <div class="field">
-									          <label for="message">Message</label>
-									          <textarea name="message" id="message" rows="4"></textarea>
-									        </div>
-									      </div>
-									      <ul class="actions">
-									        <li><input type="submit" value="Envoyer" class="button primary" /></li>
-									      </ul>
-									    </form>
-									  </div>
-									
-									  <!-- Formulaire de réservation -->
-									  <div id="form-reservation" style="display: none;">
-									    <form method="post" action="#">
-									      <div class="fields">
-									        <div class="field half">
-									          <label for="r-name">Nom</label>
-									          <input type="text" name="r-name" id="r-name" />
-									        </div>
-									        <div class="field half">
-									          <label for="r-email">Email</label>
-									          <input type="email" name="r-email" id="r-email" />
-									        </div>
-									        <div class="field half">
-									          <label for="r-phone">Téléphone</label>
-									          <input type="text" name="r-phone" id="r-phone" />
-									        </div>
-									        <div class="field half">
-									          <label for="r-date-arr">Date d’arrivée</label>
-									          <input type="date" name="r-date-arr" id="r-date-arr" />
-									        </div>
-									        <div class="field half">
-									          <label for="r-date-dep">Date de départ</label>
-									          <input type="date" name="r-date-dep" id="r-date-dep" />
-									        </div>
-									        <div class="field half">
-									          <label for="r-adultes">Nombre d’adultes</label>
-									          <input type="number" name="r-adultes" id="r-adultes" min="1" max="6" />
-									        </div>
-									        <div class="field half">
-									          <label for="r-enfants">Nombre d’enfants</label>
-									          <input type="number" name="r-enfants" id="r-enfants" min="0" max="6" />
-									        </div>
-									        <div class="field">
-									          <label for="r-message">Message (optionnel)</label>
-									          <textarea name="r-message" id="r-message" rows="4"></textarea>
-									        </div>
-									      </div>
-									      <ul class="actions">
-									        <li><input type="submit" value="Réserver" class="button primary" /></li>
-									      </ul>
-									    </form>
-									  </div>
-									</div>
+								<div class="span-3-25">
+								
+								  <!-- Toggle Switch -->
+								  <div id="form-toggle" class="toggle-container">
+								    <button id="btn-contact" class="toggle-button active">Contact</button>
+								    <button id="btn-reservation" class="toggle-button">Réservation</button>
+								  </div>
+								
+								  <!-- Formulaire Contact -->
+								  <div id="form-contact">
+								    <form method="post" action="#">
+								      <div class="fields">
+								        <div class="field third">
+								          <label for="name">Nom</label>
+								          <input type="text" name="name" id="name" />
+								        </div>
+								        <div class="field third">
+								          <label for="email">Email</label>
+								          <input type="email" name="email" id="email" />
+								        </div>
+								        <div class="field third">
+								          <label for="tel">Téléphone</label>
+								          <input type="tel" name="tel" id="tel" />
+								        </div>
+								        <div class="field">
+								          <label for="message">Message</label>
+								          <textarea name="message" id="message" rows="4"></textarea>
+								        </div>
+								      </div>
+								      <ul class="actions">
+								        <li><input type="submit" value="Envoyer" class="button primary" /></li>
+								      </ul>
+								    </form>
+								  </div>
+								
+								  <!-- Formulaire Réservation -->
+								  <div id="form-reservation" style="display: none;">
+								    <form method="post" action="#">
+								      <div class="fields">
+								        <div class="field third">
+								          <label for="r-name">Nom</label>
+								          <input type="text" name="r-name" id="r-name" />
+								        </div>
+								        <div class="field third">
+								          <label for="r-email">Email</label>
+								          <input type="email" name="r-email" id="r-email" />
+								        </div>
+								        <div class="field third">
+								          <label for="r-phone">Téléphone</label>
+								          <input type="tel" name="r-phone" id="r-phone" />
+								        </div>
+								
+								        <div class="field half">
+								          <label for="r-date-arr">Date d’arrivée</label>
+								          <input type="date" name="r-date-arr" id="r-date-arr" />
+								        </div>
+								        <div class="field half">
+								          <label for="r-date-dep">Date de départ</label>
+								          <input type="date" name="r-date-dep" id="r-date-dep" />
+								        </div>
+								
+								        <div class="field half">
+								          <label for="r-adultes">Nombre d’adultes</label>
+								          <select name="r-adultes" id="r-adultes" required>
+								            <option value="" disabled selected hidden>Choisir</option>
+								            <option value="1">1 adulte</option>
+								            <option value="2">2 adultes</option>
+								            <option value="3">3 adultes</option>
+								            <option value="4">4 adultes</option>
+								            <option value="5">5 adultes</option>
+								            <option value="6">6 adultes</option>
+								          </select>
+								        </div>
+								        <div class="field half">
+								          <label for="r-enfants">Nombre d’enfants</label>
+								          <select name="r-enfants" id="r-enfants">
+								            <option value="0" selected>0 enfant</option>
+								            <option value="1">1 enfant</option>
+								            <option value="2">2 enfants</option>
+								            <option value="3">3 enfants</option>
+								            <option value="4">4 enfants</option>
+								          </select>
+								        </div>
+								
+								        <div class="field">
+								          <label for="r-message">Message (optionnel)</label>
+								          <textarea name="r-message" id="r-message" rows="4"></textarea>
+								        </div>
+								      </div>
+								      <ul class="actions">
+								        <li><input type="submit" value="Réserver" class="button primary" /></li>
+								      </ul>
+								    </form>
+								  </div>
+								
+								</div>
+
 
 									<div class="span-1-5">
 										<p>Consultez les avis laissés par nos précédents voyageurs sur les plateformes :</p>
