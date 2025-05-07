@@ -3978,96 +3978,73 @@ input, select, textarea {
   color: #00ffaa;
 }
 
-/* --- Toggle Switch Formulaire --- */
-.toggle-container {
-  display: flex;
-  border: 2px solid rgba(255, 255, 255, 0.25);
-  border-radius: 50px;
-  overflow: hidden;
-  margin: 0 0 2em 0;
-  max-width: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  justify-content: center;
-}
+/* === Toggle Formulaire - CSS pur (Contact / Réservation) === */
 
-.toggle-button {
-  flex: 1;
-  padding: 0.75em 1em;
-  font-weight: bold;
-  font-size: 0.9em;
-  color: rgba(255, 255, 255, 0.75);
-  background: transparent;
-  border: none;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  cursor: pointer;
-  transition: background 0.3s, color 0.3s;
-}
-
-.toggle-button.active {
-  background: #fff;
-  color: #2e2b37;
-}
-
-/* --- PURE CSS TOGGLE BUTTON --- */
+/* Wrapper */
 .pure-toggle-wrapper {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   position: relative;
 }
 
+/* Boîte externe du toggle */
 .toggle-switch {
   display: inline-flex;
   position: relative;
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 2rem;
   overflow: hidden;
   font-weight: bold;
-  font-size: 0.95rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  backdrop-filter: blur(3px);
 }
 
+/* Options gauche/droite */
 .toggle-option {
   flex: 1;
-  padding: 0.75rem 1.5rem;
+  padding: 0.5rem 1rem;
   color: rgba(255, 255, 255, 0.75);
   cursor: pointer;
   z-index: 2;
   text-align: center;
+  transition: color 0.3s ease;
 }
 
+/* Curseur glissant (pastille) */
 .toggle-slider {
   position: absolute;
   top: 0;
   bottom: 0;
   width: 50%;
-  background: white;
+  background: #ffffff;
   border-radius: 2rem;
   transition: left 0.3s ease;
   z-index: 1;
   left: 0;
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.1);
 }
 
-/* Cacher les inputs */
-.pure-toggle-wrapper input[type="radio"] {
+/* Cacher les boutons radio */
+input[type="radio"][name="form-toggle"] {
   display: none;
 }
 
-/* Slide à droite si réservation cochée */
-#toggle-reservation:checked ~ .toggle-switch .toggle-slider {
+/* Déplacement de la pastille si "Réservation" sélectionné */
+#toggle-reservation:checked ~ .pure-toggle-wrapper .toggle-slider {
   left: 50%;
 }
 
-/* Textes actifs (optionnel) */
-#toggle-contact:checked ~ .toggle-switch label[for="toggle-contact"],
-#toggle-reservation:checked ~ .toggle-switch label[for="toggle-reservation"] {
+/* Changement de couleur pour l’option sélectionnée */
+#toggle-contact:checked ~ .pure-toggle-wrapper label[for="toggle-contact"],
+#toggle-reservation:checked ~ .pure-toggle-wrapper label[for="toggle-reservation"] {
   color: #2e2b37;
   z-index: 3;
 }
 
-/* Gestion des blocs de formulaire */
+/* Affichage conditionnel des formulaires */
 #toggle-contact:checked ~ #form-contact {
   display: block;
 }
