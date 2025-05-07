@@ -4054,3 +4054,31 @@ input, select, textarea {
 #toggle-reservation:checked ~ #form-reservation {
   display: block;
 }
+
+/* Toggle formulaire */
+.toggle-container {
+  display: flex;
+  border: 2px solid #ccc;
+  border-radius: 50px;
+  overflow: hidden;
+  margin-bottom: 2em;
+  max-width: 100%;
+  background: #f0f0f0;
+}
+
+.toggle-button {
+  flex: 1;
+  padding: 0.75em 1em;
+  font-weight: bold;
+  font-size: 1em;
+  color: #333;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+
+.toggle-button.active {
+  background: #333;
+  color: white;
+}
