@@ -4009,3 +4009,72 @@ input, select, textarea {
   color: #2e2b37;
 }
 
+/* --- PURE CSS TOGGLE BUTTON --- */
+.pure-toggle-wrapper {
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.toggle-switch {
+  display: inline-flex;
+  position: relative;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-radius: 2rem;
+  overflow: hidden;
+  font-weight: bold;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.toggle-option {
+  flex: 1;
+  padding: 0.75rem 1.5rem;
+  color: rgba(255, 255, 255, 0.75);
+  cursor: pointer;
+  z-index: 2;
+  text-align: center;
+}
+
+.toggle-slider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background: white;
+  border-radius: 2rem;
+  transition: left 0.3s ease;
+  z-index: 1;
+  left: 0;
+}
+
+/* Cacher les inputs */
+.pure-toggle-wrapper input[type="radio"] {
+  display: none;
+}
+
+/* Slide à droite si réservation cochée */
+#toggle-reservation:checked ~ .toggle-switch .toggle-slider {
+  left: 50%;
+}
+
+/* Textes actifs (optionnel) */
+#toggle-contact:checked ~ .toggle-switch label[for="toggle-contact"],
+#toggle-reservation:checked ~ .toggle-switch label[for="toggle-reservation"] {
+  color: #2e2b37;
+  z-index: 3;
+}
+
+/* Gestion des blocs de formulaire */
+#toggle-contact:checked ~ #form-contact {
+  display: block;
+}
+#toggle-reservation:checked ~ #form-reservation {
+  display: block;
+}
+#form-contact,
+#form-reservation {
+  display: none;
+}
