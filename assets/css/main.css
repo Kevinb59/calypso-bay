@@ -3998,7 +3998,7 @@ input, select, textarea {
   border-radius: 2rem;
   overflow: hidden;
   font-weight: bold;
-  font-size: 0.8rem;
+  font-size: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   backdrop-filter: blur(3px);
