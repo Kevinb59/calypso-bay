@@ -3973,30 +3973,34 @@ input, select, textarea {
   color: #00ffaa;
 }
 
-/* Toggle formulaire */
+/* --- Toggle Switch Formulaire --- */
 .toggle-container {
   display: flex;
-  border: 2px solid #ccc;
+  border: 2px solid rgba(255, 255, 255, 0.25);
   border-radius: 50px;
   overflow: hidden;
-  margin-bottom: 2em;
+  margin: 0 0 2em 0;
   max-width: 100%;
-  background: #f0f0f0;
+  background: rgba(255, 255, 255, 0.1);
+  justify-content: center;
 }
 
 .toggle-button {
   flex: 1;
   padding: 0.75em 1em;
   font-weight: bold;
-  font-size: 1em;
-  color: #333;
+  font-size: 0.9em;
+  color: rgba(255, 255, 255, 0.75);
   background: transparent;
   border: none;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   cursor: pointer;
   transition: background 0.3s, color 0.3s;
 }
 
 .toggle-button.active {
-  background: #333;
-  color: white;
+  background: #fff;
+  color: #2e2b37;
 }
+
