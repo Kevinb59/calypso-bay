@@ -26,10 +26,18 @@
 								<div class="span-6">
 								
 								  <!-- Toggle Switch -->
-								  <div id="form-toggle" class="toggle-container">
-								    <button id="btn-contact" class="toggle-button active">Contact</button>
-								    <button id="btn-reservation" class="toggle-button">Réservation</button>
-								  </div>
+
+      <input type="radio" id="toggle-contact" name="form-toggle" checked>
+      <input type="radio" id="toggle-reservation" name="form-toggle">
+
+      <!-- Toggle switch -->
+      <div class="pure-toggle-wrapper">
+        <div class="toggle-switch">
+          <label for="toggle-contact" class="toggle-option">Contact</label>
+          <label for="toggle-reservation" class="toggle-option">Réservation</label>
+          <div class="toggle-slider"></div>
+        </div>
+      </div>
 								
 								  <!-- Formulaire Contact -->
 								  <div id="form-contact">
