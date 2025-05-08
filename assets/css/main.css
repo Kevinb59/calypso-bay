@@ -3979,15 +3979,14 @@ input, select, textarea {
 }
 
 /* === Toggle Formulaire - CSS pur (Contact / Réservation) === */
-.pure-toggle-wrapper {
-  text-align: center;
-  margin-bottom: 0.5rem;
-  position: relative;
+.form-wrapper input[type="radio"] {
+  display: none;
 }
 
-/* Structure interne du toggle */
-.pure-toggle-wrapper input[type="radio"] {
-  display: none;
+.pure-toggle-wrapper {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  position: relative;
 }
 
 .toggle-switch {
@@ -3998,14 +3997,14 @@ input, select, textarea {
   border-radius: 2rem;
   overflow: hidden;
   font-weight: bold;
-  font-size: 0.5rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   backdrop-filter: blur(3px);
   width: fit-content;
 }
 
-/* Labels */
+/* Boutons gauche / droite */
 .toggle-option {
   flex: 1;
   padding: 0.5rem 1rem;
@@ -4017,68 +4016,43 @@ input, select, textarea {
   width: 7.5rem;
 }
 
-/* Curseur blanc */
+/* Curseur glissant (le rond blanc) */
 .toggle-slider {
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   width: 50%;
-  background: white;
+  background: #ffffff;
   border-radius: 2rem;
   transition: left 0.3s ease;
   z-index: 1;
   box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.1);
 }
 
-/* Position dynamique */
-.pure-toggle-wrapper input#toggle-reservation:checked ~ .toggle-switch .toggle-slider {
+/* Position du slider quand "réservation" est activé */
+.form-wrapper input#toggle-reservation:checked ~ .pure-toggle-wrapper .toggle-slider {
   left: 50%;
 }
 
-/* Texte actif */
-.pure-toggle-wrapper input#toggle-contact:checked ~ .toggle-switch label[for="toggle-contact"],
-.pure-toggle-wrapper input#toggle-reservation:checked ~ .toggle-switch label[for="toggle-reservation"] {
+/* Texte actif (Contact ou Réservation) */
+.form-wrapper input#toggle-contact:checked ~ .pure-toggle-wrapper label[for="toggle-contact"],
+.form-wrapper input#toggle-reservation:checked ~ .pure-toggle-wrapper label[for="toggle-reservation"] {
   color: #2e2b37;
   z-index: 3;
 }
 
-/* Affichage des formulaires */
-#form-contact,
-#form-reservation {
+/* Masquer les deux formulaires par défaut */
+.form-wrapper #form-contact,
+.form-wrapper #form-reservation {
   display: none;
 }
-#toggle-contact:checked ~ #form-contact {
+
+/* Afficher selon le toggle sélectionné */
+.form-wrapper input#toggle-contact:checked ~ #form-contact {
   display: block;
 }
-#toggle-reservation:checked ~ #form-reservation {
+
+.form-wrapper input#toggle-reservation:checked ~ #form-reservation {
   display: block;
-}
-
-/* Toggle formulaire */
-.toggle-container {
-  display: flex;
-  border: 2px solid #ccc;
-  border-radius: 50px;
-  overflow: hidden;
-  margin-bottom: 2em;
-  max-width: 100%;
-  background: #f0f0f0;
-}
-
-.toggle-button {
-  flex: 1;
-  padding: 0.75em 1em;
-  font-weight: bold;
-  font-size: 1em;
-  color: #333;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s, color 0.3s;
-}
-
-.toggle-button.active {
-  background: #333;
-  color: white;
 }
