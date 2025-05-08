@@ -3991,6 +3991,7 @@ input, select, textarea {
 
 .toggle-switch {
   display: inline-flex;
+  align-items: center;
   position: relative;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.25);
@@ -4002,18 +4003,23 @@ input, select, textarea {
   letter-spacing: 0.05em;
   backdrop-filter: blur(3px);
   width: fit-content;
+  height: 2rem;
 }
 
-/* Boutons gauche / droite */
 .toggle-option {
   flex: 1;
-  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  padding: 0 1rem;
+  width: 7rem;
   color: rgba(255, 255, 255, 0.75);
   cursor: pointer;
   z-index: 2;
   text-align: center;
   transition: color 0.3s ease;
-  width: 7.5rem;
+  font-size: 0.75rem;
 }
 
 /* Curseur glissant (le rond blanc) */
