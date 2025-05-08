@@ -3992,6 +3992,7 @@ input, select, textarea {
 .toggle-switch {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   position: relative;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.25);
@@ -4012,14 +4013,16 @@ input, select, textarea {
   align-items: center;
   justify-content: center;
   height: 2rem;
-  padding: 0 1rem;
   width: 7rem;
+  padding: 0;
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1;
   color: rgba(255, 255, 255, 0.75);
   cursor: pointer;
   z-index: 2;
   text-align: center;
   transition: color 0.3s ease;
-  font-size: 0.75rem;
 }
 
 /* Curseur glissant (le rond blanc) */
