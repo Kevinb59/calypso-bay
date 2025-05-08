@@ -228,76 +228,159 @@
 								  </div>
 							</section>
 						
-						<!-- CONTACT -->
-							<section class="panel color4-alt">
-								<div class="intro color4"><h2 class="major">📧 Contact Us</h2>
-									<p>For any questions or inquiries, feel free to contact us. You can also chat with Nestor, a smart assistant powered by ChatGPT, available anytime to inform you about the villa, its amenities or nearby activities.</p>
-									<ul class="actions">
-									  <li>
-									    <a href="https://chatgpt.com/g/g-681372a9ad1081918c780920098bf210-concierge-calypso-bay" target="_blank" rel="noopener" class="button primary color2 icon solid fa-comments">Contact Nestor</a>
-									  </li>
-									</ul>
-								</div>
-								<div class="inner columns divided">
-									<div class="span-3-25">
-										<form method="post" action="#">
-											<div class="fields">
-												<div class="field half">
-													<label for="name">Name</label>
-													<input type="text" name="name" id="name" />
-												</div>
-												<div class="field half">
-													<label for="email">Email</label>
-													<input type="email" name="email" id="email" />
-												</div>
-												<div class="field">
-													<label for="message">Message</label>
-													<textarea name="message" id="message" rows="4"></textarea>
-												</div>
-											</div>
-											<ul class="actions">
-												<li><input type="submit" value="Send" class="button primary" /></li>
-											</ul>
-										</form>
-									</div>
-									<div class="span-1-5">
-										<p>Read the reviews left by our previous guests on the platforms:</p>
-										<ul class="contact-icons color1">
-										  <li>
-										    <img src="images/logos/AIRBNB.png" alt="Logo Airbnb" style="width: 48px; height: 48px; border-radius: 50%; background: white; padding: 6px; box-sizing: border-box;">
-										    <div style="display: inline-block; vertical-align: middle; margin-left: 0.75em;">
-										      <a href="https://www.airbnb.fr/rooms/718692761956767082?viralityEntryPoint=1&s=76" target="_blank" rel="noopener" style="text-transform: none; font-family: inherit;">Airbnb</a>
-										      <br />
-										      <span class="stars" style="font-size: 0.8em;">
-										        <i class="fas fa-star color1"></i>
-										        <i class="fas fa-star color1"></i>
-										        <i class="fas fa-star color1"></i>
-										        <i class="fas fa-star color1"></i>
-										        <i class="fas fa-star-half-alt color1"></i>
-										      </span>
-										      <span style="font-size: 0.8em;">(4,92/5) – 6 reviews</span>
-										    </div>
-										  </li>
-										
-										  <li style="margin-top: 1.5em;">
-										    <img src="images/logos/BOOKING.png" alt="Logo Booking" style="width: 48px; height: 48px; border-radius: 50%; background: white; padding: 6px; box-sizing: border-box;">
-										    <div style="display: inline-block; vertical-align: middle; margin-left: 0.75em;">
-										      <a href="https://www.booking.com/hotel/gp/calypso-bay.fr.html?aid=318615&label=New_French_FR_FR_21427169905-YP8jtirKV*kzSzTpDnHYDwSM640938627539%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg-7OU47I%401746097399-Share-51Qxi5%401746101264&sid=e3dc038a67f001d547f7fd0c6da767fb&checkin=2025-05-01&checkout=2025-05-02&dest_id=-1202523&dest_type=city&dist=0&group_adults=2&group_children=0&hapos=1&hpos=1&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&soh=1&sr_order=popularity&srepoch=1746101403&srpvid=b15f55886e3d062f&type=total&ucfs=1&activeTab=main#hotelTmpl" target="_blank" rel="noopener" style="text-transform: none; font-family: inherit;">Booking</a>
-										      <br />
-										      <span class="stars" style="font-size: 0.8em;">
-										        <i class="fas fa-star color1"></i>
-										        <i class="fas fa-star color1"></i>
-										        <i class="fas fa-star color1"></i>
-										        <i class="fas fa-star color1"></i>
-										        <i class="fas fa-star-half-alt color1"></i>
-										      </span>
-										      <span style="font-size: 0.8em;">(9,6/10) – 37 reviews</span>
-										    </div>
-										  </li>
-										</ul>
-									</div>
-								</div>
-							</section>
+<!-- CONTACT -->
+<section class="panel color4-alt">
+  <div class="intro color4">
+    <h2 class="major">📧 Get in Touch</h2>
+    <p>
+      For any questions or inquiries, feel free to write to us via the contact form or send a booking request directly using the reservation form. You can also chat with Nestor, an intelligent assistant powered by ChatGPT, available at any time to inform you about the villa, its amenities, or nearby activities.
+    </p>
+    <ul class="actions">
+      <li>
+        <a href="https://chatgpt.com/g/g-681372a9ad1081918c780920098bf210-concierge-calypso-bay" target="_blank" rel="noopener" class="button primary color2 icon solid fa-comments">Chat with Nestor</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="inner columns divided">
+    <div class="span-6">
+      <div class="form-wrapper">
+        <input type="radio" id="toggle-contact" name="form-toggle" checked />
+        <input type="radio" id="toggle-reservation" name="form-toggle" />
+
+        <div class="pure-toggle-wrapper">
+          <div class="toggle-switch">
+            <label for="toggle-contact" class="toggle-option">Contact</label>
+            <label for="toggle-reservation" class="toggle-option">Reservation</label>
+            <div class="toggle-slider"></div>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div id="form-contact">
+          <form method="post" action="#">
+            <div class="fields">
+              <div class="field third">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" />
+              </div>
+              <div class="field third">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" />
+              </div>
+              <div class="field third">
+                <label for="tel">Phone</label>
+                <input type="tel" name="tel" id="tel" />
+              </div>
+              <div class="field">
+                <label for="message">Message</label>
+                <textarea name="message" id="message" rows="4"></textarea>
+              </div>
+            </div>
+            <ul class="actions">
+              <li><input type="submit" value="Send" class="button primary" /></li>
+            </ul>
+          </form>
+        </div>
+
+        <!-- Reservation Form -->
+        <div id="form-reservation">
+          <form method="post" action="#">
+            <div class="fields">
+              <div class="field third">
+                <label for="r-name">Name</label>
+                <input type="text" name="r-name" id="r-name" />
+              </div>
+              <div class="field third">
+                <label for="r-email">Email</label>
+                <input type="email" name="r-email" id="r-email" />
+              </div>
+              <div class="field third">
+                <label for="r-phone">Phone</label>
+                <input type="tel" name="r-phone" id="r-phone" />
+              </div>
+
+              <div class="field quarter">
+                <label for="r-date-arr">Arrival date</label>
+                <input type="date" name="r-date-arr" id="r-date-arr" />
+              </div>
+              <div class="field quarter">
+                <label for="r-date-dep">Departure date</label>
+                <input type="date" name="r-date-dep" id="r-date-dep" />
+              </div>
+              <div class="field quarter">
+                <label for="r-adultes">Number of adults</label>
+                <select name="r-adultes" id="r-adultes" required>
+                  <option value="" disabled selected hidden>Select</option>
+                  <option value="1">1 adult</option>
+                  <option value="2">2 adults</option>
+                  <option value="3">3 adults</option>
+                  <option value="4">4 adults</option>
+                  <option value="5">5 adults</option>
+                  <option value="6">6 adults</option>
+                </select>
+              </div>
+              <div class="field quarter">
+                <label for="r-enfants">Number of children</label>
+                <select name="r-enfants" id="r-enfants">
+                  <option value="0" selected>0 child</option>
+                  <option value="1">1 child</option>
+                  <option value="2">2 children</option>
+                  <option value="3">3 children</option>
+                  <option value="4">4 children</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="r-message">Message (optional)</label>
+                <textarea name="r-message" id="r-message" rows="4"></textarea>
+              </div>
+            </div>
+            <ul class="actions">
+              <li><input type="submit" value="Send booking request" class="button primary" /></li>
+            </ul>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="span-1-5">
+      <p>See what previous guests had to say on these platforms:</p>
+      <ul class="contact-icons color1">
+        <li>
+          <img src="images/logos/AIRBNB.png" alt="Airbnb logo" style="width: 48px; height: 48px; border-radius: 50%; background: white; padding: 6px;" />
+          <div style="display: inline-block; vertical-align: middle; margin-left: 0.75em;">
+            <a href="https://www.airbnb.fr/rooms/718692761956767082" target="_blank" rel="noopener">Airbnb</a><br />
+            <span class="stars" style="font-size: 0.8em;">
+              <i class="fas fa-star color1"></i>
+              <i class="fas fa-star color1"></i>
+              <i class="fas fa-star color1"></i>
+              <i class="fas fa-star color1"></i>
+              <i class="fas fa-star-half-alt color1"></i>
+            </span>
+            <span style="font-size: 0.8em;">(4.92/5) – 6 reviews</span>
+          </div>
+        </li>
+
+        <li style="margin-top: 1.5em;">
+          <img src="images/logos/BOOKING.png" alt="Booking logo" style="width: 48px; height: 48px; border-radius: 50%; background: white; padding: 6px;" />
+          <div style="display: inline-block; vertical-align: middle; margin-left: 0.75em;">
+            <a href="https://www.booking.com/hotel/gp/calypso-bay.fr.html" target="_blank" rel="noopener">Booking</a><br />
+            <span class="stars" style="font-size: 0.8em;">
+              <i class="fas fa-star color1"></i>
+              <i class="fas fa-star color1"></i>
+              <i class="fas fa-star color1"></i>
+              <i class="fas fa-star color1"></i>
+              <i class="fas fa-star-half-alt color1"></i>
+            </span>
+            <span style="font-size: 0.8em;">(9.6/10) – 37 reviews</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 						
 						<!-- COPYRIGHT -->
 							<div class="copyright">&copy; Calypso Bay | Design: <a href="https://html5up.net">HTML5 UP</a>.</div>
