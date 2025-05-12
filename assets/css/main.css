@@ -3614,6 +3614,7 @@ input, select, textarea {
 
 		#wrapper > .copyright {
 			position: absolute;
+			align-items: baseline;
 			bottom: -3rem;
 			right: 0;
 			font-size: 0.8rem;
