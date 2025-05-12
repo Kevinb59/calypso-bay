@@ -3681,7 +3681,9 @@ input, select, textarea {
 			}
 
 			#wrapper > .copyright {
-				display: block;
+				display: flex;               /* 🔁 important */
+			        justify-content: center;     /* centrer horizontalement */
+			        align-items: center;         /* centrer verticalement */
 				width: 100%;
 				text-align: center;
 			}
