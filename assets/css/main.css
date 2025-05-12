@@ -8,11 +8,11 @@
 }
 @font-face {
     font-family: 'Moriarty';
-    src: url('../fonts/thesignature-webfont.woff2') format('woff2'),
-         url('../fonts/thesignature-webfont.woff') format('woff');
+    src: url('../fonts/thesignature.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
+
 
 /*
 	Ethereal by HTML5 UP
@@ -4081,5 +4081,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 a.moriarty {
     font-family: 'Moriarty', cursive;
-    font-size: 1.2em; /* ajuste la taille si nécessaire */
+    font-size: 1.2em;
 }
+
