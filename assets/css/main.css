@@ -8,7 +8,9 @@
 }
 @font-face {
     font-family: 'Moriarty';
-    src: url('../fonts/thesignature.ttf') format('truetype');
+    src: url('../fonts/thesignature.woff2') format('woff2'),
+         url('../fonts/thesignature.woff') format('woff'),
+         url('../fonts/Thesignature.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
