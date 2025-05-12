@@ -3616,6 +3616,7 @@ input, select, textarea {
 			position: absolute;
 			display: flex;
 			align-items: baseline;
+			gap: 0.5rem;
 			bottom: -3rem;
 			right: 0;
 			font-size: 0.8rem;
@@ -4086,5 +4087,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .moriarty {
     font-family: 'Moriarty', cursive;
     font-size: 3em;
+    line-height: 1;
 }
 
