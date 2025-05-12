@@ -4078,3 +4078,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   opacity: 0.75;
   cursor: pointer;
 }
+
+a.moriarty {
+    font-family: 'Moriarty', cursive;
+    font-size: 1.2em; /* ajuste la taille si nécessaire */
+}
