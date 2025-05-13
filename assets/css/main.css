@@ -4092,3 +4092,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin-left: 0.25em;
 }
 
+.planning-blur-style {
+  backdrop-filter: blur(5px);
+  background-image: linear-gradient(135deg,
+    rgba(114, 97, 147, 0.5) 25%,
+    rgba(227, 123, 124, 0.5) 50%,
+    rgba(255, 228, 180, 0.5)
+  );
+  background-size: 450px 650px, auto;
+  background-color: rgba(108, 94, 134, 0.1);
+  border: 1px solid var(--blur-border);
+  box-shadow: 0 0 12px var(--blur-shadow);
+  padding: 2rem;
+}
