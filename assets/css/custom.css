@@ -1,0 +1,8 @@
+:root {
+  --color-primary: #E37B7C;      /* rose principal */
+  --color-secondary: #726193;    /* violet */
+  --color-accent: #FFE4B4;       /* jaune clair accent */
+  --color-blur-bg: rgba(255, 255, 255, 0.1);
+  --blur-border: rgba(255, 255, 255, 0.15);
+  --blur-shadow: rgba(255, 255, 255, 0.08);
+}
