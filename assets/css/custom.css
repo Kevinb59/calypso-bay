@@ -64,45 +64,34 @@
 
 .field {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 0.5em;
-  flex-wrap: nowrap;
+  margin-bottom: 1.5em;
 }
 
-/* On affiche le label et le message sur une même ligne */
-.field label {
-  min-width: 130px; /* largeur fixe pour aligner proprement */
-  flex-shrink: 0;
-}
-
-.error-message {
+/* Style des messages d’erreur */
+.field .error-message {
   color: #e74c3c;
   font-size: 0.75em;
   font-style: italic;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translateY(0%);
   white-space: nowrap;
-  animation: fadeIn 0.3s ease forwards;
   opacity: 0;
+  animation: fadeIn 0.3s ease forwards;
 }
 
+/* Animation d’apparition */
 @keyframes fadeIn {
   to {
     opacity: 1;
   }
 }
 
-/* Le champ se place sur une ligne complète en dessous */
-.field input,
-.field select,
-.field textarea {
-  flex: 1 1 100%;
-  margin-top: 0.25em;
-}
-
-/* Champ invalide */
+/* Bordures rouges sur champ invalide */
 .field.invalid input,
 .field.invalid select,
 .field.invalid textarea {
   border-color: #e74c3c !important;
 }
+
