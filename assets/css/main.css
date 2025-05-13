@@ -4093,6 +4093,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .planning-blur-style {
+  position: relative;
+  z-index: 1;
   backdrop-filter: blur(5px);
   background-image: linear-gradient(135deg,
     rgba(114, 97, 147, 0.5) 25%,
@@ -4105,3 +4107,4 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   box-shadow: 0 0 12px var(--blur-shadow);
   padding: 2rem;
 }
+
