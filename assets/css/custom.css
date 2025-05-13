@@ -51,3 +51,13 @@
 .review-link:hover {
   transform: scale(1.03);
 }
+
+.flag-links a {
+  text-decoration: none;
+  outline: none;
+  border: none;
+}
+
+.flag-links a:focus {
+  outline: none;
+}
