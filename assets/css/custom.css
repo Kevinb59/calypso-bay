@@ -61,3 +61,23 @@
 .flag-links a:focus {
   outline: none;
 }
+
+.field {
+  position: relative;
+}
+
+.field.invalid input,
+.field.invalid select,
+.field.invalid textarea {
+  border-color: #e74c3c !important;
+}
+
+.field .error-message {
+  color: #e74c3c;
+  font-size: 0.75em;
+  position: absolute;
+  right: 0.5em;
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+}
