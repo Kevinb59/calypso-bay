@@ -7,6 +7,13 @@
   --blur-shadow: rgba(255, 255, 255, 0.08);
 }
 
+.review-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  margin-bottom: 1.5em;
+}
+
 .logo-circle {
   width: 48px;
   height: 48px;
@@ -15,18 +22,22 @@
   padding: 6px;
 }
 
-.review-item {
+.review-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-row {
   display: flex;
   align-items: center;
-  gap: 0.75em;
-  margin-bottom: 1.5em;
-}
-
-.review-item .stars {
+  gap: 0.5em;
   font-size: 0.8em;
 }
 
-.review-item .score {
-  font-size: 0.8em;
-  display: block;
+.review-row .stars {
+  white-space: nowrap;
+}
+
+.review-row .score {
+  white-space: nowrap;
 }
