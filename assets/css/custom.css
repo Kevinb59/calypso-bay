@@ -70,6 +70,7 @@
 .field .error-message {
   color: #e74c3c;
   font-size: 0.75em;
+  font-weight: bold;
   font-style: italic;
   position: absolute;
   right: 0;
