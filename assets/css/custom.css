@@ -64,6 +64,27 @@
 
 .field {
   position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5em;
+  flex-wrap: wrap;
+}
+
+.field label {
+  flex: 1 1 auto;
+  position: relative;
+  display: inline-block;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 0.75em;
+  white-space: nowrap;
+  margin-left: auto;
+  margin-top: 0.2em;
+  font-style: italic;
+  opacity: 0;
+  animation: fadeIn 0.3s ease forwards;
 }
 
 .field.invalid input,
@@ -72,12 +93,21 @@
   border-color: #e74c3c !important;
 }
 
-.field .error-message {
-  color: #e74c3c;
-  font-size: 0.75em;
-  position: absolute;
-  right: 0.5em;
-  top: 50%;
-  transform: translateY(-50%);
-  white-space: nowrap;
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }
+
+@media (max-width: 500px) {
+  .field {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .error-message {
+    margin-left: 0;
+    margin-top: 0.25em;
+  }
+}
+
