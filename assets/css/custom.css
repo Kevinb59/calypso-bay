@@ -41,3 +41,13 @@
 .review-row .score {
   white-space: nowrap;
 }
+
+.review-link {
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease;
+}
+
+.review-link:hover {
+  transform: scale(1.03);
+}
