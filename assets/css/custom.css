@@ -128,9 +128,31 @@
   }
 }
 
+/* === Google Maps : bloc carte personnalisé === */
 .map-container {
   width: 100%;
-  height: 400px;
+  height: 100%;
   border-radius: 6px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  overflow: hidden;
+  background-color: #ffffff; /* fond de secours si la carte ne charge pas */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  position: relative;
+  z-index: 1;
 }
+
+/* === Correction des filtres hérités (boutons invisibles) === */
+.map-container * {
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  color: initial !important;
+  background: initial !important;
+}
+
+/* === Ajustement sur mobile === */
+@media screen and (max-width: 768px) {
+  .map-container {
+    height: 300px;
+    border-radius: 8px;
+  }
+}
+
