@@ -97,7 +97,10 @@
 
 .planning-bg {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%; /* par défaut */
   z-index: 0;
   background-image: url("../../images/gallery/fulls/Autres/03.jpg");
   background-size: cover;
@@ -108,6 +111,6 @@
 
 @media (max-width: 768px) {
   .planning-bg {
-    height: calc(100% + 20vh); /* augmente la hauteur de fond sans déformer */
+    height: calc(100% + 20vh);
   }
 }
