@@ -132,15 +132,15 @@
 .map-container {
   width: 100%;
   height: 100%;
-  border-radius: 6px;
+  border-radius: 12px;
   overflow: hidden;
-  background-color: #ffffff; /* fond de secours si la carte ne charge pas */
+  background-color: #ffffff; /* fond de secours */
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   position: relative;
   z-index: 1;
 }
 
-/* === Correction des filtres hérités (boutons invisibles) === */
+/* === Correction des filtres hérités (empêche les bugs de style sur les contrôles) === */
 .map-container * {
   filter: none !important;
   mix-blend-mode: normal !important;
@@ -148,11 +148,40 @@
   background: initial !important;
 }
 
-/* === Ajustement sur mobile === */
+/* === Style des contrôles Google Maps === */
+.map-container .gmnoprint,
+.map-container .gm-style-mtc,
+.map-container .gm-control-active,
+.map-container .gm-fullscreen-control {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  border-radius: 12px !important;
+  padding: 4px !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+  font-size: 12px !important;
+}
+
+/* Réduction des marges internes */
+.map-container .gm-control-active > div,
+.map-container .gm-style-mtc button {
+  margin: 2px !important;
+  font-size: 12px !important;
+  padding: 4px 8px !important;
+}
+
+/* Réduction du bouton plein écran */
+.map-container .gm-fullscreen-control {
+  transform: scale(0.85);
+}
+
+/* Optionnel : curseur plus visible */
+.map-container .gmnoprint:hover {
+  cursor: pointer;
+}
+
+/* === Mobile responsive === */
 @media screen and (max-width: 768px) {
   .map-container {
     height: 300px;
     border-radius: 8px;
   }
 }
-
