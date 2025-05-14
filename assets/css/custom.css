@@ -99,7 +99,7 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-image: url("images/gallery/fulls/Autres/03.jpg");
+  background-image: url("../../images/gallery/fulls/Autres/03.jpg");
   background-size: cover;
   background-position: top left;
   background-repeat: no-repeat;
