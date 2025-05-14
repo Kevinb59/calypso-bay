@@ -94,3 +94,36 @@
 .field.invalid textarea {
   border-color: #e74c3c !important;
 }
+
+.planning-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.planning-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 600px; /* Hauteur fixe ! */
+  background-image: url("../../images/gallery/fulls/Autres/03.jpg");
+  background-size: cover;
+  background-position: top left;
+  background-repeat: no-repeat;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Pour que le contenu soit bien au-dessus */
+.planning-section > .intro,
+.planning-section > .inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* Sur desktop : laisse l’image suivre la hauteur */
+@media (min-width: 769px) {
+  .planning-bg {
+    height: 100%;
+  }
+}
