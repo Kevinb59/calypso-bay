@@ -105,3 +105,9 @@
   background-repeat: no-repeat;
   pointer-events: none;
 }
+
+@media (max-width: 768px) {
+  .planning-bg {
+    height: calc(100% + 20vh); /* augmente la hauteur de fond sans déformer */
+  }
+}
