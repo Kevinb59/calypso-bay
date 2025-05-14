@@ -3897,7 +3897,7 @@ input, select, textarea {
 
 /* ✅ Disponible */
 .available {
-  background-color: rgba(0, 255, 150, 0.12);
+  background-color: rgba(0, 255, 150, 0.30);
   color: white;
 }
 
