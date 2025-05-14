@@ -95,22 +95,36 @@
   border-color: #e74c3c !important;
 }
 
+.planning-section {
+  position: relative;
+  overflow: hidden;
+}
+
 .planning-bg {
-  position: fixed; /* ✅ plus relative à la section */
+  position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 120vh; /* hauteur fixe même si le contenu s’allonge */
+  right: 0;
+  height: 600px; /* Hauteur fixe ! */
   background-image: url("../../images/gallery/fulls/Autres/03.jpg");
   background-size: cover;
   background-position: top left;
   background-repeat: no-repeat;
+  z-index: 0;
   pointer-events: none;
-  z-index: -1; /* en dessous de tout */
 }
 
-@media (max-width: 768px) {
+/* Pour que le contenu soit bien au-dessus */
+.planning-section > .intro,
+.planning-section > .inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* Sur desktop : laisse l’image suivre la hauteur */
+@media (min-width: 769px) {
   .planning-bg {
-    height: calc(100% + 20vh);
+    height: 100%;
   }
 }
+
