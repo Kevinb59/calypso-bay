@@ -6,7 +6,7 @@ function initMap() {
     center: location,
     disableDefaultUI: false,
     mapTypeControl: true,
-    streetViewControl: true
+    streetViewControl: false
   });
 
   new google.maps.Marker({
