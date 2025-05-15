@@ -140,7 +140,7 @@
   z-index: 1;
 }
 
-/* === Fix des styles hérités (empêche les conflits) === */
+/* Fix styles hérités */
 .map-container * {
   filter: none !important;
   mix-blend-mode: normal !important;
@@ -148,41 +148,21 @@
   background: initial !important;
 }
 
-/* === Style des contrôles Google Maps === */
-.map-container .gmnoprint,
-.map-container .gm-style-mtc,
-.map-container .gm-control-active,
+/* Réduction bouton plein écran + centrage */
 .map-container .gm-fullscreen-control {
-  background-color: rgba(255, 255, 255, 0.85) !important;
-  border-radius: 12px !important;
-  padding: 6px !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
-  font-size: 13px !important;
-  text-align: center !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-/* Boutons Plan / Satellite */
-.map-container .gm-style-mtc button {
-  font-size: 13px !important;
-  padding: 6px 10px !important;
-  margin: 2px !important;
-  line-height: 1.2 !important;
-}
-
-/* Réduction du bouton plein écran */
-.map-container .gm-fullscreen-control {
+  background-color: rgba(255, 255, 255, 0.5) !important;
+  border-radius: 10px !important;
+  padding: 4px !important;
   transform: scale(0.85);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Curseur survol */
-.map-container .gmnoprint:hover {
-  cursor: pointer;
+/* Supprime les autres boutons */
+.map-container .gm-style-mtc {
+  display: none !important;
 }
 
-/* === Mobile responsive === */
+/* Responsive mobile */
 @media screen and (max-width: 768px) {
   .map-container {
     height: 300px;
