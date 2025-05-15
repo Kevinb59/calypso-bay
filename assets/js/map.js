@@ -15,7 +15,7 @@ function initMap() {
     zoom: 18,
     center: location,
     disableDefaultUI: false,
-    mapTypeControl: false,      // ⛔ Plan/Satellite supprimé
+    mapTypeControl: true,      // ⛔ Plan/Satellite supprimé
     streetViewControl: false
   });
 
