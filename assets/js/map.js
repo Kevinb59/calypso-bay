@@ -15,12 +15,8 @@ function initMap() {
     zoom: 18,
     center: location,
     disableDefaultUI: false,
-    mapTypeControl: true,
-    streetViewControl: false,
-    mapTypeControlOptions: {
-      style: google.maps.MapTypeControlStyle.DEFAULT,
-      position: google.maps.ControlPosition.TOP_LEFT
-    }
+    mapTypeControl: false,      // ⛔ Plan/Satellite supprimé
+    streetViewControl: false
   });
 
   map.mapTypes.set("styled_map", styledMap);
