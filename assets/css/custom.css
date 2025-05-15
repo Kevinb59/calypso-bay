@@ -134,13 +134,13 @@
   height: 100%;
   border-radius: 12px;
   overflow: hidden;
-  background-color: #ffffff; /* fond de secours */
+  background-color: #ffffff;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   position: relative;
   z-index: 1;
 }
 
-/* === Correction des filtres hérités (empêche les bugs de style sur les contrôles) === */
+/* === Fix des styles hérités (empêche les conflits) === */
 .map-container * {
   filter: none !important;
   mix-blend-mode: normal !important;
@@ -153,19 +153,23 @@
 .map-container .gm-style-mtc,
 .map-container .gm-control-active,
 .map-container .gm-fullscreen-control {
-  background-color: rgba(255, 255, 255, 0.8) !important;
+  background-color: rgba(255, 255, 255, 0.85) !important;
   border-radius: 12px !important;
-  padding: 4px !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
-  font-size: 12px !important;
+  padding: 6px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+  font-size: 13px !important;
+  text-align: center !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
-/* Réduction des marges internes */
-.map-container .gm-control-active > div,
+/* Boutons Plan / Satellite */
 .map-container .gm-style-mtc button {
+  font-size: 13px !important;
+  padding: 6px 10px !important;
   margin: 2px !important;
-  font-size: 12px !important;
-  padding: 4px 8px !important;
+  line-height: 1.2 !important;
 }
 
 /* Réduction du bouton plein écran */
@@ -173,7 +177,7 @@
   transform: scale(0.85);
 }
 
-/* Optionnel : curseur plus visible */
+/* Curseur survol */
 .map-container .gmnoprint:hover {
   cursor: pointer;
 }
