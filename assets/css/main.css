@@ -3285,7 +3285,11 @@ input, select, textarea {
 				background-size: 128px 128px, auto;
 				background-color: #323459;
 			}
-
+			.panel.color5-alt {
+				background-image: url("../../images/overlay.png"), linear-gradient(45deg, rgba(74, 141, 156, 0.175) 20%, rgba(168, 108, 77, 0.175) 50%, rgba(255, 228, 180, 0.175));
+				background-size: 128px 128px, auto;
+				background-color: #4a8d9c;
+			}
 	}
 
 /* Panel (Banner) */
