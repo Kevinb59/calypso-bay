@@ -12,7 +12,7 @@ function initMap() {
   );
 
   const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 18,
+    zoom: 14,
     center: location,
     disableDefaultUI: false,
     mapTypeControl: true,      // ⛔ Plan/Satellite supprimé
