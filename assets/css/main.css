@@ -4130,7 +4130,18 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   );
   background-size: 450px 650px, auto;
   background-color: rgba(108, 94, 134, 0.1);
-  border: 1px solid var(--blur-border);
+  border-right: 1px solid var(--blur-border);
+  border-top: none;
+  border-left: none;
+  border-bottom: none;
   box-shadow: 0 0 12px var(--blur-shadow);
   padding: 2rem;
+}
+
+/* 📱 Sur mobile : bordure uniquement en bas */
+@media (max-width: 768px) {
+  .planning-blur-style {
+    border-right: none;
+    border-bottom: 1px solid var(--blur-border); /* ✅ bordure en bas uniquement */
+  }
 }
