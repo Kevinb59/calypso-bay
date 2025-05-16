@@ -121,7 +121,7 @@
       "Réserve d'eau de réseau",
       "Réserve d'eau de pluie (WC)"
     ]
-    },
+  },
   "parking": {
     "icon": "🅿️",
     "label": "Parking",
@@ -130,12 +130,17 @@
       "Gratuit",
       "Jusqu'à 3 voitures"
     ]
-    },
+  },
   "accessibilite": {
     "icon": "♿",
     "label": "Accessibilité",
     "items": [
       "Logement de plain-pied"
     ]
+  },
+  "reglement": {
+    "icon": "📋",
+    "label": "Règlement intérieur",
+    "content": "<ul><li><strong>Arrivée :</strong> entre 15:00 et 20:00</li><li><strong>Départ :</strong> avant 10:00</li><li><strong>6 voyageurs maximum</strong></li><li>Pas d’animaux</li><li>Calme requis entre 23:00 et 07:00</li><li>Pas de fête ni de soirée</li><li>Photographie commerciale autorisée</li><li>Logement fumeur</li></ul><p><strong>Règles supplémentaires :</strong><br />Il est possible de fumer dans la villa mais ni dans les chambres, ni dans les salles de bains.<br />Possibilité de recevoir des amis, mais pas pour dormir (maximum de couchages : 6).</p>"
   }
 }
