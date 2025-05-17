@@ -70,20 +70,40 @@ document.addEventListener("DOMContentLoaded", () => {
   const selectAdultes = document.getElementById("r-adultes");
   const selectEnfants = document.getElementById("r-enfants");
 
+  // Détection de la langue à partir de l'URL
+  let lang = "fr";
+  const path = window.location.pathname;
+  if (path.includes("index-en")) lang = "en";
+  else if (path.includes("index-de")) lang = "de";
+
+  // Libellés traduits
+  const labels = {
+    fr: {
+      adulte: (n) => `${n} adulte${n > 1 ? "s" : ""}`,
+      enfant: (n) => `${n} enfant${n > 1 ? "s" : ""}`,
+    },
+    en: {
+      adulte: (n) => `${n} adult${n > 1 ? "s" : ""}`,
+      enfant: (n) => `${n} child${n > 1 ? "ren" : ""}`,
+    },
+    de: {
+      adulte: (n) => `${n} Erwachsene${n > 1 ? "n" : ""}`,
+      enfant: (n) => `${n} Kind${n > 1 ? "er" : ""}`,
+    },
+  };
+
   function updateEnfantOptions() {
     const nbAdultes = parseInt(selectAdultes.value) || 0;
     const maxEnfants = 6 - nbAdultes;
 
-    // Mémorise la valeur actuelle
     let current = parseInt(selectEnfants.value) || 0;
     if (current > maxEnfants) current = maxEnfants;
 
-    // Réinitialise les options
     selectEnfants.innerHTML = "";
     for (let i = 0; i <= maxEnfants; i++) {
       const option = document.createElement("option");
       option.value = i;
-      option.textContent = `${i} enfant${i > 1 ? "s" : ""}`;
+      option.textContent = labels[lang].enfant(i);
       if (i === current) option.selected = true;
       selectEnfants.appendChild(option);
     }
@@ -100,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let i = 1; i <= maxAdultes; i++) {
       const option = document.createElement("option");
       option.value = i;
-      option.textContent = `${i} adulte${i > 1 ? "s" : ""}`;
+      option.textContent = labels[lang].adulte(i);
       if (i === current) option.selected = true;
       selectAdultes.appendChild(option);
     }
@@ -109,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
   selectAdultes.addEventListener("change", updateEnfantOptions);
   selectEnfants.addEventListener("change", updateAdulteOptions);
 
-  // Initialisation à l'ouverture
+  // Initialisation
   updateEnfantOptions();
   updateAdulteOptions();
 });
