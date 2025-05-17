@@ -65,3 +65,51 @@ document.addEventListener("DOMContentLoaded", function () {
     container.appendChild(span);
   }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const selectAdultes = document.getElementById("r-adultes");
+  const selectEnfants = document.getElementById("r-enfants");
+
+  function updateEnfantOptions() {
+    const nbAdultes = parseInt(selectAdultes.value) || 0;
+    const maxEnfants = 6 - nbAdultes;
+
+    // Mémorise la valeur actuelle
+    let current = parseInt(selectEnfants.value) || 0;
+    if (current > maxEnfants) current = maxEnfants;
+
+    // Réinitialise les options
+    selectEnfants.innerHTML = "";
+    for (let i = 0; i <= maxEnfants; i++) {
+      const option = document.createElement("option");
+      option.value = i;
+      option.textContent = `${i} enfant${i > 1 ? "s" : ""}`;
+      if (i === current) option.selected = true;
+      selectEnfants.appendChild(option);
+    }
+  }
+
+  function updateAdulteOptions() {
+    const nbEnfants = parseInt(selectEnfants.value) || 0;
+    const maxAdultes = 6 - nbEnfants;
+
+    let current = parseInt(selectAdultes.value) || 0;
+    if (current > maxAdultes) current = maxAdultes;
+
+    selectAdultes.innerHTML = "";
+    for (let i = 1; i <= maxAdultes; i++) {
+      const option = document.createElement("option");
+      option.value = i;
+      option.textContent = `${i} adulte${i > 1 ? "s" : ""}`;
+      if (i === current) option.selected = true;
+      selectAdultes.appendChild(option);
+    }
+  }
+
+  selectAdultes.addEventListener("change", updateEnfantOptions);
+  selectEnfants.addEventListener("change", updateAdulteOptions);
+
+  // Initialisation à l'ouverture
+  updateEnfantOptions();
+  updateAdulteOptions();
+});
