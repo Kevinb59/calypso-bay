@@ -50,7 +50,7 @@ function updateTotalPrice() {
       </div>
     </div>
   `;
-
+}
 
 // 🧾 Résumé mini bannière
 function updateBannerSummary() {
