@@ -18,14 +18,38 @@ function updateTotalPrice() {
   const nights = Math.round((selectedEnd - selectedStart) / (1000 * 60 * 60 * 24));
   const adults = parseInt(document.getElementById("adults").value || "0");
   const children = parseInt(document.getElementById("children").value || "0");
-  const persons = adults + children;
-  const total = nights * 120;
 
-  const text = persons > 0
-    ? `Total : ${total} € (soit ${(total / persons).toFixed(2)} € / pers)`
-    : `Total : ${total} €`;
+  const basePricePerNight = 120;
+  const cleaningFee = 100;
+  const touristTaxPerAdultPerNight = 4;
 
-  document.getElementById("total-price").textContent = text;
+  const baseTotal = basePricePerNight * nights;
+  const taxTotal = adults * nights * touristTaxPerAdultPerNight;
+  const total = baseTotal + cleaningFee + taxTotal;
+
+  const container = document.getElementById("total-price");
+
+  container.innerHTML = `
+    <div style="text-align: left;">
+      <div style="display: flex; justify-content: space-between;">
+        <span>${basePricePerNight} € × ${nights} nuit${nights > 1 ? "s" : ""}</span>
+        <strong>${baseTotal} €</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between;">
+        <span>Frais de ménage</span>
+        <strong>${cleaningFee} €</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between;">
+        <span>Taxes (${adults} adulte${adults > 1 ? "s" : ""})</span>
+        <strong>${taxTotal} €</strong>
+      </div>
+      <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.3); margin: 0.5rem 0;" />
+      <div style="display: flex; justify-content: space-between; font-weight: bold;">
+        <span>Total</span>
+        <span>${total} €</span>
+      </div>
+    </div>
+  `;
 }
 
 // 🧾 Résumé mini bannière
