@@ -255,3 +255,66 @@ function updateBannerSummary() {
   }
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  const selectAdultes = document.getElementById("adults");
+  const selectEnfants = document.getElementById("children");
+
+  // 🔤 Langue détection
+  let lang = "fr";
+  const path = window.location.pathname;
+  if (path.includes("index-en")) lang = "en";
+  else if (path.includes("index-de")) lang = "de";
+
+  const labels = {
+    fr: {
+      adulte: (n) => `${n} adulte${n > 1 ? "s" : ""}`,
+      enfant: (n) => `${n} enfant${n > 1 ? "s" : ""}`,
+    },
+    en: {
+      adulte: (n) => `${n} adult${n > 1 ? "s" : ""}`,
+      enfant: (n) => `${n} child${n > 1 ? "ren" : ""}`,
+    },
+    de: {
+      adulte: (n) => `${n} Erwachsene${n > 1 ? "n" : ""}`,
+      enfant: (n) => `${n} Kind${n > 1 ? "er" : ""}`,
+    },
+  };
+
+  function updateChildrenOptions() {
+    const nbAdultes = parseInt(selectAdultes.value) || 0;
+    const maxEnfants = 6 - nbAdultes;
+    const current = Math.min(parseInt(selectEnfants.value) || 0, maxEnfants);
+
+    selectEnfants.innerHTML = "";
+    for (let i = 0; i <= maxEnfants; i++) {
+      const opt = document.createElement("option");
+      opt.value = i;
+      opt.textContent = labels[lang].enfant(i);
+      if (i === current) opt.selected = true;
+      selectEnfants.appendChild(opt);
+    }
+    updateTotalPrice();
+  }
+
+  function updateAdultsOptions() {
+    const nbEnfants = parseInt(selectEnfants.value) || 0;
+    const maxAdultes = 6 - nbEnfants;
+    const current = Math.min(parseInt(selectAdultes.value) || 1, maxAdultes);
+
+    selectAdultes.innerHTML = "";
+    for (let i = 1; i <= maxAdultes; i++) {
+      const opt = document.createElement("option");
+      opt.value = i;
+      opt.textContent = labels[lang].adulte(i);
+      if (i === current) opt.selected = true;
+      selectAdultes.appendChild(opt);
+    }
+    updateTotalPrice();
+  }
+
+  selectAdultes.addEventListener("change", updateChildrenOptions);
+  selectEnfants.addEventListener("change", updateAdultsOptions);
+
+  updateAdultsOptions();
+  updateChildrenOptions();
+});
