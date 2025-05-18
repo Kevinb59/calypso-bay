@@ -90,7 +90,7 @@ function updateTotalPrice() {
   const total = nights * 120;
 
   const priceText = persons > 0
-    ? `Total : ${total} € (≈ ${(total / persons).toFixed(2)} € / pers)`
+    ? `Total : ${total} € (soit ${(total / persons).toFixed(2)} € / pers)`
     : `Total : ${total} €`;
 
   document.getElementById("total-price").textContent = priceText;
