@@ -45,40 +45,31 @@
 					</div>
 				</section>
 
-<!-- SECTION RÉSERVATION DYNAMIQUE (desktop/tablette) -->
-<section id="reservation-panel" class="panel medium color3-alt" style="display: none;">
-  <div class="intro">
-    <h2 class="major">🛏️ Réservez votre séjour</h2>
-    <p id="reservation-summary">Vous avez sélectionné <strong id="nights">...</strong> nuits, du <strong id="start-date"></strong> au <strong id="end-date"></strong>.</p>
-  </div>
-  <div class="inner columns divided aligned">
-    <div class="span-4">
-      <label for="adults">👤 Adultes</label>
-      <input type="number" id="adults" name="adults" min="1" max="6" value="2" />
-      <label for="children">🧒 Enfants</label>
-      <input type="number" id="children" name="children" min="0" max="4" value="0" />
-    </div>
-    <div class="span-4">
-      <p id="total-price" style="font-size: 1.3em; font-weight: bold;">Total : —</p>
-      <ul class="actions">
-        <li><a href="#contact" class="button primary icon solid fa-check">Réserver maintenant</a></li>
-        <li><a href="#" id="cancel-selection" class="button icon solid fa-times">Annuler</a></li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- BANNIÈRE MOBILE COLLAPSIBLE -->
+<!-- BANNIÈRE MOBILE TOUT-EN-UN -->
 <div id="mobile-banner" style="display: none;">
   <div id="mobile-banner-header" style="display: flex; justify-content: space-between; align-items: center;">
     <span><strong>Dates sélectionnées</strong></span>
     <button id="toggle-banner" style="background: none; border: none; color: white; font-size: 1.2em;">▲</button>
   </div>
-  <div id="mobile-banner-details" style="display: none; margin-top: 0.5rem;">
-    Séjour du <span id="mobile-start"></span> au <span id="mobile-end"></span><br />
-    <strong id="mobile-nights"></strong> nuits sélectionnées
-    <br />
-    <a href="#contact" class="button primary small icon solid fa-check" style="margin-top: 0.5rem;">Réserver</a>
+
+  <div id="mobile-banner-details" style="display: none; margin-top: 0.75rem;">
+    <p>
+      Séjour du <span id="mobile-start"></span> au <span id="mobile-end"></span><br />
+      <strong id="mobile-nights"></strong> nuits sélectionnées
+    </p>
+
+    <label for="adults">👤 Adultes</label>
+    <input type="number" id="adults" name="adults" min="1" max="6" value="2" />
+
+    <label for="children" style="margin-top: 0.5rem;">🧒 Enfants</label>
+    <input type="number" id="children" name="children" min="0" max="4" value="0" />
+
+    <p id="total-price" style="font-weight: bold; margin-top: 0.75rem;">Total : —</p>
+
+    <ul class="actions stacked" style="margin-top: 0.5rem;">
+      <li><a href="#contact" class="button primary small icon solid fa-check">Réserver</a></li>
+      <li><a href="#" id="cancel-selection" class="button small icon solid fa-times">Annuler</a></li>
+    </ul>
   </div>
 </div>
 				
