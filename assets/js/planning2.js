@@ -6,11 +6,15 @@ else if (page.includes("index-de")) lang = "de";
 
 // 📅 Noms des mois et jours selon la langue
 const monthNamesByLang = {
-  fr: [...], en: [...], de: [...]
+  fr: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+  en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+  de: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]
 };
 
 const daysByLang = {
-  fr: [...], en: [...], de: [...]
+  fr: ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"],
+  en: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+  de: ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
 };
 
 // 📄 URL du fichier CSV contenant les disponibilités
