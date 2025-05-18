@@ -170,6 +170,9 @@
   }
 }
 
+/* //////////////////////////////////////// BANNIÈRE MOBILE FIXE EN BAS //////////////////////////////////////// */
+
+/* 🔲 BANNIÈRE MOBILE FIXE EN BAS */
 #mobile-banner {
   display: none;
   position: fixed;
@@ -188,6 +191,16 @@
   backdrop-filter: blur(6px);
 }
 
+/* 🔼 Bouton toggle */
+#mobile-banner button#toggle-banner {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* 🧾 Labels et champs */
 #mobile-banner label {
   display: block;
   margin: 0.5rem 0 0.2rem;
@@ -202,18 +215,22 @@
   margin-bottom: 0.5rem;
 }
 
+/* ✅ Animation bannière déroulante */
+#mobile-banner-details {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.4s ease;
+}
+
+#mobile-banner-details.open {
+  max-height: 500px; /* suffit pour son contenu */
+}
+
 #mobile-banner .button {
   margin-top: 0.5rem;
 }
 
-#mobile-banner button#toggle-banner {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-
+/* 📱 Affichage uniquement mobile */
 @media (max-width: 768px) {
   #mobile-banner {
     display: block;
