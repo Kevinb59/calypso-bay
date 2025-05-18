@@ -70,8 +70,10 @@ function showBannerPanel() {
   document.getElementById("mobile-nights").textContent = nights;
 
   banner.style.display = "block";
+  updateBannerSummary(); // ← ici !
   updateTotalPrice();
 }
+
 
 function updateTotalPrice() {
   const nights = Math.round((selectedEnd - selectedStart) / (1000 * 60 * 60 * 24));
@@ -202,7 +204,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (toggleBtn && details) {
     toggleBtn.addEventListener("click", () => {
       const open = details.classList.toggle("open");
-      details.style.maxHeight = open ? details.scrollHeight + "px" : "0";
       toggleBtn.innerHTML = open ? "▲" : "▼";
     });
   }
@@ -216,4 +217,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+
 fetchPlanning();
+
+function updateBannerSummary() {
+  if (!selectedStart || !selectedEnd) return;
+  const nights = Math.round((selectedEnd - selectedStart) / (1000 * 60 * 60 * 24));
+  const startStr = selectedStart.toLocaleDateString("fr-FR", { day: 'numeric', month: 'short' });
+  const endStr = selectedEnd.toLocaleDateString("fr-FR", { day: 'numeric', month: 'short' });
+  document.getElementById("banner-summary").textContent = `Séjour du ${startStr} au ${endStr} – ${nights} nuit${nights > 1 ? 's' : ''}`;
+}
