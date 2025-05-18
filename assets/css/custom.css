@@ -199,28 +199,28 @@
   z-index: 9999;
   max-width: 600px;
   margin: 0 auto;
-
-  /* 🌈 Dégradé palette (du bleu nuit vers bleu clair) + glassmorphism */
-  background: linear-gradient(135deg, #0B0C1C, #002060, #00337C, #15729B);
-  background-size: 400% 400%;
-  animation: gradientShift 15s ease infinite;
-  backdrop-filter: blur(16px);
-
-  color: #fff;
-  padding: 1.25rem 1rem;
+  padding: 1rem;
   font-size: 0.95rem;
   text-align: center;
-  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.4);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+
+  /* 🎨 Dégradé bleu -> blanc avec transparence */
+  background: linear-gradient(
+    135deg,
+    rgba(0, 25, 80, 0.5) 0%,
+    rgba(0, 65, 130, 0.5) 40%,
+    rgba(255, 255, 255, 0.5) 100%
+  );
+
+  /* 🌫️ Flou type glassmorphism */
+  backdrop-filter: blur(12px);
+
+  /* 🖍️ Autres effets visuels */
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
+  color: white;
 }
 
-/* 🎞️ Animation du dégradé */
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
 
 /* 🔼 Bouton pour ouvrir/fermer la bannière */
 #mobile-banner button#toggle-banner {
