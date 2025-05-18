@@ -13,17 +13,35 @@ function showBannerPanel() {
   updateTotalPrice();
 }
 
-// 💸 Met à jour le prix total
+// 💸 Met à jour le prix total réel (en fonction du planning CSV)
 function updateTotalPrice() {
-  const nights = Math.round((selectedEnd - selectedStart) / (1000 * 60 * 60 * 24));
+  if (!selectedStart || !selectedEnd) return;
+
   const adults = parseInt(document.getElementById("adults").value || "0");
   const children = parseInt(document.getElementById("children").value || "0");
-
-  const basePricePerNight = 120;
-  const cleaningFee = 100;
   const touristTaxPerAdultPerNight = 4;
+  const cleaningFee = 100;
 
-  const baseTotal = basePricePerNight * nights;
+  let nights = 0;
+  let baseTotal = 0;
+  let currentDate = new Date(selectedStart);
+
+  while (currentDate < selectedEnd) {
+    const key = currentDate.toLocaleDateString("fr-FR", {
+      weekday: "short", day: "2-digit", month: "long", year: "numeric"
+    }).toLowerCase();
+
+    const value = planningData[key];
+    const price = parseFloat(value);
+
+    if (!isNaN(price)) {
+      baseTotal += price;
+      nights++;
+    }
+
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
   const taxTotal = adults * nights * touristTaxPerAdultPerNight;
   const total = baseTotal + cleaningFee + taxTotal;
 
@@ -32,7 +50,7 @@ function updateTotalPrice() {
   container.innerHTML = `
     <div style="text-align: left;">
       <div style="display: flex; justify-content: space-between;">
-        <span style="font-weight: normal;">${basePricePerNight} € × ${nights} nuit${nights > 1 ? "s" : ""}</span>
+        <span style="font-weight: normal;">Total des nuits (${nights})</span>
         <strong>${baseTotal} €</strong>
       </div>
       <div style="display: flex; justify-content: space-between;">
