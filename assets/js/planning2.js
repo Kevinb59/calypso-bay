@@ -38,7 +38,6 @@ async function fetchPlanning() {
 function resetSelection(keepCalendar = false) {
   selectedStart = null;
   selectedEnd = null;
-  document.getElementById("reservation-panel").style.display = "none";
   const banner = document.getElementById("mobile-banner");
   if (banner) banner.style.display = "none";
   if (!keepCalendar) renderCalendar(currentMonth, currentYear);
@@ -57,34 +56,40 @@ function handleDateClick(dateObj) {
     selectedEnd = dateObj;
   }
   renderCalendar(currentMonth, currentYear);
-  if (selectedStart && selectedEnd) showReservationPanel();
+  if (selectedStart && selectedEnd) showBannerPanel();
 }
 
-function showReservationPanel() {
+function showBannerPanel() {
   const nights = Math.round((selectedEnd - selectedStart) / (1000 * 60 * 60 * 24));
   const startStr = selectedStart.toLocaleDateString("fr-FR");
   const endStr = selectedEnd.toLocaleDateString("fr-FR");
 
-  document.getElementById("start-date").textContent = startStr;
-  document.getElementById("end-date").textContent = endStr;
-  document.getElementById("nights").textContent = nights;
-  document.getElementById("total-price").textContent = `Total : ${nights * 120} €`;
-
-  document.getElementById("reservation-panel").style.display = "block";
-
   const banner = document.getElementById("mobile-banner");
-  if (banner) {
-    document.getElementById("mobile-start").textContent = startStr;
-    document.getElementById("mobile-end").textContent = endStr;
-    document.getElementById("mobile-nights").textContent = nights;
-    banner.style.display = "block";
-  }
+  document.getElementById("mobile-start").textContent = startStr;
+  document.getElementById("mobile-end").textContent = endStr;
+  document.getElementById("mobile-nights").textContent = nights;
+
+  banner.style.display = "block";
+  updateTotalPrice();
+}
+
+function updateTotalPrice() {
+  const nights = Math.round((selectedEnd - selectedStart) / (1000 * 60 * 60 * 24));
+  const adults = parseInt(document.getElementById("adults").value || "0");
+  const children = parseInt(document.getElementById("children").value || "0");
+  const persons = adults + children;
+  const total = nights * 120;
+
+  const priceText = persons > 0
+    ? `Total : ${total} € (≈ ${(total / persons).toFixed(2)} € / pers)`
+    : `Total : ${total} €`;
+
+  document.getElementById("total-price").textContent = priceText;
 }
 
 function renderCalendar(month, year) {
   const grid = document.getElementById("calendar-grid");
   const title = document.getElementById("calendar-title");
-
   const monthNames = monthNamesByLang[lang];
   const days = daysByLang[lang];
 
@@ -101,7 +106,6 @@ function renderCalendar(month, year) {
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const offset = (firstDay === 0) ? 6 : firstDay - 1;
-
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -116,6 +120,7 @@ function renderCalendar(month, year) {
 
     const isToday = displayDate.getTime() === today.getTime();
     const isPast = displayDate < today;
+
     const dayStr = displayDate.toLocaleDateString("fr-FR", {
       weekday: "short", day: "2-digit", month: "long", year: "numeric"
     }).toLowerCase();
@@ -190,9 +195,25 @@ document.getElementById("next-month").addEventListener("click", () => {
   renderCalendar(currentMonth, currentYear);
 });
 
-document.getElementById("cancel-selection").addEventListener("click", e => {
-  e.preventDefault();
-  resetSelection();
+document.addEventListener("DOMContentLoaded", () => {
+  const toggleBtn = document.getElementById("toggle-banner");
+  const details = document.getElementById("mobile-banner-details");
+
+  if (toggleBtn && details) {
+    toggleBtn.addEventListener("click", () => {
+      const open = details.classList.toggle("open");
+      details.style.maxHeight = open ? details.scrollHeight + "px" : "0";
+      toggleBtn.innerHTML = open ? "▲" : "▼";
+    });
+  }
+
+  document.getElementById("adults").addEventListener("input", updateTotalPrice);
+  document.getElementById("children").addEventListener("input", updateTotalPrice);
+
+  document.getElementById("cancel-selection").addEventListener("click", (e) => {
+    e.preventDefault();
+    resetSelection();
+  });
 });
 
 fetchPlanning();
