@@ -170,7 +170,7 @@
   }
 }
 
-/* Mobile banner */
+/* Bannière mobile de réservation */
 #mobile-banner {
   display: none;
   position: fixed;
@@ -183,10 +183,16 @@
   padding: 0.75rem 1rem;
   font-size: 0.95rem;
   text-align: center;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.4);
 }
 
+/* Bouton et contenu à l'intérieur */
 #mobile-banner .button {
   margin-top: 0.5rem;
+}
+
+#mobile-banner button#toggle-banner {
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {
@@ -198,3 +204,4 @@
     display: block;
   }
 }
+
