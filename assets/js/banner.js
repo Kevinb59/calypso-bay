@@ -32,15 +32,15 @@ function updateTotalPrice() {
   container.innerHTML = `
     <div style="text-align: left;">
       <div style="display: flex; justify-content: space-between;">
-        <span>${basePricePerNight} € × ${nights} nuit${nights > 1 ? "s" : ""}</span>
+        <span style="font-weight: normal;">${basePricePerNight} € × ${nights} nuit${nights > 1 ? "s" : ""}</span>
         <strong>${baseTotal} €</strong>
       </div>
       <div style="display: flex; justify-content: space-between;">
-        <span>Frais de ménage</span>
+        <span style="font-weight: normal;">Frais de ménage</span>
         <strong>${cleaningFee} €</strong>
       </div>
       <div style="display: flex; justify-content: space-between;">
-        <span>Taxes (${adults} adulte${adults > 1 ? "s" : ""})</span>
+        <span style="font-weight: normal;">Taxes (${adults} adulte${adults > 1 ? "s" : ""})</span>
         <strong>${taxTotal} €</strong>
       </div>
       <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.3); margin: 0.5rem 0;" />
@@ -50,7 +50,7 @@ function updateTotalPrice() {
       </div>
     </div>
   `;
-}
+
 
 // 🧾 Résumé mini bannière
 function updateBannerSummary() {
