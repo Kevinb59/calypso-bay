@@ -79,7 +79,7 @@ function renderCalendar(month, year) {
     const isReserved = value === "x";
     const isAvailable = value && !isReserved;
 
-    // Déterminer le statut
+    // Déterminer le statut visuel
     if (isPast && !isToday) {
       cell.classList.add("unavailable");
     } else if (isReserved) {
@@ -90,22 +90,29 @@ function renderCalendar(month, year) {
       cell.classList.add("unavailable");
     }
 
-    // Bordure spéciale si aujourd'hui
+    // Mettre en évidence aujourd’hui
     if (isToday) {
-      cell.style.border = "1px solid white";
+      cell.style.border = "1px solid rgba(255, 230, 100, 0.9)";
+      cell.style.boxShadow = "0 0 6px 2px rgba(255, 255, 200, 0.4)";
     }
 
-    // Création du contenu
+    // Ajout des étiquettes
     const dayLabel = document.createElement("div");
     dayLabel.className = "day-label";
     dayLabel.textContent = day;
 
     const priceLabel = document.createElement("div");
     priceLabel.className = "price-label";
-    if (isAvailable) priceLabel.textContent = `${value} €`;
+
+    // ✅ Affiche le prix seulement si c’est à venir ou aujourd’hui
+    if (isAvailable && !isPast) {
+      priceLabel.textContent = `${value} €`;
+    }
 
     cell.appendChild(dayLabel);
-    if (isAvailable) cell.appendChild(priceLabel);
+    if (priceLabel.textContent) {
+      cell.appendChild(priceLabel);
+    }
 
     grid.appendChild(cell);
   }
