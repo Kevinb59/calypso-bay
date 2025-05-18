@@ -18,7 +18,7 @@ const daysByLang = {
 };
 
 // 📄 URL du fichier CSV contenant les disponibilités
-const csvUrl = "https://docs.google.com/spreadsheets/.../output=csv";
+const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEDTcen1gulUUFxzIX3-Mr5fCJZsmlp83UPmXCP89mSgIwARJg9JgwbEGmg8f8HCm2c-WnsmaA-Kup/pub?gid=0&single=true&output=csv";
 
 // 📍 États du calendrier
 let currentMonth = new Date().getMonth();
