@@ -50,6 +50,8 @@ function resetSelection(keepCalendar = false) {
 
 // 📅 Gère clic sur date
 function handleDateClick(dateObj) {
+  const MIN_NIGHTS = 6;
+
   if (!selectedStart || (selectedStart && selectedEnd)) {
     selectedStart = dateObj;
     selectedEnd = null;
@@ -59,8 +61,18 @@ function handleDateClick(dateObj) {
     resetSelection(true);
     return;
   } else {
+    const diffNights = Math.round((dateObj - selectedStart) / (1000 * 60 * 60 * 24));
+    if (diffNights < MIN_NIGHTS) {
+      const minEndDate = new Date(selectedStart);
+      minEndDate.setDate(minEndDate.getDate() + MIN_NIGHTS);
+      const minDateStr = minEndDate.toLocaleDateString("fr-FR", { day: "numeric", month: "long" });
+
+      showTooltip(`Minimum 6 nuits. Choisissez au moins jusqu’au ${minDateStr}`, event.currentTarget);
+      return;
+    }
     selectedEnd = dateObj;
   }
+
   renderCalendar(currentMonth, currentYear);
   if (selectedStart && selectedEnd) showBannerPanel();
 }
@@ -163,6 +175,37 @@ document.getElementById("next-month").addEventListener("click", () => {
   }
   renderCalendar(currentMonth, currentYear);
 });
+
+// 📅 Gère les 6 jours minimum
+function showTooltip(message, targetElement) {
+  const tooltip = document.createElement("div");
+  tooltip.textContent = message;
+  tooltip.style.position = "absolute";
+  tooltip.style.background = "#fff";
+  tooltip.style.color = "#000";
+  tooltip.style.padding = "0.4rem 0.7rem";
+  tooltip.style.fontSize = "0.85rem";
+  tooltip.style.borderRadius = "6px";
+  tooltip.style.boxShadow = "0 0 8px rgba(0,0,0,0.15)";
+  tooltip.style.zIndex = "10000";
+  tooltip.style.transition = "opacity 0.2s ease";
+  tooltip.style.opacity = "0";
+
+  document.body.appendChild(tooltip);
+
+  const rect = targetElement.getBoundingClientRect();
+  tooltip.style.left = `${rect.left + window.scrollX + rect.width / 2 - tooltip.offsetWidth / 2}px`;
+  tooltip.style.top = `${rect.top + window.scrollY - 45}px`;
+
+  requestAnimationFrame(() => {
+    tooltip.style.opacity = "1";
+  });
+
+  setTimeout(() => {
+    tooltip.style.opacity = "0";
+    setTimeout(() => tooltip.remove(), 300);
+  }, 3000);
+}
 
 // 🚀 Démarre le chargement
 fetchPlanning();
