@@ -222,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (toggleBtn && details) {
     toggleBtn.addEventListener("click", () => {
       const open = details.classList.toggle("open");
-      toggleBtn.innerHTML = open ? "▲" : "▼";
+      toggleBtn.innerHTML = open ? "▼" : "▲";
       updateBannerSummary();
     });
   }
