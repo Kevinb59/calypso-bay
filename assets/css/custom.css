@@ -236,3 +236,22 @@
     display: block;
   }
 }
+
+/* 🎯 Style de sélection dans le calendrier */
+.calendar-cell.start {
+  border: 2px solid #f5d100;
+  background-color: rgba(245, 209, 0, 0.15);
+  box-shadow: 0 0 5px 2px rgba(245, 209, 0, 0.25);
+}
+
+.calendar-cell.end {
+  border: 2px solid #f5d100;
+  background-color: rgba(245, 209, 0, 0.15);
+  box-shadow: 0 0 5px 2px rgba(245, 209, 0, 0.25);
+}
+
+.calendar-cell.in-range {
+  border: 2px solid #f5d100;
+  background-color: rgba(245, 209, 0, 0.15);
+  box-shadow: 0 0 5px 2px rgba(245, 209, 0, 0.25);
+}
