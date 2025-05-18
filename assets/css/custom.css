@@ -189,6 +189,7 @@
 /* ========================================================
    📱 BANNIÈRE MOBILE : RÉSERVATION
 ======================================================== */
+
 #mobile-banner {
   display: none;
   position: fixed;
@@ -198,18 +199,30 @@
   z-index: 9999;
   max-width: 600px;
   margin: 0 auto;
-  background-color: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(12px);
-  color: #111;
-  padding: 1rem;
+
+  /* 🌈 Dégradé palette (du bleu nuit vers bleu clair) + glassmorphism */
+  background: linear-gradient(135deg, #0B0C1C, #002060, #00337C, #15729B);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  backdrop-filter: blur(16px);
+
+  color: #fff;
+  padding: 1.25rem 1rem;
   font-size: 0.95rem;
   text-align: center;
-  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.4);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
 
+/* 🎞️ Animation du dégradé */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
+/* 🔼 Bouton pour ouvrir/fermer la bannière */
 #mobile-banner button#toggle-banner {
   background: none;
   border: none;
@@ -218,17 +231,20 @@
   cursor: pointer;
 }
 
+/* 🧾 Champs et étiquettes */
 #mobile-banner label {
   display: block;
   margin: 0.5rem 0 0.2rem;
   font-size: 0.9rem;
   text-align: left;
+  color: #fff;
 }
 
 #mobile-banner .field {
   margin-bottom: 1rem;
 }
 
+/* ✅ Section déroulante avec animation */
 #mobile-banner-details {
   overflow: hidden;
   max-height: 0;
@@ -239,10 +255,12 @@
   max-height: 500px;
 }
 
+/* ✅ Boutons */
 #mobile-banner .button {
   margin-top: 0.5rem;
 }
 
+/* 📱 Activation uniquement en mobile */
 @media (max-width: 768px) {
   #mobile-banner {
     display: block;
