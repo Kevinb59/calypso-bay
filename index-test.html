@@ -44,6 +44,30 @@
 						<div id="calendar-grid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem;"></div>
 					</div>
 				</section>
+
+<!-- SECTION RÉSERVATION DYNAMIQUE //////////////////////////////////////////////////////// -->
+<section id="reservation-panel" class="panel medium color3-alt" style="display: none;">
+  <div class="intro">
+    <h2 class="major">🛏️ Réservez votre séjour</h2>
+    <p id="reservation-summary">Vous avez sélectionné <strong id="nights">...</strong> nuits, du <strong id="start-date"></strong> au <strong id="end-date"></strong>.</p>
+  </div>
+  <div class="inner columns divided aligned">
+    <div class="span-4">
+      <label for="adults">👤 Adultes</label>
+      <input type="number" id="adults" name="adults" min="1" max="6" value="2" />
+      <label for="children">🧒 Enfants</label>
+      <input type="number" id="children" name="children" min="0" max="4" value="0" />
+    </div>
+    <div class="span-4">
+      <p id="total-price" style="font-size: 1.3em; font-weight: bold;">Total : —</p>
+      <ul class="actions">
+        <li><a href="#contact" class="button primary icon solid fa-check">Réserver maintenant</a></li>
+        <li><a href="#" id="cancel-selection" class="button icon solid fa-times">Annuler</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 				
 				<!-- CONTACT -->
 				<section class="panel color4-alt">
