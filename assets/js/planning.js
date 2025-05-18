@@ -37,10 +37,13 @@ function renderCalendar(month, year) {
   const grid = document.getElementById("calendar-grid");
   const title = document.getElementById("calendar-title");
 
-  title.textContent = `${monthNamesByLang[lang][month]} ${year}`;
+  const monthNames = monthNamesByLang[lang];
+  const days = daysByLang[lang];
+
+  title.textContent = `${monthNames[month]} ${year}`;
   grid.innerHTML = "";
 
-  daysByLang[lang].forEach(jour => {
+  days.forEach(jour => {
     const label = document.createElement("div");
     label.className = "calendar-label";
     label.textContent = jour;
@@ -51,6 +54,9 @@ function renderCalendar(month, year) {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const offset = (firstDay === 0) ? 6 : firstDay - 1;
 
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
   for (let i = 0; i < offset; i++) {
     grid.appendChild(document.createElement("div"));
   }
@@ -58,7 +64,13 @@ function renderCalendar(month, year) {
   for (let day = 1; day <= daysInMonth; day++) {
     const cell = document.createElement("div");
     cell.className = "calendar-cell";
+
     const displayDate = new Date(year, month, day);
+    displayDate.setHours(0, 0, 0, 0);
+
+    const isToday = displayDate.getTime() === today.getTime();
+    const isPast = displayDate < today;
+
     const dayStr = displayDate.toLocaleDateString("fr-FR", {
       weekday: "short", day: "2-digit", month: "long", year: "numeric"
     }).toLowerCase();
@@ -66,9 +78,11 @@ function renderCalendar(month, year) {
     const value = planningData[dayStr] || "";
     const isReserved = value === "x";
     const isAvailable = value && !isReserved;
-    const isUnavailable = !value;
 
-    if (isReserved) {
+    // Déterminer le statut
+    if (isPast && !isToday) {
+      cell.classList.add("unavailable");
+    } else if (isReserved) {
       cell.classList.add("reserved");
     } else if (isAvailable) {
       cell.classList.add("available");
@@ -76,6 +90,12 @@ function renderCalendar(month, year) {
       cell.classList.add("unavailable");
     }
 
+    // Bordure spéciale si aujourd'hui
+    if (isToday) {
+      cell.style.border = "1px solid white";
+    }
+
+    // Création du contenu
     const dayLabel = document.createElement("div");
     dayLabel.className = "day-label";
     dayLabel.textContent = day;
@@ -86,6 +106,7 @@ function renderCalendar(month, year) {
 
     cell.appendChild(dayLabel);
     if (isAvailable) cell.appendChild(priceLabel);
+
     grid.appendChild(cell);
   }
 }
