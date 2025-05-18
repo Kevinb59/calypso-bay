@@ -35,31 +35,29 @@ async function fetchPlanning() {
   renderCalendar(currentMonth, currentYear);
 }
 
-function resetSelection() {
+function resetSelection(keepCalendar = false) {
   selectedStart = null;
   selectedEnd = null;
   document.getElementById("reservation-panel").style.display = "none";
   const banner = document.getElementById("mobile-banner");
   if (banner) banner.style.display = "none";
-  renderCalendar(currentMonth, currentYear);
+  if (!keepCalendar) renderCalendar(currentMonth, currentYear);
 }
 
-function handleDateClick(dateObj, cellElement) {
-  if (!selectedStart) {
+function handleDateClick(dateObj) {
+  if (!selectedStart || (selectedStart && selectedEnd)) {
     selectedStart = dateObj;
-  } else if (!selectedEnd) {
-    if (dateObj <= selectedStart) {
-      selectedStart = dateObj;
-      selectedEnd = null;
-    } else {
-      selectedEnd = dateObj;
-      showReservationPanel();
-    }
+    selectedEnd = null;
+  } else if (dateObj < selectedStart) {
+    selectedStart = dateObj;
+  } else if (dateObj.getTime() === selectedStart.getTime()) {
+    resetSelection(true);
+    return;
   } else {
-    resetSelection();
-    selectedStart = dateObj;
+    selectedEnd = dateObj;
   }
   renderCalendar(currentMonth, currentYear);
+  if (selectedStart && selectedEnd) showReservationPanel();
 }
 
 function showReservationPanel() {
@@ -107,9 +105,7 @@ function renderCalendar(month, year) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  for (let i = 0; i < offset; i++) {
-    grid.appendChild(document.createElement("div"));
-  }
+  for (let i = 0; i < offset; i++) grid.appendChild(document.createElement("div"));
 
   for (let day = 1; day <= daysInMonth; day++) {
     const cell = document.createElement("div");
@@ -120,7 +116,6 @@ function renderCalendar(month, year) {
 
     const isToday = displayDate.getTime() === today.getTime();
     const isPast = displayDate < today;
-
     const dayStr = displayDate.toLocaleDateString("fr-FR", {
       weekday: "short", day: "2-digit", month: "long", year: "numeric"
     }).toLowerCase();
@@ -129,7 +124,6 @@ function renderCalendar(month, year) {
     const isReserved = value === "x";
     const isAvailable = value && !isReserved;
 
-    // Statut visuel
     if (isPast && !isToday) {
       cell.classList.add("unavailable");
     } else if (isReserved) {
@@ -140,13 +134,11 @@ function renderCalendar(month, year) {
       cell.classList.add("unavailable");
     }
 
-    // Aujourd’hui
     if (isToday) {
       cell.style.border = "1px solid rgba(255, 230, 100, 0.9)";
       cell.style.boxShadow = "0 0 6px 2px rgba(255, 255, 200, 0.4)";
     }
 
-    // Visuel sélection
     if (selectedStart && displayDate.getTime() === selectedStart.getTime()) {
       cell.classList.add("start");
     }
@@ -172,9 +164,8 @@ function renderCalendar(month, year) {
     cell.appendChild(dayLabel);
     if (priceLabel.textContent) cell.appendChild(priceLabel);
 
-    // Clic actif uniquement si sélectionnable
     if (!isReserved && !isPast) {
-      cell.addEventListener("click", () => handleDateClick(displayDate, cell));
+      cell.addEventListener("click", () => handleDateClick(displayDate));
     }
 
     grid.appendChild(cell);
@@ -187,7 +178,6 @@ document.getElementById("prev-month").addEventListener("click", () => {
     currentMonth = 11;
     currentYear--;
   }
-  resetSelection();
   renderCalendar(currentMonth, currentYear);
 });
 
@@ -197,7 +187,6 @@ document.getElementById("next-month").addEventListener("click", () => {
     currentMonth = 0;
     currentYear++;
   }
-  resetSelection();
   renderCalendar(currentMonth, currentYear);
 });
 
@@ -207,17 +196,3 @@ document.getElementById("cancel-selection").addEventListener("click", e => {
 });
 
 fetchPlanning();
-
-// Bannière mobile : bouton toggle (▲▼)
-document.addEventListener("DOMContentLoaded", () => {
-  const toggleBtn = document.getElementById("toggle-banner");
-  const details = document.getElementById("mobile-banner-details");
-
-  if (toggleBtn && details) {
-    toggleBtn.addEventListener("click", () => {
-      const isOpen = details.style.display === "block";
-      details.style.display = isOpen ? "none" : "block";
-      toggleBtn.innerHTML = isOpen ? "▲" : "▼";
-    });
-  }
-});
