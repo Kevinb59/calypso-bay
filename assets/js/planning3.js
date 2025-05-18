@@ -204,7 +204,7 @@ function showTooltip(message, targetElement) {
   setTimeout(() => {
     tooltip.style.opacity = "0";
     setTimeout(() => tooltip.remove(), 300);
-  }, 3000);
+  }, 5000);
 }
 
 // 🚀 Démarre le chargement
