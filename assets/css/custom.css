@@ -170,7 +170,7 @@
   }
 }
 
-/* Bannière mobile de réservation */
+/* 🟣 Bannière mobile de réservation */
 #mobile-banner {
   display: none;
   position: fixed;
@@ -178,20 +178,26 @@
   left: 0;
   right: 0;
   z-index: 9999;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.88);
   color: white;
   padding: 0.75rem 1rem;
   font-size: 0.95rem;
   text-align: center;
-  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.4);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  backdrop-filter: blur(6px);
 }
 
-/* Bouton et contenu à l'intérieur */
 #mobile-banner .button {
   margin-top: 0.5rem;
 }
 
 #mobile-banner button#toggle-banner {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
   cursor: pointer;
 }
 
@@ -205,3 +211,21 @@
   }
 }
 
+/* 🎯 Style de sélection dans le calendrier */
+.calendar-cell.start {
+  border: 2px solid #f5d100;
+  background-color: rgba(245, 209, 0, 0.15);
+  box-shadow: 0 0 5px 2px rgba(245, 209, 0, 0.25);
+}
+
+.calendar-cell.end {
+  border: 2px solid #f5d100;
+  background-color: rgba(245, 209, 0, 0.15);
+  box-shadow: 0 0 5px 2px rgba(245, 209, 0, 0.25);
+}
+
+.calendar-cell.in-range {
+  background-color: rgba(255, 255, 255, 0.07);
+  color: white;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+}
