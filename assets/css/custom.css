@@ -1,12 +1,18 @@
+/* ========================================================
+   🌈 VARIABLES GÉNÉRALES
+======================================================== */
 :root {
-  --color-primary: #E37B7C;      /* rose principal */
-  --color-secondary: #726193;    /* violet */
-  --color-accent: #FFE4B4;       /* jaune clair accent */
+  --color-primary: #E37B7C;         /* rose principal */
+  --color-secondary: #726193;       /* violet */
+  --color-accent: #FFE4B4;          /* jaune clair accent */
   --color-blur-bg: rgba(255, 255, 255, 0.1);
   --blur-border: rgba(255, 255, 255, 0.15);
   --blur-shadow: rgba(255, 255, 255, 0.08);
 }
 
+/* ========================================================
+   ⭐️ STYLES AVIS / PLATEFORMES (Airbnb / Booking)
+======================================================== */
 .review-item {
   display: flex;
   align-items: center;
@@ -34,10 +40,7 @@
   font-size: 0.8em;
 }
 
-.review-row .stars {
-  white-space: nowrap;
-}
-
+.review-row .stars,
 .review-row .score {
   white-space: nowrap;
 }
@@ -52,6 +55,9 @@
   transform: scale(1.03);
 }
 
+/* ========================================================
+   🌍 LIENS MULTILINGUES
+======================================================== */
 .flag-links a {
   text-decoration: none;
   outline: none;
@@ -62,11 +68,13 @@
   outline: none;
 }
 
+/* ========================================================
+   ❌ FORMULAIRES : ERREURS ET VALIDATION
+======================================================== */
 .field {
   position: relative;
 }
 
-/* Style des messages d’erreur */
 .field .error-message {
   color: #e74c3c;
   font-size: 0.75em;
@@ -81,20 +89,21 @@
   animation: fadeIn 0.5s ease forwards;
 }
 
-/* Animation d’apparition */
 @keyframes fadeIn {
   to {
     opacity: 1;
   }
 }
 
-/* Bordures rouges sur champ invalide */
 .field.invalid input,
 .field.invalid select,
 .field.invalid textarea {
   border-color: #e74c3c !important;
 }
 
+/* ========================================================
+   🏝️ PLANNING - SECTION ET FOND
+======================================================== */
 .planning-section {
   position: relative;
   overflow: hidden;
@@ -105,7 +114,7 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 750px; /* Hauteur fixe ! */
+  height: 750px;
   background-image: url("../../images/gallery/fulls/Autres/03.jpg");
   background-size: cover;
   background-position: top;
@@ -114,21 +123,21 @@
   pointer-events: none;
 }
 
-/* Pour que le contenu soit bien au-dessus */
 .planning-section > .intro,
 .planning-section > .inner {
   position: relative;
   z-index: 1;
 }
 
-/* Sur desktop : laisse l’image suivre la hauteur */
 @media (min-width: 769px) {
   .planning-bg {
     height: 100%;
   }
 }
 
-/* === Google Maps : bloc carte personnalisé === */
+/* ========================================================
+   🗺️ GOOGLE MAPS EMBED (carte)
+======================================================== */
 .map-container {
   width: 100%;
   height: 100%;
@@ -140,7 +149,6 @@
   z-index: 1;
 }
 
-/* Fix styles hérités */
 .map-container * {
   filter: none !important;
   mix-blend-mode: normal !important;
@@ -148,7 +156,6 @@
   background: initial !important;
 }
 
-/* Réduction bouton plein écran + centrage */
 .map-container .gm-fullscreen-control {
   background-color: rgba(255, 255, 255, 0.5) !important;
   border-radius: 10px !important;
@@ -157,12 +164,10 @@
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Supprime les autres boutons */
 .map-container .gm-style-mtc {
   display: none !important;
 }
 
-/* Responsive mobile */
 @media screen and (max-width: 768px) {
   .map-container {
     height: 300px;
@@ -170,9 +175,20 @@
   }
 }
 
-/* //////////////////////////////////////// BANNIÈRE MOBILE FIXE EN BAS //////////////////////////////////////// */
+/* ========================================================
+   📅 CALENDRIER : SÉLECTION DE DATES
+======================================================== */
+.calendar-cell.start,
+.calendar-cell.end,
+.calendar-cell.in-range {
+  border: 2px solid #f5d100;
+  background-color: rgba(245, 209, 0, 0.15);
+  box-shadow: 0 0 5px 2px rgba(245, 209, 0, 0.25);
+}
 
-/* 🔲 BANNIÈRE MOBILE FIXE EN BAS */
+/* ========================================================
+   📱 BANNIÈRE MOBILE : RÉSERVATION
+======================================================== */
 #mobile-banner {
   display: none;
   position: fixed;
@@ -191,11 +207,8 @@
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   backdrop-filter: blur(6px);
-  left: 0;
-  right: 0;
 }
 
-/* 🔼 Bouton toggle */
 #mobile-banner button#toggle-banner {
   background: none;
   border: none;
@@ -204,7 +217,6 @@
   cursor: pointer;
 }
 
-/* 🧾 Labels et champs */
 #mobile-banner label {
   display: block;
   margin: 0.5rem 0 0.2rem;
@@ -216,7 +228,6 @@
   margin-bottom: 1rem;
 }
 
-/* ✅ Animation bannière déroulante */
 #mobile-banner-details {
   overflow: hidden;
   max-height: 0;
@@ -231,18 +242,8 @@
   margin-top: 0.5rem;
 }
 
-/* 📱 Affichage uniquement mobile */
 @media (max-width: 768px) {
   #mobile-banner {
     display: block;
   }
-}
-
-/* 🎯 Style de sélection dans le calendrier */
-.calendar-cell.start,
-.calendar-cell.end,
-.calendar-cell.in-range {
-  border: 2px solid #f5d100;
-  background-color: rgba(245, 209, 0, 0.15);
-  box-shadow: 0 0 5px 2px rgba(245, 209, 0, 0.25);
 }
