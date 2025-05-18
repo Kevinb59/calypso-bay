@@ -1,28 +1,29 @@
+// 🔍 Détection de la langue en fonction du fichier HTML
 const page = window.location.pathname;
 let lang = "fr";
 if (page.includes("index-en")) lang = "en";
 else if (page.includes("index-de")) lang = "de";
 
+// 📅 Noms des mois et jours selon la langue
 const monthNamesByLang = {
-  fr: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
-  en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-  de: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]
+  fr: [...], en: [...], de: [...]
 };
 
 const daysByLang = {
-  fr: ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"],
-  en: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-  de: ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
+  fr: [...], en: [...], de: [...]
 };
 
-const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEDTcen1gulUUFxzIX3-Mr5fCJZsmlp83UPmXCP89mSgIwARJg9JgwbEGmg8f8HCm2c-WnsmaA-Kup/pub?gid=0&single=true&output=csv";
+// 📄 URL du fichier CSV contenant les disponibilités
+const csvUrl = "https://docs.google.com/spreadsheets/.../output=csv";
 
+// 📍 États du calendrier
 let currentMonth = new Date().getMonth();
 let currentYear = new Date().getFullYear();
-let planningData = {};
-let selectedStart = null;
-let selectedEnd = null;
+let planningData = {};              // Stocke les dates et leurs valeurs
+let selectedStart = null;          // Date d’arrivée sélectionnée
+let selectedEnd = null;            // Date de départ sélectionnée
 
+// 📥 Récupère le planning depuis le fichier CSV
 async function fetchPlanning() {
   const res = await fetch(csvUrl);
   const text = await res.text();
@@ -35,6 +36,7 @@ async function fetchPlanning() {
   renderCalendar(currentMonth, currentYear);
 }
 
+// 🔄 Réinitialise les dates sélectionnées
 function resetSelection(keepCalendar = false) {
   selectedStart = null;
   selectedEnd = null;
@@ -43,6 +45,7 @@ function resetSelection(keepCalendar = false) {
   if (!keepCalendar) renderCalendar(currentMonth, currentYear);
 }
 
+// 📅 Gère le clic sur un jour du calendrier
 function handleDateClick(dateObj) {
   if (!selectedStart || (selectedStart && selectedEnd)) {
     selectedStart = dateObj;
@@ -59,22 +62,22 @@ function handleDateClick(dateObj) {
   if (selectedStart && selectedEnd) showBannerPanel();
 }
 
+// 📤 Affiche la bannière avec les dates sélectionnées
 function showBannerPanel() {
   const nights = Math.round((selectedEnd - selectedStart) / (1000 * 60 * 60 * 24));
   const startStr = selectedStart.toLocaleDateString("fr-FR");
   const endStr = selectedEnd.toLocaleDateString("fr-FR");
 
-  const banner = document.getElementById("mobile-banner");
   document.getElementById("mobile-start").textContent = startStr;
   document.getElementById("mobile-end").textContent = endStr;
   document.getElementById("mobile-nights").textContent = nights;
+  document.getElementById("mobile-banner").style.display = "block";
 
-  banner.style.display = "block";
-  updateBannerSummary(); // ← ici !
-  updateTotalPrice();
+  updateBannerSummary();   // Résumé dans bannière réduite
+  updateTotalPrice();      // Calcul du total
 }
 
-
+// 💸 Met à jour le prix total et le prix par personne
 function updateTotalPrice() {
   const nights = Math.round((selectedEnd - selectedStart) / (1000 * 60 * 60 * 24));
   const adults = parseInt(document.getElementById("adults").value || "0");
@@ -89,6 +92,7 @@ function updateTotalPrice() {
   document.getElementById("total-price").textContent = priceText;
 }
 
+// 🗓️ Génère et affiche le calendrier du mois en cours
 function renderCalendar(month, year) {
   const grid = document.getElementById("calendar-grid");
   const title = document.getElementById("calendar-title");
@@ -98,6 +102,7 @@ function renderCalendar(month, year) {
   title.textContent = `${monthNames[month]} ${year}`;
   grid.innerHTML = "";
 
+  // En-têtes jours de la semaine
   days.forEach(jour => {
     const label = document.createElement("div");
     label.className = "calendar-label";
@@ -105,6 +110,7 @@ function renderCalendar(month, year) {
     grid.appendChild(label);
   });
 
+  // Jours du mois avec état
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const offset = (firstDay === 0) ? 6 : firstDay - 1;
@@ -131,6 +137,7 @@ function renderCalendar(month, year) {
     const isReserved = value === "x";
     const isAvailable = value && !isReserved;
 
+    // Statut de la cellule
     if (isPast && !isToday) {
       cell.classList.add("unavailable");
     } else if (isReserved) {
@@ -141,11 +148,13 @@ function renderCalendar(month, year) {
       cell.classList.add("unavailable");
     }
 
+    // Bordure pour aujourd’hui
     if (isToday) {
       cell.style.border = "1px solid rgba(255, 230, 100, 0.9)";
       cell.style.boxShadow = "0 0 6px 2px rgba(255, 255, 200, 0.4)";
     }
 
+    // Mise en évidence des dates sélectionnées
     if (selectedStart && displayDate.getTime() === selectedStart.getTime()) {
       cell.classList.add("start");
     }
@@ -160,6 +169,7 @@ function renderCalendar(month, year) {
       cell.classList.add("in-range");
     }
 
+    // Texte du jour et prix
     const dayLabel = document.createElement("div");
     dayLabel.className = "day-label";
     dayLabel.textContent = day;
@@ -171,6 +181,7 @@ function renderCalendar(month, year) {
     cell.appendChild(dayLabel);
     if (priceLabel.textContent) cell.appendChild(priceLabel);
 
+    // Ajoute l’événement de clic si dispo
     if (!isReserved && !isPast) {
       cell.addEventListener("click", () => handleDateClick(displayDate));
     }
@@ -179,6 +190,7 @@ function renderCalendar(month, year) {
   }
 }
 
+// ⏮ Mois précédent
 document.getElementById("prev-month").addEventListener("click", () => {
   currentMonth--;
   if (currentMonth < 0) {
@@ -188,6 +200,7 @@ document.getElementById("prev-month").addEventListener("click", () => {
   renderCalendar(currentMonth, currentYear);
 });
 
+// ⏭ Mois suivant
 document.getElementById("next-month").addEventListener("click", () => {
   currentMonth++;
   if (currentMonth > 11) {
@@ -197,6 +210,7 @@ document.getElementById("next-month").addEventListener("click", () => {
   renderCalendar(currentMonth, currentYear);
 });
 
+// ⚙️ Initialisation au chargement du DOM
 document.addEventListener("DOMContentLoaded", () => {
   const toggleBtn = document.getElementById("toggle-banner");
   const details = document.getElementById("mobile-banner-details");
@@ -217,9 +231,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-
+// 🚀 Lance le chargement du planning
 fetchPlanning();
 
+// 🧾 Affiche un résumé du séjour dans la bannière repliée
 function updateBannerSummary() {
   if (!selectedStart || !selectedEnd) return;
   const nights = Math.round((selectedEnd - selectedStart) / (1000 * 60 * 60 * 24));
