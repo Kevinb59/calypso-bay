@@ -169,3 +169,32 @@
     border-radius: 8px;
   }
 }
+
+/* Mobile banner */
+#mobile-banner {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+#mobile-banner .button {
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  #reservation-panel {
+    display: none !important;
+  }
+
+  #mobile-banner {
+    display: block;
+  }
+}
