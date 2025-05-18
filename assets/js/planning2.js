@@ -207,3 +207,17 @@ document.getElementById("cancel-selection").addEventListener("click", e => {
 });
 
 fetchPlanning();
+
+// Bannière mobile : bouton toggle (▲▼)
+document.addEventListener("DOMContentLoaded", () => {
+  const toggleBtn = document.getElementById("toggle-banner");
+  const details = document.getElementById("mobile-banner-details");
+
+  if (toggleBtn && details) {
+    toggleBtn.addEventListener("click", () => {
+      const isOpen = details.style.display === "block";
+      details.style.display = isOpen ? "none" : "block";
+      toggleBtn.innerHTML = isOpen ? "▲" : "▼";
+    });
+  }
+});
