@@ -73,8 +73,8 @@ function showBannerPanel() {
   document.getElementById("mobile-nights").textContent = nights;
   document.getElementById("mobile-banner").style.display = "block";
 
-  updateBannerSummary();   // Résumé dans bannière réduite
-  updateTotalPrice();      // Calcul du total
+  updateBannerSummary();
+  updateTotalPrice();
 }
 
 // 💸 Met à jour le prix total et le prix par personne
@@ -219,6 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleBtn.addEventListener("click", () => {
       const open = details.classList.toggle("open");
       toggleBtn.innerHTML = open ? "▲" : "▼";
+      updateBannerSummary();
     });
   }
 
@@ -240,5 +241,13 @@ function updateBannerSummary() {
   const nights = Math.round((selectedEnd - selectedStart) / (1000 * 60 * 60 * 24));
   const startStr = selectedStart.toLocaleDateString("fr-FR", { day: 'numeric', month: 'short' });
   const endStr = selectedEnd.toLocaleDateString("fr-FR", { day: 'numeric', month: 'short' });
-  document.getElementById("banner-summary").textContent = `Séjour du ${startStr} au ${endStr} – ${nights} nuit${nights > 1 ? 's' : ''}`;
+
+  const summary = document.getElementById("banner-summary");
+  const details = document.getElementById("mobile-banner-details");
+  if (!details.classList.contains("open")) {
+    summary.textContent = `Séjour du ${startStr} au ${endStr} – ${nights} nuit${nights > 1 ? 's' : ''}`;
+  } else {
+    summary.textContent = "Dates sélectionnées";
+  }
 }
+
