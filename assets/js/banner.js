@@ -112,9 +112,14 @@ function goToStep2() {
 function goToStep1() {
   step = 1;
   const details = document.getElementById("mobile-banner-details");
+
+  // Supprime la classe full pour permettre la transition vers open
   details.classList.remove("full");
-  void details.offsetWidth; // 🔁 force repaint
-  details.classList.add("open");
+
+  // Applique la classe open juste après, pour déclencher la transition
+  setTimeout(() => {
+    details.classList.add("open");
+  }, 10); // <- très court délai pour que la transition soit prise en compte
 
   const toggleBtn = document.getElementById("toggle-banner");
   toggleBtn.style.display = "inline-block";
