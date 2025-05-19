@@ -80,9 +80,82 @@ function updateBannerSummary() {
   const summary = document.getElementById("banner-summary");
   const details = document.getElementById("mobile-banner-details");
 
-  summary.textContent = details.classList.contains("open")
-    ? "Demande de réservation: étape 1 sur 2"
+  summary.textContent = details.classList.contains("open") || details.classList.contains("full")
+    ? `Demande de réservation: étape ${step} sur 2`
     : `Séjour du ${startStr} au ${endStr} – ${nights} nuit${nights > 1 ? 's' : ''}`;
+}
+
+let step = 1;
+
+function goToStep2() {
+  step = 2;
+  const details = document.getElementById("mobile-banner-details");
+  details.classList.remove("open");
+  details.classList.add("full");
+
+  document.getElementById("toggle-banner").style.display = "none";
+  document.getElementById("step-toggle").textContent = "Envoyer la demande de réservation";
+  document.getElementById("step-toggle").classList.remove("fa-arrow-right");
+  document.getElementById("step-toggle").classList.add("fa-paper-plane");
+
+  document.getElementById("cancel-selection").textContent = "Retour à l’étape 1";
+  updateBannerSummary();
+
+  document.getElementById("adults").disabled = true;
+  document.getElementById("children").disabled = true;
+  document.getElementById("adults").classList.add("locked");
+  document.getElementById("children").classList.add("locked");
+
+  addStep2Fields();
+}
+
+function goToStep1() {
+  step = 1;
+  const details = document.getElementById("mobile-banner-details");
+  details.classList.remove("full");
+  details.classList.add("open");
+
+  const toggleBtn = document.getElementById("toggle-banner");
+  toggleBtn.style.display = "inline-block";
+  toggleBtn.innerHTML = "▲";
+
+  document.getElementById("step-toggle").textContent = "Passer à l’étape 2";
+  document.getElementById("step-toggle").classList.remove("fa-paper-plane");
+  document.getElementById("step-toggle").classList.add("fa-arrow-right");
+
+  document.getElementById("cancel-selection").textContent = "Annuler";
+  updateBannerSummary();
+
+  document.getElementById("adults").disabled = false;
+  document.getElementById("children").disabled = false;
+  document.getElementById("adults").classList.remove("locked");
+  document.getElementById("children").classList.remove("locked");
+
+  removeStep2Fields();
+}
+
+function addStep2Fields() {
+  const container = document.getElementById("mobile-banner-details");
+  if (document.getElementById("step2-fields")) return;
+
+  const div = document.createElement("div");
+  div.id = "step2-fields";
+  div.innerHTML = `
+    <div class="fields" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem;">
+      <div class="field third"><label for="r-name">Nom</label><input type="text" id="r-name" required></div>
+      <div class="field third"><label for="r-email">Email</label><input type="email" id="r-email" required></div>
+      <div class="field third"><label for="r-phone">Téléphone</label><input type="tel" id="r-phone" required></div>
+    </div>
+    <div class="field"><label for="r-message">Message (optionnel)</label><textarea id="r-message" rows="3"></textarea></div>
+  `;
+
+  const actions = container.querySelector(".actions");
+  container.insertBefore(div, actions);
+}
+
+function removeStep2Fields() {
+  const el = document.getElementById("step2-fields");
+  if (el) el.remove();
 }
 
 // 🧠 Logique de la bannière : toggle, validation, choix
@@ -98,7 +171,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Dynamique 6 personnes
   const selectAdultes = document.getElementById("adults");
   const selectEnfants = document.getElementById("children");
 
@@ -157,103 +229,18 @@ document.addEventListener("DOMContentLoaded", () => {
   selectAdultes.addEventListener("change", updateChildrenOptions);
   selectEnfants.addEventListener("change", updateAdultsOptions);
 
-  document.getElementById("cancel-selection").addEventListener("click", (e) => {
+  document.getElementById("step-toggle")?.addEventListener("click", (e) => {
     e.preventDefault();
-    resetSelection();
+    if (step === 1) goToStep2();
+    else sendReservationRequest();
+  });
+
+  document.getElementById("cancel-selection")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (step === 2) goToStep1();
+    else resetSelection();
   });
 
   updateAdultsOptions();
   updateChildrenOptions();
-});
-
-
-
-
-
-
-
-
-
-
-let step = 1;
-
-function goToStep2() {
-  step = 2;
-  document.getElementById("mobile-banner-details").classList.add("full");
-  document.getElementById("toggle-banner").style.display = "none";
-
-  document.getElementById("step-toggle").textContent = "Envoyer la demande de réservation";
-  document.getElementById("step-toggle").classList.remove("fa-arrow-right");
-  document.getElementById("step-toggle").classList.add("fa-paper-plane");
-
-  document.getElementById("cancel-selection").textContent = "Retour à l’étape 1";
-  document.getElementById("banner-summary").textContent = "Demande de réservation: étape 2 sur 2";
-
-  document.getElementById("adults").disabled = true;
-  document.getElementById("children").disabled = true;
-  document.getElementById("adults").classList.add("locked");
-  document.getElementById("children").classList.add("locked");
-
-  addStep2Fields();
-}
-
-function goToStep1() {
-  step = 1;
-  document.getElementById("mobile-banner-details").classList.remove("full");
-  document.getElementById("toggle-banner").style.display = "inline-block";
-
-  document.getElementById("step-toggle").textContent = "Passer à l’étape 2";
-  document.getElementById("step-toggle").classList.remove("fa-paper-plane");
-  document.getElementById("step-toggle").classList.add("fa-arrow-right");
-
-  document.getElementById("cancel-selection").textContent = "Annuler";
-  updateBannerSummary();
-
-  document.getElementById("adults").disabled = false;
-  document.getElementById("children").disabled = false;
-  document.getElementById("adults").classList.remove("locked");
-  document.getElementById("children").classList.remove("locked");
-
-  removeStep2Fields();
-}
-
-function addStep2Fields() {
-  const container = document.getElementById("mobile-banner-details");
-  if (document.getElementById("step2-fields")) return;
-
-  const div = document.createElement("div");
-  div.id = "step2-fields";
-  div.innerHTML = `
-    <div class="fields" style="display: flex; gap: 1rem; margin-top: 1rem;">
-      <div class="field third"><label for="r-name">Nom</label><input type="text" id="r-name" required></div>
-      <div class="field third"><label for="r-email">Email</label><input type="email" id="r-email" required></div>
-      <div class="field third"><label for="r-phone">Téléphone</label><input type="tel" id="r-phone" required></div>
-    </div>
-    <div class="field"><label for="r-message">Message (optionnel)</label><textarea id="r-message" rows="3"></textarea></div>
-  `;
-  container.appendChild(div);
-}
-
-function removeStep2Fields() {
-  const el = document.getElementById("step2-fields");
-  if (el) el.remove();
-}
-
-// Gestion des clics
-document.getElementById("step-toggle").addEventListener("click", (e) => {
-  e.preventDefault();
-  if (step === 1) {
-    goToStep2();
-  } else {
-    sendReservationRequest(); // à créer dans l'étape 5
-  }
-});
-
-document.getElementById("cancel-selection").addEventListener("click", (e) => {
-  e.preventDefault();
-  if (step === 2) {
-    goToStep1();
-  } else {
-    resetSelection();
-  }
 });
