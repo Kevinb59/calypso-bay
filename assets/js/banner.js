@@ -118,7 +118,7 @@ function goToStep1() {
 
   const toggleBtn = document.getElementById("toggle-banner");
   toggleBtn.style.display = "inline-block";
-  toggleBtn.innerHTML = "▲";
+  toggleBtn.innerHTML = "▼";
 
   document.getElementById("step-toggle").textContent = "Passer à l’étape 2";
   document.getElementById("step-toggle").classList.remove("fa-paper-plane");
