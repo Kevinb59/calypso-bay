@@ -70,19 +70,21 @@ function updateTotalPrice() {
   `;
 }
 
-// 🧾 Résumé mini bannière
+// 🧾 Mise à jour du titre et des pastilles d'étape
 function updateBannerSummary() {
-  if (!selectedStart || !selectedEnd) return;
-  const nights = Math.round((selectedEnd - selectedStart) / (1000 * 60 * 60 * 24));
-  const startStr = selectedStart.toLocaleDateString("fr-FR", { day: 'numeric', month: 'short' });
-  const endStr = selectedEnd.toLocaleDateString("fr-FR", { day: 'numeric', month: 'short' });
-
   const summary = document.getElementById("banner-summary");
-  const details = document.getElementById("mobile-banner-details");
+  summary.textContent = "Demande de réservation";
 
-  summary.textContent = details.classList.contains("open") || details.classList.contains("full")
-    ? `Demande de réservation: étape ${step} sur 2`
-    : `Séjour du ${startStr} au ${endStr} – ${nights} nuit${nights > 1 ? 's' : ''}`;
+  const dot1 = document.getElementById("step-dot-1");
+  const dot2 = document.getElementById("step-dot-2");
+
+  if (dot1 && dot2) {
+    dot1.style.color = step >= 1 ? "#00ff88" : "white";
+    dot1.style.opacity = step >= 1 ? "1" : "0.4";
+
+    dot2.style.color = step === 2 ? "#00ff88" : "white";
+    dot2.style.opacity = step === 2 ? "1" : "0.4";
+  }
 }
 
 let step = 1;
@@ -95,10 +97,13 @@ function goToStep2() {
 
   document.getElementById("toggle-banner").style.display = "none";
   document.getElementById("step-toggle").textContent = "Envoyer la demande de réservation";
-  document.getElementById("step-toggle").classList.remove("fa-arrow-right");
+  document.getElementById("step-toggle").classList.remove("fa-arrow-circle-right");
   document.getElementById("step-toggle").classList.add("fa-paper-plane");
 
-  document.getElementById("cancel-selection").textContent = "Retour à l’étape 1";
+  document.getElementById("cancel-selection").textContent = "Précédent";
+  document.getElementById("cancel-selection").classList.remove("fa-times");
+  document.getElementById("cancel-selection").classList.add("fa-arrow-left");
+
   updateBannerSummary();
 
   document.getElementById("adults").disabled = true;
@@ -112,24 +117,24 @@ function goToStep2() {
 function goToStep1() {
   step = 1;
   const details = document.getElementById("mobile-banner-details");
-
-  // Supprime la classe full pour permettre la transition vers open
   details.classList.remove("full");
 
-  // Applique la classe open juste après, pour déclencher la transition
   setTimeout(() => {
     details.classList.add("open");
-  }, 10); // <- très court délai pour que la transition soit prise en compte
+  }, 10);
 
   const toggleBtn = document.getElementById("toggle-banner");
   toggleBtn.style.display = "inline-block";
   toggleBtn.innerHTML = "▼";
 
-  document.getElementById("step-toggle").textContent = "Passer à l’étape 2";
+  document.getElementById("step-toggle").textContent = "Suivant";
   document.getElementById("step-toggle").classList.remove("fa-paper-plane");
-  document.getElementById("step-toggle").classList.add("fa-arrow-right");
+  document.getElementById("step-toggle").classList.add("fa-arrow-circle-right");
 
   document.getElementById("cancel-selection").textContent = "Annuler";
+  document.getElementById("cancel-selection").classList.remove("fa-arrow-left");
+  document.getElementById("cancel-selection").classList.add("fa-times");
+
   updateBannerSummary();
 
   document.getElementById("adults").disabled = false;
@@ -139,7 +144,7 @@ function goToStep1() {
 
   setTimeout(() => {
     removeStep2Fields();
-  }, 600); // ↔ correspond à la durée de transition max-height
+  }, 600);
 }
 
 function addStep2Fields() {
