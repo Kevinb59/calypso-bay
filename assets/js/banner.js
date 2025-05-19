@@ -13,6 +13,12 @@ function showBannerPanel() {
   updateTotalPrice();
 }
 
+// 🔁 Icône toggle FontAwesome
+function updateToggleIcon(isOpen) {
+  const toggleBtn = document.getElementById("toggle-banner");
+  toggleBtn.innerHTML = `<i class="fa-regular ${isOpen ? 'fa-circle-down' : 'fa-circle-up'}"></i>`;
+}
+
 // 💸 Met à jour le prix total réel (en fonction du planning CSV)
 function updateTotalPrice() {
   if (!selectedStart || !selectedEnd) return;
@@ -45,9 +51,7 @@ function updateTotalPrice() {
   const taxTotal = adults * nights * touristTaxPerAdultPerNight;
   const total = baseTotal + cleaningFee + taxTotal;
 
-  const container = document.getElementById("total-price");
-
-  container.innerHTML = `
+  document.getElementById("total-price").innerHTML = `
     <div style="text-align: left;">
       <div style="display: flex; justify-content: space-between;">
         <span style="font-weight: normal;">Total des nuits (${nights})</span>
@@ -66,26 +70,48 @@ function updateTotalPrice() {
         <span>Total</span>
         <span>${total} €</span>
       </div>
-    </div>
-  `;
+    </div>`;
 }
 
 // 🧾 Mise à jour du titre et des pastilles d'étape
 function updateBannerSummary() {
   const summary = document.getElementById("banner-summary");
-  summary.textContent = "Demande de réservation";
+  const isFull = document.getElementById("mobile-banner-details").classList.contains("full");
 
   const dot1 = document.getElementById("step-dot-1");
   const dot2 = document.getElementById("step-dot-2");
 
-  if (dot1 && dot2) {
+  if (isFull) {
+    summary.textContent = "Demande de réservation";
+    dot1.style.display = "inline-block";
+    dot2.style.display = "inline-block";
     dot1.style.color = step >= 1 ? "#00ff88" : "white";
     dot1.style.opacity = step >= 1 ? "1" : "0.4";
-
     dot2.style.color = step === 2 ? "#00ff88" : "white";
     dot2.style.opacity = step === 2 ? "1" : "0.4";
+  } else {
+    const start = document.getElementById("mobile-start").textContent;
+    const end = document.getElementById("mobile-end").textContent;
+    const nights = document.getElementById("mobile-nights").textContent;
+    summary.innerHTML = `Séjour du <strong>${start}</strong> au <strong>${end}</strong> – <strong>${nights} nuit${nights > 1 ? 's' : ''}</strong>`;
+    dot1.style.display = "none";
+    dot2.style.display = "none";
   }
 }
+
+// 🔁 Gestion du toggle
+document.addEventListener("DOMContentLoaded", () => {
+  const toggleBtn = document.getElementById("toggle-banner");
+  const details = document.getElementById("mobile-banner-details");
+
+  if (toggleBtn && details) {
+    toggleBtn.addEventListener("click", () => {
+      const isOpen = details.classList.toggle("open");
+      updateToggleIcon(isOpen);
+      updateBannerSummary();
+    });
+  }
+});
 
 let step = 1;
 
