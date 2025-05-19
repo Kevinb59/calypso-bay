@@ -81,7 +81,7 @@ function updateBannerSummary() {
   const details = document.getElementById("mobile-banner-details");
 
   summary.textContent = details.classList.contains("open")
-    ? "Dates sélectionnées"
+    ? "Demande de réservation: étape 1 sur 2"
     : `Séjour du ${startStr} au ${endStr} – ${nights} nuit${nights > 1 ? 's' : ''}`;
 }
 
