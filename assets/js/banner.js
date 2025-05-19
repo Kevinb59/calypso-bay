@@ -113,6 +113,7 @@ function goToStep1() {
   step = 1;
   const details = document.getElementById("mobile-banner-details");
   details.classList.remove("full");
+  void details.offsetWidth; // 🔁 force repaint
   details.classList.add("open");
 
   const toggleBtn = document.getElementById("toggle-banner");
@@ -141,10 +142,10 @@ function addStep2Fields() {
   const div = document.createElement("div");
   div.id = "step2-fields";
   div.innerHTML = `
-    <div class="fields" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem;">
-      <div class="field third"><label for="r-name">Nom</label><input type="text" id="r-name" required></div>
-      <div class="field third"><label for="r-email">Email</label><input type="email" id="r-email" required></div>
-      <div class="field third"><label for="r-phone">Téléphone</label><input type="tel" id="r-phone" required></div>
+    <div class="fields" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;">
+      <div class="field" style="flex: 1; min-width: 100px;"><label for="r-name">Nom</label><input type="text" id="r-name" required></div>
+      <div class="field" style="flex: 1; min-width: 100px;"><label for="r-email">Email</label><input type="email" id="r-email" required></div>
+      <div class="field" style="flex: 1; min-width: 100px;"><label for="r-phone">Téléphone</label><input type="tel" id="r-phone" required></div>
     </div>
     <div class="field"><label for="r-message">Message (optionnel)</label><textarea id="r-message" rows="3"></textarea></div>
   `;
