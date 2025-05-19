@@ -48,7 +48,13 @@
 <!-- BANNIÈRE MOBILE TOUT-EN-UN -->
 <div id="mobile-banner" style="display: none;">
   <div id="mobile-banner-header" style="display: flex; justify-content: space-between; align-items: center;">
-    <span id="banner-summary">Dates sélectionnées</span>
+    <div style="display: flex; align-items: center; gap: 0.75rem;">
+      <span id="banner-summary">Dates sélectionnées</span>
+      <div id="step-indicator" style="display: flex; gap: 0.5rem;">
+        <i class="fas fa-circle" id="step-dot-1" style="color: white; opacity: 0.4;"></i>
+        <i class="fas fa-circle" id="step-dot-2" style="color: white; opacity: 0.4;"></i>
+      </div>
+    </div>
     <button id="toggle-banner" style="background: none; border: none; color: white; font-size: 1.2em;">▲</button>
   </div>
 
@@ -78,8 +84,8 @@
     <p id="total-price" style="font-weight: bold; margin-top: 0.75rem;">Total : —</p>
 
     <ul class="actions" style="justify-content: center;">
-      <a href="#" id="step-toggle" class="button primary small icon solid fa-arrow-right">Passer à l'étape 2</a>
-      <li><a href="#" id="cancel-selection" class="button small icon solid fa-times">Annuler</a></li>
+	<a href="#" id="step-toggle" class="button primary small icon solid fa-arrow-circle-right">Suivant</a>
+	<li><a href="#" id="cancel-selection" class="button small icon solid fa-times">Annuler</a></li>
     </ul>
   </div>
 </div>
