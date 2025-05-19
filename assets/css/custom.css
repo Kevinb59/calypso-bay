@@ -248,7 +248,7 @@
 #mobile-banner-details {
   overflow: hidden;
   max-height: 0;
-  transition: max-height 0.4s ease;
+  transition: max-height 0.6s ease;
 }
 
 #mobile-banner-details.open {
@@ -261,7 +261,7 @@
 }
 
 #mobile-banner-details.full {
-  max-height: 100vh !important;
+  max-height: 1000px;
   transition: max-height 0.6s ease;
 }
 
