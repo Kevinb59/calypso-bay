@@ -137,7 +137,9 @@ function goToStep1() {
   document.getElementById("adults").classList.remove("locked");
   document.getElementById("children").classList.remove("locked");
 
-  removeStep2Fields();
+  setTimeout(() => {
+    removeStep2Fields();
+  }, 600); // ↔ correspond à la durée de transition max-height
 }
 
 function addStep2Fields() {
