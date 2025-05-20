@@ -125,7 +125,7 @@ function goToStep1() {
 
   const toggleBtn = document.getElementById("toggle-banner");
   toggleBtn.style.display = "inline-block";
-  toggleBtn.innerHTML = "▼";
+  toggleBtn.innerHTML = '<i class="fa-regular fa-circle-down"></i>';
 
   document.getElementById("step-toggle").textContent = "Suivant";
   document.getElementById("step-toggle").classList.remove("fa-paper-plane");
@@ -179,7 +179,9 @@ document.addEventListener("DOMContentLoaded", () => {
   if (toggleBtn && details) {
     toggleBtn.addEventListener("click", () => {
       const open = details.classList.toggle("open");
-      toggleBtn.innerHTML = open ? "▼" : "▲";
+      toggleBtn.innerHTML = open
+        ? '<i class="fa-regular fa-circle-down"></i>'
+        : '<i class="fa-regular fa-circle-up"></i>';
       updateBannerSummary();
     });
   }
