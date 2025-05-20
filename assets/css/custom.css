@@ -226,8 +226,12 @@
 #mobile-banner button#toggle-banner {
   background: none;
   border: none;
+  outline: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
   color: white;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   cursor: pointer;
 }
 
