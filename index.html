@@ -293,93 +293,37 @@
 
 					<div class="inner columns divided">
 						<div class="span-4-5">
-							<!-- Form wrapper contenant radios, toggle et formulaires -->
-							<div class="form-wrapper">
-								<!-- Radios -->
-								<input type="radio" id="toggle-contact" name="form-toggle" checked />
-								<input type="radio" id="toggle-reservation" name="form-toggle" />
-
-								<!-- Toggle switch -->
-								<div class="pure-toggle-wrapper">
-									<div class="toggle-switch">
-										<label for="toggle-contact" class="toggle-option">Contact</label>
-										<label for="toggle-reservation" class="toggle-option">Réservation</label>
-										<div class="toggle-slider"></div>
-									</div>
-								</div>
-
-								<!-- Formulaire Contact -->
-								<div id="form-contact">
-									<form method="post" action="#">
-										<div class="fields">
-											<div class="field third">
-												<label for="name">Nom</label>
-												<input type="text" name="name" id="name" />
-											</div>
-											<div class="field third">
-												<label for="email">Email</label>
-												<input type="email" name="email" id="email" />
-											</div>
-											<div class="field third">
-												<label for="tel">Téléphone</label>
-												<input type="tel" name="tel" id="tel" />
-											</div>
-											<div class="field">
-												<label for="message">Message</label>
-												<textarea name="message" id="message" rows="4"></textarea>
-											</div>
-										</div>
-										<ul class="actions">
-											<li><input type="submit" value="Envoyer" class="button primary" /></li>
-										</ul>
-									</form>
-								</div>
-
-								<!-- Formulaire Réservation -->
-								<div id="form-reservation">
-									<form method="post" action="#">
-										<div class="fields">
-											<div class="field third">
-												<label for="r-name">Nom</label>
-												<input type="text" name="r-name" id="r-name" />
-											</div>
-											<div class="field third">
-												<label for="r-email">Email</label>
-												<input type="email" name="r-email" id="r-email" />
-											</div>
-											<div class="field third">
-												<label for="r-phone">Téléphone</label>
-												<input type="tel" name="r-phone" id="r-phone" />
-											</div>
-
-											<div class="field quarter">
-												<label for="r-date-arr">Date d’arrivée</label>
-												<input type="date" name="r-date-arr" id="r-date-arr" />
-											</div>
-											<div class="field quarter">
-												<label for="r-date-dep">Date de départ</label>
-												<input type="date" name="r-date-dep" id="r-date-dep" />
-											</div>
-											<div class="field quarter">
-												<label for="r-adultes">Nombre d’adultes</label>
-												<select name="r-adultes" id="r-adultes" required></select>
-											</div>
-											<div class="field quarter">
-												<label for="r-enfants">Nombre d’enfants</label>
-												<select name="r-enfants" id="r-enfants"></select>
-											</div>
-
-											<div class="field">
-												<label for="r-message">Message (optionnel)</label>
-												<textarea name="r-message" id="r-message" rows="4"></textarea>
-											</div>
-										</div>
-										<ul class="actions">
-											<li><input type="submit" value="Envoyer la demande de réservation" class="button primary" /></li>
-										</ul>
-									</form>
-								</div>
-							</div>
+						  <!-- Form wrapper contenant uniquement le formulaire de contact -->
+						  <div class="form-wrapper">
+						
+						    <!-- Formulaire Contact -->
+						    <div id="form-contact">
+						      <form method="post" action="#">
+						        <div class="fields">
+						          <div class="field third">
+						            <label for="name">Nom</label>
+						            <input type="text" name="name" id="name" />
+						          </div>
+						          <div class="field third">
+						            <label for="email">Email</label>
+						            <input type="email" name="email" id="email" />
+						          </div>
+						          <div class="field third">
+						            <label for="tel">Téléphone</label>
+						            <input type="tel" name="tel" id="tel" />
+						          </div>
+						          <div class="field">
+						            <label for="message">Message</label>
+						            <textarea name="message" id="message" rows="4"></textarea>
+						          </div>
+						        </div>
+						        <ul class="actions">
+						          <li><input type="submit" value="Envoyer" class="button primary" /></li>
+						        </ul>
+						      </form>
+						    </div>
+						
+						  </div>
 						</div>
 						<!-- Avis -->
 						<div class="span-1-5">
@@ -486,7 +430,6 @@
 		<script src="assets/js/equipements.js"></script>
 		<script src="assets/js/planning.js"></script>
 		<script src="assets/js/banner.js"></script>
-		<script src="assets/js/form-validation.js"></script>
 		<script src="assets/js/map.js"></script>
 		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFpGB6jezXVKBDSLkgR4iHKTZ9rcMUIHU&callback=initMap"></script>
 		<script src="assets/js/popup-reglement.js"></script>
