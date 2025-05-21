@@ -90,21 +90,28 @@ function updateTotalPrice() {
 // 🧾 Mise à jour du titre et des pastilles d'étape
 function updateBannerSummary() {
   const summary = document.getElementById("banner-summary");
-  summary.textContent = "Demande de réservation";
-
-  // Affiche les ronds d’étape
+  const details = document.getElementById("mobile-banner-details");
   const stepIndicator = document.getElementById("step-indicator");
-  if (stepIndicator) stepIndicator.style.display = "flex";
 
-  const dot1 = document.getElementById("step-dot-1");
-  const dot2 = document.getElementById("step-dot-2");
+  const isOpen = details.classList.contains("open") || details.classList.contains("full");
 
-  if (dot1 && dot2) {
-    dot1.style.color = step >= 1 ? "#00ff88" : "white";
-    dot1.style.opacity = step >= 1 ? "1" : "0.4";
+  if (isOpen) {
+    summary.textContent = "Demande de réservation";
+    if (stepIndicator) stepIndicator.style.display = "flex";
 
-    dot2.style.color = step === 2 ? "#00ff88" : "white";
-    dot2.style.opacity = step === 2 ? "1" : "0.4";
+    const dot1 = document.getElementById("step-dot-1");
+    const dot2 = document.getElementById("step-dot-2");
+
+    if (dot1 && dot2) {
+      dot1.style.color = step >= 1 ? "#00ff88" : "white";
+      dot1.style.opacity = step >= 1 ? "1" : "0.4";
+
+      dot2.style.color = step === 2 ? "#00ff88" : "white";
+      dot2.style.opacity = step === 2 ? "1" : "0.4";
+    }
+  } else {
+    // Ne rien modifier si la bannière est fermée
+    if (stepIndicator) stepIndicator.style.display = "none";
   }
 }
 
