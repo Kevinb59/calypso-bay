@@ -1,15 +1,28 @@
 // 📤 Affiche la bannière
 function showBannerPanel() {
   const nights = Math.round((selectedEnd - selectedStart) / (1000 * 60 * 60 * 24));
-  const startStr = selectedStart.toLocaleDateString("fr-FR");
-  const endStr = selectedEnd.toLocaleDateString("fr-FR");
 
+  // Fonction pour formater une date avec une majuscule au mois
+  const formatDate = (date) => {
+    return date.toLocaleDateString("fr-FR", { day: '2-digit', month: 'long' })
+               .replace(/^\d{2} (\w)/, (match, p1) => match.replace(p1, p1.toUpperCase()));
+  };
+
+  const startStr = formatDate(selectedStart);
+  const endStr = formatDate(selectedEnd);
+
+  // Mise à jour des éléments dans la bannière
   document.getElementById("mobile-start").textContent = startStr;
   document.getElementById("mobile-end").textContent = endStr;
   document.getElementById("mobile-nights").textContent = nights;
+
+  // Affichage de la bannière
   document.getElementById("mobile-banner").style.display = "block";
 
-  updateBannerSummary();
+  // Mise à jour du résumé (compact)
+  document.getElementById("banner-summary").textContent = `Séjour du ${startStr} au ${endStr} - ${nights} nuits`;
+
+  // Mise à jour du prix
   updateTotalPrice();
 }
 
