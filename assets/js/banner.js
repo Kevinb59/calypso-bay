@@ -19,8 +19,12 @@ function showBannerPanel() {
   // Affichage de la bannière
   document.getElementById("mobile-banner").style.display = "block";
 
-  // Mise à jour du résumé (compact)
-  document.getElementById("banner-summary").textContent = `Séjour du ${startStr} au ${endStr} - ${nights} nuits`;
+  // Mise à jour du résumé (compact) avec texte en gras
+  document.getElementById("banner-summary").innerHTML = `<strong>Séjour du ${startStr} au ${endStr} – ${nights} nuits</strong>`;
+
+  // Masquer les ronds d'étapes
+  const stepIndicator = document.getElementById("step-indicator");
+  if (stepIndicator) stepIndicator.style.display = "none";
 
   // Mise à jour du prix
   updateTotalPrice();
@@ -87,6 +91,10 @@ function updateTotalPrice() {
 function updateBannerSummary() {
   const summary = document.getElementById("banner-summary");
   summary.textContent = "Demande de réservation";
+
+  // Affiche les ronds d’étape
+  const stepIndicator = document.getElementById("step-indicator");
+  if (stepIndicator) stepIndicator.style.display = "flex";
 
   const dot1 = document.getElementById("step-dot-1");
   const dot2 = document.getElementById("step-dot-2");
