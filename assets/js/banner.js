@@ -1,32 +1,15 @@
 // 📤 Affiche la bannière
 function showBannerPanel() {
   const nights = Math.round((selectedEnd - selectedStart) / (1000 * 60 * 60 * 24));
+  const startStr = selectedStart.toLocaleDateString("fr-FR");
+  const endStr = selectedEnd.toLocaleDateString("fr-FR");
 
-  // Fonction pour formater une date avec une majuscule au mois
-  const formatDate = (date) => {
-    return date.toLocaleDateString("fr-FR", { day: '2-digit', month: 'long' })
-               .replace(/^\d{2} (\w)/, (match, p1) => match.replace(p1, p1.toUpperCase()));
-  };
-
-  const startStr = formatDate(selectedStart);
-  const endStr = formatDate(selectedEnd);
-
-  // Mise à jour des éléments dans la bannière
   document.getElementById("mobile-start").textContent = startStr;
   document.getElementById("mobile-end").textContent = endStr;
   document.getElementById("mobile-nights").textContent = nights;
-
-  // Affichage de la bannière
   document.getElementById("mobile-banner").style.display = "block";
 
-  // Mise à jour du résumé (compact) avec texte en gras
-  document.getElementById("banner-summary").innerHTML = `<strong>Séjour du ${startStr} au ${endStr} – ${nights} nuits</strong>`;
-
-  // Masquer les ronds d'étapes
-  const stepIndicator = document.getElementById("step-indicator");
-  if (stepIndicator) stepIndicator.style.display = "none";
-
-  // Mise à jour du prix
+  updateBannerSummary();
   updateTotalPrice();
 }
 
@@ -90,28 +73,17 @@ function updateTotalPrice() {
 // 🧾 Mise à jour du titre et des pastilles d'étape
 function updateBannerSummary() {
   const summary = document.getElementById("banner-summary");
-  const details = document.getElementById("mobile-banner-details");
-  const stepIndicator = document.getElementById("step-indicator");
+  summary.textContent = "Demande de réservation";
 
-  const isOpen = details.classList.contains("open") || details.classList.contains("full");
+  const dot1 = document.getElementById("step-dot-1");
+  const dot2 = document.getElementById("step-dot-2");
 
-  if (isOpen) {
-    summary.textContent = "Demande de réservation";
-    if (stepIndicator) stepIndicator.style.display = "flex";
+  if (dot1 && dot2) {
+    dot1.style.color = step >= 1 ? "#00ff88" : "white";
+    dot1.style.opacity = step >= 1 ? "1" : "0.4";
 
-    const dot1 = document.getElementById("step-dot-1");
-    const dot2 = document.getElementById("step-dot-2");
-
-    if (dot1 && dot2) {
-      dot1.style.color = step >= 1 ? "#00ff88" : "white";
-      dot1.style.opacity = step >= 1 ? "1" : "0.4";
-
-      dot2.style.color = step === 2 ? "#00ff88" : "white";
-      dot2.style.opacity = step === 2 ? "1" : "0.4";
-    }
-  } else {
-    // Ne rien modifier si la bannière est fermée
-    if (stepIndicator) stepIndicator.style.display = "none";
+    dot2.style.color = step === 2 ? "#00ff88" : "white";
+    dot2.style.opacity = step === 2 ? "1" : "0.4";
   }
 }
 
