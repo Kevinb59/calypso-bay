@@ -14,7 +14,7 @@
 		<div id="page-wrapper">
 			<!-- Wrapper -->
 			<div id="wrapper">
-				
+
 				<!-- A C C U E I L //////////////////////////////////////////////////////////////////////////////// -->
 				<section class="panel banner right">
 					<div class="content color0 span-3-75">
@@ -209,11 +209,15 @@
 				<!-- Lightbox -->
 				<div id="lightbox" class="lightbox" style="display:none;">
 					<span class="close" onclick="closeLightbox()">&times;</span>
-					<div id="lightbox-counter" style="color:white; margin-bottom: 1em; font-size: 1.2em;"></div>
-					<img id="lightbox-img" src="" alt="" />
-					<div class="nav">
-						<i class="fas fa-chevron-circle-left" onclick="prevImage()"></i>
-						<i class="fas fa-chevron-circle-right" onclick="nextImage()"></i>
+					<div id="lightbox-counter">Photo 1 / 5</div>
+
+					<!-- 🆕 Nouveau conteneur -->
+					<div class="lightbox-image-wrapper">
+						<img id="lightbox-img" src="" alt="" />
+						<div class="nav">
+							<i class="fas fa-chevron-circle-left" onclick="prevImage()"></i>
+							<i class="fas fa-chevron-circle-right" onclick="nextImage()"></i>
+						</div>
 					</div>
 				</div>
 
@@ -255,7 +259,7 @@
 						<div id="calendar-grid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem;"></div>
 					</div>
 				</section>
-				
+
 				<!-- Conteneur du popup -->
 				<div id="popup-reglement" class="equipment-popup">
 					<div class="popup-content">
@@ -295,7 +299,7 @@
 						<div class="span-4-5">
 						  <!-- Form wrapper contenant uniquement le formulaire de contact -->
 						  <div class="form-wrapper">
-						
+
 						    <!-- Formulaire Contact -->
 						    <div id="form-contact">
 						      <form method="post" action="#">
@@ -322,7 +326,7 @@
 						        </ul>
 						      </form>
 						    </div>
-						
+
 						  </div>
 						</div>
 						<!-- Avis -->
@@ -420,7 +424,7 @@
 			</ul>
 		  </div>
 		</div>
-		
+
 		<!-- Scripts -->
 		<script src="assets/js/jquery.min.js"></script>
 		<script src="assets/js/browser.min.js"></script>
