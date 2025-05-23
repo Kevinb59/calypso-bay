@@ -84,7 +84,7 @@ function handleDateClick(dateObj, event) {
       minEndDate.setDate(minEndDate.getDate() + MIN_NIGHTS);
       const minDateStr = minEndDate.toLocaleDateString("fr-FR", { day: "numeric", month: "long" });
 
-      showTooltip(`Minimum 6 nuits. Choisissez au moins jusqu’au ${minDateStr}`, event.currentTarget);
+      showTooltip(`Minimum 6 nuits. Choisissez au moins jusqu’au <strong>${minDateStr}</strong>`, event.currentTarget);
       return;
     }
 
@@ -203,7 +203,7 @@ document.getElementById("next-month").addEventListener("click", () => {
 // 📅 Gère les 6 jours minimum
 function showTooltip(message, targetElement) {
   const tooltip = document.createElement("div");
-  tooltip.textContent = message;
+  tooltip.innerHTML = message;
   tooltip.style.position = "absolute";
   tooltip.style.background = "#fff";
   tooltip.style.color = "#000";
