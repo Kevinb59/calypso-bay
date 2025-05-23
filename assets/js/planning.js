@@ -67,7 +67,10 @@ function handleDateClick(dateObj, event) {
 
     while (current < dateObj) {
       const key = current.toLocaleDateString("fr-FR", {
-        weekday: "short", day: "2-digit", month: "long", year: "numeric"
+        weekday: "short",
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
       }).toLowerCase();
 
       const value = planningData[key];
@@ -75,6 +78,7 @@ function handleDateClick(dateObj, event) {
         hasInvalid = true;
         break;
       }
+
       current.setDate(current.getDate() + 1);
     }
 
@@ -82,9 +86,17 @@ function handleDateClick(dateObj, event) {
     if (diffNights < MIN_NIGHTS) {
       const minEndDate = new Date(selectedStart);
       minEndDate.setDate(minEndDate.getDate() + MIN_NIGHTS);
-      const minDateStr = minEndDate.toLocaleDateString("fr-FR", { day: "numeric", month: "long" });
 
-      showTooltip(`Minimum 6 nuits. Choisissez au moins jusqu’au <strong>${minDateStr}</strong>`, event.currentTarget);
+      const minDateStr = minEndDate.toLocaleDateString("fr-FR", {
+        day: "numeric",
+        month: "long"
+      });
+
+      // ✅ Texte avec date en gras (et soulignée si tu veux)
+      showTooltip(
+        `Minimum 6 nuits. Choisissez au moins jusqu’au <strong><u>${minDateStr}</u></strong>`,
+        event.currentTarget
+      );
       return;
     }
 
