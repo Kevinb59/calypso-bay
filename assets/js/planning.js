@@ -49,7 +49,7 @@ function resetSelection(keepCalendar = false) {
 }
 
 // 📅 Gère clic sur date
-function handleDateClick(dateObj) {
+function handleDateClick(dateObj, event) {
   const MIN_NIGHTS = 6;
 
   if (!selectedStart || (selectedStart && selectedEnd)) {
@@ -61,6 +61,23 @@ function handleDateClick(dateObj) {
     resetSelection(true);
     return;
   } else {
+    // Vérifie que la plage contient uniquement des jours disponibles avec un tarif
+    let current = new Date(selectedStart);
+    let hasInvalid = false;
+
+    while (current < dateObj) {
+      const key = current.toLocaleDateString("fr-FR", {
+        weekday: "short", day: "2-digit", month: "long", year: "numeric"
+      }).toLowerCase();
+
+      const value = planningData[key];
+      if (!value || value === "x" || isNaN(parseFloat(value))) {
+        hasInvalid = true;
+        break;
+      }
+      current.setDate(current.getDate() + 1);
+    }
+
     const diffNights = Math.round((dateObj - selectedStart) / (1000 * 60 * 60 * 24));
     if (diffNights < MIN_NIGHTS) {
       const minEndDate = new Date(selectedStart);
@@ -70,6 +87,13 @@ function handleDateClick(dateObj) {
       showTooltip(`Minimum 6 nuits. Choisissez au moins jusqu’au ${minDateStr}`, event.currentTarget);
       return;
     }
+
+    if (hasInvalid) {
+      showTooltip("Votre sélection contient un jour non disponible", event.currentTarget);
+      resetSelection(true);
+      return;
+    }
+
     selectedEnd = dateObj;
   }
 
@@ -149,8 +173,8 @@ function renderCalendar(month, year) {
     cell.appendChild(dayLabel);
     if (priceLabel.textContent) cell.appendChild(priceLabel);
 
-    if (!isReserved && !isPast) {
-      cell.addEventListener("click", () => handleDateClick(displayDate));
+    if (!isPast && !isReserved && !isNaN(parseFloat(value))) {
+      cell.addEventListener("click", (e) => handleDateClick(displayDate, e));
     }
 
     grid.appendChild(cell);
