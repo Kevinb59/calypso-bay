@@ -215,7 +215,10 @@ document.getElementById("next-month").addEventListener("click", () => {
 // 📅 Gère les 6 jours minimum
 function showTooltip(message, targetElement) {
   const tooltip = document.createElement("div");
-  tooltip.innerHTML = `<span style="color: #000;">${message}</span>`;
+  tooltip.innerHTML = message.replace(
+  /<strong>(.*?)<\/strong>/g,
+  '<strong style="color: #000;">$1</strong>'
+  );
   tooltip.style.position = "absolute";
   tooltip.style.background = "#fff";
   tooltip.style.color = "#000";
