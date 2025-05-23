@@ -101,7 +101,7 @@ function handleDateClick(dateObj, event) {
     }
 
     if (hasInvalid) {
-      showTooltip("Votre sélection contient un jour ou plusieurs non disponible", event.currentTarget);
+      showTooltip("Votre sélection contient un ou plusieurs jours non disponibles", event.currentTarget);
       resetSelection(true);
       return;
     }
