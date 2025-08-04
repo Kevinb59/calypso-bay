@@ -73,6 +73,19 @@ function updateTotalPrice() {
 
   const container = document.getElementById('total-price')
 
+  // Message d'avertissement pour les enfants
+  const childrenWarning =
+    children > 0
+      ? `
+    <div style="margin-top: 0.75rem; padding: 0.5rem; background-color: rgba(255, 193, 7, 0.2); border-left: 3px solid #ffc107; border-radius: 3px;">
+      <span style="color: #ffc107; font-size: 0.9em;">
+        <i class="fas fa-exclamation-triangle" style="margin-right: 0.5rem;"></i>
+        Les enfants de moins de 8 ans ne sont pas admis
+      </span>
+    </div>
+  `
+      : ''
+
   container.innerHTML = `
     <div style="text-align: left;">
       <div style="display: flex; justify-content: space-between;">
@@ -94,6 +107,7 @@ function updateTotalPrice() {
         <span>Total</span>
         <span>${total.toFixed(2)} €</span>
       </div>
+      ${childrenWarning}
     </div>
   `
 }
