@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Engagement&display=swap');
 @import url(fontawesome-all.min.css);
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,300i,400i');
 @font-face {
@@ -2331,7 +2332,8 @@ button:disabled,
 
 .panel > *.color0 {
   background-image: url('../../images/overlay.png'),
-    linear-gradient(45deg, #726193 20%, #e37b7c 60%, #ffe4b4);
+    linear-gradient(45deg, #0077be 15%, #00c3c9 45%, #b8e994 75%, #fff1c1 90%);
+
   background-size: 128px 128px, auto;
 }
 

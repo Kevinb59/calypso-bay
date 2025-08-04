@@ -3,17 +3,14 @@
     "icon": "🍽️",
     "label": "Cuisine",
     "items": [
-      "Table à manger",
-      "Machine à café",
-      "Produits ménagers",
+      "Ilot central",
+      "Machines à café (Nespresso et à filtre)",
       "Grille-pain",
       "Plaque de cuisson",
       "Four",
-      "Sèche-linge",
       "Ustensiles de cuisine",
       "Vaisselle et couverts",
       "Bouilloire électrique",
-      "Lave-linge",
       "Lave-vaisselle",
       "Micro-ondes",
       "Réfrigérateur",
@@ -25,7 +22,6 @@
     "label": "Salles de bains",
     "items": [
       "Sèche-cheveux",
-      "Produits de nettoyage",
       "Eau chaude",
       "Serviettes",
       "Grandes douches",
@@ -43,14 +39,15 @@
       "Table basse"
     ]
   },
+  "salon_ext": {
+    "icon": "🌞",
+    "label": "Salon extérieur",
+    "items": ["3 fauteuils", "Table basse", "Avec vue mer"]
+  },
   "repas": {
     "icon": "🍴",
     "label": "Espace repas",
-    "items": [
-      "En extérieur",
-      "Table 6 personnes",
-      "Avec vue"
-    ]
+    "items": ["En extérieur", "Table 6 à 10 personnes", "Avec vue mer"]
   },
   "chambres": {
     "icon": "🛏️",
@@ -59,7 +56,7 @@
       "<15m²",
       "2 lits queen size",
       "2 lits simples",
-      "Avec vue",
+      "Avec vue mer",
       "Climatisation",
       "Armoires/Dressing",
       "Salles de bains attenantes",
@@ -70,16 +67,23 @@
       "Accès direct à la terrasse"
     ]
   },
+  "cellier": {
+    "icon": "🧺",
+    "label": "Cellier",
+    "items": ["Machine à laver", "Sèche-linge", "Etendoir"]
+  },
   "piscine": {
     "icon": "🏊",
     "label": "Piscine",
     "items": [
       "Ouverte toute l'année",
       "Piscine à débordement",
-      "Serviettes de piscine/plage",
-      "Piscine avec vue",
+      "Serviettes de piscine",
+      "Piscine avec vue mer",
       "Chaises longues",
-      "Piscine d'eau salée"
+      "Piscine d'eau salée",
+      "5m x 3m",
+      "1,5m de profondeur"
     ]
   },
   "terrasse": {
@@ -89,23 +93,23 @@
       "50m²",
       "Table 6 personnes",
       "3 chaises longues",
-      "Barbecue",
       "Piscine privée",
       "Espace apéro",
       "Méridienne exotique avec moustiquaire",
-      "Avec vue",
+      "Avec vue mer",
       "Barbecue et ustensiles"
     ]
   },
   "exterieur": {
     "icon": "🌴",
-    "label": "Extérieurs / Jardin",
+    "label": "Jardin tropical",
     "items": [
       "1350m²",
       "Pelouse",
       "Fleuris",
       "Verdoyant",
-      "Avec vue",
+      "Avec vue mer",
+      "Barbecue",
       "Sans vis-à-vis"
     ]
   },
@@ -118,6 +122,7 @@
       "Coffre-fort",
       "Volets sécurisés",
       "Jardin clôturé",
+      "Détecteur de fumée",
       "Réserve d'eau de réseau",
       "Réserve d'eau de pluie (WC)"
     ]
@@ -125,17 +130,11 @@
   "parking": {
     "icon": "🅿️",
     "label": "Parking",
-    "items": [
-      "Privé",
-      "Gratuit",
-      "Jusqu'à 3 voitures"
-    ]
+    "items": ["Privé", "Sur la propriété", "Jusqu'à 5 voitures"]
   },
   "accessibilite": {
     "icon": "♿",
     "label": "Accessibilité",
-    "items": [
-      "Logement de plain-pied"
-    ]
+    "items": ["Logement de plain-pied"]
   }
 }

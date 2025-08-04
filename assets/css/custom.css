@@ -485,11 +485,13 @@ body.no-scroll .lightbox * {
   margin-top: 0.5rem;
 }
 
-.moriarty {
-  font-family: 'Moriarty', cursive;
+.moriarty-link {
+  font-family: 'Engagement', 'Brush Script MT', cursive;
   font-size: 2.2em;
   line-height: 1;
   margin-left: 0.25em;
+  text-decoration: none;
+  color: inherit;
 }
 
 /* ===============================
