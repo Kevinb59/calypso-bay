@@ -246,6 +246,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Variables pour le swipe
+  let startY = 0
+  let currentY = 0
+  let isDragging = false
+  let startTime = 0
+
   // Ajouter l'événement sur le header de la bannière
   if (bannerHeader && details) {
     bannerHeader.addEventListener('click', (e) => {
@@ -255,6 +261,96 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       toggleBanner()
     })
+  }
+
+  // Gestion des gestes tactiles pour la bannière
+  const banner = document.getElementById('mobile-banner')
+  const swipeIndicator = document.getElementById('swipe-indicator')
+
+  if (banner && swipeIndicator) {
+    // Événements tactiles
+    banner.addEventListener('touchstart', handleTouchStart, { passive: false })
+    banner.addEventListener('touchmove', handleTouchMove, { passive: false })
+    banner.addEventListener('touchend', handleTouchEnd, { passive: false })
+
+    // Événements souris pour les écrans tactiles avec souris
+    banner.addEventListener('mousedown', handleMouseDown)
+    banner.addEventListener('mousemove', handleMouseMove)
+    banner.addEventListener('mouseup', handleMouseUp)
+    banner.addEventListener('mouseleave', handleMouseUp)
+
+    function handleTouchStart(e) {
+      startY = e.touches[0].clientY
+      startTime = Date.now()
+      isDragging = true
+      e.preventDefault()
+    }
+
+    function handleTouchMove(e) {
+      if (!isDragging) return
+      currentY = e.touches[0].clientY
+      e.preventDefault()
+    }
+
+    function handleTouchEnd(e) {
+      if (!isDragging) return
+      const deltaY = currentY - startY
+      const deltaTime = Date.now() - startTime
+      const velocity = Math.abs(deltaY) / deltaTime
+
+      // Seuil de vitesse et distance pour déclencher le swipe
+      if (Math.abs(deltaY) > 30 || velocity > 0.3) {
+        if (deltaY > 0) {
+          // Swipe vers le bas = fermer
+          if (details.classList.contains('open')) {
+            toggleBanner()
+          }
+        } else {
+          // Swipe vers le haut = ouvrir
+          if (!details.classList.contains('open')) {
+            toggleBanner()
+          }
+        }
+      }
+      isDragging = false
+    }
+
+    function handleMouseDown(e) {
+      if (e.target.closest('button, a, select, input, textarea')) return
+      startY = e.clientY
+      startTime = Date.now()
+      isDragging = true
+      banner.style.cursor = 'grabbing'
+    }
+
+    function handleMouseMove(e) {
+      if (!isDragging) return
+      currentY = e.clientY
+    }
+
+    function handleMouseUp(e) {
+      if (!isDragging) return
+      const deltaY = currentY - startY
+      const deltaTime = Date.now() - startTime
+      const velocity = Math.abs(deltaY) / deltaTime
+
+      // Seuil de vitesse et distance pour déclencher le swipe
+      if (Math.abs(deltaY) > 30 || velocity > 0.3) {
+        if (deltaY > 0) {
+          // Swipe vers le bas = fermer
+          if (details.classList.contains('open')) {
+            toggleBanner()
+          }
+        } else {
+          // Swipe vers le haut = ouvrir
+          if (!details.classList.contains('open')) {
+            toggleBanner()
+          }
+        }
+      }
+      isDragging = false
+      banner.style.cursor = 'grab'
+    }
   }
 
   // Garder l'événement sur le bouton toggle aussi
