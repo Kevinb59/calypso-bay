@@ -1,0 +1,14 @@
+# Redirections pour Vercel
+# Redirection de la racine vers la version française
+/ /index.html 200
+
+# Redirections pour les versions linguistiques
+/en /index-en.html 200
+/de /index-de.html 200
+/fr /index.html 200
+
+# Redirection des anciennes URLs (si nécessaire)
+# /old-page /new-page 301
+
+# Gestion des erreurs 404
+/* /index.html 404

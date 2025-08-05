@@ -130,6 +130,12 @@ typings/
 # Optional eslint cache
 .eslintcache
 
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
 # Optional REPL history
 .node_repl_history
 
@@ -141,58 +147,23 @@ typings/
 
 # dotenv environment variables file
 .env
+.env.test
+.env.production
+.env.local
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache
 
-# next.js build output
-.next
+# Vercel
+.vercel
 
-# nuxt.js build output
-.nuxt
-
-# vuepress build output
-.vuepress/dist
-
-# Serverless directories
-.serverless/
-
-# FuseBox cache
-.fusebox/
-
-# DynamoDB Local files
-.dynamodb/
-
-# TernJS port file
-.tern-port
-
-# Stores VSCode versions used for testing VSCode extensions
-.vscode-test
-
-# IDE files
+# IDE
 .vscode/
 .idea/
 *.swp
 *.swo
-*~
 
-# OS generated files
+# OS
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
-
-# Backup files
-*.bak
-*.backup
-*.old
-
-# Local development files
-.local/
-
-# Google Apps Script
-.calypso-bay-contact.gs

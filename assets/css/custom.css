@@ -75,6 +75,11 @@
   position: relative;
 }
 
+/* Empêcher le redimensionnement du textarea */
+textarea {
+  resize: none !important;
+}
+
 .field .error-message {
   color: #e74c3c;
   font-size: 0.75em;
