@@ -157,6 +157,7 @@ typings/
 
 # Vercel
 .vercel
+.vercel/output
 
 # IDE
 .vscode/

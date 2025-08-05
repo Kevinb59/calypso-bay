@@ -1,0 +1,32 @@
+{
+  "name": "Calypso Bay - Villa de Location",
+  "short_name": "Calypso Bay",
+  "description": "Villa de standing à Bouillante, Guadeloupe - Vue imprenable sur la mer et les îlets Pigeon",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4a90e2",
+  "icons": [
+    {
+      "src": "/images/logos/AIRBNB.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/logos/BOOKING.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "lang": "fr",
+  "dir": "ltr",
+  "categories": ["travel", "accommodation", "vacation"],
+  "screenshots": [
+    {
+      "src": "/images/pic01.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    }
+  ]
+}
