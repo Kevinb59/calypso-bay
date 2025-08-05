@@ -302,15 +302,15 @@
 
 						    <!-- Formulaire Contact -->
 						    <div id="form-contact">
-						      <form method="post" action="#">
+						      <form id="contact-form" method="post" action="#">
 						        <div class="fields">
 						          <div class="field third">
 						            <label for="name">Nom</label>
-						            <input type="text" name="name" id="name" />
+						            <input type="text" name="name" id="name" required />
 						          </div>
 						          <div class="field third">
 						            <label for="email">Email</label>
-						            <input type="email" name="email" id="email" />
+						            <input type="email" name="email" id="email" required />
 						          </div>
 						          <div class="field third">
 						            <label for="tel">Téléphone</label>
@@ -318,11 +318,11 @@
 						          </div>
 						          <div class="field">
 						            <label for="message">Message</label>
-						            <textarea name="message" id="message" rows="4"></textarea>
+						            <textarea name="message" id="message" rows="4" required></textarea>
 						          </div>
 						        </div>
 						        <ul class="actions">
-						          <li><input type="submit" value="Envoyer" class="button primary" /></li>
+						          <li><button type="submit" class="button primary"><span class="icon solid fa-paper-plane"></span> Envoyer</button></li>
 						        </ul>
 						      </form>
 						    </div>
@@ -440,5 +440,6 @@
 		<script src="assets/js/map.js"></script>
 		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFpGB6jezXVKBDSLkgR4iHKTZ9rcMUIHU&callback=initMap"></script>
 		<script src="assets/js/popup-reglement.js"></script>
+		<script src="assets/js/form-contact.js"></script>
 	</body>
 </html>

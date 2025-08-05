@@ -193,3 +193,6 @@ Thumbs.db
 
 # Local development files
 .local/
+
+# Google Apps Script
+.calypso-bay-contact.gs
