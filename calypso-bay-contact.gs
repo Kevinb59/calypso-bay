@@ -26,8 +26,7 @@ function envoyerMessageContact(data) {
     const destinataire = 'contact.calypso.bay@gmail.com'
 
     // Sujet de l'email reçu
-    const objet =
-      '📩 Contact Calypso Bay : Nouveau message de la part de ${data.name}'
+    const objet = `📩 Contact Calypso Bay : Nouveau message de la part de ${data.name}`
 
     // Préparation du corps du mailto, formaté en texte brut
     const corpsReponse =
