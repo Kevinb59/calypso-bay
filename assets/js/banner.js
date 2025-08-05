@@ -269,9 +269,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (banner && swipeIndicator) {
     // Événements tactiles
-    banner.addEventListener('touchstart', handleTouchStart, { passive: false })
+    banner.addEventListener('touchstart', handleTouchStart, { passive: true })
     banner.addEventListener('touchmove', handleTouchMove, { passive: false })
-    banner.addEventListener('touchend', handleTouchEnd, { passive: false })
+    banner.addEventListener('touchend', handleTouchEnd, { passive: true })
 
     // Événements souris pour les écrans tactiles avec souris
     banner.addEventListener('mousedown', handleMouseDown)
@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
       startY = e.touches[0].clientY
       startTime = Date.now()
       isDragging = true
-      e.preventDefault()
+      // Ne pas empêcher le comportement par défaut pour permettre les clics
     }
 
     function handleTouchMove(e) {
@@ -302,6 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return
       }
       currentY = e.touches[0].clientY
+      // Empêcher le scroll seulement pendant le swipe
       e.preventDefault()
     }
 
