@@ -280,6 +280,12 @@ document.addEventListener('DOMContentLoaded', () => {
     banner.addEventListener('mouseleave', handleMouseUp)
 
     function handleTouchStart(e) {
+      // Ignorer si on touche un élément interactif
+      if (
+        e.target.closest('button, a, select, input, textarea, .actions, .field')
+      ) {
+        return
+      }
       startY = e.touches[0].clientY
       startTime = Date.now()
       isDragging = true
@@ -288,6 +294,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleTouchMove(e) {
       if (!isDragging) return
+      // Ignorer si on touche un élément interactif
+      if (
+        e.target.closest('button, a, select, input, textarea, .actions, .field')
+      ) {
+        isDragging = false
+        return
+      }
       currentY = e.touches[0].clientY
       e.preventDefault()
     }
@@ -316,7 +329,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleMouseDown(e) {
-      if (e.target.closest('button, a, select, input, textarea')) return
+      if (
+        e.target.closest('button, a, select, input, textarea, .actions, .field')
+      )
+        return
       startY = e.clientY
       startTime = Date.now()
       isDragging = true
