@@ -208,9 +208,9 @@ function addStep2Fields() {
   div.id = 'step2-fields'
   div.innerHTML = `
     <div class="fields" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;">
-      <div class="field" style="flex: 1; min-width: 100px;"><label for="r-name">Nom</label><input type="text" id="r-name" required></div>
-      <div class="field" style="flex: 1; min-width: 100px;"><label for="r-email">Email</label><input type="email" id="r-email" required></div>
-      <div class="field" style="flex: 1; min-width: 100px;"><label for="r-phone">Téléphone</label><input type="tel" id="r-phone" required></div>
+      <div class="field" style="flex: 1; min-width: 100px;"><label for="r-name">Nom *</label><input type="text" id="r-name" required></div>
+      <div class="field" style="flex: 1; min-width: 100px;"><label for="r-email">Email *</label><input type="email" id="r-email" required></div>
+      <div class="field" style="flex: 1; min-width: 100px;"><label for="r-phone">Téléphone</label><input type="tel" id="r-phone"></div>
     </div>
     <div class="field"><label for="r-message">Message (optionnel)</label><textarea id="r-message" rows="3"></textarea></div>
   `
@@ -222,6 +222,223 @@ function addStep2Fields() {
 function removeStep2Fields() {
   const el = document.getElementById('step2-fields')
   if (el) el.remove()
+}
+
+// 🚀 Envoi de la demande de réservation
+function sendReservationRequest() {
+  const name = document.getElementById('r-name')?.value.trim()
+  const email = document.getElementById('r-email')?.value.trim()
+  const phone = document.getElementById('r-phone')?.value.trim()
+  const message = document.getElementById('r-message')?.value.trim()
+
+  // Validation des champs obligatoires
+  if (!name || !email) {
+    const stepToggle = document.getElementById('step-toggle')
+    stepToggle.innerHTML =
+      '<i class="fas fa-exclamation-triangle"></i> Champs requis'
+    stepToggle.style.backgroundColor = '#ff4444'
+
+    setTimeout(() => {
+      stepToggle.innerHTML =
+        '<i class="fas fa-paper-plane"></i> Envoyer la demande de réservation'
+      stepToggle.style.backgroundColor = ''
+    }, 2000)
+    return
+  }
+
+  // Récupération des données de réservation
+  const adults = parseInt(document.getElementById('adults').value) || 0
+  const children = parseInt(document.getElementById('children').value) || 0
+  const startDate = selectedStart
+  const endDate = selectedEnd
+  const nights = Math.round(
+    (selectedEnd - selectedStart) / (1000 * 60 * 60 * 24)
+  )
+
+  // Calcul du prix total
+  const touristTaxPerAdultPerNight = 2.3
+  const cleaningFee = 100
+  let baseTotal = 0
+  let currentDate = new Date(selectedStart)
+
+  while (currentDate < selectedEnd) {
+    const key = currentDate
+      .toLocaleDateString('fr-FR', {
+        weekday: 'short',
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric'
+      })
+      .toLowerCase()
+
+    const value = planningData[key]
+    const price = parseFloat(value)
+
+    if (!isNaN(price)) {
+      baseTotal += price
+    }
+
+    currentDate.setDate(currentDate.getDate() + 1)
+  }
+
+  const taxTotal =
+    Math.round(adults * nights * touristTaxPerAdultPerNight * 100) / 100
+  const total = Math.round((baseTotal + cleaningFee + taxTotal) * 100) / 100
+
+  // Formatage des dates
+  const formatDate = (date) => {
+    return date.toLocaleDateString('fr-FR', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric'
+    })
+  }
+
+  // Préparation des données de réservation structurées
+  const reservationDetails = `Dates : ${formatDate(startDate)} au ${formatDate(
+    endDate
+  )} (${nights} nuits)
+Voyageurs : ${adults} adulte${adults > 1 ? 's' : ''}${
+    children > 0 ? `, ${children} enfant${children > 1 ? 's' : ''}` : ''
+  }
+
+Détail du prix :
+• Total des nuits (${nights}) : ${baseTotal} €
+• Frais de ménage : ${cleaningFee} €
+• Taxes (${adults} adulte${adults > 1 ? 's' : ''}) : ${taxTotal.toFixed(2)} €
+• Total : ${total.toFixed(2)} €`
+
+  // Envoi via le script Google Apps Script pour les réservations
+  // ⚠️ IMPORTANT : Remplacez cette URL par celle de votre nouveau déploiement GAS
+  const GAS_URL =
+    'https://script.google.com/macros/s/AKfycbx8thcTAG0Pku5Nu4Xv03-gktS4nG99lZEZ4cnXWxt-VUGc0M0lQ7mS7A-sFlNyC1U/exec'
+
+  const params = new URLSearchParams({
+    name,
+    email,
+    tel: phone || '',
+    reservationDetails,
+    userMessage: message || ''
+  })
+
+  // Mise à jour du bouton pendant l'envoi
+  const stepToggle = document.getElementById('step-toggle')
+  const originalText = stepToggle.textContent
+  const originalIcon = stepToggle.querySelector('i')?.className || ''
+
+  stepToggle.innerHTML =
+    '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...'
+  stepToggle.disabled = true
+
+  // Log pour débogage
+  console.log('🚀 Envoi de la demande de réservation...')
+  console.log('📡 URL:', GAS_URL)
+  console.log('📋 Paramètres:', params.toString())
+
+  fetch(`${GAS_URL}?${params.toString()}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  })
+    .then((res) => {
+      console.log('📥 Réponse reçue:', res.status, res.statusText)
+
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}: ${res.statusText}`)
+      }
+
+      return res.json()
+    })
+    .then((result) => {
+      console.log('✅ Réponse JSON:', result)
+
+      if (result.status === 'success') {
+        stepToggle.innerHTML = '<i class="fas fa-check"></i> Demande envoyée'
+        stepToggle.style.backgroundColor = '#00ff88'
+        stepToggle.style.color = '#000'
+
+        // Réinitialiser après 3 secondes
+        setTimeout(() => {
+          resetSelection()
+        }, 3000)
+      } else {
+        console.error('❌ Erreur côté serveur:', result.message)
+        stepToggle.innerHTML =
+          '<i class="fas fa-exclamation-triangle"></i> Erreur serveur'
+        stepToggle.style.backgroundColor = '#ff4444'
+
+        setTimeout(() => {
+          stepToggle.innerHTML = originalIcon
+            ? `<i class="${originalIcon}"></i> ${originalText}`
+            : originalText
+          stepToggle.disabled = false
+          stepToggle.style.backgroundColor = ''
+          stepToggle.style.color = ''
+        }, 3000)
+      }
+    })
+    .catch((err) => {
+      console.error("❌ Erreur lors de l'envoi:", err)
+      console.error("🔍 Type d'erreur:", err.name)
+      console.error("📝 Message d'erreur:", err.message)
+
+      let errorMessage = 'Erreur réseau'
+
+      if (err.name === 'TypeError' && err.message.includes('fetch')) {
+        errorMessage = 'Erreur de connexion'
+      } else if (err.message.includes('CORS')) {
+        errorMessage = 'Erreur CORS'
+      } else if (err.message.includes('404')) {
+        errorMessage = 'Script non trouvé'
+      } else if (err.message.includes('500')) {
+        errorMessage = 'Erreur serveur'
+      }
+
+      stepToggle.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${errorMessage}`
+      stepToggle.style.backgroundColor = '#ff4444'
+
+      setTimeout(() => {
+        stepToggle.innerHTML = originalIcon
+          ? `<i class="${originalIcon}"></i> ${originalText}`
+          : originalText
+        stepToggle.disabled = false
+        stepToggle.style.backgroundColor = ''
+        stepToggle.style.color = ''
+      }, 3000)
+    })
+}
+
+// 🔄 Réinitialisation de la sélection
+function resetSelection() {
+  selectedStart = null
+  selectedEnd = null
+  step = 1
+  isBannerOpen = false
+
+  // Réinitialiser les champs
+  document.getElementById('adults').value = '1'
+  document.getElementById('children').value = '0'
+
+  // Cacher la bannière
+  document.getElementById('mobile-banner').style.display = 'none'
+
+  // Réinitialiser le calendrier en utilisant la fonction du planning.js
+  if (typeof window.resetSelection === 'function') {
+    window.resetSelection()
+  }
+
+  // Réinitialiser les champs du formulaire
+  const rName = document.getElementById('r-name')
+  const rEmail = document.getElementById('r-email')
+  const rPhone = document.getElementById('r-phone')
+  const rMessage = document.getElementById('r-message')
+
+  if (rName) rName.value = ''
+  if (rEmail) rEmail.value = ''
+  if (rPhone) rPhone.value = ''
+  if (rMessage) rMessage.value = ''
 }
 
 // 🧠 Logique de la bannière : toggle, validation, choix

@@ -7,7 +7,7 @@ function initContactForm() {
   const submit = form?.querySelector('button[type="submit"]')
 
   const GAS_URL =
-    'https://script.google.com/macros/s/AKfycbziMbfckUpGrEDo5tqInljqf7UykbF37DBUT2C8nVFr6ih6mcoFMSXeh87dckC5Cuw/exec'
+    'https://script.google.com/macros/s/AKfycbxYKzGO8Cn22Gh-XS-Qt4drqUYeLZETVPORXvlFKtnrCPR83Q-aGB9bev-CNwi_OVA/exec'
 
   if (!form || !submit) return
 
