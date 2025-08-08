@@ -496,13 +496,27 @@ document.addEventListener('DOMContentLoaded', () => {
     banner.addEventListener('mouseup', handleMouseUp)
     banner.addEventListener('mouseleave', handleMouseUp)
 
+    // Empêcher le scroll de la page quand on est dans un champ de saisie
+    banner.addEventListener(
+      'wheel',
+      (e) => {
+        if (e.target.matches('input, textarea')) {
+          e.stopPropagation()
+        }
+      },
+      { passive: false }
+    )
+
     function handleTouchStart(e) {
-      // Ignorer si on touche un élément interactif
-      if (
-        e.target.closest('button, a, select, input, textarea, .actions, .field')
-      ) {
+      // Vérifier si on touche un élément interactif
+      const isInteractive =
+        e.target.matches('input, textarea, select, button, a') ||
+        e.target.closest('input, textarea, select, button, a, .actions, .field')
+
+      if (isInteractive) {
         return
       }
+
       startY = e.touches[0].clientY
       startTime = Date.now()
       isDragging = true
@@ -511,13 +525,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleTouchMove(e) {
       if (!isDragging) return
-      // Ignorer si on touche un élément interactif
-      if (
-        e.target.closest('button, a, select, input, textarea, .actions, .field')
-      ) {
+
+      // Vérifier si on touche un élément interactif
+      const isInteractive =
+        e.target.matches('input, textarea, select, button, a') ||
+        e.target.closest('input, textarea, select, button, a, .actions, .field')
+
+      if (isInteractive) {
         isDragging = false
         return
       }
+
       currentY = e.touches[0].clientY
       // Empêcher le scroll seulement pendant le swipe
       e.preventDefault()
@@ -547,10 +565,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleMouseDown(e) {
-      if (
-        e.target.closest('button, a, select, input, textarea, .actions, .field')
-      )
+      // Vérifier si on clique sur un élément interactif
+      const isInteractive =
+        e.target.matches('input, textarea, select, button, a') ||
+        e.target.closest('input, textarea, select, button, a, .actions, .field')
+
+      if (isInteractive) {
         return
+      }
+
       startY = e.clientY
       startTime = Date.now()
       isDragging = true
