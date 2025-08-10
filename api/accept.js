@@ -22,7 +22,7 @@ export default async function handler(req, res) {
 
   try {
     // Appeler Google Apps Script pour traiter l'acceptation
-    const scriptUrl = `https://script.google.com/macros/s/AKfycby6FV6pHutW44KrLNbR6n8Za-bRGXX2UVlrls0VqahOPe5zwucddIjhjAJr11FGCNc/exec`
+    const scriptUrl = `https://script.google.com/macros/s/AKfycbxxFpbg8zTDCz0aR_mA1gyN8pdr0odcQ8lmZiPGE353UqYmWbgx_gUw0CvhZiPpsx4/exec`
 
     const response = await fetch(
       `${scriptUrl}?action=accept&token=${encodeURIComponent(token)}`,

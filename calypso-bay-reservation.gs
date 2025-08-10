@@ -38,6 +38,11 @@ function doGet(e) {
       return getReservationData_(p.token)
     }
 
+    // Diagnostic de la structure du Sheet
+    if (p.action === 'debug') {
+      return debugSheetStructure_()
+    }
+
     // Validation minimale pour nouvelle réservation
     const required = ['name', 'email', 'reservationDetails']
     const missing = required.filter((k) => !p[k])
@@ -146,7 +151,7 @@ function handleAction_(action, token) {
     // Chercher la ligne avec ce token
     const data = sh.getDataRange().getValues()
     const headers = data[0]
-    const tokenColIndex = headers.indexOf('token')
+    const tokenColIndex = headers.indexOf('id') // Changé de 'token' à 'id'
     const statusColIndex = headers.indexOf('status')
 
     if (tokenColIndex === -1 || statusColIndex === -1) {
@@ -192,8 +197,9 @@ function handleAction_(action, token) {
       email: data[rowIndex - 1][headers.indexOf('email')],
       tel: data[rowIndex - 1][headers.indexOf('tel')],
       reservationDetails:
-        data[rowIndex - 1][headers.indexOf('reservationDetails_raw')],
-      userMessage: data[rowIndex - 1][headers.indexOf('userMessage')]
+        data[rowIndex - 1][headers.indexOf('reservationDetails')], // Changé de 'reservationDetails_raw' à 'reservationDetails'
+      userMessage: data[rowIndex - 1][headers.indexOf('userMessage')],
+      token: token // Ajout du token pour l'email
     }
 
     // Envoyer l'email de confirmation au client
@@ -213,6 +219,64 @@ function handleAction_(action, token) {
     return jsonOut({
       status: 'error',
       message: '❌ Erreur: ' + (err && err.message ? err.message : String(err))
+    })
+  }
+}
+
+// ======================================
+// Diagnostic de la structure du Sheet
+// ======================================
+function debugSheetStructure_() {
+  try {
+    const ss = SpreadsheetApp.openById(SHEET_ID)
+    const sh = ss.getSheetByName(SHEET_NAME)
+
+    if (!sh) {
+      return jsonOut({
+        status: 'error',
+        message: '❌ Onglet ReservationsTemp non trouvé'
+      })
+    }
+
+    const data = sh.getDataRange().getValues()
+    const headers = data[0]
+
+    return jsonOut({
+      status: 'success',
+      message: '✅ Structure du Sheet analysée',
+      headers: headers,
+      rowCount: data.length,
+      expectedHeaders: [
+        'timestamp',
+        'id',
+        'status',
+        'name',
+        'email',
+        'tel',
+        'reservationDetails',
+        'userMessage',
+        'acceptUrl',
+        'refuseUrl'
+      ],
+      missingHeaders: [
+        'timestamp',
+        'id',
+        'status',
+        'name',
+        'email',
+        'tel',
+        'reservationDetails',
+        'userMessage',
+        'acceptUrl',
+        'refuseUrl'
+      ].filter((h) => !headers.includes(h))
+    })
+  } catch (err) {
+    return jsonOut({
+      status: 'error',
+      message:
+        '❌ Erreur diagnostic: ' +
+        (err && err.message ? err.message : String(err))
     })
   }
 }
@@ -332,7 +396,7 @@ function getReservationData_(token) {
     // Chercher la ligne avec ce token
     const data = sh.getDataRange().getValues()
     const headers = data[0]
-    const tokenColIndex = headers.indexOf('token')
+    const tokenColIndex = headers.indexOf('id') // Changé de 'token' à 'id'
     const statusColIndex = headers.indexOf('status')
 
     if (tokenColIndex === -1) {
@@ -371,10 +435,9 @@ function getReservationData_(token) {
       name: data[rowIndex][headers.indexOf('name')],
       email: data[rowIndex][headers.indexOf('email')],
       tel: data[rowIndex][headers.indexOf('tel')],
-      reservationDetails:
-        data[rowIndex][headers.indexOf('reservationDetails_raw')],
+      reservationDetails: data[rowIndex][headers.indexOf('reservationDetails')], // Changé de 'reservationDetails_raw' à 'reservationDetails'
       userMessage: data[rowIndex][headers.indexOf('userMessage')],
-      createdAt: data[rowIndex][headers.indexOf('createdAt')],
+      createdAt: data[rowIndex][headers.indexOf('timestamp')], // Changé de 'createdAt' à 'timestamp'
       token: token
     }
 
@@ -415,7 +478,7 @@ function finalizeReservation_(token, paymentData) {
     // Chercher la ligne avec ce token
     const data = sh.getDataRange().getValues()
     const headers = data[0]
-    const tokenColIndex = headers.indexOf('token')
+    const tokenColIndex = headers.indexOf('id') // Changé de 'token' à 'id'
     const statusColIndex = headers.indexOf('status')
 
     if (tokenColIndex === -1) {
@@ -472,7 +535,7 @@ function finalizeReservation_(token, paymentData) {
       email: data[rowIndex - 1][headers.indexOf('email')],
       tel: data[rowIndex - 1][headers.indexOf('tel')],
       reservationDetails:
-        data[rowIndex - 1][headers.indexOf('reservationDetails_raw')],
+        data[rowIndex - 1][headers.indexOf('reservationDetails')], // Changé de 'reservationDetails_raw' à 'reservationDetails'
       userMessage: data[rowIndex - 1][headers.indexOf('userMessage')]
     }
 
@@ -643,26 +706,30 @@ function writeToSheet_(data, token) {
   // Entêtes si vide
   if (sh.getLastRow() === 0) {
     sh.appendRow([
-      'createdAt',
-      'token',
+      'timestamp',
+      'id',
+      'status',
       'name',
       'email',
       'tel',
-      'reservationDetails_raw',
+      'reservationDetails',
       'userMessage',
-      'status' // pending | accepted | refused
+      'acceptUrl',
+      'refuseUrl'
     ])
   }
 
   const rowValues = [
     new Date(data.createdAt),
     token,
+    'pending',
     data.name,
     data.email,
     data.tel,
     data.reservationDetails,
     data.userMessage,
-    'pending'
+    '', // acceptUrl sera ajouté plus tard
+    '' // refuseUrl sera ajouté plus tard
   ]
   sh.appendRow(rowValues)
   return sh.getLastRow()
