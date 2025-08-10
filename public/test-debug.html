@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Debug - Calypso Bay</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      .test-section {
+        margin: 20px 0;
+        padding: 20px;
+        border: 1px solid #ccc;
+      }
+      .success {
+        color: green;
+      }
+      .error {
+        color: red;
+      }
+      .image-test {
+        max-width: 200px;
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Test Debug - Calypso Bay</h1>
+
+    <div class="test-section">
+      <h2>Test des images</h2>
+      <p>Test image principale :</p>
+      <img
+        src="images/pic01.jpg"
+        alt="Test"
+        class="image-test"
+        onload="console.log('Image pic01.jpg chargée')"
+        onerror="console.log('Erreur chargement pic01.jpg')"
+      />
+
+      <p>Test thumbnail galerie :</p>
+      <img
+        src="images/gallery/thumbs/01.jpg"
+        alt="Test"
+        class="image-test"
+        onload="console.log('Image thumbnail 01.jpg chargée')"
+        onerror="console.log('Erreur chargement thumbnail 01.jpg')"
+      />
+    </div>
+
+    <div class="test-section">
+      <h2>Test des équipements</h2>
+      <div id="equipment-buttons"></div>
+      <div id="popup-container"></div>
+    </div>
+
+    <div class="test-section">
+      <h2>Test de la galerie</h2>
+      <div class="gallery">
+        <a href="#" class="image" data-room="Salon">
+          <img src="images/gallery/thumbs/01.jpg" alt="Salon" />
+        </a>
+      </div>
+      <div id="lightbox" style="display: none">
+        <span class="close">&times;</span>
+        <div id="lightbox-counter">Photo 1 / 5</div>
+        <div class="lightbox-image-wrapper">
+          <img id="lightbox-img" src="" alt="" />
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Test des équipements
+      async function testEquipements() {
+        try {
+          console.log('Test chargement équipements...')
+          const res = await fetch('data/equipements.json')
+          if (res.ok) {
+            const data = await res.json()
+            console.log('Équipements chargés:', data)
+
+            const btnContainer = document.getElementById('equipment-buttons')
+            for (const key in data) {
+              const category = data[key]
+              const btn = document.createElement('button')
+              btn.textContent = `${category.icon} ${category.label}`
+              btn.style.margin = '5px'
+              btnContainer.appendChild(btn)
+            }
+          } else {
+            console.error('Erreur HTTP:', res.status)
+          }
+        } catch (err) {
+          console.error('Erreur équipements:', err)
+        }
+      }
+
+      // Test de la galerie
+      function testGallery() {
+        console.log('Test galerie...')
+        const links = document.querySelectorAll('.gallery .image')
+        console.log('Liens galerie trouvés:', links.length)
+
+        links.forEach((link, index) => {
+          link.addEventListener('click', (e) => {
+            e.preventDefault()
+            console.log('Clic sur image galerie:', index)
+          })
+        })
+      }
+
+      // Tests au chargement
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log('Page chargée, lancement des tests...')
+        testEquipements()
+        testGallery()
+      })
+    </script>
+
+    <script src="assets/js/equipements.js"></script>
+    <script src="assets/js/gallery.js"></script>
+  </body>
+</html>
