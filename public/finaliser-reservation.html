@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finaliser ma réservation - Calypso Bay</title>
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/custom.css" />
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+      .header h1 {
+        color: #5d3fd3;
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+      }
+      .header p {
+        color: #6b7280;
+        font-size: 1.1rem;
+      }
+      .form-section {
+        background: white;
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e5e7eb;
+      }
+      .form-section h2 {
+        color: #5d3fd3;
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #374151;
+      }
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+      }
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: #5d3fd3;
+      }
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      .reservation-details {
+        background: #f8fafc;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      }
+      .reservation-details h3 {
+        color: #5d3fd3;
+        margin-bottom: 15px;
+      }
+      .detail-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        padding: 8px 0;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      .detail-item:last-child {
+        border-bottom: none;
+        font-weight: bold;
+        font-size: 1.1rem;
+        color: #5d3fd3;
+      }
+      .payment-section {
+        background: #f0fdf4;
+        border: 2px solid #10b981;
+      }
+      .payment-amount {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: bold;
+        color: #10b981;
+        margin-bottom: 20px;
+      }
+      #card-element {
+        padding: 12px;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        background: white;
+      }
+      #card-errors {
+        color: #ef4444;
+        margin-top: 10px;
+        font-size: 14px;
+      }
+      .btn-submit {
+        background: #10b981;
+        color: white;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        width: 100%;
+        transition: background-color 0.3s ease;
+      }
+      .btn-submit:hover {
+        background: #059669;
+      }
+      .btn-submit:disabled {
+        background: #9ca3af;
+        cursor: not-allowed;
+      }
+      .loading {
+        display: none;
+        text-align: center;
+        margin: 20px 0;
+      }
+      .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #10b981;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .error-message {
+        background: #fef2f2;
+        color: #ef4444;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        border: 1px solid #fecaca;
+      }
+      .success-message {
+        background: #f0fdf4;
+        color: #10b981;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        border: 1px solid #bbf7d0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🎉 Finaliser ma réservation</h1>
+        <p>Complétez les informations et effectuez le paiement de l'acompte</p>
+      </div>
+
+      <div id="error-container"></div>
+      <div id="success-container"></div>
+
+      <form id="finalization-form">
+        <div class="form-section">
+          <h2>📋 Informations personnelles</h2>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Nom complet *</label>
+              <input type="text" id="name" name="name" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email *</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="tel">Téléphone *</label>
+              <input type="tel" id="tel" name="tel" required />
+            </div>
+            <div class="form-group">
+              <label for="address">Adresse *</label>
+              <input type="text" id="address" name="address" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="city">Ville *</label>
+              <input type="text" id="city" name="city" required />
+            </div>
+            <div class="form-group">
+              <label for="postal">Code postal *</label>
+              <input type="text" id="postal" name="postal" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="country">Pays *</label>
+            <input
+              type="text"
+              id="country"
+              name="country"
+              value="France"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h2>📅 Détails de la réservation</h2>
+          <div class="reservation-details" id="reservation-details">
+            <div class="loading">
+              <div class="spinner"></div>
+              <p>Chargement des détails...</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section payment-section">
+          <h2>💳 Paiement de l'acompte (10%)</h2>
+          <div class="payment-amount" id="payment-amount">
+            Calcul en cours...
+          </div>
+          <div class="form-group">
+            <label for="card-element">Informations de carte bancaire</label>
+            <div id="card-element"></div>
+            <div id="card-errors" role="alert"></div>
+          </div>
+          <button type="submit" class="btn-submit" id="submit-button">
+            Payer l'acompte et confirmer ma réservation
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      // Initialiser Stripe
+      const stripe = Stripe(
+        'pk_live_51RuYagJuxMM0V1wvWkNbfWITDKf6J6Q8BaoCPCwWrd6juAMlGekc3RADsm9VfcFcfkk7dYmY8dgDr0DqHOBw3qtb006Bbqn4e4'
+      )
+      const elements = stripe.elements()
+      const card = elements.create('card', {
+        style: {
+          base: {
+            fontSize: '16px',
+            color: '#424770',
+            '::placeholder': {
+              color: '#aab7c4'
+            }
+          }
+        }
+      })
+      card.mount('#card-element')
+
+      // Gestion des erreurs de carte
+      card.addEventListener('change', function (event) {
+        const displayError = document.getElementById('card-errors')
+        if (event.error) {
+          displayError.textContent = event.error.message
+        } else {
+          displayError.textContent = ''
+        }
+      })
+
+      // Récupérer le token depuis l'URL
+      const urlParams = new URLSearchParams(window.location.search)
+      const token = urlParams.get('token')
+
+      if (!token) {
+        showError('Token de réservation manquant')
+      } else {
+        // Charger les données de réservation
+        loadReservationData()
+      }
+
+      async function loadReservationData() {
+        try {
+          const response = await fetch(
+            `/api/getReservation?token=${encodeURIComponent(token)}`
+          )
+          const result = await response.json()
+
+          if (result.status === 'success') {
+            populateForm(result.data)
+            calculatePaymentAmount(result.data)
+          } else {
+            showError(result.message || 'Erreur lors du chargement des données')
+          }
+        } catch (error) {
+          showError('Erreur de connexion')
+          console.error('Erreur:', error)
+        }
+      }
+
+      function populateForm(data) {
+        document.getElementById('name').value = data.name || ''
+        document.getElementById('email').value = data.email || ''
+        document.getElementById('tel').value = data.tel || ''
+
+        // Afficher les détails de réservation
+        const detailsContainer = document.getElementById('reservation-details')
+        detailsContainer.innerHTML = `
+                <h3>Résumé de votre demande</h3>
+                <div class="detail-item">
+                    <span>Nom :</span>
+                    <span>${escapeHtml(data.name)}</span>
+                </div>
+                <div class="detail-item">
+                    <span>Email :</span>
+                    <span>${escapeHtml(data.email)}</span>
+                </div>
+                <div class="detail-item">
+                    <span>Détails :</span>
+                    <span>${formatReservationDetails(
+                      data.reservationDetails
+                    )}</span>
+                </div>
+                ${
+                  data.userMessage
+                    ? `
+                <div class="detail-item">
+                    <span>Message :</span>
+                    <span>${escapeHtml(data.userMessage)}</span>
+                </div>
+                `
+                    : ''
+                }
+            `
+      }
+
+      function calculatePaymentAmount(data) {
+        // Extraire le montant total des détails de réservation
+        const totalMatch = data.reservationDetails.match(
+          /total\s*:\s*([\d\s,]+)\s*€/i
+        )
+        if (totalMatch) {
+          const totalAmount = parseFloat(totalMatch[1].replace(/[\s,]/g, ''))
+          const depositAmount = totalAmount * 0.1
+
+          document.getElementById(
+            'payment-amount'
+          ).textContent = `${depositAmount.toFixed(
+            2
+          )} € (10% de ${totalAmount.toFixed(2)} €)`
+
+          // Stocker le montant total pour le paiement
+          window.totalAmount = totalAmount
+        } else {
+          document.getElementById('payment-amount').textContent =
+            'Montant à calculer'
+        }
+      }
+
+      // Gestion de la soumission du formulaire
+      document
+        .getElementById('finalization-form')
+        .addEventListener('submit', async function (event) {
+          event.preventDefault()
+
+          const submitButton = document.getElementById('submit-button')
+          submitButton.disabled = true
+          submitButton.textContent = 'Traitement en cours...'
+
+          try {
+            // Créer le PaymentIntent
+            const paymentResponse = await fetch('/api/createPaymentIntent', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                token: token,
+                totalAmount: window.totalAmount
+              })
+            })
+
+            const paymentResult = await paymentResponse.json()
+
+            if (!paymentResult.clientSecret) {
+              throw new Error(
+                paymentResult.error || 'Erreur lors de la création du paiement'
+              )
+            }
+
+            // Confirmer le paiement avec Stripe
+            const { error, paymentIntent } = await stripe.confirmCardPayment(
+              paymentResult.clientSecret,
+              {
+                payment_method: {
+                  card: card,
+                  billing_details: {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value
+                  }
+                }
+              }
+            )
+
+            if (error) {
+              throw new Error(error.message)
+            }
+
+            // Finaliser la réservation
+            const finalizeResponse = await fetch('/api/finalizeReservation', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                token: token,
+                paymentData: {
+                  amount: paymentResult.amount,
+                  paymentIntentId: paymentIntent.id,
+                  status: paymentIntent.status
+                }
+              })
+            })
+
+            const finalizeResult = await finalizeResponse.json()
+
+            if (finalizeResult.status === 'success') {
+              showSuccess(
+                'Réservation finalisée avec succès ! Vous allez recevoir un email de confirmation.'
+              )
+              // Rediriger vers la page de succès après 3 secondes
+              setTimeout(() => {
+                window.location.href = '/reservation-confirmee.html'
+              }, 3000)
+            } else {
+              throw new Error(
+                finalizeResult.message || 'Erreur lors de la finalisation'
+              )
+            }
+          } catch (error) {
+            showError(error.message)
+            submitButton.disabled = false
+            submitButton.textContent =
+              "Payer l'acompte et confirmer ma réservation"
+          }
+        })
+
+      function showError(message) {
+        const container = document.getElementById('error-container')
+        container.innerHTML = `<div class="error-message">❌ ${message}</div>`
+      }
+
+      function showSuccess(message) {
+        const container = document.getElementById('success-container')
+        container.innerHTML = `<div class="success-message">✅ ${message}</div>`
+      }
+
+      function escapeHtml(text) {
+        const div = document.createElement('div')
+        div.textContent = text
+        return div.innerHTML
+      }
+
+      function formatReservationDetails(details) {
+        if (!details) return 'Aucun détail'
+        return details.replace(/\n/g, '<br>')
+      }
+    </script>
+  </body>
+</html>

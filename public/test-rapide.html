@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Rapide GAS</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background: #f0f0f0;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .btn {
+        background: #007bff;
+        color: white;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin: 10px 5px;
+      }
+      .btn:hover {
+        background: #0056b3;
+      }
+      .result {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 5px;
+        font-family: monospace;
+        white-space: pre-wrap;
+      }
+      .success {
+        background: #d4edda;
+        color: #155724;
+      }
+      .error {
+        background: #f8d7da;
+        color: #721c24;
+      }
+      .info {
+        background: #d1ecf1;
+        color: #0c5460;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>⚡ Test Rapide - Script GAS</h1>
+
+      <p>
+        <strong>URL testée :</strong>
+        <code id="gas-url"
+          >https://script.google.com/macros/s/AKfycbwhcCISvo6FUPHzp3uNNZvoXtP1EjFPBuGgttCv27vAKaMVl3HsuAKKxKQvuegOFDs/exec</code
+        >
+      </p>
+
+      <button class="btn" onclick="testSimple()">🧪 Test Simple</button>
+      <button class="btn" onclick="testAvecParams()">
+        📝 Test avec Paramètres
+      </button>
+      <button class="btn" onclick="ouvrirURL()">🔗 Ouvrir URL</button>
+
+      <div id="result" class="result" style="display: none"></div>
+
+      <div class="result info">
+        <strong>Instructions :</strong>
+        1. Cliquez sur "Test Simple" pour vérifier la connectivité 2. Si ça
+        marche, testez "Test avec Paramètres" 3. Si ça ne marche pas, cliquez
+        sur "Ouvrir URL" pour voir l'erreur
+      </div>
+    </div>
+
+    <script>
+      const GAS_URL =
+        'https://script.google.com/macros/s/AKfycbwhcCISvo6FUPHzp3uNNZvoXtP1EjFPBuGgttCv27vAKaMVl3HsuAKKxKQvuegOFDs/exec'
+
+      function showResult(content, isSuccess = true) {
+        const result = document.getElementById('result')
+        result.style.display = 'block'
+        result.className = `result ${isSuccess ? 'success' : 'error'}`
+        result.textContent = content
+      }
+
+      function testSimple() {
+        showResult('⏳ Test en cours...', true)
+
+        fetch(GAS_URL)
+          .then((response) => {
+            console.log('Réponse:', response)
+            return response.text()
+          })
+          .then((data) => {
+            showResult(
+              `✅ SUCCÈS!\n\nStatus: OK\nRéponse: ${data.substring(0, 200)}`,
+              true
+            )
+          })
+          .catch((error) => {
+            console.error('Erreur:', error)
+            showResult(
+              `❌ ERREUR!\n\nType: ${error.name}\nMessage: ${error.message}\n\nVérifiez:\n- L'URL est correcte\n- Le script est déployé\n- Les permissions sont "Tout le monde"`,
+              false
+            )
+          })
+      }
+
+      function testAvecParams() {
+        showResult('⏳ Test avec paramètres...', true)
+
+        const params = new URLSearchParams({
+          name: 'Kévin TEST',
+          email: 'kevinblart@live.fr',
+          reservationDetails:
+            'Dates : 15 janvier 2024 au 20 janvier 2024 (5 nuits)\nVoyageurs : 2 adultes\n\nDétail du prix :\n• Total des nuits (5) : 750 €\n• Frais de ménage : 100 €\n• Taxes (2 adultes) : 23.00 €\n• Total : 873.00 €',
+          userMessage: 'Test de réservation'
+        })
+
+        fetch(`${GAS_URL}?${params.toString()}`)
+          .then((response) => {
+            console.log('Réponse:', response)
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+            }
+            return response.json()
+          })
+          .then((data) => {
+            showResult(
+              `✅ SUCCÈS!\n\nStatus: ${data.status}\nMessage: ${data.message}`,
+              true
+            )
+          })
+          .catch((error) => {
+            console.error('Erreur:', error)
+            showResult(
+              `❌ ERREUR!\n\nType: ${error.name}\nMessage: ${error.message}`,
+              false
+            )
+          })
+      }
+
+      function ouvrirURL() {
+        window.open(GAS_URL, '_blank')
+      }
+    </script>
+  </body>
+</html>

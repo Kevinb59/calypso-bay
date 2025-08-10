@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Test Formulaire Réservation</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/custom.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+      .test-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      }
+      .test-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+      .test-form input,
+      .test-form textarea {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+      .test-form button {
+        padding: 12px 24px;
+        background: #551f7e;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .test-form button:hover {
+        background: #4a1a6b;
+      }
+      .result {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 5px;
+        font-family: monospace;
+        white-space: pre-wrap;
+      }
+      .success {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+      .error {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="test-container">
+      <h1>🧪 Test Formulaire Réservation</h1>
+      <p>
+        Ce formulaire simule l'envoi d'une demande de réservation pour tester le
+        fonctionnement.
+      </p>
+
+      <form class="test-form" id="test-form">
+        <div>
+          <label for="name">Nom *</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+
+        <div>
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+
+        <div>
+          <label for="tel">Téléphone</label>
+          <input type="tel" id="tel" name="tel" />
+        </div>
+
+        <div>
+          <label for="message">Message de réservation</label>
+          <textarea
+            id="message"
+            name="message"
+            rows="6"
+            placeholder="Simulation d'une demande de réservation avec dates, voyageurs et prix..."
+          ></textarea>
+        </div>
+
+        <button type="submit">
+          <i class="fas fa-paper-plane"></i> Tester l'envoi
+        </button>
+      </form>
+
+      <div id="result"></div>
+    </div>
+
+    <script>
+      document
+        .getElementById('test-form')
+        .addEventListener('submit', async (e) => {
+          e.preventDefault()
+
+          const formData = new FormData(e.target)
+          const data = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            tel: formData.get('tel') || '',
+            message: formData.get('message') || 'Test de réservation'
+          }
+
+          const resultDiv = document.getElementById('result')
+          resultDiv.innerHTML = '<div class="result">Envoi en cours...</div>'
+
+          const GAS_URL =
+            'https://script.google.com/macros/s/AKfycbziMbfckUpGrEDo5tqInljqf7UykbF37DBUT2C8nVFr6ih6mcoFMSXeh87dckC5Cuw/exec'
+
+          try {
+            const params = new URLSearchParams(data)
+            const response = await fetch(`${GAS_URL}?${params.toString()}`)
+            const result = await response.json()
+
+            if (result.status === 'success') {
+              resultDiv.innerHTML = `
+                        <div class="result success">
+✅ Succès !
+Status: ${result.status}
+Message: ${result.message}
+
+Données envoyées :
+${JSON.stringify(data, null, 2)}
+                        </div>
+                    `
+            } else {
+              resultDiv.innerHTML = `
+                        <div class="result error">
+❌ Erreur !
+Status: ${result.status}
+Message: ${result.message}
+
+Données envoyées :
+${JSON.stringify(data, null, 2)}
+                        </div>
+                    `
+            }
+          } catch (error) {
+            resultDiv.innerHTML = `
+                    <div class="result error">
+❌ Erreur réseau !
+${error.message}
+
+Données envoyées :
+${JSON.stringify(data, null, 2)}
+                    </div>
+                `
+          }
+        })
+    </script>
+  </body>
+</html>

@@ -78,7 +78,7 @@ dist
 
 # Gatsby files
 .cache/
-public
+# public  # Commenté car nous avons besoin de ce dossier pour Vercel
 
 # Storybook build outputs
 .out

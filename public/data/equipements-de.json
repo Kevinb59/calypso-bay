@@ -1,0 +1,141 @@
+{
+  "cuisine": {
+    "icon": "🍽️",
+    "label": "Küche",
+    "items": [
+      "Esstisch",
+      "Kaffeemaschine",
+      "Haushaltsprodukte",
+      "Toaster",
+      "Kochfeld",
+      "Backofen",
+      "Wäschetrockner",
+      "Küchenutensilien",
+      "Geschirr und Besteck",
+      "Wasserkocher",
+      "Waschmaschine",
+      "Geschirrspüler",
+      "Mikrowelle",
+      "Kühlschrank",
+      "Gefrierschrank"
+    ]
+  },
+  "sdb": {
+    "icon": "🛁",
+    "label": "Badezimmer",
+    "items": [
+      "Haartrockner",
+      "Reinigungsprodukte",
+      "Warmwasser",
+      "Handtücher",
+      "Große Duschen",
+      "Kleiderhaken",
+      "Doppelwaschbecken"
+    ]
+  },
+  "salon": {
+    "icon": "🛋️",
+    "label": "Wohnzimmer",
+    "items": [
+      "2 Zweisitzer-Sofas",
+      "Flachbildfernseher",
+      "Deckenventilator",
+      "Couchtisch"
+    ]
+  },
+  "repas": {
+    "icon": "🍴",
+    "label": "Essbereich",
+    "items": [
+      "Im Freien",
+      "Tisch für 6 Personen",
+      "Mit Aussicht"
+    ]
+  },
+  "chambres": {
+    "icon": "🛏️",
+    "label": "Schlafzimmer",
+    "items": [
+      "<15 m²",
+      "2 Queen-Size-Betten",
+      "2 Einzelbetten",
+      "Mit Aussicht",
+      "Klimaanlage",
+      "Schränke/Ankleidezimmer",
+      "Angrenzende Badezimmer",
+      "Bettwäsche",
+      "Kleiderbügel",
+      "Zusätzliche Kissen und Decken",
+      "Moskitonetze",
+      "Direkter Zugang zur Terrasse"
+    ]
+  },
+  "piscine": {
+    "icon": "🏊",
+    "label": "Pool",
+    "items": [
+      "Ganzjährig geöffnet",
+      "Infinity-Pool",
+      "Pool-/Strandtücher",
+      "Pool mit Aussicht",
+      "Liegestühle",
+      "Salzwasserpool"
+    ]
+  },
+  "terrasse": {
+    "icon": "🌞",
+    "label": "Terrasse",
+    "items": [
+      "50 m²",
+      "Tisch für 6 Personen",
+      "3 Liegestühle",
+      "Grill",
+      "Privater Pool",
+      "Aperitif-Bereich",
+      "Exotische Liege mit Moskitonetz",
+      "Mit Aussicht",
+      "Grill und Utensilien"
+    ]
+  },
+  "exterieur": {
+    "icon": "🌴",
+    "label": "Außenbereich / Garten",
+    "items": [
+      "1350 m²",
+      "Rasen",
+      "Blumenreich",
+      "Grün",
+      "Mit Aussicht",
+      "Ohne Gegenüber"
+    ]
+  },
+  "services": {
+    "icon": "🧾",
+    "label": "Service / Sicherheit",
+    "items": [
+      "Kostenloses WLAN (21 Mb/s | HD-Streaming & Videoanrufe)",
+      "Lebensmittellieferung (gegen Aufpreis)",
+      "Safe",
+      "Sichere Rollläden",
+      "Eingezäunter Garten",
+      "Städtischer Wassertank",
+      "Regenwassertank (WC)"
+    ]
+  },
+  "parking": {
+    "icon": "🅿️",
+    "label": "Parkplatz",
+    "items": [
+      "Privat",
+      "Kostenlos",
+      "Bis zu 3 Autos"
+    ]
+  },
+  "accessibilite": {
+    "icon": "♿",
+    "label": "Barrierefreiheit",
+    "items": [
+      "Unterkunft auf einer Ebene"
+    ]
+  }
+}

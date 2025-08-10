@@ -1,0 +1,140 @@
+{
+  "cuisine": {
+    "icon": "🍽️",
+    "label": "Cuisine",
+    "items": [
+      "Ilot central",
+      "Machines à café (Nespresso et à filtre)",
+      "Grille-pain",
+      "Plaque de cuisson",
+      "Four",
+      "Ustensiles de cuisine",
+      "Vaisselle et couverts",
+      "Bouilloire électrique",
+      "Lave-vaisselle",
+      "Micro-ondes",
+      "Réfrigérateur",
+      "Congélateur"
+    ]
+  },
+  "sdb": {
+    "icon": "🛁",
+    "label": "Salles de bains",
+    "items": [
+      "Sèche-cheveux",
+      "Eau chaude",
+      "Serviettes",
+      "Grandes douches",
+      "Pendoirs",
+      "Lavabos double vasques"
+    ]
+  },
+  "salon": {
+    "icon": "🛋️",
+    "label": "Salon",
+    "items": [
+      "2 canapés 2 places",
+      "Télévision à écran plat",
+      "Ventilateur de plafond",
+      "Table basse"
+    ]
+  },
+  "salon_ext": {
+    "icon": "🌞",
+    "label": "Salon extérieur",
+    "items": ["3 fauteuils", "Table basse", "Avec vue mer"]
+  },
+  "repas": {
+    "icon": "🍴",
+    "label": "Espace repas",
+    "items": ["En extérieur", "Table 6 à 10 personnes", "Avec vue mer"]
+  },
+  "chambres": {
+    "icon": "🛏️",
+    "label": "Chambres",
+    "items": [
+      "<15m²",
+      "2 lits queen size",
+      "2 lits simples",
+      "Avec vue mer",
+      "Climatisation",
+      "Armoires/Dressing",
+      "Salles de bains attenantes",
+      "Draps",
+      "Cintres",
+      "Oreillers et couvertures supplémentaires",
+      "Moustiquaires",
+      "Accès direct à la terrasse"
+    ]
+  },
+  "cellier": {
+    "icon": "🧺",
+    "label": "Cellier",
+    "items": ["Machine à laver", "Sèche-linge", "Etendoir"]
+  },
+  "piscine": {
+    "icon": "🏊",
+    "label": "Piscine",
+    "items": [
+      "Ouverte toute l'année",
+      "Piscine à débordement",
+      "Serviettes de piscine",
+      "Piscine avec vue mer",
+      "Chaises longues",
+      "Piscine d'eau salée",
+      "5m x 3m",
+      "1,5m de profondeur"
+    ]
+  },
+  "terrasse": {
+    "icon": "🌞",
+    "label": "Terrasse",
+    "items": [
+      "50m²",
+      "Table 6 personnes",
+      "3 chaises longues",
+      "Piscine privée",
+      "Espace apéro",
+      "Méridienne exotique avec moustiquaire",
+      "Avec vue mer",
+      "Barbecue et ustensiles"
+    ]
+  },
+  "exterieur": {
+    "icon": "🌴",
+    "label": "Jardin tropical",
+    "items": [
+      "1350m²",
+      "Pelouse",
+      "Fleuris",
+      "Verdoyant",
+      "Avec vue mer",
+      "Barbecue",
+      "Sans vis-à-vis"
+    ]
+  },
+  "services": {
+    "icon": "🧾",
+    "label": "Services / Sécurité",
+    "items": [
+      "Wi-Fi gratuit (21Mb/s | Streaming HD & Appels visio)",
+      "Livraison de courses (en supplément)",
+      "Coffre-fort",
+      "Volets sécurisés",
+      "Jardin clôturé",
+      "Détecteur de fumée",
+      "Réserve d'eau de réseau",
+      "Réserve d'eau de pluie (WC)"
+    ]
+  },
+  "parking": {
+    "icon": "🅿️",
+    "label": "Parking",
+    "items": ["Privé", "Sur la propriété", "Jusqu'à 5 voitures"]
+  },
+  "accessibilite": {
+    "icon": "♿",
+    "label": "Accessibilité",
+    "items": ["Logement de plain-pied"]
+  }
+}

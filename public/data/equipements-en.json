@@ -1,0 +1,141 @@
+{
+  "cuisine": {
+    "icon": "🍽️",
+    "label": "Kitchen",
+    "items": [
+      "Dining table",
+      "Coffee machine",
+      "Household products",
+      "Toaster",
+      "Cooktop",
+      "Oven",
+      "Dryer",
+      "Cooking utensils",
+      "Dishes and cutlery",
+      "Electric kettle",
+      "Washing machine",
+      "Dishwasher",
+      "Microwave",
+      "Refrigerator",
+      "Freezer"
+    ]
+  },
+  "sdb": {
+    "icon": "🛁",
+    "label": "Bathrooms",
+    "items": [
+      "Hair dryer",
+      "Cleaning products",
+      "Hot water",
+      "Towels",
+      "Large showers",
+      "Hangers",
+      "Double sinks"
+    ]
+  },
+  "salon": {
+    "icon": "🛋️",
+    "label": "Living room",
+    "items": [
+      "2 two-seater sofas",
+      "Flat screen TV",
+      "Ceiling fan",
+      "Coffee table"
+    ]
+  },
+  "repas": {
+    "icon": "🍴",
+    "label": "Dining area",
+    "items": [
+      "Outdoor",
+      "Table for 6",
+      "With view"
+    ]
+  },
+  "chambres": {
+    "icon": "🛏️",
+    "label": "Bedrooms",
+    "items": [
+      "<15m²",
+      "2 queen size beds",
+      "2 single beds",
+      "With view",
+      "Air conditioning",
+      "Wardrobes/Closet",
+      "En-suite bathrooms",
+      "Sheets",
+      "Hangers",
+      "Extra pillows and blankets",
+      "Mosquito nets",
+      "Direct access to terrace"
+    ]
+  },
+  "piscine": {
+    "icon": "🏊",
+    "label": "Swimming pool",
+    "items": [
+      "Open all year round",
+      "Infinity pool",
+      "Pool/beach towels",
+      "Pool with view",
+      "Sun loungers",
+      "Saltwater pool"
+    ]
+  },
+  "terrasse": {
+    "icon": "🌞",
+    "label": "Terrace",
+    "items": [
+      "50m²",
+      "Table for 6",
+      "3 sun loungers",
+      "Barbecue",
+      "Private pool",
+      "Lounge area",
+      "Exotic daybed with mosquito net",
+      "With view",
+      "Barbecue and utensils"
+    ]
+  },
+  "exterieur": {
+    "icon": "🌴",
+    "label": "Outdoor / Garden",
+    "items": [
+      "1350m²",
+      "Lawn",
+      "Flowered",
+      "Green",
+      "With view",
+      "Not overlooked"
+    ]
+  },
+  "services": {
+    "icon": "🧾",
+    "label": "Services / Security",
+    "items": [
+      "Free Wi-Fi (21Mb/s | HD streaming & video calls)",
+      "Grocery delivery (extra charge)",
+      "Safe",
+      "Secured shutters",
+      "Fenced garden",
+      "Network water tank",
+      "Rainwater tank (WC)"
+    ]
+  },
+  "parking": {
+    "icon": "🅿️",
+    "label": "Parking",
+    "items": [
+      "Private",
+      "Free",
+      "Up to 3 cars"
+    ]
+  },
+  "accessibilite": {
+    "icon": "♿",
+    "label": "Accessibility",
+    "items": [
+      "Single-storey accommodation"
+    ]
+  }
+}
