@@ -247,38 +247,40 @@
             <div id="card-errors" role="alert"></div>
           </div>
           <button type="submit" class="btn-submit" id="submit-button">
-            🧪 TEST - Simuler la finalisation (Stripe désactivé)
+            Payer l'acompte et confirmer ma réservation
           </button>
         </div>
       </form>
     </div>
 
     <script>
-      // Initialiser Stripe (désactivé pour les tests)
-      // const stripe = Stripe('pk_test_YOUR_PUBLISHABLE_KEY') // Remplacer par votre clé publique
-      // const elements = stripe.elements()
-      // const card = elements.create('card', {
-      //   style: {
-      //     base: {
-      //       fontSize: '16px',
-      //       color: '#424770',
-      //       '::placeholder': {
-      //         color: '#aab7c4'
-      //       }
-      //     }
-      //   }
-      // })
-      // card.mount('#card-element')
+      // Initialiser Stripe
+      const stripe = Stripe(
+        'pk_live_51RuYagJuxMM0V1wvWkNbfWITDKf6J6Q8BaoCPCwWrd6juAMlGekc3RADsm9VfcFcfkk7dYmY8dgDr0DqHOBw3qtb006Bbqn4e4'
+      )
+      const elements = stripe.elements()
+      const card = elements.create('card', {
+        style: {
+          base: {
+            fontSize: '16px',
+            color: '#424770',
+            '::placeholder': {
+              color: '#aab7c4'
+            }
+          }
+        }
+      })
+      card.mount('#card-element')
 
       // Gestion des erreurs de carte
-      // card.addEventListener('change', function (event) {
-      //   const displayError = document.getElementById('card-errors')
-      //   if (event.error) {
-      //     displayError.textContent = event.error.message
-      //   } else {
-      //     displayError.textContent = ''
-      //   }
-      // })
+      card.addEventListener('change', function (event) {
+        const displayError = document.getElementById('card-errors')
+        if (event.error) {
+          displayError.textContent = event.error.message
+        } else {
+          displayError.textContent = ''
+        }
+      })
 
       // Récupérer le token depuis l'URL
       const urlParams = new URLSearchParams(window.location.search)
@@ -369,7 +371,7 @@
         }
       }
 
-      // Gestion de la soumission du formulaire (MODE TEST)
+      // Gestion de la soumission du formulaire
       document
         .getElementById('finalization-form')
         .addEventListener('submit', async function (event) {
@@ -377,30 +379,83 @@
 
           const submitButton = document.getElementById('submit-button')
           submitButton.disabled = true
-          submitButton.textContent = '🧪 Test en cours...'
+          submitButton.textContent = 'Traitement en cours...'
 
           try {
-            // Simulation du test
-            showSuccess(
-              '🧪 TEST RÉUSSI ! Le système fonctionne correctement. Les données ont été récupérées et le formulaire est prêt. Stripe sera activé une fois votre compte configuré.'
+            // Créer le PaymentIntent
+            const paymentResponse = await fetch('/api/createPaymentIntent', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                token: token,
+                totalAmount: window.totalAmount
+              })
+            })
+
+            const paymentResult = await paymentResponse.json()
+
+            if (!paymentResult.clientSecret) {
+              throw new Error(
+                paymentResult.error || 'Erreur lors de la création du paiement'
+              )
+            }
+
+            // Confirmer le paiement avec Stripe
+            const { error, paymentIntent } = await stripe.confirmCardPayment(
+              paymentResult.clientSecret,
+              {
+                payment_method: {
+                  card: card,
+                  billing_details: {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value
+                  }
+                }
+              }
             )
 
-            // Afficher les données récupérées
-            console.log(
-              'Données de réservation récupérées:',
-              window.reservationData
-            )
-            console.log('Montant total calculé:', window.totalAmount)
-            console.log("Montant de l'acompte (10%):", window.totalAmount * 0.1)
+            if (error) {
+              throw new Error(error.message)
+            }
 
-            submitButton.disabled = false
-            submitButton.textContent =
-              '🧪 TEST - Simuler la finalisation (Stripe désactivé)'
+            // Finaliser la réservation
+            const finalizeResponse = await fetch('/api/finalizeReservation', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                token: token,
+                paymentData: {
+                  amount: paymentResult.amount,
+                  paymentIntentId: paymentIntent.id,
+                  status: paymentIntent.status
+                }
+              })
+            })
+
+            const finalizeResult = await finalizeResponse.json()
+
+            if (finalizeResult.status === 'success') {
+              showSuccess(
+                'Réservation finalisée avec succès ! Vous allez recevoir un email de confirmation.'
+              )
+              // Rediriger vers la page de succès après 3 secondes
+              setTimeout(() => {
+                window.location.href = '/reservation-confirmee.html'
+              }, 3000)
+            } else {
+              throw new Error(
+                finalizeResult.message || 'Erreur lors de la finalisation'
+              )
+            }
           } catch (error) {
             showError(error.message)
             submitButton.disabled = false
             submitButton.textContent =
-              '🧪 TEST - Simuler la finalisation (Stripe désactivé)'
+              "Payer l'acompte et confirmer ma réservation"
           }
         })
 
