@@ -2,7 +2,7 @@
   "name": "calypso-bay",
   "version": "1.0.0",
   "description": "Site web de la villa Calypso Bay",
-  "main": "index.html",
+  "main": "api/simple.js",
   "scripts": {
     "dev": "npx http-server -p 8000 -o",
     "start": "npx http-server -p 8000",
