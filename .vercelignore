@@ -1,9 +1,0 @@
-# Ignorer les fichiers de développement mais pas les API
-node_modules/
-.env
-.env.local
-*.log
-
-# Ne pas ignorer les fichiers API
-!api/
-!api/*.js
