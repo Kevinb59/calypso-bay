@@ -17,6 +17,9 @@
   ],
   "author": "",
   "license": "MIT",
+  "dependencies": {
+    "stripe": "^14.0.0"
+  },
   "devDependencies": {
     "http-server": "^14.1.1"
   },

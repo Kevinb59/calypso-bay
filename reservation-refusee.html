@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Réservation Refusée - Calypso Bay</title>
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/custom.css" />
+    <style>
+      .refused-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 20px;
+      }
+      .refused-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        text-align: center;
+        max-width: 500px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+      .refused-icon {
+        font-size: 80px;
+        color: #ef4444;
+        margin-bottom: 20px;
+      }
+      .refused-title {
+        font-size: 28px;
+        color: #1f2937;
+        margin-bottom: 15px;
+        font-weight: 700;
+      }
+      .refused-message {
+        color: #6b7280;
+        line-height: 1.6;
+        margin-bottom: 30px;
+      }
+      .btn-home {
+        display: inline-block;
+        background: #ef4444;
+        color: white;
+        padding: 15px 30px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+      .btn-home:hover {
+        background: #dc2626;
+        transform: translateY(-2px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="refused-container">
+      <div class="refused-card">
+        <div class="refused-icon">❌</div>
+        <h1 class="refused-title">Réservation Refusée</h1>
+        <p class="refused-message">
+          Nous regrettons de vous informer que votre demande de réservation ne
+          peut être acceptée.<br />
+          Vous recevrez prochainement un email avec plus de détails.
+        </p>
+        <a href="/" class="btn-home">Retour à l'accueil</a>
+      </div>
+    </div>
+  </body>
+</html>
