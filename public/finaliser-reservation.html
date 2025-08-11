@@ -228,7 +228,7 @@
             <p>
               Votre demande de réservation a été acceptée ! Complétez les
               informations ci-dessous et effectuez le paiement de l'acompte de
-              10% pour confirmer votre séjour à Calypso Bay.
+              10% pour confirmer votre réservation à Calypso Bay.
             </p>
             <ul class="actions">
               <li>
@@ -336,8 +336,8 @@
             <h2 class="major">💳 Paiement de l'acompte</h2>
             <p>
               Pour confirmer votre réservation, veuillez effectuer le paiement
-              de l'acompte de 10% du montant total. Le solde sera à régler sur
-              place lors de votre arrivée.
+              de l'acompte de 10% du montant total. Le solde sera à régler au
+              plus tard 7 jours avant votre arrivée.
             </p>
           </div>
           <div class="inner columns divided">
@@ -359,7 +359,9 @@
                   id="submit-button"
                   form="finalization-form"
                 >
-                  Payer l'acompte et confirmer ma réservation
+                  <span id="button-text"
+                    >Payer l'acompte et confirmer ma réservation</span
+                  >
                 </button>
               </div>
             </div>
@@ -482,6 +484,14 @@
             2
           )} € (10% de ${totalAmount.toFixed(2)} €)`
 
+          // Mettre à jour le texte du bouton avec le montant
+          const buttonText = document.getElementById('button-text')
+          if (buttonText) {
+            buttonText.textContent = `Payer ${depositAmount.toFixed(
+              2
+            )} € (acompte) et confirmer ma réservation`
+          }
+
           // Stocker le montant total pour le paiement
           window.totalAmount = totalAmount
         } else {
@@ -573,8 +583,11 @@
           } catch (error) {
             showError(error.message)
             submitButton.disabled = false
-            submitButton.textContent =
-              "Payer l'acompte et confirmer ma réservation"
+            const buttonText = document.getElementById('button-text')
+            if (buttonText) {
+              buttonText.textContent =
+                "Payer l'acompte et confirmer ma réservation"
+            }
           }
         })
 
