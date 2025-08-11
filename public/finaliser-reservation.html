@@ -19,44 +19,69 @@
     <script src="https://js.stripe.com/v3/"></script>
     <style>
       .form-section {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 16px;
-        padding: 30px;
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 20px;
+        padding: 40px;
         margin-bottom: 30px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
+      .form-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.1),
+          rgba(255, 255, 255, 0.05)
+        );
+        pointer-events: none;
+      }
+      .form-section > * {
+        position: relative;
+        z-index: 1;
       }
       .form-group {
-        margin-bottom: 20px;
+        margin-bottom: 25px;
       }
       .form-group label {
         display: block;
-        margin-bottom: 8px;
+        margin-bottom: 10px;
         font-weight: 600;
         color: #374151;
-        font-size: 0.9rem;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
       }
       .form-group input,
       .form-group textarea {
         width: 100%;
-        padding: 12px;
-        border: 2px solid #e5e7eb;
-        border-radius: 8px;
+        padding: 15px;
+        border: 2px solid rgba(229, 231, 235, 0.5);
+        border-radius: 12px;
         font-size: 16px;
         transition: all 0.3s ease;
-        background: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
       }
       .form-group input:focus,
       .form-group textarea:focus {
         outline: none;
         border-color: #5d3fd3;
-        box-shadow: 0 0 0 3px rgba(93, 63, 211, 0.1);
+        box-shadow: 0 0 0 4px rgba(93, 63, 211, 0.15);
+        background: rgba(255, 255, 255, 0.95);
+        transform: translateY(-2px);
       }
       .form-row {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 20px;
+        gap: 25px;
       }
       @media (max-width: 768px) {
         .form-row {
@@ -64,70 +89,119 @@
         }
       }
       .reservation-details {
-        background: rgba(248, 250, 252, 0.9);
-        padding: 20px;
-        border-radius: 8px;
+        background: rgba(248, 250, 252, 0.8);
+        padding: 30px;
+        border-radius: 16px;
         margin-bottom: 20px;
-        border: 1px solid rgba(229, 231, 235, 0.5);
+        border: 1px solid rgba(229, 231, 235, 0.3);
+        backdrop-filter: blur(15px);
       }
       .reservation-details h3 {
         color: #5d3fd3;
-        margin-bottom: 15px;
-        font-size: 1.2rem;
+        margin-bottom: 20px;
+        font-size: 1.3rem;
+        font-weight: 700;
+        text-align: center;
       }
       .detail-item {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 10px;
-        padding: 8px 0;
-        border-bottom: 1px solid rgba(229, 231, 235, 0.5);
+        margin-bottom: 15px;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(229, 231, 235, 0.4);
+        font-size: 1rem;
       }
       .detail-item:last-child {
         border-bottom: none;
         font-weight: bold;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         color: #5d3fd3;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 2px solid rgba(93, 63, 211, 0.2);
       }
       .payment-section {
-        background: rgba(240, 253, 244, 0.95);
+        background: rgba(240, 253, 244, 0.9);
         border: 2px solid #10b981;
+        position: relative;
+      }
+      .payment-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(16, 185, 129, 0.05),
+          rgba(16, 185, 129, 0.02)
+        );
+        pointer-events: none;
       }
       .payment-amount {
         text-align: center;
-        font-size: 2rem;
+        font-size: 2.5rem;
         font-weight: bold;
         color: #10b981;
-        margin-bottom: 20px;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 16px;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(16, 185, 129, 0.2);
+      }
+      .payment-amount.highlight {
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
       }
       #card-element {
-        padding: 12px;
-        border: 2px solid #e5e7eb;
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.9);
+        padding: 15px;
+        border: 2px solid rgba(229, 231, 235, 0.5);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+      }
+      #card-element:focus-within {
+        border-color: #5d3fd3;
+        box-shadow: 0 0 0 4px rgba(93, 63, 211, 0.15);
+        background: rgba(255, 255, 255, 0.95);
       }
       #card-errors {
         color: #ef4444;
-        margin-top: 10px;
+        margin-top: 12px;
         font-size: 14px;
+        font-weight: 500;
       }
       .btn-submit {
         background: linear-gradient(135deg, #10b981, #059669);
         color: white;
-        padding: 15px 30px;
+        padding: 18px 30px;
         border: none;
-        border-radius: 8px;
+        border-radius: 12px;
         font-size: 18px;
         font-weight: 600;
         cursor: pointer;
         width: 100%;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
       }
       .btn-submit:hover {
         background: linear-gradient(135deg, #059669, #047857);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
       }
       .btn-submit:disabled {
         background: #9ca3af;
@@ -161,7 +235,7 @@
         background: rgba(254, 242, 242, 0.95);
         color: #ef4444;
         padding: 15px;
-        border-radius: 8px;
+        border-radius: 12px;
         margin-bottom: 20px;
         border: 1px solid #fecaca;
         backdrop-filter: blur(10px);
@@ -170,29 +244,10 @@
         background: rgba(240, 253, 244, 0.95);
         color: #10b981;
         padding: 15px;
-        border-radius: 8px;
+        border-radius: 12px;
         margin-bottom: 20px;
         border: 1px solid #bbf7d0;
         backdrop-filter: blur(10px);
-      }
-      .back-button {
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        background: rgba(255, 255, 255, 0.9);
-        color: #5d3fd3;
-        padding: 10px 15px;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: 600;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(93, 63, 211, 0.2);
-        transition: all 0.3s ease;
-        z-index: 1000;
-      }
-      .back-button:hover {
-        background: rgba(93, 63, 211, 0.1);
-        transform: translateY(-2px);
       }
       .progress-bar {
         position: fixed;
@@ -203,16 +258,21 @@
         background: linear-gradient(90deg, #5d3fd3, #10b981);
         z-index: 1001;
       }
+      .validation-error {
+        border-color: #ef4444 !important;
+        box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15) !important;
+      }
+      .validation-message {
+        color: #ef4444;
+        font-size: 12px;
+        margin-top: 5px;
+        font-weight: 500;
+      }
     </style>
   </head>
   <body class="is-preload">
     <!-- Progress Bar -->
     <div class="progress-bar"></div>
-
-    <!-- Back Button -->
-    <a href="/" class="back-button">
-      <i class="fas fa-arrow-left"></i> Retour
-    </a>
 
     <!-- Page Wrapper -->
     <div id="page-wrapper">
@@ -262,36 +322,42 @@
               <div class="form-section">
                 <div class="form-row">
                   <div class="form-group">
-                    <label for="name">Nom complet *</label>
+                    <label for="name">Nom complet</label>
                     <input type="text" id="name" name="name" required />
+                    <div class="validation-message" id="name-error"></div>
                   </div>
                   <div class="form-group">
-                    <label for="email">Email *</label>
+                    <label for="email">Email</label>
                     <input type="email" id="email" name="email" required />
+                    <div class="validation-message" id="email-error"></div>
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group">
-                    <label for="tel">Téléphone *</label>
+                    <label for="tel">Téléphone</label>
                     <input type="tel" id="tel" name="tel" required />
+                    <div class="validation-message" id="tel-error"></div>
                   </div>
                   <div class="form-group">
-                    <label for="address">Adresse *</label>
+                    <label for="address">Adresse</label>
                     <input type="text" id="address" name="address" required />
+                    <div class="validation-message" id="address-error"></div>
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group">
-                    <label for="city">Ville *</label>
+                    <label for="city">Ville</label>
                     <input type="text" id="city" name="city" required />
+                    <div class="validation-message" id="city-error"></div>
                   </div>
                   <div class="form-group">
-                    <label for="postal">Code postal *</label>
+                    <label for="postal">Code postal</label>
                     <input type="text" id="postal" name="postal" required />
+                    <div class="validation-message" id="postal-error"></div>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="country">Pays *</label>
+                  <label for="country">Pays</label>
                   <input
                     type="text"
                     id="country"
@@ -299,6 +365,7 @@
                     value="France"
                     required
                   />
+                  <div class="validation-message" id="country-error"></div>
                 </div>
               </div>
             </form>
@@ -416,6 +483,60 @@
         loadReservationData()
       }
 
+      // Validation des champs
+      function validateField(fieldId, errorId, validationFn) {
+        const field = document.getElementById(fieldId)
+        const errorElement = document.getElementById(errorId)
+        const value = field.value.trim()
+
+        field.classList.remove('validation-error')
+        errorElement.textContent = ''
+
+        if (!validationFn(value)) {
+          field.classList.add('validation-error')
+          errorElement.textContent = 'Ce champ est obligatoire'
+          return false
+        }
+        return true
+      }
+
+      function validateEmail(email) {
+        return email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+      }
+
+      function validatePhone(phone) {
+        return phone && phone.length >= 10
+      }
+
+      function validateRequired(value) {
+        return value && value.length > 0
+      }
+
+      // Validation en temps réel
+      document.getElementById('name').addEventListener('blur', () => {
+        validateField('name', 'name-error', validateRequired)
+      })
+
+      document.getElementById('email').addEventListener('blur', () => {
+        validateField('email', 'email-error', validateEmail)
+      })
+
+      document.getElementById('tel').addEventListener('blur', () => {
+        validateField('tel', 'tel-error', validatePhone)
+      })
+
+      document.getElementById('address').addEventListener('blur', () => {
+        validateField('address', 'address-error', validateRequired)
+      })
+
+      document.getElementById('city').addEventListener('blur', () => {
+        validateField('city', 'city-error', validateRequired)
+      })
+
+      document.getElementById('postal').addEventListener('blur', () => {
+        validateField('postal', 'postal-error', validateRequired)
+      })
+
       async function loadReservationData() {
         try {
           const response = await fetch(
@@ -478,11 +599,9 @@
           const totalAmount = parseFloat(totalMatch[1].replace(/[\s,]/g, ''))
           const depositAmount = totalAmount * 0.1
 
-          document.getElementById(
-            'payment-amount'
-          ).textContent = `${depositAmount.toFixed(
-            2
-          )} € (10% de ${totalAmount.toFixed(2)} €)`
+          const paymentAmountElement = document.getElementById('payment-amount')
+          paymentAmountElement.textContent = `${depositAmount.toFixed(2)} €`
+          paymentAmountElement.classList.add('highlight')
 
           // Mettre à jour le texte du bouton avec le montant
           const buttonText = document.getElementById('button-text')
@@ -505,6 +624,21 @@
         .getElementById('finalization-form')
         .addEventListener('submit', async function (event) {
           event.preventDefault()
+
+          // Validation complète avant soumission
+          const validations = [
+            validateField('name', 'name-error', validateRequired),
+            validateField('email', 'email-error', validateEmail),
+            validateField('tel', 'tel-error', validatePhone),
+            validateField('address', 'address-error', validateRequired),
+            validateField('city', 'city-error', validateRequired),
+            validateField('postal', 'postal-error', validateRequired)
+          ]
+
+          if (!validations.every((v) => v)) {
+            showError('Veuillez corriger les erreurs dans le formulaire')
+            return
+          }
 
           const submitButton = document.getElementById('submit-button')
           submitButton.disabled = true
