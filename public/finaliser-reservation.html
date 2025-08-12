@@ -67,9 +67,7 @@
       }
       .form-group input::placeholder,
       .form-group textarea::placeholder {
-        color: #6b7280;
-        font-weight: 500;
-        text-transform: uppercase;
+        color: #6b7280 !important;
         letter-spacing: 0.5px;
         opacity: 1;
       }
@@ -103,7 +101,7 @@
         color: #5d3fd3;
         margin-bottom: 20px;
         font-size: 1.3rem;
-        font-weight: 700;
+        font-weight: 500;
         text-align: center;
       }
       .detail-item {
@@ -295,7 +293,7 @@
             </h2>
             <p>
               Votre demande de réservation a été acceptée ! Complétez le
-              formulaire ci-dessous et effectuez le paiement de l'acompte de 10%
+              formulaire suivant et effectuez le paiement de l'acompte de 10%
               pour confirmer votre réservation à Calypso Bay.
             </p>
             <ul class="actions">
@@ -335,7 +333,7 @@
                       type="text"
                       id="name"
                       name="name"
-                      placeholder="NOM COMPLET"
+                      placeholder="Nom complet"
                       required
                     />
                     <div class="validation-message" id="name-error"></div>
@@ -346,7 +344,7 @@
                       type="email"
                       id="email"
                       name="email"
-                      placeholder="EMAIL"
+                      placeholder="Email"
                       required
                     />
                     <div class="validation-message" id="email-error"></div>
@@ -359,7 +357,7 @@
                       type="tel"
                       id="tel"
                       name="tel"
-                      placeholder="TÉLÉPHONE"
+                      placeholder="Téléphone"
                       required
                     />
                     <div class="validation-message" id="tel-error"></div>
@@ -370,7 +368,7 @@
                       type="text"
                       id="address"
                       name="address"
-                      placeholder="ADRESSE"
+                      placeholder="Adresse"
                       required
                     />
                     <div class="validation-message" id="address-error"></div>
@@ -383,7 +381,7 @@
                       type="text"
                       id="city"
                       name="city"
-                      placeholder="VILLE"
+                      placeholder="Ville"
                       required
                     />
                     <div class="validation-message" id="city-error"></div>
@@ -394,7 +392,7 @@
                       type="text"
                       id="postal"
                       name="postal"
-                      placeholder="CODE POSTAL"
+                      placeholder="Code postal"
                       required
                     />
                     <div class="validation-message" id="postal-error"></div>
@@ -407,7 +405,7 @@
                     id="country"
                     name="country"
                     value="France"
-                    placeholder="PAYS"
+                    placeholder="Pays"
                     required
                   />
                   <div class="validation-message" id="country-error"></div>
@@ -601,14 +599,14 @@
         }
       }
 
-             function populateForm(data) {
-         document.getElementById('name').value = data.name || ''
-         document.getElementById('email').value = data.email || ''
-         document.getElementById('tel').value = data.tel || ''
+      function populateForm(data) {
+        document.getElementById('name').value = data.name || ''
+        document.getElementById('email').value = data.email || ''
+        document.getElementById('tel').value = data.tel || ''
 
-         // Afficher les détails de réservation
-         const detailsContainer = document.getElementById('reservation-details')
-         detailsContainer.innerHTML = `
+        // Afficher les détails de réservation
+        const detailsContainer = document.getElementById('reservation-details')
+        detailsContainer.innerHTML = `
 					<h3>Détails de votre réservation</h3>
 					<div class="detail-item">
 						<span>Détails :</span>
@@ -625,60 +623,69 @@
               : ''
           }
 				`
-       }
+      }
 
-             function calculatePaymentAmount(data) {
-         console.log('Calculating payment for:', data.reservationDetails)
-         
-         // Essayer plusieurs patterns pour extraire le montant total
-         let totalAmount = null
-         
-         // Pattern 1: "Total des nuits (X) : Y €"
-         let totalMatch = data.reservationDetails.match(/Total des nuits\s*\(\d+\)\s*:\s*([\d\s,]+)\s*€/i)
-         if (totalMatch) {
-           totalAmount = parseFloat(totalMatch[1].replace(/[\s,]/g, ''))
-         }
-         
-         // Pattern 2: "total : Y €" (plus générique)
-         if (!totalAmount) {
-           totalMatch = data.reservationDetails.match(/total\s*:\s*([\d\s,]+)\s*€/i)
-           if (totalMatch) {
-             totalAmount = parseFloat(totalMatch[1].replace(/[\s,]/g, ''))
-           }
-         }
-         
-         // Pattern 3: Chercher un nombre suivi de €
-         if (!totalAmount) {
-           totalMatch = data.reservationDetails.match(/(\d+(?:\s*\d+)*)\s*€/g)
-           if (totalMatch && totalMatch.length > 0) {
-             // Prendre le plus grand nombre trouvé
-             const amounts = totalMatch.map(match => parseFloat(match.replace(/[\s€]/g, '')))
-             totalAmount = Math.max(...amounts)
-           }
-         }
-         
-         console.log('Total amount found:', totalAmount)
-         
-         if (totalAmount && totalAmount > 0) {
-           const depositAmount = totalAmount * 0.1
+      function calculatePaymentAmount(data) {
+        console.log('Calculating payment for:', data.reservationDetails)
 
-           const paymentAmountElement = document.getElementById('payment-amount')
-           paymentAmountElement.textContent = `${depositAmount.toFixed(2)} €`
-           paymentAmountElement.classList.add('highlight')
+        // Essayer plusieurs patterns pour extraire le montant total
+        let totalAmount = null
 
-           // Mettre à jour le texte du bouton avec le montant
-           const buttonText = document.getElementById('button-text')
-           if (buttonText) {
-             buttonText.textContent = `Payer ${depositAmount.toFixed(2)} € (acompte) et confirmer ma réservation`
-           }
+        // Pattern 1: "Total des nuits (X) : Y €"
+        let totalMatch = data.reservationDetails.match(
+          /Total des nuits\s*\(\d+\)\s*:\s*([\d\s,]+)\s*€/i
+        )
+        if (totalMatch) {
+          totalAmount = parseFloat(totalMatch[1].replace(/[\s,]/g, ''))
+        }
 
-           // Stocker le montant total pour le paiement
-           window.totalAmount = totalAmount
-         } else {
-           document.getElementById('payment-amount').textContent = 'Montant à calculer'
-           console.log('No valid amount found in:', data.reservationDetails)
-         }
-       }
+        // Pattern 2: "total : Y €" (plus générique)
+        if (!totalAmount) {
+          totalMatch = data.reservationDetails.match(
+            /total\s*:\s*([\d\s,]+)\s*€/i
+          )
+          if (totalMatch) {
+            totalAmount = parseFloat(totalMatch[1].replace(/[\s,]/g, ''))
+          }
+        }
+
+        // Pattern 3: Chercher un nombre suivi de €
+        if (!totalAmount) {
+          totalMatch = data.reservationDetails.match(/(\d+(?:\s*\d+)*)\s*€/g)
+          if (totalMatch && totalMatch.length > 0) {
+            // Prendre le plus grand nombre trouvé
+            const amounts = totalMatch.map((match) =>
+              parseFloat(match.replace(/[\s€]/g, ''))
+            )
+            totalAmount = Math.max(...amounts)
+          }
+        }
+
+        console.log('Total amount found:', totalAmount)
+
+        if (totalAmount && totalAmount > 0) {
+          const depositAmount = totalAmount * 0.1
+
+          const paymentAmountElement = document.getElementById('payment-amount')
+          paymentAmountElement.textContent = `${depositAmount.toFixed(2)} €`
+          paymentAmountElement.classList.add('highlight')
+
+          // Mettre à jour le texte du bouton avec le montant
+          const buttonText = document.getElementById('button-text')
+          if (buttonText) {
+            buttonText.textContent = `Payer ${depositAmount.toFixed(
+              2
+            )} € (acompte) et confirmer ma réservation`
+          }
+
+          // Stocker le montant total pour le paiement
+          window.totalAmount = totalAmount
+        } else {
+          document.getElementById('payment-amount').textContent =
+            'Montant à calculer'
+          console.log('No valid amount found in:', data.reservationDetails)
+        }
+      }
 
       // Gestion de la soumission du formulaire
       document
