@@ -575,12 +575,16 @@
 
       async function loadReservationData() {
         try {
+          console.log('Loading reservation data for token:', token)
           const response = await fetch(
             `/api/getReservation?token=${encodeURIComponent(token)}`
           )
           const result = await response.json()
 
+          console.log('API Response:', result)
+
           if (result.status === 'success') {
+            console.log('Reservation data received:', result.data)
             populateForm(result.data)
             calculatePaymentAmount(result.data)
           } else {
@@ -593,22 +597,27 @@
       }
 
       function populateForm(data) {
+        console.log('populateForm called with data:', data)
+        
         document.getElementById('name').value = data.name || ''
         document.getElementById('email').value = data.email || ''
         document.getElementById('tel').value = data.tel || ''
 
         // Afficher les détails de réservation
         const detailsContainer = document.getElementById('reservation-details')
-        
+
         // Créer les détails de réservation avec la structure appropriée
         const reservationDetails = formatReservationDetails(data)
-        const detailsHtml = reservationDetails.split('<br>').map(line => {
-          if (line.trim()) {
-            return `<div class="detail-item"><span>${line}</span></div>`
-          }
-          return ''
-        }).join('')
-        
+        const detailsHtml = reservationDetails
+          .split('<br>')
+          .map((line) => {
+            if (line.trim()) {
+              return `<div class="detail-item"><span>${line}</span></div>`
+            }
+            return ''
+          })
+          .join('')
+
         detailsContainer.innerHTML = `
           ${detailsHtml}
           ${
@@ -797,7 +806,7 @@
 
       function formatReservationDetails(data) {
         console.log('formatReservationDetails called with data:', data)
-        
+
         if (!data) return 'Aucun détail'
 
         const startDate = new Date(data.startDate)
