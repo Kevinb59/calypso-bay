@@ -599,21 +599,29 @@
 
         // Afficher les détails de réservation
         const detailsContainer = document.getElementById('reservation-details')
+        
+        // Créer les détails de réservation avec la structure appropriée
+        const reservationDetails = formatReservationDetails(data)
+        const detailsHtml = reservationDetails.split('<br>').map(line => {
+          if (line.trim()) {
+            return `<div class="detail-item"><span>${line}</span></div>`
+          }
+          return ''
+        }).join('')
+        
         detailsContainer.innerHTML = `
-					<div class="detail-item">
-						<span>${formatReservationDetails(data)}</span>
-					</div>
-					${
+          ${detailsHtml}
+          ${
             data.userMessage
               ? `
-					<div class="detail-item">
-						<span>Message :</span>
-						<span>${escapeHtml(data.userMessage)}</span>
-					</div>
-					`
+            <div class="detail-item">
+              <span>Message :</span>
+              <span>${escapeHtml(data.userMessage)}</span>
+            </div>
+            `
               : ''
           }
-				`
+        `
       }
 
       function calculatePaymentAmount(data) {
@@ -788,10 +796,14 @@
       }
 
       function formatReservationDetails(data) {
+        console.log('formatReservationDetails called with data:', data)
+        
         if (!data) return 'Aucun détail'
 
         const startDate = new Date(data.startDate)
         const endDate = new Date(data.endDate)
+
+        console.log('Parsed dates:', { startDate, endDate })
 
         const formatDate = (date) => {
           return date.toLocaleDateString('fr-FR', {
@@ -849,7 +861,9 @@
           details.push(`• Total : ${data.priceTotal.toLocaleString('fr-FR')} €`)
         }
 
-        return details.join('<br>')
+        const result = details.join('<br>')
+        console.log('formatReservationDetails result:', result)
+        return result
       }
     </script>
   </body>
