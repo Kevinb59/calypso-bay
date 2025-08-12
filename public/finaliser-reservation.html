@@ -581,10 +581,10 @@
           )
           const result = await response.json()
 
-          console.log('API Response:', result)
+          console.log('API Response:', JSON.stringify(result, null, 2))
 
           if (result.status === 'success') {
-            console.log('Reservation data received:', result.data)
+            console.log('Reservation data received:', JSON.stringify(result.data, null, 2))
             populateForm(result.data)
             calculatePaymentAmount(result.data)
           } else {
@@ -597,8 +597,8 @@
       }
 
       function populateForm(data) {
-        console.log('populateForm called with data:', data)
-        
+        console.log('populateForm called with data:', JSON.stringify(data, null, 2))
+
         document.getElementById('name').value = data.name || ''
         document.getElementById('email').value = data.email || ''
         document.getElementById('tel').value = data.tel || ''
@@ -805,14 +805,19 @@
       }
 
       function formatReservationDetails(data) {
-        console.log('formatReservationDetails called with data:', data)
+        console.log('formatReservationDetails called with data:', JSON.stringify(data, null, 2))
 
         if (!data) return 'Aucun détail'
 
         const startDate = new Date(data.startDate)
         const endDate = new Date(data.endDate)
 
-        console.log('Parsed dates:', { startDate, endDate })
+        console.log('Parsed dates:', { 
+          startDate: startDate.toString(), 
+          endDate: endDate.toString(),
+          startDateValue: data.startDate,
+          endDateValue: data.endDate
+        })
 
         const formatDate = (date) => {
           return date.toLocaleDateString('fr-FR', {
