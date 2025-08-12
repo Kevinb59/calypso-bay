@@ -617,52 +617,59 @@
       }
 
       function calculatePaymentAmount(data) {
-        console.log('Calculating payment for:', data.reservationDetails)
+        console.log('Calculating payment for data:', data)
 
-        // Essayer plusieurs patterns pour extraire le montant total
-        let totalAmount = null
+        // Utiliser directement le champ total structuré
+        let totalAmount = data.total
 
-        // Pattern 1: "Total: X.XX €" (le vrai total final avec décimales)
-        let totalMatch = data.reservationDetails.match(
-          /Total:\s*([\d\s,]+\.?\d*)\s*€/i
-        )
-        if (totalMatch) {
-          totalAmount = parseFloat(totalMatch[1].replace(/[\s,]/g, ''))
-          console.log('Found total with pattern 1:', totalAmount)
-        }
-
-        // Pattern 2: "Total: X €" (le vrai total final sans décimales)
-        if (!totalAmount) {
-          totalMatch = data.reservationDetails.match(/Total:\s*([\d\s,]+)\s*€/i)
+        // Fallback vers l'ancien système si total n'est pas disponible
+        if (!totalAmount || totalAmount === 0) {
+          console.log('Total not found in structured data, falling back to parsing')
+          
+          // Pattern 1: "Total: X.XX €" (le vrai total final avec décimales)
+          let totalMatch = data.reservationDetails.match(
+            /Total:\s*([\d\s,]+\.?\d*)\s*€/i
+          )
           if (totalMatch) {
             totalAmount = parseFloat(totalMatch[1].replace(/[\s,]/g, ''))
-            console.log('Found total with pattern 2:', totalAmount)
+            console.log('Found total with pattern 1:', totalAmount)
           }
-        }
 
-        // Pattern 3: Chercher tous les montants et prendre le plus grand
-        if (!totalAmount) {
-          const allAmounts = data.reservationDetails.match(
-            /(\d+(?:[,\s]\d+)*\.?\d*)\s*€/g
-          )
-          if (allAmounts && allAmounts.length > 0) {
-            const amounts = allAmounts.map((match) =>
-              parseFloat(match.replace(/[\s€]/g, '').replace(',', ''))
+          // Pattern 2: "Total: X €" (le vrai total final sans décimales)
+          if (!totalAmount) {
+            totalMatch = data.reservationDetails.match(/Total:\s*([\d\s,]+)\s*€/i)
+            if (totalMatch) {
+              totalAmount = parseFloat(totalMatch[1].replace(/[\s,]/g, ''))
+              console.log('Found total with pattern 2:', totalAmount)
+            }
+          }
+
+          // Pattern 3: Chercher tous les montants et prendre le plus grand
+          if (!totalAmount) {
+            const allAmounts = data.reservationDetails.match(
+              /(\d+(?:[,\s]\d+)*\.?\d*)\s*€/g
             )
-            totalAmount = Math.max(...amounts)
-            console.log('Found total with pattern 3 (max amount):', totalAmount)
+            if (allAmounts && allAmounts.length > 0) {
+              const amounts = allAmounts.map((match) =>
+                parseFloat(match.replace(/[\s€]/g, '').replace(',', ''))
+              )
+              totalAmount = Math.max(...amounts)
+              console.log('Found total with pattern 3 (max amount):', totalAmount)
+            }
           }
-        }
 
-        // Pattern 4: "Total des nuits (X) : Y €" (fallback)
-        if (!totalAmount) {
-          totalMatch = data.reservationDetails.match(
-            /Total des nuits\s*\(\d+\)\s*:\s*([\d\s,]+)\s*€/i
-          )
-          if (totalMatch) {
-            totalAmount = parseFloat(totalMatch[1].replace(/[\s,]/g, ''))
-            console.log('Found total with pattern 4:', totalAmount)
+          // Pattern 4: "Total des nuits (X) : Y €" (fallback)
+          if (!totalAmount) {
+            totalMatch = data.reservationDetails.match(
+              /Total des nuits\s*\(\d+\)\s*:\s*([\d\s,]+)\s*€/i
+            )
+            if (totalMatch) {
+              totalAmount = parseFloat(totalMatch[1].replace(/[\s,]/g, ''))
+              console.log('Found total with pattern 4:', totalAmount)
+            }
           }
+        } else {
+          console.log('Using structured total:', totalAmount)
         }
 
         console.log('Final total amount found:', totalAmount)

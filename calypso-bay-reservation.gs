@@ -256,7 +256,16 @@ function debugSheetStructure_() {
         'reservationDetails',
         'userMessage',
         'acceptUrl',
-        'refuseUrl'
+        'refuseUrl',
+        'dateArrivee',
+        'dateDepart',
+        'nbAdultes',
+        'nbEnfants',
+        'nbNuits',
+        'prixNuits',
+        'fraisMenage',
+        'taxes',
+        'total'
       ],
       missingHeaders: [
         'timestamp',
@@ -268,7 +277,16 @@ function debugSheetStructure_() {
         'reservationDetails',
         'userMessage',
         'acceptUrl',
-        'refuseUrl'
+        'refuseUrl',
+        'dateArrivee',
+        'dateDepart',
+        'nbAdultes',
+        'nbEnfants',
+        'nbNuits',
+        'prixNuits',
+        'fraisMenage',
+        'taxes',
+        'total'
       ].filter((h) => !headers.includes(h))
     })
   } catch (err) {
@@ -435,10 +453,20 @@ function getReservationData_(token) {
       name: data[rowIndex][headers.indexOf('name')],
       email: data[rowIndex][headers.indexOf('email')],
       tel: data[rowIndex][headers.indexOf('tel')],
-      reservationDetails: data[rowIndex][headers.indexOf('reservationDetails')], // Changé de 'reservationDetails_raw' à 'reservationDetails'
+      reservationDetails: data[rowIndex][headers.indexOf('reservationDetails')],
       userMessage: data[rowIndex][headers.indexOf('userMessage')],
-      createdAt: data[rowIndex][headers.indexOf('timestamp')], // Changé de 'createdAt' à 'timestamp'
-      token: token
+      createdAt: data[rowIndex][headers.indexOf('timestamp')],
+      token: token,
+      // Nouvelles données structurées
+      dateArrivee: data[rowIndex][headers.indexOf('dateArrivee')],
+      dateDepart: data[rowIndex][headers.indexOf('dateDepart')],
+      nbAdultes: data[rowIndex][headers.indexOf('nbAdultes')],
+      nbEnfants: data[rowIndex][headers.indexOf('nbEnfants')],
+      nbNuits: data[rowIndex][headers.indexOf('nbNuits')],
+      prixNuits: data[rowIndex][headers.indexOf('prixNuits')],
+      fraisMenage: data[rowIndex][headers.indexOf('fraisMenage')],
+      taxes: data[rowIndex][headers.indexOf('taxes')],
+      total: data[rowIndex][headers.indexOf('total')]
     }
 
     return jsonOut({
@@ -715,9 +743,22 @@ function writeToSheet_(data, token) {
       'reservationDetails',
       'userMessage',
       'acceptUrl',
-      'refuseUrl'
+      'refuseUrl',
+      // Nouvelles colonnes structurées
+      'dateArrivee',
+      'dateDepart',
+      'nbAdultes',
+      'nbEnfants',
+      'nbNuits',
+      'prixNuits',
+      'fraisMenage',
+      'taxes',
+      'total'
     ])
   }
+
+  // Parser les détails de réservation pour extraire les données structurées
+  const parsedData = parseReservationDetails_(data.reservationDetails)
 
   const rowValues = [
     new Date(data.createdAt),
@@ -729,10 +770,77 @@ function writeToSheet_(data, token) {
     data.reservationDetails,
     data.userMessage,
     '', // acceptUrl sera ajouté plus tard
-    '' // refuseUrl sera ajouté plus tard
+    '', // refuseUrl sera ajouté plus tard
+    // Données structurées
+    parsedData.dateArrivee,
+    parsedData.dateDepart,
+    parsedData.nbAdultes,
+    parsedData.nbEnfants,
+    parsedData.nbNuits,
+    parsedData.prixNuits,
+    parsedData.fraisMenage,
+    parsedData.taxes,
+    parsedData.total
   ]
   sh.appendRow(rowValues)
   return sh.getLastRow()
+}
+
+// ======================================
+// Parser les détails de réservation
+// ======================================
+function parseReservationDetails_(details) {
+  const text = String(details || '')
+  
+  // Valeurs par défaut
+  let result = {
+    dateArrivee: '',
+    dateDepart: '',
+    nbAdultes: 0,
+    nbEnfants: 0,
+    nbNuits: 0,
+    prixNuits: 0,
+    fraisMenage: 0,
+    taxes: 0,
+    total: 0
+  }
+
+  // Parser les dates
+  const dateMatch = text.match(/Dates\s*:\s*(\d{1,2}\s+\w+\s+\d{4})\s+au\s+(\d{1,2}\s+\w+\s+\d{4})\s*\((\d+)\s+nuits?\)/i)
+  if (dateMatch) {
+    result.dateArrivee = dateMatch[1].trim()
+    result.dateDepart = dateMatch[2].trim()
+    result.nbNuits = parseInt(dateMatch[3]) || 0
+  }
+
+  // Parser les voyageurs
+  const voyageursMatch = text.match(/Voyageurs\s*:\s*(\d+)\s+adulte/i)
+  if (voyageursMatch) {
+    result.nbAdultes = parseInt(voyageursMatch[1]) || 0
+  }
+
+  // Parser les prix
+  const prixNuitsMatch = text.match(/Total des nuits\s*\(\d+\)\s*:\s*([\d\s,]+\.?\d*)\s*€/i)
+  if (prixNuitsMatch) {
+    result.prixNuits = parseFloat(prixNuitsMatch[1].replace(/[\s,]/g, '')) || 0
+  }
+
+  const fraisMenageMatch = text.match(/Frais de ménage\s*:\s*([\d\s,]+\.?\d*)\s*€/i)
+  if (fraisMenageMatch) {
+    result.fraisMenage = parseFloat(fraisMenageMatch[1].replace(/[\s,]/g, '')) || 0
+  }
+
+  const taxesMatch = text.match(/Taxes\s*\(\d+\s+adulte\)\s*:\s*([\d\s,]+\.?\d*)\s*€/i)
+  if (taxesMatch) {
+    result.taxes = parseFloat(taxesMatch[1].replace(/[\s,]/g, '')) || 0
+  }
+
+  const totalMatch = text.match(/Total\s*:\s*([\d\s,]+\.?\d*)\s*€/i)
+  if (totalMatch) {
+    result.total = parseFloat(totalMatch[1].replace(/[\s,]/g, '')) || 0
+  }
+
+  return result
 }
 
 // ==================================================
