@@ -457,24 +457,82 @@ function getReservationData_(token) {
       })
     }
 
-    // Récupérer les données de la réservation
+    // Récupérer les données de la réservation avec conversion des types
+    const nameIndex = headers.indexOf('name')
+    const emailIndex = headers.indexOf('email')
+    const telIndex = headers.indexOf('tel')
+    const userMessageIndex = headers.indexOf('userMessage')
+    const nbAdultsIndex = headers.indexOf('nbAdults')
+    const nbChildsIndex = headers.indexOf('nbChilds')
+    const nbNightsIndex = headers.indexOf('nbNights')
+    const priceNightsIndex = headers.indexOf('priceNights')
+    const priceCleanIndex = headers.indexOf('priceClean')
+    const priceTaxIndex = headers.indexOf('priceTax')
+    const priceTotalIndex = headers.indexOf('priceTotal')
+    const startDateIndex = headers.indexOf('startDate')
+    const endDateIndex = headers.indexOf('endDate')
+    const timestampIndex = headers.indexOf('timestamp')
+
+    // Log pour déboguer
+    console.log('Headers found:', {
+      name: nameIndex,
+      email: emailIndex,
+      tel: telIndex,
+      userMessage: userMessageIndex,
+      nbAdults: nbAdultsIndex,
+      nbChilds: nbChildsIndex,
+      nbNights: nbNightsIndex,
+      priceNights: priceNightsIndex,
+      priceClean: priceCleanIndex,
+      priceTax: priceTaxIndex,
+      priceTotal: priceTotalIndex,
+      startDate: startDateIndex,
+      endDate: endDateIndex,
+      timestamp: timestampIndex
+    })
+
+    console.log('Raw row data:', data[rowIndex])
+
     const reservationData = {
-      name: data[rowIndex][headers.indexOf('name')],
-      email: data[rowIndex][headers.indexOf('email')],
-      tel: data[rowIndex][headers.indexOf('tel')],
-      userMessage: data[rowIndex][headers.indexOf('userMessage')],
-      nbAdults: data[rowIndex][headers.indexOf('nbAdults')],
-      nbChilds: data[rowIndex][headers.indexOf('nbChilds')],
-      nbNights: data[rowIndex][headers.indexOf('nbNights')],
-      priceNights: data[rowIndex][headers.indexOf('priceNights')],
-      priceClean: data[rowIndex][headers.indexOf('priceClean')],
-      priceTax: data[rowIndex][headers.indexOf('priceTax')],
-      priceTotal: data[rowIndex][headers.indexOf('priceTotal')],
-      startDate: data[rowIndex][headers.indexOf('startDate')],
-      endDate: data[rowIndex][headers.indexOf('endDate')],
-      createdAt: data[rowIndex][headers.indexOf('timestamp')],
+      name: nameIndex !== -1 ? String(data[rowIndex][nameIndex] || '') : '',
+      email: emailIndex !== -1 ? String(data[rowIndex][emailIndex] || '') : '',
+      tel: telIndex !== -1 ? data[rowIndex][telIndex] : '',
+      userMessage:
+        userMessageIndex !== -1
+          ? String(data[rowIndex][userMessageIndex] || '')
+          : '',
+      nbAdults:
+        nbAdultsIndex !== -1 ? Number(data[rowIndex][nbAdultsIndex]) || 0 : 0,
+      nbChilds:
+        nbChildsIndex !== -1 ? Number(data[rowIndex][nbChildsIndex]) || 0 : 0,
+      nbNights:
+        nbNightsIndex !== -1 ? Number(data[rowIndex][nbNightsIndex]) || 0 : 0,
+      priceNights:
+        priceNightsIndex !== -1
+          ? Number(data[rowIndex][priceNightsIndex]) || 0
+          : 0,
+      priceClean:
+        priceCleanIndex !== -1
+          ? Number(data[rowIndex][priceCleanIndex]) || 0
+          : 0,
+      priceTax:
+        priceTaxIndex !== -1 ? Number(data[rowIndex][priceTaxIndex]) || 0 : 0,
+      priceTotal:
+        priceTotalIndex !== -1
+          ? Number(data[rowIndex][priceTotalIndex]) || 0
+          : 0,
+      startDate:
+        startDateIndex !== -1
+          ? String(data[rowIndex][startDateIndex] || '')
+          : '',
+      endDate:
+        endDateIndex !== -1 ? String(data[rowIndex][endDateIndex] || '') : '',
+      createdAt:
+        timestampIndex !== -1 ? data[rowIndex][timestampIndex] : new Date(),
       token: token
     }
+
+    console.log('Processed reservation data:', reservationData)
 
     return jsonOut({
       status: 'success',
