@@ -592,14 +592,14 @@
         }
       }
 
-             function populateForm(data) {
-         document.getElementById('name').value = data.name || ''
-         document.getElementById('email').value = data.email || ''
-         document.getElementById('tel').value = data.tel || ''
+      function populateForm(data) {
+        document.getElementById('name').value = data.name || ''
+        document.getElementById('email').value = data.email || ''
+        document.getElementById('tel').value = data.tel || ''
 
-         // Afficher les détails de réservation
-         const detailsContainer = document.getElementById('reservation-details')
-         detailsContainer.innerHTML = `
+        // Afficher les détails de réservation
+        const detailsContainer = document.getElementById('reservation-details')
+        detailsContainer.innerHTML = `
 					<div class="detail-item">
 						<span>${formatReservationDetails(data.reservationDetails)}</span>
 					</div>
@@ -614,7 +614,7 @@
               : ''
           }
 				`
-       }
+      }
 
              function calculatePaymentAmount(data) {
          console.log('Calculating payment for:', data.reservationDetails)
@@ -622,62 +622,70 @@
          // Essayer plusieurs patterns pour extraire le montant total
          let totalAmount = null
 
-         // Pattern 1: "Total: X €" (le vrai total final)
-         let totalMatch = data.reservationDetails.match(/Total:\s*([\d\s,]+)\s*€/i)
+         // Pattern 1: "Total: X.XX €" (le vrai total final avec décimales)
+         let totalMatch = data.reservationDetails.match(
+           /Total:\s*([\d\s,]+\.?\d*)\s*€/i
+         )
          if (totalMatch) {
            totalAmount = parseFloat(totalMatch[1].replace(/[\s,]/g, ''))
+           console.log('Found total with pattern 1:', totalAmount)
          }
 
-         // Pattern 2: "Total des nuits (X) : Y €" (si pas de total final)
+         // Pattern 2: "Total: X €" (le vrai total final sans décimales)
+         if (!totalAmount) {
+           totalMatch = data.reservationDetails.match(
+             /Total:\s*([\d\s,]+)\s*€/i
+           )
+           if (totalMatch) {
+             totalAmount = parseFloat(totalMatch[1].replace(/[\s,]/g, ''))
+             console.log('Found total with pattern 2:', totalAmount)
+           }
+         }
+
+         // Pattern 3: Chercher tous les montants et prendre le plus grand
+         if (!totalAmount) {
+           const allAmounts = data.reservationDetails.match(/(\d+(?:[,\s]\d+)*\.?\d*)\s*€/g)
+           if (allAmounts && allAmounts.length > 0) {
+             const amounts = allAmounts.map((match) =>
+               parseFloat(match.replace(/[\s€]/g, '').replace(',', ''))
+             )
+             totalAmount = Math.max(...amounts)
+             console.log('Found total with pattern 3 (max amount):', totalAmount)
+           }
+         }
+
+         // Pattern 4: "Total des nuits (X) : Y €" (fallback)
          if (!totalAmount) {
            totalMatch = data.reservationDetails.match(
              /Total des nuits\s*\(\d+\)\s*:\s*([\d\s,]+)\s*€/i
            )
            if (totalMatch) {
              totalAmount = parseFloat(totalMatch[1].replace(/[\s,]/g, ''))
+             console.log('Found total with pattern 4:', totalAmount)
            }
          }
 
-         // Pattern 3: "total : Y €" (plus générique)
-         if (!totalAmount) {
-           totalMatch = data.reservationDetails.match(
-             /total\s*:\s*([\d\s,]+)\s*€/i
-           )
-           if (totalMatch) {
-             totalAmount = parseFloat(totalMatch[1].replace(/[\s,]/g, ''))
-           }
-         }
-
-         // Pattern 4: Chercher le plus grand nombre suivi de €
-         if (!totalAmount) {
-           totalMatch = data.reservationDetails.match(/(\d+(?:\s*\d+)*)\s*€/g)
-           if (totalMatch && totalMatch.length > 0) {
-             // Prendre le plus grand nombre trouvé
-             const amounts = totalMatch.map((match) =>
-               parseFloat(match.replace(/[\s€]/g, ''))
-             )
-             totalAmount = Math.max(...amounts)
-           }
-         }
-
-         console.log('Total amount found:', totalAmount)
+         console.log('Final total amount found:', totalAmount)
 
          if (totalAmount && totalAmount > 0) {
            const depositAmount = totalAmount * 0.1
            const remainingAmount = totalAmount - depositAmount
 
+           console.log('Calculated deposit:', depositAmount)
+           console.log('Remaining amount:', remainingAmount)
+
            const paymentAmountElement = document.getElementById('payment-amount')
            paymentAmountElement.innerHTML = `
-             <div style="font-size: 2.5rem; font-weight: bold; color: #10b981; margin-bottom: 10px;">
-               ${totalAmount.toFixed(2)} €
-             </div>
-             <div style="font-size: 1.2rem; color: #6b7280; margin-bottom: 5px;">
-               -${depositAmount.toFixed(2)} € (acompte)
-             </div>
-             <div style="font-size: 1.1rem; color: #374151; font-weight: 600;">
-               Solde restant (après acompte)
-             </div>
-           `
+              <div style="font-size: 2.5rem; font-weight: bold; color: #10b981; margin-bottom: 10px;">
+                ${totalAmount.toFixed(2)} €
+              </div>
+              <div style="font-size: 1.2rem; color: #6b7280; margin-bottom: 5px;">
+                -${depositAmount.toFixed(2)} € (acompte)
+              </div>
+              <div style="font-size: 1.1rem; color: #374151; font-weight: 600;">
+                Solde restant (après acompte)
+              </div>
+            `
            paymentAmountElement.classList.add('highlight')
 
            // Mettre à jour le texte du bouton avec le montant
