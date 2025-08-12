@@ -19,7 +19,7 @@ export default async function handler(req, res) {
 
   try {
     // Appeler Google Apps Script pour finaliser la réservation
-    const scriptUrl = `https://script.google.com/macros/s/AKfycbxxFpbg8zTDCz0aR_mA1gyN8pdr0odcQ8lmZiPGE353UqYmWbgx_gUw0CvhZiPpsx4/exec`
+    const scriptUrl = `https://script.google.com/macros/s/AKfycbyl8u3KV9Sb-yWYSfZO_cLLpqlzLRDx-wmxS3EIdct0fl068M6VCc9cpI-4vs2WKLg/exec`
 
     const response = await fetch(
       `${scriptUrl}?action=finalizeReservation&token=${encodeURIComponent(

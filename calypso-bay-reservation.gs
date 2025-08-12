@@ -362,9 +362,15 @@ function buildClientEmailHtml_(data, action) {
     '.header h1{margin:0;font-size:24px;letter-spacing:1px;}' +
     '.section{padding:30px;border-bottom:1px solid #eee;}' +
     '.section:last-child{border-bottom:none;}' +
-    'h2{font-size:18px;margin:0 0 15px;color:' + color + ';border-left:4px solid ' + color + ';padding-left:15px;display:flex;align-items:center;gap:10px;}' +
+    'h2{font-size:18px;margin:0 0 15px;color:' +
+    color +
+    ';border-left:4px solid ' +
+    color +
+    ';padding-left:15px;display:flex;align-items:center;gap:10px;}' +
     'p{margin:6px 0;line-height:1.6;}' +
-    '.details{background:#f9fafb;padding:15px;border-left:3px solid ' + color + ';border-radius:6px;margin-top:10px;}' +
+    '.details{background:#f9fafb;padding:15px;border-left:3px solid ' +
+    color +
+    ';border-radius:6px;margin-top:10px;}' +
     '.btn{display:inline-block;background:' +
     color +
     ';color:#ffffff !important;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:700;margin-top:20px;}' +
@@ -387,13 +393,14 @@ function buildClientEmailHtml_(data, action) {
     message +
     '</p>' +
     '</div>' +
-    (isAccepted ? 
-      '<div class="section">' +
-      '<h2>🔹 Détails de votre réservation</h2>' +
-      '<div class="details">' +
-      reservationDetails +
-      '</div>' +
-      '</div>' : '') +
+    (isAccepted
+      ? '<div class="section">' +
+        '<h2>🔹 Détails de votre réservation</h2>' +
+        '<div class="details">' +
+        reservationDetails +
+        '</div>' +
+        '</div>'
+      : '') +
     '<div class="section" style="text-align:center;">' +
     (isAccepted
       ? '<a href="' +
@@ -982,7 +989,7 @@ function formatReservationDetails_(data) {
   }
 
   let details = []
-  
+
   // Dates avec formatage HTML
   const startDateStr = formatDate(startDate)
   const endDateStr = formatDate(endDate)
@@ -993,11 +1000,15 @@ function formatReservationDetails_(data) {
   // Voyageurs
   if (data.nbChilds > 0) {
     details.push(
-      `<strong>Voyageurs :</strong> ${data.nbAdults} adulte${data.nbAdults > 1 ? 's' : ''}, ${data.nbChilds} enfant${data.nbChilds > 1 ? 's' : ''}`
+      `<strong>Voyageurs :</strong> ${data.nbAdults} adulte${
+        data.nbAdults > 1 ? 's' : ''
+      }, ${data.nbChilds} enfant${data.nbChilds > 1 ? 's' : ''}`
     )
   } else {
     details.push(
-      `<strong>Voyageurs :</strong> ${data.nbAdults} adulte${data.nbAdults > 1 ? 's' : ''}`
+      `<strong>Voyageurs :</strong> ${data.nbAdults} adulte${
+        data.nbAdults > 1 ? 's' : ''
+      }`
     )
   }
 
@@ -1006,24 +1017,34 @@ function formatReservationDetails_(data) {
 
   if (data.priceNights > 0) {
     details.push(
-      `&nbsp;&nbsp;&nbsp;&nbsp;• Total des nuits (${data.nbNights}) : ${data.priceNights.toLocaleString('fr-FR')} €`
+      `&nbsp;&nbsp;&nbsp;&nbsp;• Total des nuits (${
+        data.nbNights
+      }) : ${data.priceNights.toLocaleString('fr-FR')} €`
     )
   }
 
   if (data.priceClean > 0) {
     details.push(
-      `&nbsp;&nbsp;&nbsp;&nbsp;• Frais de ménage : ${data.priceClean.toLocaleString('fr-FR')} €`
+      `&nbsp;&nbsp;&nbsp;&nbsp;• Frais de ménage : ${data.priceClean.toLocaleString(
+        'fr-FR'
+      )} €`
     )
   }
 
   if (data.priceTax > 0) {
     details.push(
-      `&nbsp;&nbsp;&nbsp;&nbsp;• Taxes (${data.nbAdults} adulte${data.nbAdults > 1 ? 's' : ''}) : ${data.priceTax.toLocaleString('fr-FR')} €`
+      `&nbsp;&nbsp;&nbsp;&nbsp;• Taxes (${data.nbAdults} adulte${
+        data.nbAdults > 1 ? 's' : ''
+      }) : ${data.priceTax.toLocaleString('fr-FR')} €`
     )
   }
 
   if (data.priceTotal > 0) {
-    details.push(`&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Total : ${data.priceTotal.toLocaleString('fr-FR')} €</strong>`)
+    details.push(
+      `&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Total : ${data.priceTotal.toLocaleString(
+        'fr-FR'
+      )} €</strong>`
+    )
   }
 
   return details.join('<br>')
