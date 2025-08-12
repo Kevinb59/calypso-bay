@@ -311,14 +311,22 @@ Détail du prix :
   // Envoi via le script Google Apps Script pour les réservations
   // ⚠️ IMPORTANT : Remplacez cette URL par celle de votre nouveau déploiement GAS
   const GAS_URL =
-    'https://script.google.com/macros/s/AKfycbwiR-8h2G2HmXI-enb9hTPooHihRxZawTpLAQVGEsqmEB_tk6oIQKILhLKQwRGfzmg/exec'
+    'https://script.google.com/macros/s/AKfycbwl1mu4wpb0sERjtG1BegPobx-sWuA0EN9NuMQLozbiRVcJL7bF-Vtlo2HFZC_4980/exec'
 
   const params = new URLSearchParams({
     name,
     email,
     tel: phone || '',
-    reservationDetails,
-    userMessage: message || ''
+    userMessage: message || '',
+    nbAdults: adults,
+    nbChilds: children,
+    nbNights: nights,
+    priceNights: baseTotal,
+    priceClean: cleaningFee,
+    priceTax: taxTotal,
+    priceTotal: total,
+    startDate: selectedStart.toISOString().split('T')[0],
+    endDate: selectedEnd.toISOString().split('T')[0]
   })
 
   // Mise à jour du bouton pendant l'envoi

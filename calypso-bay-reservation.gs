@@ -43,13 +43,8 @@ function doGet(e) {
       return debugSheetStructure_()
     }
 
-    // Test du parsing des détails de réservation
-    if (p.action === 'testParse') {
-      return testParseReservationDetails_()
-    }
-
     // Validation minimale pour nouvelle réservation
-    const required = ['name', 'email', 'reservationDetails']
+    const required = ['name', 'email', 'startDate', 'endDate', 'nbAdults']
     const missing = required.filter((k) => !p[k])
     if (missing.length) {
       return jsonOut({
@@ -63,8 +58,16 @@ function doGet(e) {
       name: String(p.name).trim(),
       email: String(p.email).trim(),
       tel: p.tel ? String(p.tel).trim() : '',
-      reservationDetails: String(p.reservationDetails || ''),
       userMessage: String(p.userMessage || ''),
+      nbAdults: parseInt(p.nbAdults) || 0,
+      nbChilds: parseInt(p.nbChilds) || 0,
+      nbNights: parseInt(p.nbNights) || 0,
+      priceNights: parseFloat(p.priceNights) || 0,
+      priceClean: parseFloat(p.priceClean) || 0,
+      priceTax: parseFloat(p.priceTax) || 0,
+      priceTotal: parseFloat(p.priceTotal) || 0,
+      startDate: String(p.startDate).trim(),
+      endDate: String(p.endDate).trim(),
       createdAt: new Date()
     }
 
@@ -156,7 +159,7 @@ function handleAction_(action, token) {
     // Chercher la ligne avec ce token
     const data = sh.getDataRange().getValues()
     const headers = data[0]
-    const tokenColIndex = headers.indexOf('id') // Changé de 'token' à 'id'
+    const tokenColIndex = headers.indexOf('id')
     const statusColIndex = headers.indexOf('status')
 
     if (tokenColIndex === -1 || statusColIndex === -1) {
@@ -201,10 +204,17 @@ function handleAction_(action, token) {
       name: data[rowIndex - 1][headers.indexOf('name')],
       email: data[rowIndex - 1][headers.indexOf('email')],
       tel: data[rowIndex - 1][headers.indexOf('tel')],
-      reservationDetails:
-        data[rowIndex - 1][headers.indexOf('reservationDetails')], // Changé de 'reservationDetails_raw' à 'reservationDetails'
       userMessage: data[rowIndex - 1][headers.indexOf('userMessage')],
-      token: token // Ajout du token pour l'email
+      nbAdults: data[rowIndex - 1][headers.indexOf('nbAdults')],
+      nbChilds: data[rowIndex - 1][headers.indexOf('nbChilds')],
+      nbNights: data[rowIndex - 1][headers.indexOf('nbNights')],
+      priceNights: data[rowIndex - 1][headers.indexOf('priceNights')],
+      priceClean: data[rowIndex - 1][headers.indexOf('priceClean')],
+      priceTax: data[rowIndex - 1][headers.indexOf('priceTax')],
+      priceTotal: data[rowIndex - 1][headers.indexOf('priceTotal')],
+      startDate: data[rowIndex - 1][headers.indexOf('startDate')],
+      endDate: data[rowIndex - 1][headers.indexOf('endDate')],
+      token: token
     }
 
     // Envoyer l'email de confirmation au client
@@ -258,19 +268,16 @@ function debugSheetStructure_() {
         'name',
         'email',
         'tel',
-        'reservationDetails',
         'userMessage',
-        'acceptUrl',
-        'refuseUrl',
-        'dateArrivee',
-        'dateDepart',
-        'nbAdultes',
-        'nbEnfants',
-        'nbNuits',
-        'prixNuits',
-        'fraisMenage',
-        'taxes',
-        'total'
+        'nbAdults',
+        'nbChilds',
+        'nbNights',
+        'priceNights',
+        'priceClean',
+        'priceTax',
+        'priceTotal',
+        'startDate',
+        'endDate'
       ],
       missingHeaders: [
         'timestamp',
@@ -279,19 +286,16 @@ function debugSheetStructure_() {
         'name',
         'email',
         'tel',
-        'reservationDetails',
         'userMessage',
-        'acceptUrl',
-        'refuseUrl',
-        'dateArrivee',
-        'dateDepart',
-        'nbAdultes',
-        'nbEnfants',
-        'nbNuits',
-        'prixNuits',
-        'fraisMenage',
-        'taxes',
-        'total'
+        'nbAdults',
+        'nbChilds',
+        'nbNights',
+        'priceNights',
+        'priceClean',
+        'priceTax',
+        'priceTotal',
+        'startDate',
+        'endDate'
       ].filter((h) => !headers.includes(h))
     })
   } catch (err) {
@@ -299,42 +303,6 @@ function debugSheetStructure_() {
       status: 'error',
       message:
         '❌ Erreur diagnostic: ' +
-        (err && err.message ? err.message : String(err))
-    })
-  }
-}
-
-// ======================================
-// Test du parsing des détails de réservation
-// ======================================
-function testParseReservationDetails_() {
-  try {
-    const testData = `Demande de réservation pour Calypso Bay
-
-Dates : 15 janvier 2024 au 22 janvier 2024 (7 nuits)
-Voyageurs : 2 adultes, 1 enfant
-
-Détail du prix :
-- Total des nuits (7) : 1400 €
-- Frais de ménage : 100 €
-- Taxes (2 adultes) : 32.20 €
-- Total : 1532.20 €
-
-Nous souhaitons réserver pour nos vacances en famille.`
-
-    const result = parseReservationDetails_(testData)
-
-    return jsonOut({
-      status: 'success',
-      message: '✅ Test de parsing réussi',
-      testData: testData,
-      parsedResult: result
-    })
-  } catch (err) {
-    return jsonOut({
-      status: 'error',
-      message:
-        '❌ Erreur test parsing: ' +
         (err && err.message ? err.message : String(err))
     })
   }
@@ -455,7 +423,7 @@ function getReservationData_(token) {
     // Chercher la ligne avec ce token
     const data = sh.getDataRange().getValues()
     const headers = data[0]
-    const tokenColIndex = headers.indexOf('id') // Changé de 'token' à 'id'
+    const tokenColIndex = headers.indexOf('id')
     const statusColIndex = headers.indexOf('status')
 
     if (tokenColIndex === -1) {
@@ -494,20 +462,18 @@ function getReservationData_(token) {
       name: data[rowIndex][headers.indexOf('name')],
       email: data[rowIndex][headers.indexOf('email')],
       tel: data[rowIndex][headers.indexOf('tel')],
-      reservationDetails: data[rowIndex][headers.indexOf('reservationDetails')],
       userMessage: data[rowIndex][headers.indexOf('userMessage')],
+      nbAdults: data[rowIndex][headers.indexOf('nbAdults')],
+      nbChilds: data[rowIndex][headers.indexOf('nbChilds')],
+      nbNights: data[rowIndex][headers.indexOf('nbNights')],
+      priceNights: data[rowIndex][headers.indexOf('priceNights')],
+      priceClean: data[rowIndex][headers.indexOf('priceClean')],
+      priceTax: data[rowIndex][headers.indexOf('priceTax')],
+      priceTotal: data[rowIndex][headers.indexOf('priceTotal')],
+      startDate: data[rowIndex][headers.indexOf('startDate')],
+      endDate: data[rowIndex][headers.indexOf('endDate')],
       createdAt: data[rowIndex][headers.indexOf('timestamp')],
-      token: token,
-      // Nouvelles données structurées
-      dateArrivee: data[rowIndex][headers.indexOf('dateArrivee')],
-      dateDepart: data[rowIndex][headers.indexOf('dateDepart')],
-      nbAdultes: data[rowIndex][headers.indexOf('nbAdultes')],
-      nbEnfants: data[rowIndex][headers.indexOf('nbEnfants')],
-      nbNuits: data[rowIndex][headers.indexOf('nbNuits')],
-      prixNuits: data[rowIndex][headers.indexOf('prixNuits')],
-      fraisMenage: data[rowIndex][headers.indexOf('fraisMenage')],
-      taxes: data[rowIndex][headers.indexOf('taxes')],
-      total: data[rowIndex][headers.indexOf('total')]
+      token: token
     }
 
     return jsonOut({
@@ -547,7 +513,7 @@ function finalizeReservation_(token, paymentData) {
     // Chercher la ligne avec ce token
     const data = sh.getDataRange().getValues()
     const headers = data[0]
-    const tokenColIndex = headers.indexOf('id') // Changé de 'token' à 'id'
+    const tokenColIndex = headers.indexOf('id')
     const statusColIndex = headers.indexOf('status')
 
     if (tokenColIndex === -1) {
@@ -603,9 +569,16 @@ function finalizeReservation_(token, paymentData) {
       name: data[rowIndex - 1][headers.indexOf('name')],
       email: data[rowIndex - 1][headers.indexOf('email')],
       tel: data[rowIndex - 1][headers.indexOf('tel')],
-      reservationDetails:
-        data[rowIndex - 1][headers.indexOf('reservationDetails')], // Changé de 'reservationDetails_raw' à 'reservationDetails'
-      userMessage: data[rowIndex - 1][headers.indexOf('userMessage')]
+      userMessage: data[rowIndex - 1][headers.indexOf('userMessage')],
+      nbAdults: data[rowIndex - 1][headers.indexOf('nbAdults')],
+      nbChilds: data[rowIndex - 1][headers.indexOf('nbChilds')],
+      nbNights: data[rowIndex - 1][headers.indexOf('nbNights')],
+      priceNights: data[rowIndex - 1][headers.indexOf('priceNights')],
+      priceClean: data[rowIndex - 1][headers.indexOf('priceClean')],
+      priceTax: data[rowIndex - 1][headers.indexOf('priceTax')],
+      priceTotal: data[rowIndex - 1][headers.indexOf('priceTotal')],
+      startDate: data[rowIndex - 1][headers.indexOf('startDate')],
+      endDate: data[rowIndex - 1][headers.indexOf('endDate')]
     }
 
     // Envoyer les emails de confirmation
@@ -781,25 +754,18 @@ function writeToSheet_(data, token) {
       'name',
       'email',
       'tel',
-      'reservationDetails',
       'userMessage',
-      'acceptUrl',
-      'refuseUrl',
-      // Nouvelles colonnes structurées
-      'dateArrivee',
-      'dateDepart',
-      'nbAdultes',
-      'nbEnfants',
-      'nbNuits',
-      'prixNuits',
-      'fraisMenage',
-      'taxes',
-      'total'
+      'nbAdults',
+      'nbChilds',
+      'nbNights',
+      'priceNights',
+      'priceClean',
+      'priceTax',
+      'priceTotal',
+      'startDate',
+      'endDate'
     ])
   }
-
-  // Parser les détails de réservation pour extraire les données structurées
-  const parsedData = parseReservationDetails_(data.reservationDetails)
 
   const rowValues = [
     new Date(data.createdAt),
@@ -808,98 +774,19 @@ function writeToSheet_(data, token) {
     data.name,
     data.email,
     data.tel,
-    data.reservationDetails,
     data.userMessage,
-    '', // acceptUrl sera ajouté plus tard
-    '', // refuseUrl sera ajouté plus tard
-    // Données structurées
-    parsedData.dateArrivee,
-    parsedData.dateDepart,
-    parsedData.nbAdultes,
-    parsedData.nbEnfants,
-    parsedData.nbNuits,
-    parsedData.prixNuits,
-    parsedData.fraisMenage,
-    parsedData.taxes,
-    parsedData.total
+    data.nbAdults,
+    data.nbChilds,
+    data.nbNights,
+    data.priceNights,
+    data.priceClean,
+    data.priceTax,
+    data.priceTotal,
+    data.startDate,
+    data.endDate
   ]
   sh.appendRow(rowValues)
   return sh.getLastRow()
-}
-
-// ======================================
-// Parser les détails de réservation
-// ======================================
-function parseReservationDetails_(details) {
-  const text = String(details || '')
-
-  // Valeurs par défaut
-  let result = {
-    dateArrivee: '',
-    dateDepart: '',
-    nbAdultes: 0,
-    nbEnfants: 0,
-    nbNuits: 0,
-    prixNuits: 0,
-    fraisMenage: 0,
-    taxes: 0,
-    total: 0
-  }
-
-  // Parser les dates
-  const dateMatch = text.match(
-    /Dates\s*:\s*(\d{1,2}\s+\w+\s+\d{4})\s+au\s+(\d{1,2}\s+\w+\s+\d{4})\s*\((\d+)\s+nuits?\)/i
-  )
-  if (dateMatch) {
-    result.dateArrivee = dateMatch[1].trim()
-    result.dateDepart = dateMatch[2].trim()
-    result.nbNuits = parseInt(dateMatch[3]) || 0
-  }
-
-  // Parser les voyageurs (format: "2 adultes, 1 enfant" ou "2 adultes")
-  const voyageursMatch = text.match(/Voyageurs\s*:\s*(\d+)\s+adulte/i)
-  if (voyageursMatch) {
-    result.nbAdultes = parseInt(voyageursMatch[1]) || 0
-  }
-
-  // Parser les enfants (format: "2 adultes, 1 enfant")
-  const enfantsMatch = text.match(/Voyageurs\s*:\s*\d+\s+adulte,\s*(\d+)\s+enfant/i)
-  if (enfantsMatch) {
-    result.nbEnfants = parseInt(enfantsMatch[1]) || 0
-  }
-
-  // Parser les prix (format: "Total des nuits (7) : 1400 €")
-  const prixNuitsMatch = text.match(
-    /Total des nuits\s*\(\d+\)\s*:\s*([\d\s,]+\.?\d*)\s*€/i
-  )
-  if (prixNuitsMatch) {
-    result.prixNuits = parseFloat(prixNuitsMatch[1].replace(/[\s,]/g, '')) || 0
-  }
-
-  // Parser les frais de ménage (format: "Frais de ménage : 100 €")
-  const fraisMenageMatch = text.match(
-    /Frais de ménage\s*:\s*([\d\s,]+\.?\d*)\s*€/i
-  )
-  if (fraisMenageMatch) {
-    result.fraisMenage =
-      parseFloat(fraisMenageMatch[1].replace(/[\s,]/g, '')) || 0
-  }
-
-  // Parser les taxes (format: "Taxes (2 adultes) : 32.20 €")
-  const taxesMatch = text.match(
-    /Taxes\s*\(\d+\s+adulte\)\s*:\s*([\d\s,]+\.?\d*)\s*€/i
-  )
-  if (taxesMatch) {
-    result.taxes = parseFloat(taxesMatch[1].replace(/[\s,]/g, '')) || 0
-  }
-
-  // Parser le total (format: "Total : 1532.20 €")
-  const totalMatch = text.match(/Total\s*:\s*([\d\s,]+\.?\d*)\s*€/i)
-  if (totalMatch) {
-    result.total = parseFloat(totalMatch[1].replace(/[\s,]/g, '')) || 0
-  }
-
-  return result
 }
 
 // ==================================================
@@ -907,7 +794,7 @@ function parseReservationDetails_(details) {
 // ==================================================
 function buildEmailHtml_(data, links) {
   const { acceptUrl, refuseUrl } = links
-  const detailsHtml = formatReservationDetails_(data.reservationDetails)
+  const detailsHtml = formatReservationDetails_(data)
 
   // Mailto Répondre — corps simple encodé
   const replySubject = 'RE: Demande de réservation Calypso Bay'
@@ -1010,75 +897,70 @@ function buildEmailHtml_(data, links) {
 }
 
 // =====================================================
-// Formattage des détails (transforme puces en tableau prix)
+// Formattage des détails (utilise les données structurées)
 // =====================================================
-function formatReservationDetails_(raw) {
-  const text = String(raw || '')
-  const lines = text.split(/\r?\n/)
+function formatReservationDetails_(data) {
+  const startDate = new Date(data.startDate)
+  const endDate = new Date(data.endDate)
 
-  var out = []
-  var rows = []
-
-  for (var i = 0; i < lines.length; i++) {
-    var line = String(lines[i] || '').trim()
-    if (!line) continue
-
-    // Titre
-    if (/^détail du prix\s*:/i.test(line)) {
-      out.push('<strong>Détail du prix :</strong>')
-      continue
-    }
-
-    // Lignes de prix: "• Libellé : 123 €" ou "- Libellé : 123 €"
-    if (/^(•|-)/.test(line) && line.indexOf(':') > -1) {
-      var noBullet = line.replace(/^(•|-)\s*/, '')
-      var parts = noBullet.split(':')
-      var label = (parts[0] || '').trim()
-      var amountRaw = (parts[1] || '').replace('€', '').trim()
-
-      var amount = formatNumberFr_(amountRaw)
-      var isTotal = /^total$/i.test(label)
-
-      rows.push(
-        '<tr>' +
-          '<td style="padding:2px 12px 2px 0; white-space:nowrap;">' +
-          (isTotal
-            ? '<strong>• Total :</strong>'
-            : '• ' + escapeHtml_(label) + ' :') +
-          '</td>' +
-          '<td style="padding:2px 0; text-align:right; white-space:nowrap;">' +
-          (isTotal ? '<strong>' + amount + ' €</strong>' : amount + ' €') +
-          '</td>' +
-          '</tr>'
-      )
-    } else {
-      // Autres lignes (dates, voyageurs, etc.)
-      out.push(escapeHtml_(line))
-    }
+  const formatDate = (date) => {
+    return date.toLocaleDateString('fr-FR', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric'
+    })
   }
 
-  if (rows.length) {
-    out.push(
-      '<table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:8px; width:100%;">' +
-        rows.join('') +
-        '</table>'
+  let details = []
+  details.push(
+    `Dates : ${formatDate(startDate)} au ${formatDate(endDate)} (${
+      data.nbNights
+    } nuits)`
+  )
+
+  const totalGuests = data.nbAdults + data.nbChilds
+  if (data.nbChilds > 0) {
+    details.push(
+      `Voyageurs : ${data.nbAdults} adulte${data.nbAdults > 1 ? 's' : ''}, ${
+        data.nbChilds
+      } enfant${data.nbChilds > 1 ? 's' : ''}`
+    )
+  } else {
+    details.push(
+      `Voyageurs : ${data.nbAdults} adulte${data.nbAdults > 1 ? 's' : ''}`
     )
   }
 
-  return out.join('\n')
-}
+  details.push('')
+  details.push('Détail du prix :')
 
-function formatNumberFr_(str) {
-  var normalized = String(str || '')
-    .trim()
-    .replace(/\s+/g, '') // retire espaces (y compris insécables)
-    .replace(',', '.') // virgule -> point
-  var num = parseFloat(normalized.replace(/[^\d.-]/g, ''))
-  if (isNaN(num)) return escapeHtml_(String(str))
-  return num.toLocaleString('fr-FR', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  })
+  if (data.priceNights > 0) {
+    details.push(
+      `• Total des nuits (${data.nbNights}) : ${data.priceNights.toLocaleString(
+        'fr-FR'
+      )} €`
+    )
+  }
+
+  if (data.priceClean > 0) {
+    details.push(
+      `• Frais de ménage : ${data.priceClean.toLocaleString('fr-FR')} €`
+    )
+  }
+
+  if (data.priceTax > 0) {
+    details.push(
+      `• Taxes (${data.nbAdults} adulte${
+        data.nbAdults > 1 ? 's' : ''
+      }) : ${data.priceTax.toLocaleString('fr-FR')} €`
+    )
+  }
+
+  if (data.priceTotal > 0) {
+    details.push(`• Total : ${data.priceTotal.toLocaleString('fr-FR')} €`)
+  }
+
+  return details.join('\n')
 }
 
 // =============
