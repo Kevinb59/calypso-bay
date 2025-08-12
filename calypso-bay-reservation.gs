@@ -791,7 +791,7 @@ function writeToSheet_(data, token) {
 // ======================================
 function parseReservationDetails_(details) {
   const text = String(details || '')
-  
+
   // Valeurs par défaut
   let result = {
     dateArrivee: '',
@@ -806,7 +806,9 @@ function parseReservationDetails_(details) {
   }
 
   // Parser les dates
-  const dateMatch = text.match(/Dates\s*:\s*(\d{1,2}\s+\w+\s+\d{4})\s+au\s+(\d{1,2}\s+\w+\s+\d{4})\s*\((\d+)\s+nuits?\)/i)
+  const dateMatch = text.match(
+    /Dates\s*:\s*(\d{1,2}\s+\w+\s+\d{4})\s+au\s+(\d{1,2}\s+\w+\s+\d{4})\s*\((\d+)\s+nuits?\)/i
+  )
   if (dateMatch) {
     result.dateArrivee = dateMatch[1].trim()
     result.dateDepart = dateMatch[2].trim()
@@ -820,17 +822,24 @@ function parseReservationDetails_(details) {
   }
 
   // Parser les prix
-  const prixNuitsMatch = text.match(/Total des nuits\s*\(\d+\)\s*:\s*([\d\s,]+\.?\d*)\s*€/i)
+  const prixNuitsMatch = text.match(
+    /Total des nuits\s*\(\d+\)\s*:\s*([\d\s,]+\.?\d*)\s*€/i
+  )
   if (prixNuitsMatch) {
     result.prixNuits = parseFloat(prixNuitsMatch[1].replace(/[\s,]/g, '')) || 0
   }
 
-  const fraisMenageMatch = text.match(/Frais de ménage\s*:\s*([\d\s,]+\.?\d*)\s*€/i)
+  const fraisMenageMatch = text.match(
+    /Frais de ménage\s*:\s*([\d\s,]+\.?\d*)\s*€/i
+  )
   if (fraisMenageMatch) {
-    result.fraisMenage = parseFloat(fraisMenageMatch[1].replace(/[\s,]/g, '')) || 0
+    result.fraisMenage =
+      parseFloat(fraisMenageMatch[1].replace(/[\s,]/g, '')) || 0
   }
 
-  const taxesMatch = text.match(/Taxes\s*\(\d+\s+adulte\)\s*:\s*([\d\s,]+\.?\d*)\s*€/i)
+  const taxesMatch = text.match(
+    /Taxes\s*\(\d+\s+adulte\)\s*:\s*([\d\s,]+\.?\d*)\s*€/i
+  )
   if (taxesMatch) {
     result.taxes = parseFloat(taxesMatch[1].replace(/[\s,]/g, '')) || 0
   }

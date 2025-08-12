@@ -624,8 +624,10 @@
 
         // Fallback vers l'ancien système si total n'est pas disponible
         if (!totalAmount || totalAmount === 0) {
-          console.log('Total not found in structured data, falling back to parsing')
-          
+          console.log(
+            'Total not found in structured data, falling back to parsing'
+          )
+
           // Pattern 1: "Total: X.XX €" (le vrai total final avec décimales)
           let totalMatch = data.reservationDetails.match(
             /Total:\s*([\d\s,]+\.?\d*)\s*€/i
@@ -637,7 +639,9 @@
 
           // Pattern 2: "Total: X €" (le vrai total final sans décimales)
           if (!totalAmount) {
-            totalMatch = data.reservationDetails.match(/Total:\s*([\d\s,]+)\s*€/i)
+            totalMatch = data.reservationDetails.match(
+              /Total:\s*([\d\s,]+)\s*€/i
+            )
             if (totalMatch) {
               totalAmount = parseFloat(totalMatch[1].replace(/[\s,]/g, ''))
               console.log('Found total with pattern 2:', totalAmount)
@@ -654,7 +658,10 @@
                 parseFloat(match.replace(/[\s€]/g, '').replace(',', ''))
               )
               totalAmount = Math.max(...amounts)
-              console.log('Found total with pattern 3 (max amount):', totalAmount)
+              console.log(
+                'Found total with pattern 3 (max amount):',
+                totalAmount
+              )
             }
           }
 
