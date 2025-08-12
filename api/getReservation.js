@@ -17,7 +17,7 @@ export default async function handler(req, res) {
 
   try {
     // Appeler Google Apps Script pour récupérer les données
-    const scriptUrl = `https://script.google.com/macros/s/AKfycbxxFpbg8zTDCz0aR_mA1gyN8pdr0odcQ8lmZiPGE353UqYmWbgx_gUw0CvhZiPpsx4/exec`
+    const scriptUrl = `https://script.google.com/macros/s/AKfycbxSRvl7Bdc5W-7T0DbE--naruS8YeXntyJksmE2QlrczTTc9-BUht4ajy8uUJIFHA/exec`
 
     const response = await fetch(
       `${scriptUrl}?action=getReservation&token=${encodeURIComponent(token)}`,
