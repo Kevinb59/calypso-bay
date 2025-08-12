@@ -43,6 +43,11 @@ function doGet(e) {
       return debugSheetStructure_()
     }
 
+    // Test du parsing des détails de réservation
+    if (p.action === 'testParse') {
+      return testParseReservationDetails_()
+    }
+
     // Validation minimale pour nouvelle réservation
     const required = ['name', 'email', 'reservationDetails']
     const missing = required.filter((k) => !p[k])
@@ -294,6 +299,42 @@ function debugSheetStructure_() {
       status: 'error',
       message:
         '❌ Erreur diagnostic: ' +
+        (err && err.message ? err.message : String(err))
+    })
+  }
+}
+
+// ======================================
+// Test du parsing des détails de réservation
+// ======================================
+function testParseReservationDetails_() {
+  try {
+    const testData = `Demande de réservation pour Calypso Bay
+
+Dates : 15 janvier 2024 au 22 janvier 2024 (7 nuits)
+Voyageurs : 2 adultes, 1 enfant
+
+Détail du prix :
+- Total des nuits (7) : 1400 €
+- Frais de ménage : 100 €
+- Taxes (2 adultes) : 32.20 €
+- Total : 1532.20 €
+
+Nous souhaitons réserver pour nos vacances en famille.`
+
+    const result = parseReservationDetails_(testData)
+
+    return jsonOut({
+      status: 'success',
+      message: '✅ Test de parsing réussi',
+      testData: testData,
+      parsedResult: result
+    })
+  } catch (err) {
+    return jsonOut({
+      status: 'error',
+      message:
+        '❌ Erreur test parsing: ' +
         (err && err.message ? err.message : String(err))
     })
   }
@@ -815,13 +856,19 @@ function parseReservationDetails_(details) {
     result.nbNuits = parseInt(dateMatch[3]) || 0
   }
 
-  // Parser les voyageurs
+  // Parser les voyageurs (format: "2 adultes, 1 enfant" ou "2 adultes")
   const voyageursMatch = text.match(/Voyageurs\s*:\s*(\d+)\s+adulte/i)
   if (voyageursMatch) {
     result.nbAdultes = parseInt(voyageursMatch[1]) || 0
   }
 
-  // Parser les prix
+  // Parser les enfants (format: "2 adultes, 1 enfant")
+  const enfantsMatch = text.match(/Voyageurs\s*:\s*\d+\s+adulte,\s*(\d+)\s+enfant/i)
+  if (enfantsMatch) {
+    result.nbEnfants = parseInt(enfantsMatch[1]) || 0
+  }
+
+  // Parser les prix (format: "Total des nuits (7) : 1400 €")
   const prixNuitsMatch = text.match(
     /Total des nuits\s*\(\d+\)\s*:\s*([\d\s,]+\.?\d*)\s*€/i
   )
@@ -829,6 +876,7 @@ function parseReservationDetails_(details) {
     result.prixNuits = parseFloat(prixNuitsMatch[1].replace(/[\s,]/g, '')) || 0
   }
 
+  // Parser les frais de ménage (format: "Frais de ménage : 100 €")
   const fraisMenageMatch = text.match(
     /Frais de ménage\s*:\s*([\d\s,]+\.?\d*)\s*€/i
   )
@@ -837,6 +885,7 @@ function parseReservationDetails_(details) {
       parseFloat(fraisMenageMatch[1].replace(/[\s,]/g, '')) || 0
   }
 
+  // Parser les taxes (format: "Taxes (2 adultes) : 32.20 €")
   const taxesMatch = text.match(
     /Taxes\s*\(\d+\s+adulte\)\s*:\s*([\d\s,]+\.?\d*)\s*€/i
   )
@@ -844,6 +893,7 @@ function parseReservationDetails_(details) {
     result.taxes = parseFloat(taxesMatch[1].replace(/[\s,]/g, '')) || 0
   }
 
+  // Parser le total (format: "Total : 1532.20 €")
   const totalMatch = text.match(/Total\s*:\s*([\d\s,]+\.?\d*)\s*€/i)
   if (totalMatch) {
     result.total = parseFloat(totalMatch[1].replace(/[\s,]/g, '')) || 0
