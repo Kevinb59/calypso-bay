@@ -614,33 +614,23 @@
 
         // Créer les détails de réservation avec la structure appropriée
         const reservationDetails = formatReservationDetails(data)
-        
+
         // Regrouper les sections dans des spans séparés
         const sections = reservationDetails.split('<hr')
-        const detailsHtml = sections.map((section, index) => {
-          if (section.trim()) {
-            // Nettoyer les balises hr et créer un span pour chaque section
-            const cleanSection = section.replace(/^[^>]*>/, '').trim()
-            if (cleanSection) {
-              return `<div class="detail-item"><span>${cleanSection}</span></div>`
+        const detailsHtml = sections
+          .map((section, index) => {
+            if (section.trim()) {
+              // Nettoyer les balises hr et créer un span pour chaque section
+              const cleanSection = section.replace(/^[^>]*>/, '').trim()
+              if (cleanSection) {
+                return `<div class="detail-item"><span>${cleanSection}</span></div>`
+              }
             }
-          }
-          return ''
-        }).join('')
+            return ''
+          })
+          .join('')
 
-        detailsContainer.innerHTML = `
-          ${detailsHtml}
-          ${
-            data.userMessage
-              ? `
-            <div class="detail-item">
-              <span>Message :</span>
-              <span>${escapeHtml(data.userMessage)}</span>
-            </div>
-            `
-              : ''
-          }
-        `
+        detailsContainer.innerHTML = detailsHtml
       }
 
       function calculatePaymentAmount(data) {
@@ -848,18 +838,20 @@
         // Section Voyageurs
         let travelersSection
         if (data.nbChilds > 0) {
-          travelersSection = `<strong>Voyageurs :</strong> ${data.nbAdults} adulte${
-            data.nbAdults > 1 ? 's' : ''
-          }, ${data.nbChilds} enfant${data.nbChilds > 1 ? 's' : ''}`
-        } else {
-          travelersSection = `<strong>Voyageurs :</strong> ${data.nbAdults} adulte${
-            data.nbAdults > 1 ? 's' : ''
+          travelersSection = `<strong>Voyageurs :</strong> ${
+            data.nbAdults
+          } adulte${data.nbAdults > 1 ? 's' : ''}, ${data.nbChilds} enfant${
+            data.nbChilds > 1 ? 's' : ''
           }`
+        } else {
+          travelersSection = `<strong>Voyageurs :</strong> ${
+            data.nbAdults
+          } adulte${data.nbAdults > 1 ? 's' : ''}`
         }
 
         // Section Détail du prix
         let priceDetails = ['<strong>Détail du prix :</strong>']
-        
+
         if (data.priceNights > 0) {
           priceDetails.push(
             `&nbsp;&nbsp;&nbsp;&nbsp;• Total des nuits (${
@@ -896,7 +888,7 @@
 
         // Assembler les sections avec les séparateurs
         const result = `${datesSection}<hr style="border: none; border-top: 1px solid rgba(255,255,255,0.3); margin: 0.5rem 0;" />${travelersSection}<hr style="border: none; border-top: 1px solid rgba(255,255,255,0.3); margin: 0.5rem 0;" />${priceSection}`
-        
+
         console.log('formatReservationDetails result:', result)
         return result
       }
