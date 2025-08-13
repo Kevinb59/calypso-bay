@@ -250,6 +250,133 @@
         margin-top: 5px;
         font-weight: 500;
       }
+
+      /* Responsive design pour mobile */
+      @media (max-width: 768px) {
+        /* Conteneurs principaux */
+        .content,
+        .inner {
+          padding: 0 10px;
+          max-width: 100vw;
+          width: 100%;
+        }
+
+        .form-section {
+          padding: 15px;
+          margin: 10px 0;
+          max-width: 100%;
+          width: 100%;
+        }
+
+        .form-row {
+          flex-direction: column;
+          gap: 15px;
+        }
+        .form-row .form-group {
+          flex: none;
+          min-width: 100%;
+          width: 100%;
+        }
+        .form-group input,
+        .form-group textarea {
+          font-size: 16px; /* Évite le zoom sur iOS */
+          padding: 12px;
+          max-width: 100%;
+          width: 100%;
+        }
+        .payment-amount {
+          padding: 20px 15px;
+          max-width: 100%;
+          width: 100%;
+        }
+        .payment-amount > div {
+          font-size: 1.8rem;
+          max-width: 100%;
+          word-break: break-word;
+        }
+        .btn-submit {
+          padding: 15px 20px;
+          font-size: 16px;
+          min-height: 50px;
+          max-width: 100%;
+          width: 100%;
+        }
+        .detail-item {
+          font-size: 0.85rem;
+          padding: 10px 0;
+          max-width: 100%;
+          width: 100%;
+        }
+        .reservation-details {
+          padding: 15px;
+          max-width: 100%;
+          width: 100%;
+        }
+
+        /* Forcer les largeurs maximales */
+        .span-4-5,
+        .span-9-5,
+        .span-3-75,
+        .span-1-75 {
+          max-width: 100%;
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 480px) {
+        /* Conteneurs principaux */
+        .content,
+        .inner {
+          padding: 0 5px;
+          max-width: 100vw;
+          width: 100%;
+        }
+
+        .form-section {
+          padding: 10px;
+          max-width: 100%;
+          width: 100%;
+        }
+
+        .form-row {
+          gap: 10px;
+        }
+        .payment-amount > div {
+          font-size: 1.5rem;
+          max-width: 100%;
+          word-break: break-word;
+        }
+        .btn-submit {
+          font-size: 14px;
+          padding: 12px 15px;
+          max-width: 100%;
+          width: 100%;
+        }
+        .detail-item {
+          font-size: 0.8rem;
+          max-width: 100%;
+          width: 100%;
+        }
+
+        /* Forcer tous les éléments à respecter la largeur */
+        * {
+          max-width: 100vw;
+        }
+
+        .panel,
+        .content,
+        .inner,
+        .form-section,
+        .form-row,
+        .form-group,
+        .payment-amount,
+        .btn-submit,
+        .detail-item {
+          max-width: 100%;
+          width: 100%;
+          overflow-x: hidden;
+        }
+      }
     </style>
   </head>
   <body class="is-preload">
@@ -386,6 +513,34 @@
           </div>
           <div class="image filtered tinted" data-position="center">
             <img src="images/pic02.jpg" alt="" />
+          </div>
+        </section>
+
+        <!-- Â G E S   E T   M E S S A G E //////////////////////////////////////////////////////////////////////////////// -->
+        <section class="panel medium color2-alt" id="children-ages">
+          <div class="intro color2">
+            <h2 class="major">👶 Âges des enfants</h2>
+            <p>
+              Si vous voyagez avec des enfants, veuillez indiquer leurs âges
+              pour nous permettre de mieux préparer votre accueil.
+            </p>
+          </div>
+          <div class="inner">
+            <div class="form-section">
+              <div id="children-ages-container">
+                <!-- Les champs d'âges seront générés dynamiquement ici -->
+              </div>
+              <div class="form-group">
+                <label for="message">Message (optionnel)</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  placeholder="Votre message, demandes spéciales, informations complémentaires..."
+                  rows="4"
+                ></textarea>
+                <div class="validation-message" id="message-error"></div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -551,6 +706,14 @@
         validateField('postal', 'postal-error', validateRequired)
       })
 
+      document.getElementById('message').addEventListener('blur', () => {
+        // Le message est optionnel, donc pas de validation stricte
+        const messageField = document.getElementById('message')
+        const messageError = document.getElementById('message-error')
+        messageField.classList.remove('validation-error')
+        messageError.textContent = ''
+      })
+
       async function loadReservationData() {
         try {
           console.log('Loading reservation data for token:', token)
@@ -566,6 +729,8 @@
               'Reservation data received:',
               JSON.stringify(result.data, null, 2)
             )
+            // Stocker les données globalement pour la validation
+            window.reservationData = result.data
             populateForm(result.data)
             calculatePaymentAmount(result.data)
           } else {
@@ -586,6 +751,9 @@
         document.getElementById('name').value = data.name || ''
         document.getElementById('email').value = data.email || ''
         document.getElementById('tel').value = data.tel || ''
+
+        // Générer les champs d'âges des enfants
+        generateChildrenAgeFields(data.nbChilds || 0)
 
         // Afficher les détails de réservation
         const detailsContainer = document.getElementById('reservation-details')
@@ -609,6 +777,64 @@
           .join('')
 
         detailsContainer.innerHTML = detailsHtml
+      }
+
+      // Fonction pour générer dynamiquement les champs d'âges des enfants
+      function generateChildrenAgeFields(nbChildren) {
+        const container = document.getElementById('children-ages-container')
+
+        if (nbChildren === 0) {
+          container.innerHTML =
+            '<p style="text-align: center; color: #6b7280; font-style: italic;">Aucun enfant - aucun champ d\'âge requis</p>'
+          return
+        }
+
+        let html = '<div class="form-row">'
+
+        for (let i = 1; i <= nbChildren; i++) {
+          html += `
+            <div class="form-group">
+              <label for="child-age-${i}">Âge de l'enfant ${i}</label>
+              <input
+                type="number"
+                id="child-age-${i}"
+                name="child-age-${i}"
+                placeholder="Âge de l'enfant ${i}"
+                min="0"
+                max="17"
+                required
+              />
+              <div class="validation-message" id="child-age-${i}-error"></div>
+            </div>
+          `
+
+          // Créer une nouvelle ligne tous les 2 enfants pour la lisibilité
+          if (i % 2 === 0 && i < nbChildren) {
+            html += '</div><div class="form-row">'
+          }
+        }
+
+        html += '</div>'
+        container.innerHTML = html
+
+        // Ajouter la validation pour les nouveaux champs
+        for (let i = 1; i <= nbChildren; i++) {
+          document
+            .getElementById(`child-age-${i}`)
+            .addEventListener('blur', () => {
+              validateField(
+                `child-age-${i}`,
+                `child-age-${i}-error`,
+                validateChildAge
+              )
+            })
+        }
+      }
+
+      // Fonction de validation pour l'âge des enfants
+      function validateChildAge(age) {
+        const ageNum = parseInt(age)
+        return age && ageNum >= 0 && ageNum <= 17
       }
 
       function calculatePaymentAmount(data) {
@@ -675,6 +901,18 @@
             validateField('city', 'city-error', validateRequired),
             validateField('postal', 'postal-error', validateRequired)
           ]
+
+          // Ajouter la validation des âges des enfants si nécessaire
+          const nbChildren = window.reservationData?.nbChilds || 0
+          for (let i = 1; i <= nbChildren; i++) {
+            validations.push(
+              validateField(
+                `child-age-${i}`,
+                `child-age-${i}-error`,
+                validateChildAge
+              )
+            )
+          }
 
           if (!validations.every((v) => v)) {
             showError('Veuillez corriger les erreurs dans le formulaire')
