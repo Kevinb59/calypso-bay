@@ -614,15 +614,19 @@
 
         // Créer les détails de réservation avec la structure appropriée
         const reservationDetails = formatReservationDetails(data)
-        const detailsHtml = reservationDetails
-          .split('<br>')
-          .map((line) => {
-            if (line.trim()) {
-              return `<div class="detail-item"><span>${line}</span></div>`
+        
+        // Regrouper les sections dans des spans séparés
+        const sections = reservationDetails.split('<hr')
+        const detailsHtml = sections.map((section, index) => {
+          if (section.trim()) {
+            // Nettoyer les balises hr et créer un span pour chaque section
+            const cleanSection = section.replace(/^[^>]*>/, '').trim()
+            if (cleanSection) {
+              return `<div class="detail-item"><span>${cleanSection}</span></div>`
             }
-            return ''
-          })
-          .join('')
+          }
+          return ''
+        }).join('')
 
         detailsContainer.innerHTML = `
           ${detailsHtml}
@@ -836,44 +840,28 @@
           })
         }
 
-        let details = []
-
-        // Dates avec formatage HTML
+        // Section Dates
         const startDateStr = formatDate(startDate)
         const endDateStr = formatDate(endDate)
-        details.push(
-          `<strong>Dates :</strong> <u>${startDateStr}</u> au <u>${endDateStr}</u> (${data.nbNights} nuits)`
-        )
+        const datesSection = `<strong>Dates :</strong> <u>${startDateStr}</u> au <u>${endDateStr}</u> (${data.nbNights} nuits)`
 
-        // Séparateur entre dates et voyageurs
-        details.push(
-          '<hr style="border: none; border-top: 1px solid rgba(255,255,255,0.3); margin: 0.5rem 0;" />'
-        )
-
-        // Voyageurs
+        // Section Voyageurs
+        let travelersSection
         if (data.nbChilds > 0) {
-          details.push(
-            `<strong>Voyageurs :</strong> ${data.nbAdults} adulte${
-              data.nbAdults > 1 ? 's' : ''
-            }, ${data.nbChilds} enfant${data.nbChilds > 1 ? 's' : ''}`
-          )
+          travelersSection = `<strong>Voyageurs :</strong> ${data.nbAdults} adulte${
+            data.nbAdults > 1 ? 's' : ''
+          }, ${data.nbChilds} enfant${data.nbChilds > 1 ? 's' : ''}`
         } else {
-          details.push(
-            `<strong>Voyageurs :</strong> ${data.nbAdults} adulte${
-              data.nbAdults > 1 ? 's' : ''
-            }`
-          )
+          travelersSection = `<strong>Voyageurs :</strong> ${data.nbAdults} adulte${
+            data.nbAdults > 1 ? 's' : ''
+          }`
         }
 
-        // Séparateur entre voyageurs et détail du prix
-        details.push(
-          '<hr style="border: none; border-top: 1px solid rgba(255,255,255,0.3); margin: 0.5rem 0;" />'
-        )
-
-        details.push('<strong>Détail du prix :</strong>')
-
+        // Section Détail du prix
+        let priceDetails = ['<strong>Détail du prix :</strong>']
+        
         if (data.priceNights > 0) {
-          details.push(
+          priceDetails.push(
             `&nbsp;&nbsp;&nbsp;&nbsp;• Total des nuits (${
               data.nbNights
             }) : ${data.priceNights.toLocaleString('fr-FR')} €`
@@ -881,7 +869,7 @@
         }
 
         if (data.priceClean > 0) {
-          details.push(
+          priceDetails.push(
             `&nbsp;&nbsp;&nbsp;&nbsp;• Frais de ménage : ${data.priceClean.toLocaleString(
               'fr-FR'
             )} €`
@@ -889,7 +877,7 @@
         }
 
         if (data.priceTax > 0) {
-          details.push(
+          priceDetails.push(
             `&nbsp;&nbsp;&nbsp;&nbsp;• Taxes (${data.nbAdults} adulte${
               data.nbAdults > 1 ? 's' : ''
             }) : ${data.priceTax.toLocaleString('fr-FR')} €`
@@ -897,14 +885,18 @@
         }
 
         if (data.priceTotal > 0) {
-          details.push(
+          priceDetails.push(
             `&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Total : ${data.priceTotal.toLocaleString(
               'fr-FR'
             )} €</strong>`
           )
         }
 
-        const result = details.join('<br>')
+        const priceSection = priceDetails.join('<br>')
+
+        // Assembler les sections avec les séparateurs
+        const result = `${datesSection}<hr style="border: none; border-top: 1px solid rgba(255,255,255,0.3); margin: 0.5rem 0;" />${travelersSection}<hr style="border: none; border-top: 1px solid rgba(255,255,255,0.3); margin: 0.5rem 0;" />${priceSection}`
+        
         console.log('formatReservationDetails result:', result)
         return result
       }
