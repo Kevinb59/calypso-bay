@@ -251,6 +251,91 @@
         font-weight: 500;
       }
 
+      /* Styles pour l'encart de paiement */
+      .payment-card {
+        background: white;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .payment-card h3 {
+        color: #374151;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 25px;
+        text-align: center;
+      }
+
+      .payment-breakdown {
+        margin-bottom: 30px;
+      }
+
+      .payment-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        color: #374151;
+        font-size: 1rem;
+      }
+
+      .payment-row.deposit-row {
+        color: #10b981;
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+
+      .payment-row.remaining-row {
+        font-weight: 500;
+        border-top: 1px solid #e5e7eb;
+        margin-top: 10px;
+        padding-top: 15px;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 8px;
+        background: #e5e7eb;
+        border-radius: 4px;
+        margin: 15px 0;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: #10b981;
+        border-radius: 4px;
+        transition: width 0.3s ease;
+      }
+
+      .payment-form {
+        border-top: 1px solid #e5e7eb;
+        padding-top: 25px;
+      }
+
+      .payment-form .form-group {
+        margin-bottom: 20px;
+      }
+
+      .payment-form label {
+        display: block;
+        color: #374151;
+        font-weight: 500;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+      }
+
+      .payment-disclaimer {
+        text-align: center;
+        color: #6b7280;
+        font-size: 0.8rem;
+        margin-top: 15px;
+        line-height: 1.4;
+      }
+
       /* Responsive design pour mobile */
       @media (max-width: 768px) {
         /* Conteneurs principaux */
@@ -321,6 +406,50 @@
           max-width: 100%;
           width: 100%;
         }
+
+        /* Responsive pour l'encart de paiement */
+        .payment-card {
+          padding: 20px;
+          margin: 0 10px;
+          max-width: 100%;
+          width: calc(100% - 20px);
+        }
+
+        .payment-card h3 {
+          font-size: 1.3rem;
+          margin-bottom: 20px;
+        }
+
+        .payment-row {
+          font-size: 0.9rem;
+          padding: 10px 0;
+        }
+
+        .payment-row.deposit-row {
+          font-size: 1rem;
+        }
+
+        .progress-bar {
+          margin: 12px 0;
+        }
+
+        .payment-form {
+          padding-top: 20px;
+        }
+
+        .payment-form .form-group {
+          margin-bottom: 15px;
+        }
+
+        .payment-form label {
+          font-size: 0.85rem;
+          margin-bottom: 6px;
+        }
+
+        .payment-disclaimer {
+          font-size: 0.75rem;
+          margin-top: 12px;
+        }
       }
 
       @media (max-width: 480px) {
@@ -375,6 +504,50 @@
           max-width: 100%;
           width: 100%;
           overflow-x: hidden;
+        }
+
+        /* Responsive pour l'encart de paiement sur très petits écrans */
+        .payment-card {
+          padding: 15px;
+          margin: 0 5px;
+          width: calc(100% - 10px);
+        }
+
+        .payment-card h3 {
+          font-size: 1.2rem;
+          margin-bottom: 15px;
+        }
+
+        .payment-row {
+          font-size: 0.85rem;
+          padding: 8px 0;
+        }
+
+        .payment-row.deposit-row {
+          font-size: 0.95rem;
+        }
+
+        .progress-bar {
+          margin: 10px 0;
+          height: 6px;
+        }
+
+        .payment-form {
+          padding-top: 15px;
+        }
+
+        .payment-form .form-group {
+          margin-bottom: 12px;
+        }
+
+        .payment-form label {
+          font-size: 0.8rem;
+          margin-bottom: 5px;
+        }
+
+        .payment-disclaimer {
+          font-size: 0.7rem;
+          margin-top: 10px;
         }
       }
     </style>
@@ -576,16 +749,29 @@
               plus tard 7 jours avant votre arrivée.
             </p>
           </div>
-          <div class="inner columns divided">
-            <div class="span-4-5">
-              <div class="form-section payment-section">
-                <div class="payment-amount" id="payment-amount">
-                  Calcul en cours...
+          <div class="inner">
+            <div class="payment-card">
+              <h3>Récapitulatif du paiement</h3>
+              <div class="payment-breakdown">
+                <div class="payment-row">
+                  <span>Total</span>
+                  <span id="total-amount">Calcul en cours...</span>
                 </div>
+                <div class="payment-row deposit-row">
+                  <span>Acompte (10%)</span>
+                  <span id="deposit-amount">Calcul en cours...</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="payment-row remaining-row">
+                  <span>Solde restant après acompte</span>
+                  <span id="remaining-amount">Calcul en cours...</span>
+                </div>
+              </div>
+              <div class="payment-form">
                 <div class="form-group">
-                  <label for="card-element"
-                    >Informations de carte bancaire</label
-                  >
+                  <label for="card-element">Carte de paiement</label>
                   <div id="card-element"></div>
                   <div id="card-errors" role="alert"></div>
                 </div>
@@ -599,6 +785,10 @@
                     >Payer l'acompte et confirmer ma réservation</span
                   >
                 </button>
+                <p class="payment-disclaimer">
+                  Paiement sécurisé via Stripe. Aucune donnée bancaire n'est
+                  stockée par Calypso Bay.
+                </p>
               </div>
             </div>
           </div>
@@ -854,36 +1044,41 @@
           console.log('Calculated deposit:', depositAmount)
           console.log('Remaining amount:', remainingAmount)
 
-          const paymentAmountElement = document.getElementById('payment-amount')
-          paymentAmountElement.innerHTML = `
-						<div style="font-size: 2.5rem; font-weight: bold; color: #10b981; margin-bottom: 10px;">
-							${totalAmount.toFixed(2)} €
-						</div>
-						<div style="font-size: 1.2rem; color: #6b7280; margin-bottom: 5px;">
-							-${depositAmount.toFixed(2)} € (acompte)
-						</div>
-						<div style="font-size: 1.1rem; color: #374151; font-weight: 600; margin-bottom: 5px;">
-							Solde restant (après acompte)
-						</div>
-						<div style="font-size: 1.8rem; color: #10b981; font-weight: bold;">
-							${remainingAmount.toFixed(2)} €
-						</div>
-					`
-          paymentAmountElement.classList.add('highlight')
+          // Mettre à jour les éléments du récapitulatif
+          document.getElementById(
+            'total-amount'
+          ).textContent = `${totalAmount.toFixed(2)} €`
+          document.getElementById(
+            'deposit-amount'
+          ).textContent = `${depositAmount.toFixed(2)} €`
+          document.getElementById(
+            'remaining-amount'
+          ).textContent = `${remainingAmount.toFixed(2)} €`
+
+          // Mettre à jour la barre de progression
+          const progressFill = document.getElementById('progress-fill')
+          const progressPercentage = (depositAmount / totalAmount) * 100
+          progressFill.style.width = `${progressPercentage}%`
 
           // Mettre à jour le texte du bouton avec le montant
           const buttonText = document.getElementById('button-text')
           if (buttonText) {
-            buttonText.textContent = `Payer ${depositAmount.toFixed(
-              2
-            )} € (acompte) et confirmer ma réservation`
+            const newButtonText = `Payer l'acompte – ${depositAmount.toFixed(2)} €`
+            buttonText.textContent = newButtonText
+            console.log('Button text updated to:', newButtonText)
+          } else {
+            console.error('Button text element not found')
           }
 
           // Stocker le montant total pour le paiement
           window.totalAmount = totalAmount
         } else {
-          document.getElementById('payment-amount').textContent =
-            'Montant à calculer'
+          document.getElementById('total-amount').textContent =
+            'Calcul en cours...'
+          document.getElementById('deposit-amount').textContent =
+            'Calcul en cours...'
+          document.getElementById('remaining-amount').textContent =
+            'Calcul en cours...'
           console.log('No valid amount found in structured data')
         }
       }
@@ -998,10 +1193,13 @@
           } catch (error) {
             showError(error.message)
             submitButton.disabled = false
-            const buttonText = document.getElementById('button-text')
-            if (buttonText) {
-              buttonText.textContent =
-                "Payer l'acompte et confirmer ma réservation"
+            // Remettre le texte du bouton avec le montant de l'acompte
+            if (window.totalAmount) {
+              const depositAmount = window.totalAmount * 0.1
+              const buttonText = document.getElementById('button-text')
+              if (buttonText) {
+                buttonText.textContent = `Payer l'acompte – ${depositAmount.toFixed(2)} €`
+              }
             }
           }
         })
