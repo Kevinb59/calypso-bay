@@ -519,10 +519,10 @@
         <!-- Â G E S   E T   M E S S A G E //////////////////////////////////////////////////////////////////////////////// -->
         <section class="panel medium color2-alt" id="children-ages">
           <div class="intro color2">
-            <h2 class="major">👶 Âges des enfants</h2>
-            <p>
-              Si vous voyagez avec des enfants, veuillez indiquer leurs âges
-              pour nous permettre de mieux préparer votre accueil.
+            <h2 class="major">📝 Précisions</h2>
+            <p id="section-description">
+              Vous pouvez nous laisser un message ou nous poser des questions si
+              vous le souhaitez.
             </p>
           </div>
           <div class="inner">
@@ -782,14 +782,22 @@
       // Fonction pour générer dynamiquement les champs d'âges des enfants
       function generateChildrenAgeFields(nbChildren) {
         const container = document.getElementById('children-ages-container')
+        const sectionDescription = document.getElementById(
+          'section-description'
+        )
 
         if (nbChildren === 0) {
-          container.innerHTML =
-            '<p style="text-align: center; color: #6b7280; font-style: italic;">Aucun enfant - aucun champ d\'âge requis</p>'
+          container.innerHTML = ''
+          sectionDescription.innerHTML =
+            'Vous pouvez nous laisser un message ou nous poser des questions si vous le souhaitez.'
           return
         }
 
-        let html = '<div class="form-row">'
+        // Mettre à jour la description pour inclure le message sur les enfants
+        sectionDescription.innerHTML =
+          'Vous pouvez nous laisser un message ou nous poser des questions si vous le souhaitez.<br><br><strong style="color: #ef4444;">⚠️ Rappel : les enfants de moins de 8 ans ne sont pas admis.</strong>'
+
+        let html = ''
 
         for (let i = 1; i <= nbChildren; i++) {
           html += `
@@ -807,14 +815,8 @@
               <div class="validation-message" id="child-age-${i}-error"></div>
             </div>
           `
-
-          // Créer une nouvelle ligne tous les 2 enfants pour la lisibilité
-          if (i % 2 === 0 && i < nbChildren) {
-            html += '</div><div class="form-row">'
-          }
         }
 
-        html += '</div>'
         container.innerHTML = html
 
         // Ajouter la validation pour les nouveaux champs
