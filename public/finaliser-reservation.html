@@ -845,6 +845,11 @@
           `<strong>Dates :</strong> <u>${startDateStr}</u> au <u>${endDateStr}</u> (${data.nbNights} nuits)`
         )
 
+        // Séparateur entre dates et voyageurs
+        details.push(
+          '<hr style="border: none; border-top: 1px solid rgba(255,255,255,0.3); margin: 0.5rem 0;" />'
+        )
+
         // Voyageurs
         if (data.nbChilds > 0) {
           details.push(
@@ -860,7 +865,11 @@
           )
         }
 
-        details.push('')
+        // Séparateur entre voyageurs et détail du prix
+        details.push(
+          '<hr style="border: none; border-top: 1px solid rgba(255,255,255,0.3); margin: 0.5rem 0;" />'
+        )
+
         details.push('<strong>Détail du prix :</strong>')
 
         if (data.priceNights > 0) {

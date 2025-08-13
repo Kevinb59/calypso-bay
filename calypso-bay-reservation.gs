@@ -314,7 +314,7 @@ function debugSheetStructure_() {
 function sendClientEmail_(data, action) {
   const subject =
     action === 'accept'
-      ? '✅ Votre réservation Calypso Bay a été acceptée !'
+      ? '✅ Acceptation de votre demande de réservation pour Calypso Bay !'
       : '❌ Réponse à votre demande de réservation Calypso Bay'
 
   const html = buildClientEmailHtml_(data, action)
@@ -332,11 +332,11 @@ function sendClientEmail_(data, action) {
 // ======================================
 function buildClientEmailHtml_(data, action) {
   const isAccepted = action === 'accept'
-  const title = isAccepted ? 'Réservation Acceptée' : 'Réponse à votre demande'
-  const color = isAccepted ? '#10b981' : '#ef4444'
-  const icon = isAccepted ? '✅' : '❌'
+  const title = isAccepted ? 'Calypso Bay' : 'Réponse à votre demande'
+  const color = isAccepted ? '#5d3fd3' : '#ef4444'
+  const icon = isAccepted ? '🏖️' : '❌'
   const message = isAccepted
-    ? "Nous avons le plaisir de vous confirmer que votre réservation a été acceptée. Pour finaliser votre réservation, veuillez compléter le formulaire ci-dessous et effectuer le paiement des 10% d'acompte."
+    ? "Nous avons le plaisir de vous informer que votre demande réservation a été acceptée. Pour finaliser votre réservation, veuillez cliquer sur le lien ci-dessous, remplir le formulaire et effectuer le paiement des 10% d'acompte."
     : 'Nous regrettons de vous informer que votre demande de réservation ne peut être acceptée.'
 
   // Détails de la réservation pour l'email
@@ -373,7 +373,7 @@ function buildClientEmailHtml_(data, action) {
     ';border-radius:6px;margin-top:10px;}' +
     '.btn{display:inline-block;background:' +
     color +
-    ';color:#ffffff !important;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:700;margin-top:20px;}' +
+    ';color:#ffffff !important;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:700;margin-top:20px;text-align:center;}' +
     '</style>' +
     '</head>' +
     '<body>' +

@@ -311,7 +311,7 @@ Détail du prix :
   // Envoi via le script Google Apps Script pour les réservations
   // ⚠️ IMPORTANT : Remplacez cette URL par celle de votre nouveau déploiement GAS
   const GAS_URL =
-    'https://script.google.com/macros/s/AKfycbyl8u3KV9Sb-yWYSfZO_cLLpqlzLRDx-wmxS3EIdct0fl068M6VCc9cpI-4vs2WKLg/exec'
+    'https://script.google.com/macros/s/AKfycbzkdj57oOwsWqewCnXgvXsCeE9WdG90alI8dt1d_lk3w_xszZfE0dNoe3DW-LkzCiY/exec'
 
   const params = new URLSearchParams({
     name,
