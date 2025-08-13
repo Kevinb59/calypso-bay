@@ -18,54 +18,17 @@
     />
     <script src="https://js.stripe.com/v3/"></script>
     <style>
-             /* Styles globaux pour éviter les débordements */
-       * {
-         box-sizing: border-box;
-       }
-       
-       body {
-         overflow-x: hidden;
-         max-width: 100vw;
-       }
-       
-       /* Conteneurs principaux */
-       #page-wrapper,
-       #wrapper,
-       .panel,
-       .content,
-       .inner {
-         max-width: 100vw;
-         overflow-x: hidden;
-       }
-       
-       /* Sections */
-       .panel {
-         width: 100%;
-         max-width: 100vw;
-       }
-       
-       .content,
-       .inner {
-         width: 100%;
-         max-width: 100%;
-         padding-left: 15px;
-         padding-right: 15px;
-       }
-
-             .form-section {
-         background: rgba(255, 255, 255, 0.1);
-         border-radius: 20px;
-         padding: 20px;
-         box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-         backdrop-filter: blur(20px);
-         border: 1px solid rgba(255, 255, 255, 0.3);
-         position: relative;
-         overflow: hidden;
-         box-sizing: border-box;
-         width: 100%;
-         max-width: 100%;
-         min-width: 0;
-       }
+      /* Styles spécifiques pour la page de finalisation */
+      .form-section {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
       .form-section::before {
         content: '';
         position: absolute;
@@ -101,7 +64,6 @@
         background: rgba(255, 255, 255, 0.8);
         backdrop-filter: blur(10px);
         color: #374151;
-        box-sizing: border-box;
       }
       .form-group input::placeholder,
       .form-group textarea::placeholder {
@@ -117,45 +79,21 @@
         background: rgba(255, 255, 255, 0.95);
         transform: translateY(-2px);
       }
-             .form-row {
-         display: flex;
-         flex-wrap: wrap;
-         gap: 25px;
-         width: 100%;
-         max-width: 100%;
-       }
-       .form-row .form-group {
-         flex: 1;
-         min-width: 250px;
-         max-width: 100%;
-         width: 100%;
-       }
-             @media (max-width: 768px) {
-         .form-row .form-group {
-           flex: 100%;
-           min-width: 100%;
-           max-width: 100%;
-           width: 100%;
-         }
-       }
-             .reservation-details {
-         background: rgba(248, 250, 252, 0.1);
-         padding: 10px;
-         border-radius: 16px;
-         border: 1px solid rgba(229, 231, 235, 0.3);
-         backdrop-filter: blur(15px);
-         box-sizing: border-box;
-         width: 100%;
-         max-width: 100%;
-         min-width: 0;
-         overflow: hidden;
-       }
-      .reservation-details h3 {
-        color: #5d3fd3;
-        margin-bottom: 20px;
-        font-size: 1.3rem;
-        font-weight: 500;
-        text-align: center;
+      .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 25px;
+      }
+      .form-row .form-group {
+        flex: 1;
+        min-width: 250px;
+      }
+      .reservation-details {
+        background: rgba(248, 250, 252, 0.1);
+        padding: 10px;
+        border-radius: 16px;
+        border: 1px solid rgba(229, 231, 235, 0.3);
+        backdrop-filter: blur(15px);
       }
       .detail-item {
         display: flex;
@@ -172,16 +110,11 @@
         padding-top: 20px;
         border-top: 2px solid rgba(255, 255, 255, 0.4);
       }
-             .payment-section {
-         background: rgba(255, 255, 255, 0.1);
-         border: 2px solid rgba(255, 255, 255, 0.3);
-         position: relative;
-         box-sizing: border-box;
-         width: 100%;
-         max-width: 100%;
-         min-width: 0;
-         overflow: hidden;
-       }
+      .payment-section {
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        position: relative;
+      }
       .payment-section::before {
         content: '';
         position: absolute;
@@ -196,23 +129,16 @@
         );
         pointer-events: none;
       }
-             .payment-amount {
-         text-align: center;
-         margin-bottom: 30px;
-         text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-         padding: 25px;
-         background: rgba(255, 255, 255, 0.6);
-         border-radius: 16px;
-         backdrop-filter: blur(10px);
-         border: 2px solid rgba(16, 185, 129, 0.2);
-         box-sizing: border-box;
-         overflow: hidden;
-         word-wrap: break-word;
-         overflow-wrap: break-word;
-         width: 100%;
-         max-width: 100%;
-         min-width: 0;
-       }
+      .payment-amount {
+        text-align: center;
+        margin-bottom: 30px;
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 25px;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 16px;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(16, 185, 129, 0.2);
+      }
       .payment-amount.highlight {
         animation: pulse 2s infinite;
       }
@@ -225,18 +151,14 @@
           transform: scale(1.05);
         }
       }
-             #card-element {
-         padding: 15px;
-         border: 2px solid rgba(229, 231, 235, 0.5);
-         border-radius: 12px;
-         background: rgba(255, 255, 255, 0.8);
-         backdrop-filter: blur(10px);
-         transition: all 0.3s ease;
-         box-sizing: border-box;
-         width: 100%;
-         max-width: 100%;
-         min-width: 0;
-       }
+      #card-element {
+        padding: 15px;
+        border: 2px solid rgba(229, 231, 235, 0.5);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+      }
       #card-element:focus-within {
         border-color: #5d3fd3;
         box-shadow: 0 0 0 4px rgba(93, 63, 211, 0.15);
@@ -248,28 +170,25 @@
         font-size: 14px;
         font-weight: 500;
       }
-             .btn-submit {
-         background: linear-gradient(135deg, #10b981, #059669);
-         color: white;
-         padding: 18px 30px;
-         border: none;
-         border-radius: 12px;
-         font-size: 18px;
-         font-weight: 600;
-         cursor: pointer;
-         width: 100%;
-         max-width: 100%;
-         min-width: 0;
-         transition: all 0.3s ease;
-         box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
-         text-transform: uppercase;
-         letter-spacing: 0.5px;
-         display: flex;
-         align-items: center;
-         justify-content: center;
-         min-height: 60px;
-         box-sizing: border-box;
-       }
+      .btn-submit {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        padding: 18px 30px;
+        border: none;
+        border-radius: 12px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        width: 100%;
+        transition: all 0.3s ease;
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 60px;
+      }
       .btn-submit:hover {
         background: linear-gradient(135deg, #059669, #047857);
         transform: translateY(-3px);
@@ -321,15 +240,6 @@
         border: 1px solid #bbf7d0;
         backdrop-filter: blur(10px);
       }
-      .progress-bar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 4px;
-        background: linear-gradient(90deg, #5d3fd3, #10b981);
-        z-index: 1001;
-      }
       .validation-error {
         border-color: #ef4444 !important;
         box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15) !important;
@@ -340,169 +250,9 @@
         margin-top: 5px;
         font-weight: 500;
       }
-
-             /* Responsive design pour mobile */
-       @media (max-width: 768px) {
-         /* Conteneurs principaux */
-         .content,
-         .inner {
-           padding: 0 10px !important;
-           max-width: 100vw !important;
-           width: 100% !important;
-         }
-         
-         .form-section {
-           padding: 15px;
-           margin: 10px 0;
-           max-width: 100% !important;
-           width: 100% !important;
-         }
-         
-         .form-group input,
-         .form-group textarea {
-           font-size: 16px; /* Évite le zoom sur iOS */
-           padding: 12px;
-           max-width: 100% !important;
-           width: 100% !important;
-         }
-         
-         .payment-amount {
-           padding: 20px 15px;
-           max-width: 100% !important;
-           width: 100% !important;
-         }
-         
-         .payment-amount > div {
-           font-size: 1.8rem !important;
-           max-width: 100% !important;
-           word-break: break-word !important;
-         }
-         
-         .btn-submit {
-           padding: 15px 20px;
-           font-size: 16px;
-           min-height: 50px;
-           max-width: 100% !important;
-           width: 100% !important;
-         }
-         
-         .detail-item {
-           font-size: 0.85rem;
-           padding: 10px 0;
-           max-width: 100% !important;
-           width: 100% !important;
-         }
-         
-         .reservation-details {
-           padding: 15px;
-           max-width: 100% !important;
-           width: 100% !important;
-         }
-         
-         /* Correction des débordements */
-         .form-row {
-           gap: 15px;
-           max-width: 100% !important;
-           width: 100% !important;
-         }
-         
-         .form-group {
-           margin-bottom: 20px;
-           max-width: 100% !important;
-           width: 100% !important;
-         }
-         
-         .payment-amount {
-           word-wrap: break-word;
-           overflow-wrap: break-word;
-         }
-         
-         .payment-amount > div {
-           word-break: break-word;
-         }
-         
-         /* Forcer les largeurs maximales */
-         .span-4-5,
-         .span-9-5,
-         .span-3-75,
-         .span-1-75 {
-           max-width: 100% !important;
-           width: 100% !important;
-         }
-       }
-
-             @media (max-width: 480px) {
-         /* Conteneurs principaux */
-         .content,
-         .inner {
-           padding: 0 5px !important;
-           max-width: 100vw !important;
-           width: 100% !important;
-         }
-         
-         .form-section {
-           padding: 10px;
-           max-width: 100% !important;
-           width: 100% !important;
-         }
-         
-         .payment-amount > div {
-           font-size: 1.5rem !important;
-           max-width: 100% !important;
-           word-break: break-word !important;
-         }
-         
-         .btn-submit {
-           font-size: 14px;
-           padding: 12px 15px;
-           max-width: 100% !important;
-           width: 100% !important;
-         }
-         
-         /* Corrections supplémentaires pour très petits écrans */
-         .form-row {
-           gap: 10px;
-           max-width: 100% !important;
-           width: 100% !important;
-         }
-         
-         .payment-amount {
-           padding: 15px 10px;
-           max-width: 100% !important;
-           width: 100% !important;
-         }
-         
-         .detail-item {
-           font-size: 0.8rem;
-           max-width: 100% !important;
-           width: 100% !important;
-         }
-         
-         /* Forcer tous les éléments à respecter la largeur */
-         * {
-           max-width: 100vw !important;
-         }
-         
-         .panel,
-         .content,
-         .inner,
-         .form-section,
-         .form-row,
-         .form-group,
-         .payment-amount,
-         .btn-submit,
-         .detail-item {
-           max-width: 100% !important;
-           width: 100% !important;
-           overflow-x: hidden !important;
-         }
-       }
     </style>
   </head>
   <body class="is-preload">
-    <!-- Progress Bar -->
-    <div class="progress-bar"></div>
-
     <!-- Page Wrapper -->
     <div id="page-wrapper">
       <!-- Wrapper -->
@@ -878,19 +628,19 @@
 
           const paymentAmountElement = document.getElementById('payment-amount')
           paymentAmountElement.innerHTML = `
-               <div style="font-size: 2.5rem; font-weight: bold; color: #10b981; margin-bottom: 10px;">
-                 ${totalAmount.toFixed(2)} €
-               </div>
-               <div style="font-size: 1.2rem; color: #6b7280; margin-bottom: 5px;">
-                 -${depositAmount.toFixed(2)} € (acompte)
-               </div>
-               <div style="font-size: 1.1rem; color: #374151; font-weight: 600; margin-bottom: 5px;">
-                 Solde restant (après acompte)
-               </div>
-               <div style="font-size: 1.8rem; color: #10b981; font-weight: bold;">
-                 ${remainingAmount.toFixed(2)} €
-               </div>
-             `
+						<div style="font-size: 2.5rem; font-weight: bold; color: #10b981; margin-bottom: 10px;">
+							${totalAmount.toFixed(2)} €
+						</div>
+						<div style="font-size: 1.2rem; color: #6b7280; margin-bottom: 5px;">
+							-${depositAmount.toFixed(2)} € (acompte)
+						</div>
+						<div style="font-size: 1.1rem; color: #374151; font-weight: 600; margin-bottom: 5px;">
+							Solde restant (après acompte)
+						</div>
+						<div style="font-size: 1.8rem; color: #10b981; font-weight: bold;">
+							${remainingAmount.toFixed(2)} €
+						</div>
+					`
           paymentAmountElement.classList.add('highlight')
 
           // Mettre à jour le texte du bouton avec le montant
