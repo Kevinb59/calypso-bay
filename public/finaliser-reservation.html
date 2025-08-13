@@ -108,14 +108,11 @@
         margin-bottom: 15px;
         padding: 12px 0;
         border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-        font-size: 0.75rem;
+        font-size: 0.9rem;
         color: white;
       }
       .detail-item:last-child {
         border-bottom: none;
-        font-weight: bold;
-        font-size: 1rem;
-        color: white;
         margin-top: 20px;
         padding-top: 20px;
         border-top: 2px solid rgba(255, 255, 255, 0.4);
@@ -833,7 +830,7 @@
         // Section Dates
         const startDateStr = formatDate(startDate)
         const endDateStr = formatDate(endDate)
-        const datesSection = `<strong>Dates :</strong> <u>${startDateStr}</u> au <u>${endDateStr}</u> (${data.nbNights} nuits)`
+        const datesSection = `<strong>Dates :</strong> ${startDateStr} au ${endDateStr} (${data.nbNights} nuits)`
 
         // Section Voyageurs
         let travelersSection
@@ -886,8 +883,8 @@
 
         const priceSection = priceDetails.join('<br>')
 
-        // Assembler les sections avec les séparateurs
-        const result = `${datesSection}<hr style="border: none; border-top: 1px solid rgba(255,255,255,0.3); margin: 0.5rem 0;" />${travelersSection}<hr style="border: none; border-top: 1px solid rgba(255,255,255,0.3); margin: 0.5rem 0;" />${priceSection}`
+        // Assembler les sections avec un seul séparateur entre dates et voyageurs
+        const result = `${datesSection}<hr style="border: none; border-top: 1px solid rgba(255,255,255,0.3); margin: 0.5rem 0;" />${travelersSection}<br><br>${priceSection}`
 
         console.log('formatReservationDetails result:', result)
         return result
