@@ -2,7 +2,7 @@
 
 ## Vue d'ensemble
 
-Ce projet utilise des variables d'environnement pour gérer les URLs sensibles et les configurations. L'URL du Google Apps Script est maintenant centralisée et peut être modifiée facilement.
+Ce projet utilise des variables d'environnement pour gérer les URLs sensibles et les configurations. Les URLs des Google Apps Scripts sont maintenant centralisées et peuvent être modifiées facilement.
 
 ## Variables d'Environnement
 
@@ -11,7 +11,12 @@ Ce projet utilise des variables d'environnement pour gérer les URLs sensibles e
 - **Description** : URL du Google Apps Script pour les réservations
 - **Valeur** : `https://script.google.com/macros/s/VOTRE_SCRIPT_ID/exec` (obligatoire)
 - **Utilisation** : API routes et frontend
-- **Sécurité** : Cette variable est obligatoire et ne peut pas être laissée vide
+
+### `NEXT_PUBLIC_GAS_CONTACT_URL`
+
+- **Description** : URL du Google Apps Script pour le formulaire de contact
+- **Valeur** : `https://script.google.com/macros/s/VOTRE_SCRIPT_CONTACT_ID/exec` (obligatoire)
+- **Utilisation** : Formulaire de contact
 
 ## Configuration Locale
 
@@ -23,8 +28,9 @@ Ce projet utilise des variables d'environnement pour gérer les URLs sensibles e
 # Copiez le fichier env.example vers .env.local
 cp env.example .env.local
 
-# Puis éditez .env.local avec votre URL
+# Puis éditez .env.local avec vos URLs
 NEXT_PUBLIC_GAS_URL=https://script.google.com/macros/s/VOTRE_SCRIPT_ID/exec
+NEXT_PUBLIC_GAS_CONTACT_URL=https://script.google.com/macros/s/VOTRE_SCRIPT_CONTACT_ID/exec
 ```
 
 #### 2. Redémarrer le serveur de développement
@@ -35,35 +41,11 @@ npm run dev
 
 ### Option 2 : Live Server (pour tests rapides)
 
-#### 1. Inclure le script de configuration dans vos pages HTML
-
-Ajoutez cette ligne dans le `<head>` de vos pages HTML :
-
-```html
-<script src="/assets/js/dev-config.js"></script>
-```
-
-#### 2. Utiliser "Open With Live Server" dans Cursor
+Le script `config-loader.js` détecte automatiquement l'environnement local et utilise les URLs par défaut.
 
 - Clic droit sur `index.html`
 - Sélectionner "Open With Live Server"
 - Le site fonctionnera avec les URLs par défaut
-
-**Note** : En mode développement local, les URLs par défaut sont utilisées automatiquement.
-
-### Option 3 : Production (Vercel)
-
-#### 1. Inclure le script de production dans vos pages HTML
-
-Ajoutez cette ligne dans le `<head>` de vos pages HTML :
-
-```html
-<script src="/assets/js/prod-config.js"></script>
-```
-
-#### 2. Les variables d'environnement Vercel sont utilisées automatiquement
-
-En production, le script détecte automatiquement l'environnement et utilise les URLs sécurisées.
 
 ## Configuration Vercel
 
@@ -71,16 +53,35 @@ En production, le script détecte automatiquement l'environnement et utilise les
 
 1. Allez dans votre projet sur [vercel.com](https://vercel.com)
 2. Cliquez sur "Settings" → "Environment Variables"
-3. Ajoutez la variable :
+3. Ajoutez les variables :
    - **Name** : `NEXT_PUBLIC_GAS_URL`
-   - **Value** : `https://script.google.com/macros/s/VOTRE_NOUVEAU_SCRIPT_ID/exec`
+   - **Value** : `https://script.google.com/macros/s/VOTRE_SCRIPT_ID/exec`
+   - **Environment** : Production, Preview, Development
+   
+   - **Name** : `NEXT_PUBLIC_GAS_CONTACT_URL`
+   - **Value** : `https://script.google.com/macros/s/VOTRE_SCRIPT_CONTACT_ID/exec`
    - **Environment** : Production, Preview, Development
 
 ### 2. Via Vercel CLI
 
 ```bash
 vercel env add NEXT_PUBLIC_GAS_URL
+vercel env add NEXT_PUBLIC_GAS_CONTACT_URL
 ```
+
+## Fonctionnement
+
+### En Production (Vercel)
+
+1. Le script `config-loader.js` fait un appel à `/api/config`
+2. L'API route récupère les variables d'environnement Vercel
+3. Les URLs sont exposées globalement via `window.GAS_URL` et `window.GAS_CONTACT_URL`
+
+### En Développement Local
+
+1. Le script détecte l'environnement local
+2. Il utilise automatiquement les URLs par défaut
+3. Aucun appel API n'est nécessaire
 
 ## Fichiers Modifiés
 
@@ -90,30 +91,33 @@ vercel env add NEXT_PUBLIC_GAS_URL
 - `api/finalizeReservation.js`
 - `api/getReservation.js`
 - `api/refuse.js`
+- `api/config.js` (nouveau)
 
 ### Frontend
 
 - `public/assets/js/banner.js`
-- `public/assets/js/config.js` (nouveau)
+- `public/assets/js/form-contact.js`
+- `public/assets/js/config-loader.js` (nouveau)
 
 ## Avantages
 
-1. **Sécurité** : L'URL n'est plus exposée dans le code source
-2. **Maintenabilité** : Un seul endroit pour modifier l'URL
+1. **Sécurité** : Les URLs ne sont plus exposées dans le code source
+2. **Maintenabilité** : Un seul endroit pour modifier les URLs
 3. **Flexibilité** : Différentes URLs pour différents environnements
 4. **Déploiement** : Changement d'URL sans redéploiement du code
+5. **Compatibilité** : Fonctionne avec les sites statiques Vercel
 
 ## Migration
 
-Si vous devez changer l'URL du Google Apps Script :
+Si vous devez changer les URLs des Google Apps Scripts :
 
 1. **Développement local** : Modifiez `.env.local`
-2. **Production** : Modifiez la variable dans Vercel
+2. **Production** : Modifiez les variables dans Vercel
 3. **Redéployez** : Les changements sont automatiques
 
 ## Notes Importantes
 
-- Le préfixe `NEXT_PUBLIC_` est nécessaire pour que la variable soit accessible côté client
-- **Cette variable est obligatoire** - l'application ne fonctionnera pas sans elle
+- Le préfixe `NEXT_PUBLIC_` est nécessaire pour que les variables soient accessibles côté client
+- **Ces variables sont obligatoires** - l'application ne fonctionnera pas sans elles
 - Aucune URL n'est exposée dans le code source pour des raisons de sécurité
-- Tous les fichiers utilisent maintenant la même variable d'environnement
+- Le système fonctionne avec les sites statiques Vercel

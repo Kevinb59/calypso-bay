@@ -1,0 +1,28 @@
+export default function handler(req, res) {
+  // Autoriser seulement les requêtes GET
+  if (req.method !== 'GET') {
+    return res.status(405).json({ error: 'Method not allowed' })
+  }
+
+  // Récupérer les variables d'environnement
+  const gasUrl = process.env.NEXT_PUBLIC_GAS_URL
+  const gasContactUrl = process.env.NEXT_PUBLIC_GAS_CONTACT_URL
+
+  // Vérifier que les variables sont configurées
+  if (!gasUrl || !gasContactUrl) {
+    return res.status(500).json({
+      error: 'Variables d\'environnement non configurées',
+      missing: {
+        gasUrl: !gasUrl,
+        gasContactUrl: !gasContactUrl
+      }
+    })
+  }
+
+  // Retourner la configuration
+  res.status(200).json({
+    GAS_URL: gasUrl,
+    GAS_CONTACT_URL: gasContactUrl,
+    ENVIRONMENT: process.env.NODE_ENV || 'production'
+  })
+}
