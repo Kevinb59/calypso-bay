@@ -51,6 +51,20 @@ Ajoutez cette ligne dans le `<head>` de vos pages HTML :
 
 **Note** : En mode développement local, les URLs par défaut sont utilisées automatiquement.
 
+### Option 3 : Production (Vercel)
+
+#### 1. Inclure le script de production dans vos pages HTML
+
+Ajoutez cette ligne dans le `<head>` de vos pages HTML :
+
+```html
+<script src="/assets/js/prod-config.js"></script>
+```
+
+#### 2. Les variables d'environnement Vercel sont utilisées automatiquement
+
+En production, le script détecte automatiquement l'environnement et utilise les URLs sécurisées.
+
 ## Configuration Vercel
 
 ### 1. Via l'interface web Vercel

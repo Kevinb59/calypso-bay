@@ -6,13 +6,14 @@
 
   // Fonction pour injecter les variables d'environnement dans le DOM
   function injectEnvironmentVariables() {
-    // Récupérer les variables depuis le serveur (injectées par le middleware)
-    let gasUrl = document
-      .querySelector('meta[name="gas-url"]')
-      ?.getAttribute('content')
-    let gasContactUrl = document
-      .querySelector('meta[name="gas-contact-url"]')
-      ?.getAttribute('content')
+    // En production, les variables d'environnement sont injectées par Vercel
+    // En développement local, on utilise les fallbacks
+    let gasUrl = null
+    let gasContactUrl = null
+
+    // Essayer de récupérer depuis les meta tags (si injectés par Vercel)
+    gasUrl = document.querySelector('meta[name="gas-url"]')?.getAttribute('content')
+    gasContactUrl = document.querySelector('meta[name="gas-contact-url"]')?.getAttribute('content')
 
     // Fallback pour le développement local (Live Server)
     if (!gasUrl) {
