@@ -8,6 +8,15 @@ const SHEET_ID = '1r6rmtpCZ3AZSSQKb6Kf51-Vdpkc1uzM2brubh6RK1tk'
 const SHEET_NAME = 'ReservationsTemp'
 const RECIPIENT_EMAIL = 'contact.calypso.bay@gmail.com'
 
+// URL du Google Apps Script depuis les variables d'environnement
+const GAS_URL = process.env.NEXT_PUBLIC_GAS_URL
+
+if (!GAS_URL) {
+  throw new Error(
+    "NEXT_PUBLIC_GAS_URL non configurée dans les variables d'environnement"
+  )
+}
+
 export default async function handler(req, res) {
   // Vérifier que c'est une requête GET
   if (req.method !== 'GET') {
@@ -22,10 +31,8 @@ export default async function handler(req, res) {
 
   try {
     // Appeler Google Apps Script pour traiter le refus
-    const scriptUrl = `https://script.google.com/macros/s/AKfycbzkdj57oOwsWqewCnXgvXsCeE9WdG90alI8dt1d_lk3w_xszZfE0dNoe3DW-LkzCiY/exec`
-
     const response = await fetch(
-      `${scriptUrl}?action=refuse&token=${encodeURIComponent(token)}`,
+      `${GAS_URL}?action=refuse&token=${encodeURIComponent(token)}`,
       {
         method: 'GET',
         headers: {

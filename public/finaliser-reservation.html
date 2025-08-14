@@ -795,15 +795,28 @@
               </div>
             </div>
           </div>
-                 </section>
+        </section>
 
-         <!-- C O P Y R I G H T //////////////////////////////////////////////////////////////////////////////// -->
-         <div class="copyright">
-           <span>&copy; Calypso Bay | By</span>
-           <a href="https://moriarty-design.fr" target="_blank" rel="noopener" style="font-family: 'Engagement', 'Brush Script MT', cursive; font-size: 2.2em; line-height: 1; margin-left: 0.25em; text-decoration: none; color: inherit;">Moriarty</a>.
-         </div>
-       </div>
-     </div>
+        <!-- C O P Y R I G H T //////////////////////////////////////////////////////////////////////////////// -->
+        <div class="copyright">
+          <span>&copy; Calypso Bay | By</span>
+          <a
+            href="https://moriarty-design.fr"
+            target="_blank"
+            rel="noopener"
+            style="
+              font-family: 'Engagement', 'Brush Script MT', cursive;
+              font-size: 2.2em;
+              line-height: 1;
+              margin-left: 0.25em;
+              text-decoration: none;
+              color: inherit;
+            "
+            >Moriarty</a
+          >.
+        </div>
+      </div>
+    </div>
 
     <!-- Scripts -->
     <script src="assets/js/jquery.min.js"></script>
@@ -1053,31 +1066,43 @@
           console.log('Calculated deposit:', depositAmount)
           console.log('Remaining amount:', remainingAmount)
 
-                     // Mettre à jour les éléments du récapitulatif avec espacement des milliers
-           document.getElementById(
-             'total-amount'
-           ).textContent = `${totalAmount.toLocaleString('fr-FR', {minimumFractionDigits: 2, maximumFractionDigits: 2})} €`
-           document.getElementById(
-             'deposit-amount'
-           ).textContent = `${depositAmount.toLocaleString('fr-FR', {minimumFractionDigits: 2, maximumFractionDigits: 2})} €`
-           document.getElementById(
-             'remaining-amount'
-           ).textContent = `${remainingAmount.toLocaleString('fr-FR', {minimumFractionDigits: 2, maximumFractionDigits: 2})} €`
+          // Mettre à jour les éléments du récapitulatif avec espacement des milliers
+          document.getElementById(
+            'total-amount'
+          ).textContent = `${totalAmount.toLocaleString('fr-FR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          })} €`
+          document.getElementById(
+            'deposit-amount'
+          ).textContent = `${depositAmount.toLocaleString('fr-FR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          })} €`
+          document.getElementById(
+            'remaining-amount'
+          ).textContent = `${remainingAmount.toLocaleString('fr-FR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          })} €`
 
           // Mettre à jour la barre de progression
           const progressFill = document.getElementById('progress-fill')
           const progressPercentage = (depositAmount / totalAmount) * 100
           progressFill.style.width = `${progressPercentage}%`
 
-                     // Mettre à jour le texte du bouton avec le montant
-           const buttonText = document.getElementById('button-text')
-           if (buttonText) {
-             const newButtonText = `Payer l'acompte – ${depositAmount.toLocaleString('fr-FR', {minimumFractionDigits: 2, maximumFractionDigits: 2})} €`
-             buttonText.textContent = newButtonText
-             console.log('Button text updated to:', newButtonText)
-           } else {
-             console.error('Button text element not found')
-           }
+          // Mettre à jour le texte du bouton avec le montant
+          const buttonText = document.getElementById('button-text')
+          if (buttonText) {
+            const newButtonText = `Payer l'acompte – ${depositAmount.toLocaleString(
+              'fr-FR',
+              { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+            )} €`
+            buttonText.textContent = newButtonText
+            console.log('Button text updated to:', newButtonText)
+          } else {
+            console.error('Button text element not found')
+          }
 
           // Stocker le montant total pour le paiement
           window.totalAmount = totalAmount
@@ -1202,14 +1227,17 @@
           } catch (error) {
             showError(error.message)
             submitButton.disabled = false
-                         // Remettre le texte du bouton avec le montant de l'acompte
-             if (window.totalAmount) {
-               const depositAmount = window.totalAmount * 0.1
-               const buttonText = document.getElementById('button-text')
-               if (buttonText) {
-                 buttonText.textContent = `Payer l'acompte – ${depositAmount.toLocaleString('fr-FR', {minimumFractionDigits: 2, maximumFractionDigits: 2})} €`
-               }
-             }
+            // Remettre le texte du bouton avec le montant de l'acompte
+            if (window.totalAmount) {
+              const depositAmount = window.totalAmount * 0.1
+              const buttonText = document.getElementById('button-text')
+              if (buttonText) {
+                buttonText.textContent = `Payer l'acompte – ${depositAmount.toLocaleString(
+                  'fr-FR',
+                  { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+                )} €`
+              }
+            }
           }
         })
 

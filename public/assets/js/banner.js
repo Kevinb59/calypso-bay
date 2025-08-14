@@ -309,9 +309,19 @@ Détail du prix :
 • Total : ${total.toFixed(2)} €`
 
   // Envoi via le script Google Apps Script pour les réservations
-  // ⚠️ IMPORTANT : Remplacez cette URL par celle de votre nouveau déploiement GAS
-  const GAS_URL =
-    'https://script.google.com/macros/s/AKfycbzkdj57oOwsWqewCnXgvXsCeE9WdG90alI8dt1d_lk3w_xszZfE0dNoe3DW-LkzCiY/exec'
+  // URL récupérée depuis les variables d'environnement
+  const GAS_URL = window.GAS_URL
+
+  // Vérification que l'URL est configurée
+  if (!GAS_URL) {
+    console.error(
+      "❌ GAS_URL non configurée dans les variables d'environnement"
+    )
+    stepToggle.innerHTML =
+      '<i class="fas fa-exclamation-triangle"></i> Erreur de configuration'
+    stepToggle.style.backgroundColor = '#ff4444'
+    return
+  }
 
   const params = new URLSearchParams({
     name,

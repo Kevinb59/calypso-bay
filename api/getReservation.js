@@ -3,6 +3,15 @@
  * Récupère les informations depuis Google Sheets via Apps Script
  */
 
+// URL du Google Apps Script depuis les variables d'environnement
+const GAS_URL = process.env.NEXT_PUBLIC_GAS_URL
+
+if (!GAS_URL) {
+  throw new Error(
+    "NEXT_PUBLIC_GAS_URL non configurée dans les variables d'environnement"
+  )
+}
+
 export default async function handler(req, res) {
   // Vérifier que c'est une requête GET
   if (req.method !== 'GET') {
@@ -17,10 +26,8 @@ export default async function handler(req, res) {
 
   try {
     // Appeler Google Apps Script pour récupérer les données
-    const scriptUrl = `https://script.google.com/macros/s/AKfycbzkdj57oOwsWqewCnXgvXsCeE9WdG90alI8dt1d_lk3w_xszZfE0dNoe3DW-LkzCiY/exec`
-
     const response = await fetch(
-      `${scriptUrl}?action=getReservation&token=${encodeURIComponent(token)}`,
+      `${GAS_URL}?action=getReservation&token=${encodeURIComponent(token)}`,
       {
         method: 'GET',
         headers: {

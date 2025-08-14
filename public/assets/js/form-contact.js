@@ -6,8 +6,14 @@ function initContactForm() {
   const form = document.getElementById('contact-form')
   const submit = form?.querySelector('button[type="submit"]')
 
-  const GAS_URL =
-    'https://script.google.com/macros/s/AKfycbxYKzGO8Cn22Gh-XS-Qt4drqUYeLZETVPORXvlFKtnrCPR83Q-aGB9bev-CNwi_OVA/exec'
+  const GAS_URL = window.GAS_CONTACT_URL
+
+  if (!GAS_URL) {
+    console.error(
+      '❌ GAS_CONTACT_URL non configurée pour le formulaire de contact'
+    )
+    return
+  }
 
   if (!form || !submit) return
 
