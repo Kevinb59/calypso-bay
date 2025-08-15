@@ -751,7 +751,10 @@
             </div>
           </div>
           <div class="image filtered tinted" data-position="center">
-            <img src="images/gallery/fulls/Piscine/04.jpg" alt="Piscine - Calypso Bay" />
+            <img
+              src="images/gallery/fulls/Piscine/04.jpg"
+              alt="Piscine - Calypso Bay"
+            />
           </div>
         </section>
 
@@ -761,7 +764,7 @@
             <h2 class="major">💳 Paiement de l'acompte</h2>
             <p>
               Pour confirmer votre réservation, veuillez effectuer le paiement
-              de l'acompte de 10% du montant total. Le solde sera à régler au
+              de l'acompte de <span id="deposit-percent">10%</span> du montant total (un montant minimum peut être appliqué pour les tests). Le solde sera à régler au
               plus tard 7 jours avant votre arrivée.
             </p>
           </div>
@@ -774,7 +777,7 @@
                   <span id="total-amount">Calcul en cours...</span>
                 </div>
                 <div class="payment-row deposit-row">
-                  <span>Acompte (10%)</span>
+                  <span>Acompte (<span id="deposit-percent-inline">10%</span>)</span>
                   <span id="deposit-amount">Calcul en cours...</span>
                 </div>
                 <div class="progress-bar">
@@ -941,6 +944,16 @@
 
       async function loadReservationData() {
         try {
+          // Charger la configuration serveur (pourcentage/minimum acompte)
+          try {
+            const cfgRes = await fetch('/api/config')
+            if (cfgRes.ok) {
+              window.appConfig = await cfgRes.json()
+            }
+          } catch (e) {
+            console.warn('Config non chargée, valeurs par défaut utilisées')
+          }
+
           console.log('Loading reservation data for token:', token)
           const response = await fetch(
             `/api/getReservation?token=${encodeURIComponent(token)}`
@@ -1073,7 +1086,11 @@
         console.log('Using structured total:', totalAmount)
 
         if (totalAmount && totalAmount > 0) {
-          const depositAmount = totalAmount * 0.1
+          const percent = window.appConfig?.DEPOSIT_PERCENT ?? 10
+          const minEur = window.appConfig?.DEPOSIT_MIN_EUR ?? 0.5
+          let depositAmount = totalAmount * (percent / 100)
+          if (!depositAmount || depositAmount <= 0) depositAmount = minEur
+          if (depositAmount < minEur) depositAmount = minEur
           const remainingAmount = totalAmount - depositAmount
 
           console.log('Calculated deposit:', depositAmount)
@@ -1101,7 +1118,7 @@
 
           // Mettre à jour la barre de progression
           const progressFill = document.getElementById('progress-fill')
-          const progressPercentage = (depositAmount / totalAmount) * 100
+          const progressPercentage = Math.min(100, (depositAmount / totalAmount) * 100)
           progressFill.style.width = `${progressPercentage}%`
 
           // Mettre à jour le texte du bouton avec le montant
@@ -1116,6 +1133,12 @@
           } else {
             console.error('Button text element not found')
           }
+
+          // Mettre à jour les libellés du pourcentage si présents
+          const dp = document.getElementById('deposit-percent')
+          const dpi = document.getElementById('deposit-percent-inline')
+          if (dp) dp.textContent = `${percent}%`
+          if (dpi) dpi.textContent = `${percent}%`
 
           // Stocker le montant total pour le paiement
           window.totalAmount = totalAmount

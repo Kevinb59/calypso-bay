@@ -1,6 +1,6 @@
 /**
  * Route Vercel pour créer un PaymentIntent Stripe
- * Calcule le montant de l'acompte (10%) et crée l'intention de paiement
+ * Calcule le montant de l'acompte (configurable) et crée l'intention de paiement
  */
 
 import Stripe from 'stripe'
@@ -20,8 +20,17 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Calculer l'acompte (10% du montant total)
-    const depositAmount = Math.round(totalAmount * 0.1 * 100) // Stripe utilise les centimes
+    // Calculer l'acompte: pour les tests on autorise un pourcentage configurable
+    const percent = Number(process.env.DEPOSIT_PERCENT || '10')
+    const minEur = Number(process.env.DEPOSIT_MIN_EUR || '0.5')
+    let computed = (Number(totalAmount) * (percent / 100))
+    if (isNaN(computed) || computed <= 0) {
+      computed = minEur
+    }
+    // Appliquer un minimum en euros
+    const finalDepositEur = Math.max(computed, minEur)
+    // Stripe attend des centimes
+    const depositAmount = Math.round(finalDepositEur * 100)
 
     // Créer le PaymentIntent
     const paymentIntent = await stripe.paymentIntents.create({
@@ -30,7 +39,10 @@ export default async function handler(req, res) {
       metadata: {
         token: token,
         type: 'deposit',
-        totalAmount: totalAmount
+        totalAmount: totalAmount,
+        depositPercent: String(percent),
+        depositMinEur: String(minEur),
+        finalDepositEur: String(finalDepositEur)
       },
       description: `Acompte réservation Calypso Bay - Token: ${token}`
     })
