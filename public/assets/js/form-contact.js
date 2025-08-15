@@ -9,9 +9,8 @@ function initContactForm() {
   const GAS_URL = window.GAS_CONTACT_URL
 
   if (!GAS_URL) {
-    console.error(
-      '❌ GAS_CONTACT_URL non configurée pour le formulaire de contact'
-    )
+    console.error('❌ GAS_CONTACT_URL non configurée pour le formulaire de contact')
+    console.warn('APP_CONFIG actuel:', window.APP_CONFIG)
     return
   }
 
@@ -47,6 +46,7 @@ function initContactForm() {
     submit.disabled = true
 
     try {
+      console.log('📨 Envoi contact →', { name, email, tel, message, url: GAS_URL })
       const params = new URLSearchParams({
         name,
         email,
@@ -54,7 +54,10 @@ function initContactForm() {
         message
       })
       const res = await fetch(`${GAS_URL}?${params.toString()}`)
+      console.log('📥 Statut réponse contact:', res.status)
       const result = await res.json()
+
+      console.log('📦 Réponse contact:', result)
 
       if (result.status === 'success') {
         setBtn('Message envoyé', 'fa-check')
@@ -63,6 +66,7 @@ function initContactForm() {
         setBtn("Erreur à l'envoi", 'fa-exclamation-triangle')
       }
     } catch (err) {
+      console.error('❌ Erreur envoi contact:', err)
       setBtn('Erreur réseau', 'fa-exclamation-triangle')
     }
 

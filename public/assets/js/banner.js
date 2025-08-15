@@ -442,9 +442,9 @@ function resetSelection() {
   // Cacher la bannière
   document.getElementById('mobile-banner').style.display = 'none'
 
-  // Réinitialiser le calendrier en utilisant la fonction du planning.js
-  if (typeof window.resetSelection === 'function') {
-    window.resetSelection()
+  // Réinitialiser le calendrier via l'API globale du planning
+  if (typeof window.planningResetSelection === 'function') {
+    window.planningResetSelection()
   }
 
   // Réinitialiser les champs du formulaire

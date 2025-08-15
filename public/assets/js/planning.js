@@ -316,5 +316,5 @@ function showTooltip(message, targetElement) {
 // 🚀 Démarre le chargement
 fetchPlanning()
 
-// 🌐 Exposer la fonction resetSelection globalement
-window.resetSelection = resetSelection
+// 🌐 Exposer la fonction de reset du planning sous un nom non conflictuel
+window.planningResetSelection = resetSelection
