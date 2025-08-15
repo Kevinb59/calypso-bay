@@ -340,6 +340,16 @@
       }
 
       /* Responsive design pour mobile */
+      @media (min-width: 981px) {
+        #children-ages .inner {
+          max-width: 100%;
+        }
+        #children-ages .form-section {
+          width: 100%;
+          max-width: 1000px;
+          margin: 0 auto;
+        }
+      }
       @media (max-width: 768px) {
         /* Conteneurs principaux */
         .content,
@@ -693,15 +703,15 @@
         </section>
 
         <!-- Â G E S   E T   M E S S A G E //////////////////////////////////////////////////////////////////////////////// -->
-        <section class="panel medium color2-alt" id="children-ages">
-          <div class="intro color2">
+        <section class="panel large color2-alt" id="children-ages">
+          <div class="intro color2 span-3-5">
             <h2 class="major">📝 Précisions</h2>
             <p id="section-description">
               Vous pouvez nous laisser un message ou nous poser des questions si
               vous le souhaitez.
             </p>
           </div>
-          <div class="inner">
+          <div class="inner span-9-5">
             <div class="form-section">
               <div id="children-ages-container">
                 <!-- Les champs d'âges seront générés dynamiquement ici -->
