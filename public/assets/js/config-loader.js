@@ -22,21 +22,13 @@
         window.GAS_CONTACT_URL =
           'https://script.google.com/macros/s/AKfycbxYKzGO8Cn22Gh-XS-Qt4drqUYeLZETVPORXvlFKtnrCPR83Q-aGB9bev-CNwi_OVA/exec'
 
-        window.APP_CONFIG = {
-          GAS_URL: window.GAS_URL,
-          GAS_CONTACT_URL: window.GAS_CONTACT_URL,
-          ENVIRONMENT: 'development'
-        }
-
-        console.log(
-          '✅ Configuration de développement chargée:',
-          window.APP_CONFIG
-        )
+        // N'exposons rien en console en dehors de l'environnement local
+        window.APP_CONFIG = { ENVIRONMENT: 'development' }
         return
       }
 
       // En production, récupérer depuis l'API
-      console.log("🔧 Chargement de la configuration depuis l'API...")
+      // Chargement de la configuration depuis l'API (silencieux en prod)
 
       const response = await fetch('/api/config')
 
@@ -50,13 +42,8 @@
       window.GAS_URL = config.GAS_URL
       window.GAS_CONTACT_URL = config.GAS_CONTACT_URL
 
-      window.APP_CONFIG = {
-        GAS_URL: config.GAS_URL,
-        GAS_CONTACT_URL: config.GAS_CONTACT_URL,
-        ENVIRONMENT: config.ENVIRONMENT
-      }
-
-      console.log('✅ Configuration de production chargée:', window.APP_CONFIG)
+      // N'exposons pas les valeurs en console
+      window.APP_CONFIG = { ENVIRONMENT: config.ENVIRONMENT || 'production' }
     } catch (error) {
       console.error('❌ Erreur lors du chargement de la configuration:', error)
 
@@ -66,13 +53,7 @@
       window.GAS_CONTACT_URL =
         'https://script.google.com/macros/s/AKfycbxYKzGO8Cn22Gh-XS-Qt4drqUYeLZETVPORXvlFKtnrCPR83Q-aGB9bev-CNwi_OVA/exec'
 
-      window.APP_CONFIG = {
-        GAS_URL: window.GAS_URL,
-        GAS_CONTACT_URL: window.GAS_CONTACT_URL,
-        ENVIRONMENT: 'fallback'
-      }
-
-      console.warn('⚠️ Configuration de fallback utilisée')
+      window.APP_CONFIG = { ENVIRONMENT: 'fallback' }
     }
   }
 

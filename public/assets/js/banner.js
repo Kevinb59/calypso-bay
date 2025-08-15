@@ -350,8 +350,8 @@ Détail du prix :
 
   // Log pour débogage
   console.log('🚀 Envoi de la demande de réservation...')
-  console.log('📡 URL:', GAS_URL)
-  console.log('📋 Paramètres:', params.toString())
+  // Logs anonymisés (pas d'URL ni de données sensibles en console)
+  console.log('📡 Envoi de la demande de réservation...')
 
   fetch(`${GAS_URL}?${params.toString()}`, {
     method: 'GET',

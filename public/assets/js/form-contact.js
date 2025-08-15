@@ -10,7 +10,6 @@ function initContactForm() {
 
   if (!GAS_URL) {
     console.error('❌ GAS_CONTACT_URL non configurée pour le formulaire de contact')
-    console.warn('APP_CONFIG actuel:', window.APP_CONFIG)
     return
   }
 
@@ -46,7 +45,7 @@ function initContactForm() {
     submit.disabled = true
 
     try {
-      console.log('📨 Envoi contact →', { name, email, tel, message, url: GAS_URL })
+      // Pas de fuite d'URL en console
       const params = new URLSearchParams({
         name,
         email,
@@ -54,10 +53,11 @@ function initContactForm() {
         message
       })
       const res = await fetch(`${GAS_URL}?${params.toString()}`)
+      // Statut uniquement
       console.log('📥 Statut réponse contact:', res.status)
       const result = await res.json()
 
-      console.log('📦 Réponse contact:', result)
+      // Ne pas afficher le payload en prod
 
       if (result.status === 'success') {
         setBtn('Message envoyé', 'fa-check')
