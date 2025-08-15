@@ -75,4 +75,10 @@ function initContactForm() {
 }
 
 // Sécurité : on attend que tout soit chargé
-window.addEventListener('load', initContactForm)
+// Attendre que la configuration soit prête avant d'initialiser le formulaire
+window.addEventListener('app:config-ready', initContactForm)
+// Et fallback si l'événement est manqué (ex: chargement très rapide)
+window.addEventListener('load', () => {
+  if (!window.GAS_CONTACT_URL) return
+  initContactForm()
+})

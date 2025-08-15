@@ -24,6 +24,9 @@
 
         // N'exposons rien en console en dehors de l'environnement local
         window.APP_CONFIG = { ENVIRONMENT: 'development' }
+
+        // Signaler aux autres scripts que la config est prête
+        window.dispatchEvent(new CustomEvent('app:config-ready'))
         return
       }
 
@@ -44,6 +47,9 @@
 
       // N'exposons pas les valeurs en console
       window.APP_CONFIG = { ENVIRONMENT: config.ENVIRONMENT || 'production' }
+
+      // Signaler aux autres scripts que la config est prête
+      window.dispatchEvent(new CustomEvent('app:config-ready'))
     } catch (error) {
       console.error('❌ Erreur lors du chargement de la configuration:', error)
 
@@ -54,6 +60,9 @@
         'https://script.google.com/macros/s/AKfycbxYKzGO8Cn22Gh-XS-Qt4drqUYeLZETVPORXvlFKtnrCPR83Q-aGB9bev-CNwi_OVA/exec'
 
       window.APP_CONFIG = { ENVIRONMENT: 'fallback' }
+
+      // Signaler aux autres scripts que la config est prête (fallback)
+      window.dispatchEvent(new CustomEvent('app:config-ready'))
     }
   }
 
