@@ -15,7 +15,7 @@
 
       if (isLocalDev) {
         console.log('🔧 Mode développement local détecté')
-        
+
         // Configuration par défaut pour le développement
         window.GAS_URL =
           'https://script.google.com/macros/s/AKfycbzkdj57oOwsWqewCnXgvXsCeE9WdG90alI8dt1d_lk3w_xszZfE0dNoe3DW-LkzCiY/exec'
@@ -28,15 +28,18 @@
           ENVIRONMENT: 'development'
         }
 
-        console.log('✅ Configuration de développement chargée:', window.APP_CONFIG)
+        console.log(
+          '✅ Configuration de développement chargée:',
+          window.APP_CONFIG
+        )
         return
       }
 
       // En production, récupérer depuis l'API
-      console.log('🔧 Chargement de la configuration depuis l\'API...')
-      
+      console.log("🔧 Chargement de la configuration depuis l'API...")
+
       const response = await fetch('/api/config')
-      
+
       if (!response.ok) {
         throw new Error(`Erreur HTTP: ${response.status}`)
       }
@@ -54,10 +57,9 @@
       }
 
       console.log('✅ Configuration de production chargée:', window.APP_CONFIG)
-
     } catch (error) {
       console.error('❌ Erreur lors du chargement de la configuration:', error)
-      
+
       // Fallback en cas d'erreur
       window.GAS_URL =
         'https://script.google.com/macros/s/AKfycbzkdj57oOwsWqewCnXgvXsCeE9WdG90alI8dt1d_lk3w_xszZfE0dNoe3DW-LkzCiY/exec'

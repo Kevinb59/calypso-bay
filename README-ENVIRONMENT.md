@@ -54,10 +54,11 @@ Le script `config-loader.js` détecte automatiquement l'environnement local et u
 1. Allez dans votre projet sur [vercel.com](https://vercel.com)
 2. Cliquez sur "Settings" → "Environment Variables"
 3. Ajoutez les variables :
+
    - **Name** : `NEXT_PUBLIC_GAS_URL`
    - **Value** : `https://script.google.com/macros/s/VOTRE_SCRIPT_ID/exec`
    - **Environment** : Production, Preview, Development
-   
+
    - **Name** : `NEXT_PUBLIC_GAS_CONTACT_URL`
    - **Value** : `https://script.google.com/macros/s/VOTRE_SCRIPT_CONTACT_ID/exec`
    - **Environment** : Production, Preview, Development
