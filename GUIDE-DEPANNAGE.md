@@ -14,13 +14,11 @@
    - **Exécuter en tant que** : Moi
    - **Qui a accès** : **Tout le monde**
 6. Cliquez sur **"Déployer"**
-7. **Copiez la nouvelle URL** et mettez-la à jour dans `assets/js/banner.js`
+7. **Copiez la nouvelle URL** et mettez-la à jour dans les variables d'environnement Vercel (`NEXT_PUBLIC_GAS_URL` ou `NEXT_PUBLIC_GAS_CONTACT_URL`)
 
 #### 2. **Tester avec le fichier de diagnostic**
 
-1. Ouvrez `test-diagnostic.html` dans votre navigateur
-2. Lancez les tests un par un
-3. Notez les résultats pour identifier le problème
+Les fichiers de test ont été retirés. Utilisez la console réseau du navigateur sur la page principale.
 
 #### 3. **Vérifications courantes**
 
@@ -32,7 +30,7 @@
 ##### B. **URL incorrecte**
 
 - **Symptôme** : Erreur 404 ou "Not Found"
-- **Solution** : Vérifier que l'URL dans `banner.js` correspond exactement à celle du déploiement
+- **Solution** : Vérifier que l'URL dans les variables d'environnement correspond exactement à celle du déploiement
 
 ##### C. **Script non déployé**
 

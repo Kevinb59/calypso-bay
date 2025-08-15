@@ -30,12 +30,9 @@
 1. Après le déploiement, copiez l'URL fournie
 2. Elle ressemble à : `https://script.google.com/macros/s/[SCRIPT_ID]/exec`
 
-### 5. Mettre à jour le code JavaScript
+### 5. Mettre à jour les variables d'environnement
 
-1. Ouvrez le fichier `assets/js/banner.js`
-2. Remplacez `VOTRE_NOUVEAU_SCRIPT_ID` par l'ID de votre script
-3. Ouvrez le fichier `test-reservation-new.html`
-4. Remplacez également `VOTRE_NOUVEAU_SCRIPT_ID` par l'ID de votre script
+Mettez à jour les variables dans Vercel : `NEXT_PUBLIC_GAS_URL` ou `NEXT_PUBLIC_GAS_CONTACT_URL`.
 
 ## ✨ Fonctionnalités du nouveau script
 
@@ -60,20 +57,7 @@
 
 ## 🧪 Tests
 
-### Test basique
-
-1. Ouvrez `test-reservation-new.html` dans votre navigateur
-2. Remplissez le formulaire
-3. Cliquez sur "Tester l'envoi de réservation"
-4. Vérifiez que l'email est reçu avec le bon format
-
-### Test intégré
-
-1. Allez sur le site principal
-2. Sélectionnez des dates dans le calendrier
-3. Remplissez le formulaire de réservation
-4. Envoyez la demande
-5. Vérifiez l'email reçu
+Testez directement sur la page principale du site. Les variables sont chargées côté client par `assets/js/config-loader.js`.
 
 ## 📊 Différences avec l'ancien script
 
@@ -137,5 +121,4 @@ Pour ajouter de nouveaux champs dans l'email :
 Si vous rencontrez des problèmes :
 
 1. Vérifiez les logs dans Google Apps Script
-2. Testez avec le fichier `test-reservation-new.html`
-3. Vérifiez que l'URL du script est correcte dans `banner.js`
+2. Vérifiez que l'URL du script est correcte dans les variables d'environnement Vercel
