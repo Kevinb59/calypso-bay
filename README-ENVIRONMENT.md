@@ -41,11 +41,14 @@ npm run dev
 
 ### Option 2 : Live Server (pour tests rapides)
 
-Le script `config-loader.js` détecte automatiquement l'environnement local et utilise les URLs par défaut.
+En local (sans Vercel), aucune URL n'est codée en dur. Définissez vos URLs via `localStorage` dans la console du navigateur :
 
-- Clic droit sur `index.html`
-- Sélectionner "Open With Live Server"
-- Le site fonctionnera avec les URLs par défaut
+```js
+localStorage.setItem('GAS_URL', 'https://script.google.com/macros/s/VOTRE_SCRIPT_ID/exec')
+localStorage.setItem('GAS_CONTACT_URL', 'https://script.google.com/macros/s/VOTRE_SCRIPT_CONTACT_ID/exec')
+```
+
+Puis rechargez la page. `config-loader.js` lira ces valeurs et émettra `app:config-ready`.
 
 ## Configuration Vercel
 

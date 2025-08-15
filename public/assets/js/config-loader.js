@@ -16,17 +16,20 @@
       if (isLocalDev) {
         console.log('🔧 Mode développement local détecté')
 
-        // Configuration par défaut pour le développement
-        window.GAS_URL =
-          'https://script.google.com/macros/s/AKfycbzkdj57oOwsWqewCnXgvXsCeE9WdG90alI8dt1d_lk3w_xszZfE0dNoe3DW-LkzCiY/exec'
-        window.GAS_CONTACT_URL =
-          'https://script.google.com/macros/s/AKfycbxYKzGO8Cn22Gh-XS-Qt4drqUYeLZETVPORXvlFKtnrCPR83Q-aGB9bev-CNwi_OVA/exec'
+        // Fallback local sans URLs codées en dur: lire depuis localStorage
+        const localGasUrl = localStorage.getItem('GAS_URL')
+        const localGasContactUrl = localStorage.getItem('GAS_CONTACT_URL')
 
-        // N'exposons rien en console en dehors de l'environnement local
-        window.APP_CONFIG = { ENVIRONMENT: 'development' }
-
-        // Signaler aux autres scripts que la config est prête
-        window.dispatchEvent(new CustomEvent('app:config-ready'))
+        if (localGasUrl && localGasContactUrl) {
+          window.GAS_URL = localGasUrl
+          window.GAS_CONTACT_URL = localGasContactUrl
+          window.APP_CONFIG = { ENVIRONMENT: 'development' }
+          window.dispatchEvent(new CustomEvent('app:config-ready'))
+        } else {
+          console.warn(
+            "⚠️ Variables locales manquantes. Définissez-les via localStorage: localStorage.setItem('GAS_URL','https://...'); localStorage.setItem('GAS_CONTACT_URL','https://...')"
+          )
+        }
         return
       }
 
@@ -53,16 +56,8 @@
     } catch (error) {
       console.error('❌ Erreur lors du chargement de la configuration:', error)
 
-      // Fallback en cas d'erreur
-      window.GAS_URL =
-        'https://script.google.com/macros/s/AKfycbzkdj57oOwsWqewCnXgvXsCeE9WdG90alI8dt1d_lk3w_xszZfE0dNoe3DW-LkzCiY/exec'
-      window.GAS_CONTACT_URL =
-        'https://script.google.com/macros/s/AKfycbxYKzGO8Cn22Gh-XS-Qt4drqUYeLZETVPORXvlFKtnrCPR83Q-aGB9bev-CNwi_OVA/exec'
-
+      // Fallback silencieux: ne pas définir d'URL en prod si erreur
       window.APP_CONFIG = { ENVIRONMENT: 'fallback' }
-
-      // Signaler aux autres scripts que la config est prête (fallback)
-      window.dispatchEvent(new CustomEvent('app:config-ready'))
     }
   }
 
