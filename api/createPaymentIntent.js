@@ -23,7 +23,7 @@ export default async function handler(req, res) {
     // Calculer l'acompte: pour les tests on autorise un pourcentage configurable
     const percent = Number(process.env.DEPOSIT_PERCENT || '10')
     const minEur = Number(process.env.DEPOSIT_MIN_EUR || '0.5')
-    let computed = (Number(totalAmount) * (percent / 100))
+    let computed = Number(totalAmount) * (percent / 100)
     if (isNaN(computed) || computed <= 0) {
       computed = minEur
     }

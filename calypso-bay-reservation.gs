@@ -15,6 +15,9 @@ const SHEET_NAME = 'ReservationsTemp' // Onglet tampon
 const SITE_BASE = 'https://www.calypso-bay.com' // Domaine prod
 const ACCEPT_PATH = '/api/accept' // Route acceptation
 const REFUSE_PATH = '/api/refuse' // Route refus
+// Liens post-acompte (à implémenter côté site si besoin)
+const CANCEL_PATH = '/annuler-reservation'
+const PAY_BALANCE_PATH = '/payer-solde'
 
 const RECIPIENT_EMAIL = 'contact.calypso.bay@gmail.com' // Gestionnaire
 
@@ -103,6 +106,34 @@ function doGet(e) {
     return jsonOut({
       status: 'error',
       message: '❌ Erreur: ' + (err && err.message ? err.message : String(err))
+    })
+  }
+}
+
+// ==============
+// Entrée HTTP POST
+// ==============
+function doPost(e) {
+  try {
+    const p = (e && e.parameter) || {}
+    if (!e || !e.postData || !e.postData.contents) {
+      return jsonOut({ status: 'error', message: '❌ Corps POST manquant' })
+    }
+    const body = JSON.parse(e.postData.contents || '{}')
+
+    if (p.action === 'finalizeReservation') {
+      const token = p.token || body.token
+      const paymentData = body.paymentData || {}
+      const formData = body.formData || {}
+      return finalizeReservationFromWebhook_(token, paymentData, formData)
+    }
+
+    return jsonOut({ status: 'error', message: '❌ Action POST inconnue' })
+  } catch (err) {
+    return jsonOut({
+      status: 'error',
+      message:
+        '❌ Erreur POST: ' + (err && err.message ? err.message : String(err))
     })
   }
 }
@@ -674,11 +705,192 @@ function finalizeReservation_(token, paymentData) {
 }
 
 // ======================================
+// Finalisation depuis le webhook Stripe
+// ======================================
+function finalizeReservationFromWebhook_(token, paymentData, formData) {
+  try {
+    if (!token) {
+      return jsonOut({ status: 'error', message: '❌ Token manquant' })
+    }
+
+    const ss = SpreadsheetApp.openById(SHEET_ID)
+    const sh = ss.getSheetByName(SHEET_NAME)
+    if (!sh) {
+      return jsonOut({
+        status: 'error',
+        message: '❌ Onglet ReservationsTemp non trouvé'
+      })
+    }
+
+    const data = sh.getDataRange().getValues()
+    const headers = data[0]
+    const tokenColIndex = headers.indexOf('id')
+    const statusColIndex = headers.indexOf('status')
+    if (tokenColIndex === -1 || statusColIndex === -1) {
+      return jsonOut({
+        status: 'error',
+        message: '❌ Structure de données invalide'
+      })
+    }
+
+    let rowIndex = -1
+    for (let i = 1; i < data.length; i++) {
+      if (data[i][tokenColIndex] === token) {
+        rowIndex = i + 1
+        break
+      }
+    }
+    if (rowIndex === -1) {
+      return jsonOut({ status: 'error', message: '❌ Réservation non trouvée' })
+    }
+
+    // Idempotence: si déjà payé, ne rien refaire
+    const currentStatus = sh.getRange(rowIndex, statusColIndex + 1).getValue()
+    if (String(currentStatus) === 'depositPay') {
+      return jsonOut({ status: 'success', message: 'Déjà finalisé' })
+    }
+
+    // Vérifier statut de paiement
+    if (!paymentData || String(paymentData.status) !== 'succeeded') {
+      return jsonOut({ status: 'error', message: '❌ Paiement non confirmé' })
+    }
+
+    // Colonnes cibles
+    const cols = headerIndexes_(headers, [
+      'name',
+      'email',
+      'tel',
+      'depositAt',
+      'address',
+      'city',
+      'postal',
+      'country',
+      'finalMessage',
+      'childAge1',
+      'childAge2',
+      'childAge3',
+      'childAge4',
+      'childAge5'
+    ])
+
+    const values = {
+      status: 'depositPay',
+      depositAt: new Date(),
+      name: formData.name || '',
+      email: formData.email || '',
+      tel: formData.tel || '',
+      address: formData.address || '',
+      city: formData.city || '',
+      postal: formData.postal || '',
+      country: formData.country || '',
+      finalMessage: formData.message || ''
+    }
+
+    // Écrire statut
+    sh.getRange(rowIndex, statusColIndex + 1).setValue(values.status)
+    // Écrire timestamp acompte
+    if (cols.depositAt !== -1)
+      sh.getRange(rowIndex, cols.depositAt + 1).setValue(values.depositAt)
+    // Écrire infos client
+    if (cols.name !== -1)
+      sh.getRange(rowIndex, cols.name + 1).setValue(values.name)
+    if (cols.email !== -1)
+      sh.getRange(rowIndex, cols.email + 1).setValue(values.email)
+    if (cols.tel !== -1)
+      sh.getRange(rowIndex, cols.tel + 1).setValue(values.tel)
+    if (cols.address !== -1)
+      sh.getRange(rowIndex, cols.address + 1).setValue(values.address)
+    if (cols.city !== -1)
+      sh.getRange(rowIndex, cols.city + 1).setValue(values.city)
+    if (cols.postal !== -1)
+      sh.getRange(rowIndex, cols.postal + 1).setValue(values.postal)
+    if (cols.country !== -1)
+      sh.getRange(rowIndex, cols.country + 1).setValue(values.country)
+    if (cols.finalMessage !== -1)
+      sh.getRange(rowIndex, cols.finalMessage + 1).setValue(values.finalMessage)
+
+    // Âges enfants
+    const ages = Array.isArray(formData.childrenAges)
+      ? formData.childrenAges.slice(0, 5)
+      : []
+    for (let i = 0; i < 5; i++) {
+      const headerKey = 'childAge' + (i + 1)
+      const colIdx = cols[headerKey]
+      if (colIdx !== -1) {
+        sh.getRange(rowIndex, colIdx + 1).setValue(
+          ages[i] != null ? Number(ages[i]) : ''
+        )
+      }
+    }
+
+    // Préparer données pour emails (reprendre la ligne actuelle)
+    const row = sh.getRange(rowIndex, 1, 1, sh.getLastColumn()).getValues()[0]
+    const h = headers
+    const reservationData = {
+      token: token,
+      name: row[h.indexOf('name')],
+      email: row[h.indexOf('email')],
+      tel: row[h.indexOf('tel')],
+      userMessage:
+        row[h.indexOf('finalMessage')] || row[h.indexOf('userMessage')] || '',
+      nbAdults: row[h.indexOf('nbAdults')],
+      nbChilds: row[h.indexOf('nbChilds')],
+      nbNights: row[h.indexOf('nbNights')],
+      priceNights: row[h.indexOf('priceNights')],
+      priceClean: row[h.indexOf('priceClean')],
+      priceTax: row[h.indexOf('priceTax')],
+      priceTotal: row[h.indexOf('priceTotal')],
+      startDate: row[h.indexOf('startDate')],
+      endDate: row[h.indexOf('endDate')],
+      address: h.indexOf('address') !== -1 ? row[h.indexOf('address')] : '',
+      city: h.indexOf('city') !== -1 ? row[h.indexOf('city')] : '',
+      postal: h.indexOf('postal') !== -1 ? row[h.indexOf('postal')] : '',
+      country: h.indexOf('country') !== -1 ? row[h.indexOf('country')] : '',
+      childrenAges: [
+        h.indexOf('childAge1') !== -1 ? row[h.indexOf('childAge1')] : '',
+        h.indexOf('childAge2') !== -1 ? row[h.indexOf('childAge2')] : '',
+        h.indexOf('childAge3') !== -1 ? row[h.indexOf('childAge3')] : '',
+        h.indexOf('childAge4') !== -1 ? row[h.indexOf('childAge4')] : '',
+        h.indexOf('childAge5') !== -1 ? row[h.indexOf('childAge5')] : ''
+      ].filter(function (v) {
+        return v !== '' && v != null
+      })
+    }
+
+    sendFinalizationEmails_(reservationData, paymentData)
+
+    return jsonOut({
+      status: 'success',
+      message: '✅ Finalisation enregistrée'
+    })
+  } catch (err) {
+    return jsonOut({
+      status: 'error',
+      message: '❌ Erreur: ' + (err && err.message ? err.message : String(err))
+    })
+  }
+}
+
+// Désactivé: on ne crée plus automatiquement les colonnes pour éviter les doublons
+function ensureHeaders_(sh) {
+  const headers = sh
+    .getRange(1, 1, 1, Math.max(1, sh.getLastColumn()))
+    .getValues()[0]
+  return { headers: headers, changed: false }
+}
+
+function headerIndexes_(headers, keys) {
+  const map = {}
+  keys.forEach((k) => (map[k] = headers.indexOf(k)))
+  return map
+}
+
+// ======================================
 // Envoi des emails de finalisation
 // ======================================
 function sendFinalizationEmails_(data, paymentData) {
   // Email au client
-  const clientSubject = '✅ Votre réservation Calypso Bay est confirmée !'
+  const clientSubject = 'Votre réservation pour Calypso Bay est confirmée'
   const clientHtml = buildFinalizationClientEmail_(data, paymentData)
 
   MailApp.sendEmail({
@@ -689,7 +901,7 @@ function sendFinalizationEmails_(data, paymentData) {
   })
 
   // Email au gestionnaire
-  const managerSubject = '✅ Réservation finalisée - Paiement reçu'
+  const managerSubject = 'Acompte reçu de ' + (data.name || 'Client')
   const managerHtml = buildFinalizationManagerEmail_(data, paymentData)
 
   MailApp.sendEmail({
@@ -703,50 +915,125 @@ function sendFinalizationEmails_(data, paymentData) {
 // Construction email client finalisation
 // ======================================
 function buildFinalizationClientEmail_(data, paymentData) {
+  const color = '#5d3fd3'
+  const depositAmount = Number(paymentData.amount || 0).toLocaleString(
+    'fr-FR',
+    { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+  )
+  // Calcul date limite (J-7)
+  const start = new Date(data.startDate)
+  const deadline = new Date(start.getTime() - 7 * 24 * 60 * 60 * 1000)
+  const deadlineStr = deadline.toLocaleDateString('fr-FR', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric'
+  })
+
+  const details = (function () {
+    var base = formatReservationDetails_(data)
+    // Adresse complète
+    var addressParts = []
+    if (data.address) addressParts.push(escapeHtml_(data.address))
+    var cityLine = []
+    if (data.postal) cityLine.push(escapeHtml_(data.postal))
+    if (data.city) cityLine.push(escapeHtml_(data.city))
+    if (cityLine.length) addressParts.push(cityLine.join(' '))
+    if (data.country) addressParts.push(escapeHtml_(data.country))
+    if (addressParts.length) {
+      base +=
+        '<br><br><strong>Adresse de facturation :</strong><br>' +
+        addressParts.join('<br>')
+    }
+    // Acompte et solde restant
+    var total = Number(data.priceTotal || 0)
+    var deposit = Number(paymentData.amount || 0)
+    var remaining = Math.max(0, total - deposit)
+    var fmt = function (n) {
+      return Number(n).toLocaleString('fr-FR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })
+    }
+    if (!isNaN(total) && total > 0) {
+      base += '<br><br><strong>Acompte reçu :</strong> ' + fmt(deposit) + ' €'
+      base += '<br><strong>Solde restant :</strong> ' + fmt(remaining) + ' €'
+    }
+    // Âges enfants
+    if (Array.isArray(data.childrenAges) && data.childrenAges.length > 0) {
+      base +=
+        '<br><br><strong>Âges des enfants :</strong> ' +
+        data.childrenAges
+          .map(function (a) {
+            return escapeHtml_(a)
+          })
+          .join(', ')
+    }
+    return base
+  })()
+
+  const cancelUrl = buildSiteUrl_(CANCEL_PATH, { token: data.token || '' })
+  const payBalanceUrl = buildSiteUrl_(PAY_BALANCE_PATH, {
+    token: data.token || ''
+  })
+
   return (
     '<!DOCTYPE html>' +
     '<html lang="fr">' +
     '<head>' +
     '<meta charset="UTF-8">' +
     '<meta name="viewport" content="width=device-width, initial-scale=1.0">' +
-    '<title>Réservation confirmée - Calypso Bay</title>' +
+    '<title>Calypso Bay</title>' +
     '<style>' +
     "body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f2f4f8;padding:40px 20px;margin:0;}" +
-    '.container{max-width:600px;margin:auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.05);}' +
-    '.header{background:linear-gradient(120deg,#10b981,#059669);color:#ffffff;text-align:center;padding:30px;}' +
-    '.header h1{margin:0;font-size:24px;letter-spacing:1px;}' +
-    '.section{padding:30px;border-bottom:1px solid #eee;}' +
+    '.container{max-width:640px;margin:auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.05);}' +
+    '.header{background:' +
+    color +
+    ';color:#ffffff;text-align:center;padding:28px;}' +
+    '.header h1{margin:0;font-size:24px;letter-spacing:0.5px;}' +
+    '.section{padding:26px 28px;border-bottom:1px solid #eee;}' +
     '.section:last-child{border-bottom:none;}' +
-    'p{margin:6px 0;line-height:1.6;}' +
-    '.highlight{background:#f0fdf4;padding:15px;border-left:4px solid #10b981;border-radius:6px;margin:15px 0;}' +
+    'p{margin:8px 0;line-height:1.6;color:#333;}' +
+    '.details{background:#f9fafb;padding:16px;border-left:3px solid ' +
+    color +
+    ';border-radius:8px;margin-top:12px;}' +
+    '.btn{display:block;background:' +
+    color +
+    ';color:#ffffff !important;text-decoration:none;padding:12px 20px;border-radius:10px;font-weight:700;margin-top:12px;text-align:center;}' +
     '</style>' +
     '</head>' +
     '<body>' +
     '<div class="container">' +
-    '<div class="header">' +
-    '<h1>🎉 Réservation confirmée !</h1>' +
-    '</div>' +
+    '<div class="header"><h1>Calypso Bay</h1></div>' +
     '<div class="section">' +
     '<p>Bonjour ' +
     escapeHtml_(data.name) +
     ',</p>' +
-    '<p>Nous avons le plaisir de vous confirmer que votre réservation est maintenant définitive !</p>' +
-    '<div class="highlight">' +
-    '<p><strong>Paiement reçu :</strong> ' +
-    escapeHtml_(paymentData.amount) +
-    ' €</p>' +
-    '<p><strong>Référence :</strong> ' +
-    escapeHtml_(paymentData.paymentIntentId) +
-    '</p>' +
+    '<p>Nous avons le plaisir de vous informer que nous avons bien reçu votre acompte de 10% (' +
+    depositAmount +
+    ' €), confirmant ainsi votre réservation dans notre villa <strong>Calypso Bay</strong>.</p>' +
+    '<p>Le solde restant sera à régler au maximum <strong>7 jours avant le début de votre séjour</strong>, soit le <strong>' +
+    escapeHtml_(deadlineStr) +
+    '</strong>.</p>' +
+    '<p>Comme précisé dans notre notice d’informations, vous pouvez annuler gratuitement votre réservation jusqu’à <strong>3 mois avant</strong> le début du séjour. Au-delà, l’acompte restera acquis.</p>' +
+    '<p>Vous trouverez ci-dessous le récapitulatif de votre réservation, ainsi que deux liens utiles : l’un pour <strong>annuler</strong> votre réservation, l’autre pour <strong>régler le solde restant</strong>.</p>' +
     '</div>' +
-    '<p>Votre acompte de 10% a été reçu avec succès. Nous vous contacterons prochainement pour les détails de votre séjour.</p>' +
+    '<div class="section">' +
+    '<h3 style="margin:0 0 10px; color:' +
+    color +
+    '">📋 Récapitulatif</h3>' +
+    '<div class="details">' +
+    details +
+    '</div>' +
     '</div>' +
     '<div class="section" style="text-align:center;">' +
     '<a href="' +
-    SITE_BASE +
-    '" style="display:inline-block;background:#10b981;color:#ffffff !important;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:700;">Visiter Calypso Bay</a>' +
+    escapeHtml_(payBalanceUrl) +
+    '" class="btn">Régler le solde restant</a>' +
+    '<a href="' +
+    escapeHtml_(cancelUrl) +
+    '" class="btn" style="background:#ef4444">Annuler ma réservation</a>' +
     '</div>' +
-    '<div class="footer" style="text-align:center;font-size:13px;color:#888;padding:20px;">Calypso Bay – Villa de standing à Bouillante, Guadeloupe</div>' +
+    '<div class="section" style="text-align:center;color:#666;font-size:13px">Nous vous souhaitons un excellent séjour à Calypso Bay.</div>' +
     '</div>' +
     '</body>' +
     '</html>'
@@ -757,55 +1044,64 @@ function buildFinalizationClientEmail_(data, paymentData) {
 // Construction email gestionnaire finalisation
 // ======================================
 function buildFinalizationManagerEmail_(data, paymentData) {
+  const color = '#5d3fd3'
+  const amount = Number(paymentData.amount || 0).toLocaleString('fr-FR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  })
+  const details = formatReservationDetails_(data)
   return (
     '<!DOCTYPE html>' +
     '<html lang="fr">' +
     '<head>' +
     '<meta charset="UTF-8">' +
     '<meta name="viewport" content="width=device-width, initial-scale=1.0">' +
-    '<title>Réservation finalisée - Calypso Bay</title>' +
+    '<title>Acompte reçu</title>' +
     '<style>' +
     "body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f2f4f8;padding:40px 20px;margin:0;}" +
-    '.container{max-width:600px;margin:auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.05);}' +
-    '.header{background:linear-gradient(120deg,#10b981,#059669);color:#ffffff;text-align:center;padding:30px;}' +
-    '.header h1{margin:0;font-size:24px;letter-spacing:1px;}' +
-    '.section{padding:30px;border-bottom:1px solid #eee;}' +
+    '.container{max-width:640px;margin:auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.05);}' +
+    '.header{background:' +
+    color +
+    ';color:#ffffff;text-align:center;padding:28px;}' +
+    '.header h1{margin:0;font-size:22px;letter-spacing:0.5px;}' +
+    '.section{padding:24px 28px;border-bottom:1px solid #eee;}' +
     '.section:last-child{border-bottom:none;}' +
-    'h2{font-size:18px;margin:0 0 15px;color:#10b981;border-left:4px solid #10b981;padding-left:15px;}' +
-    'p{margin:6px 0;line-height:1.6;}' +
-    '.highlight{background:#f0fdf4;padding:15px;border-left:4px solid #10b981;border-radius:6px;margin:15px 0;}' +
+    'p{margin:6px 0;line-height:1.6;color:#333;}' +
+    '.details{background:#f9fafb;padding:16px;border-left:3px solid ' +
+    color +
+    ';border-radius:8px;margin-top:12px;}' +
     '</style>' +
     '</head>' +
     '<body>' +
     '<div class="container">' +
-    '<div class="header">' +
-    '<h1>💰 Paiement reçu - Réservation finalisée</h1>' +
-    '</div>' +
+    '<div class="header"><h1>✅ Acompte reçu</h1></div>' +
     '<div class="section">' +
-    '<h2>📅 Informations client</h2>' +
-    '<p><strong>Nom :</strong> ' +
-    escapeHtml_(data.name) +
+    '<p><strong>Client :</strong> ' +
+    escapeHtml_(data.name || '') +
     '</p>' +
     '<p><strong>Email :</strong> ' +
-    escapeHtml_(data.email) +
+    escapeHtml_(data.email || '') +
     '</p>' +
     '<p><strong>Téléphone :</strong> ' +
     (data.tel ? escapeHtml_(data.tel) : 'Non renseigné') +
     '</p>' +
     '</div>' +
     '<div class="section">' +
-    '<h2>💳 Informations de paiement</h2>' +
-    '<div class="highlight">' +
-    '<p><strong>Montant :</strong> ' +
-    escapeHtml_(paymentData.amount) +
+    '<p><strong>Montant accompagné :</strong> ' +
+    amount +
     ' €</p>' +
-    '<p><strong>Référence :</strong> ' +
-    escapeHtml_(paymentData.paymentIntentId) +
+    '<p><strong>Référence Stripe :</strong> ' +
+    escapeHtml_(paymentData.paymentIntentId || '') +
     '</p>' +
-    '<p><strong>Statut :</strong> Payé</p>' +
+    '</div>' +
+    '<div class="section">' +
+    '<h3 style="margin:0 0 10px; color:' +
+    color +
+    '">📋 Récapitulatif</h3>' +
+    '<div class="details">' +
+    details +
     '</div>' +
     '</div>' +
-    '<div class="footer" style="text-align:center;font-size:13px;color:#888;padding:20px;">Calypso Bay – Villa de standing à Bouillante, Guadeloupe</div>' +
     '</div>' +
     '</body>' +
     '</html>'
