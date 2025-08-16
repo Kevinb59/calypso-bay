@@ -13,7 +13,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Méthode non autorisée' })
   }
 
-  const { token, totalAmount } = req.body
+  const { token, totalAmount, formData } = req.body
 
   if (!token || !totalAmount) {
     return res.status(400).json({ error: 'Token et montant total manquants' })
@@ -42,7 +42,21 @@ export default async function handler(req, res) {
         totalAmount: totalAmount,
         depositPercent: String(percent),
         depositMinEur: String(minEur),
-        finalDepositEur: String(finalDepositEur)
+        finalDepositEur: String(finalDepositEur),
+        // FormData compact pour rester dans les limites de Stripe
+        form: JSON.stringify({
+          name: formData?.name || '',
+          email: formData?.email || '',
+          tel: formData?.tel || '',
+          address: formData?.address || '',
+          city: formData?.city || '',
+          postal: formData?.postal || '',
+          country: formData?.country || '',
+          message: (formData?.message || '').slice(0, 400),
+          childrenAges: Array.isArray(formData?.childrenAges)
+            ? formData.childrenAges.slice(0, 5)
+            : []
+        })
       },
       description: `Acompte réservation Calypso Bay - Token: ${token}`
     })

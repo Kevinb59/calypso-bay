@@ -764,8 +764,9 @@
             <h2 class="major">💳 Paiement de l'acompte</h2>
             <p>
               Pour confirmer votre réservation, veuillez effectuer le paiement
-              de l'acompte de <span id="deposit-percent">10%</span> du montant total (un montant minimum peut être appliqué pour les tests). Le solde sera à régler au
-              plus tard 7 jours avant votre arrivée.
+              de l'acompte de <span id="deposit-percent">10%</span> du montant
+              total (un montant minimum peut être appliqué pour les tests). Le
+              solde sera à régler au plus tard 7 jours avant votre arrivée.
             </p>
           </div>
           <div class="inner">
@@ -777,7 +778,10 @@
                   <span id="total-amount">Calcul en cours...</span>
                 </div>
                 <div class="payment-row deposit-row">
-                  <span>Acompte (<span id="deposit-percent-inline">10%</span>)</span>
+                  <span
+                    >Acompte (<span id="deposit-percent-inline">10%</span
+                    >)</span
+                  >
                   <span id="deposit-amount">Calcul en cours...</span>
                 </div>
                 <div class="progress-bar">
@@ -1118,7 +1122,10 @@
 
           // Mettre à jour la barre de progression
           const progressFill = document.getElementById('progress-fill')
-          const progressPercentage = Math.min(100, (depositAmount / totalAmount) * 100)
+          const progressPercentage = Math.min(
+            100,
+            (depositAmount / totalAmount) * 100
+          )
           progressFill.style.width = `${progressPercentage}%`
 
           // Mettre à jour le texte du bouton avec le montant
@@ -1191,6 +1198,25 @@
           submitButton.textContent = 'Traitement en cours...'
 
           try {
+            // Préparer les données du formulaire à envoyer en métadonnées Stripe
+            const childrenAges = Array.from(
+              document.querySelectorAll('[id^="child-age-"]')
+            )
+              .map((el) => (el && el.value ? Number(el.value) : null))
+              .filter((v) => v !== null)
+
+            const formData = {
+              name: document.getElementById('name').value,
+              email: document.getElementById('email').value,
+              tel: document.getElementById('tel').value,
+              address: document.getElementById('address').value,
+              city: document.getElementById('city').value,
+              postal: document.getElementById('postal').value,
+              country: document.getElementById('country').value,
+              message: document.getElementById('message')?.value || '',
+              childrenAges
+            }
+
             // Créer le PaymentIntent
             const paymentResponse = await fetch('/api/createPaymentIntent', {
               method: 'POST',
@@ -1199,7 +1225,8 @@
               },
               body: JSON.stringify({
                 token: token,
-                totalAmount: window.totalAmount
+                totalAmount: window.totalAmount,
+                formData
               })
             })
 
