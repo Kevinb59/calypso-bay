@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Annuler ma réservation – Calypso Bay</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/custom.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+      .form-section { background: rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; box-shadow: 0 12px 40px rgba(0,0,0,0.15); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.3); }
+      .warning { background: rgba(255,193,7,0.15); border:1px solid rgba(255,193,7,0.4); border-radius: 10px; padding: 12px; color:#2d2d2d; }
+      .btn-submit { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 14px 24px; border: none; border-radius: 12px; font-weight: 600; width: 100%; display: flex; align-items: center; justify-content: center; min-height: 50px; box-shadow: 0 6px 20px rgba(239,68,68,0.3); }
+      textarea { width: 100%; border-radius: 10px; padding: 12px; border: 1px solid rgba(255,255,255,0.4); background: rgba(255,255,255,0.9); }
+    </style>
+  </head>
+  <body class="is-preload">
+    <div id="page-wrapper">
+      <div id="wrapper">
+        <section class="panel banner right">
+          <div class="content color0 span-3-75">
+            <h2 class="major">Annuler ma<br /><span class="themysion">Réservation</span></h2>
+            <p>Vous pouvez demander l’annulation de votre réservation. Nous appliquerons la politique indiquée dans nos conditions.</p>
+            <ul class="actions"><li><a href="#form" class="button primary color1 circle icon solid fa-angle-right">Continuer</a></li></ul>
+          </div>
+          <div class="image filtered span-1-75" data-position="25% 25%"><img src="images/pic04.jpg" alt="" /></div>
+        </section>
+
+        <section class="panel spotlight medium right" id="form">
+          <div class="content span-9-5">
+            <h3 class="major">🧾 Demande d’annulation</h3>
+            <div class="form-section">
+              <div class="warning" id="policy">Chargement des informations…</div>
+              <div style="margin-top:16px">
+                <label for="reason" style="color:white; font-weight:600;">Motif (optionnel)</label>
+                <textarea id="reason" rows="4" placeholder="Expliquez brièvement la raison de votre demande (facultatif)"></textarea>
+              </div>
+              <button id="cancel-btn" class="btn-submit" style="margin-top:16px">Demander l’annulation</button>
+            </div>
+          </div>
+          <div class="image filtered tinted" data-position="center"><img src="images/pic02.jpg" alt="" /></div>
+        </section>
+
+        <div class="copyright"><span>&copy; Calypso Bay | By</span> <a href="https://moriarty-design.fr" target="_blank" rel="noopener" style="font-family: 'Engagement', 'Brush Script MT', cursive; font-size: 2.2em; line-height: 1; margin-left: 0.25em; text-decoration: none; color: inherit;">Moriarty</a>.</div>
+      </div>
+    </div>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+      const params = new URLSearchParams(window.location.search)
+      const token = params.get('token')
+      const policyBox = document.getElementById('policy')
+      const btn = document.getElementById('cancel-btn')
+
+      async function load() {
+        if (!token) { policyBox.textContent = 'Token manquant'; btn.disabled = true; return }
+        try {
+          const res = await fetch(`/api/getReservation?token=${encodeURIComponent(token)}`)
+          const json = await res.json()
+          if (json.status !== 'success') { policyBox.textContent = json.message || 'Réservation introuvable'; btn.disabled = true; return }
+          const d = json.data
+          const start = new Date(d.startDate)
+          const now = new Date()
+          const diffDays = Math.ceil((start - now) / (1000*60*60*24))
+          let msg = "Vous pouvez annuler."
+          if (diffDays >= 90) {
+            msg = "Annulation gratuite jusqu'à 3 mois avant le début du séjour."
+          } else {
+            msg = "Au-delà de 3 mois avant le début du séjour, l’acompte peut être retenu selon nos conditions."
+          }
+          policyBox.textContent = msg
+        } catch (e) { policyBox.textContent = 'Erreur de chargement' }
+      }
+      load()
+
+      btn.addEventListener('click', async () => {
+        if (!token) return
+        btn.disabled = true; btn.textContent = 'Envoi…'
+        try {
+          const reason = document.getElementById('reason').value
+          const resp = await fetch('/api/requestCancellation', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ token, reason }) })
+          const json = await resp.json()
+          if (!resp.ok || json.status !== 'success') throw new Error(json.error || json.message || 'Erreur')
+          btn.textContent = 'Demande envoyée ✔'
+        } catch (e) { alert(e.message); btn.disabled = false; btn.textContent = 'Demander l’annulation' }
+      })
+    </script>
+  </body>
+</html>
+
+
