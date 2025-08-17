@@ -1,3 +1,8 @@
 {
-  "version": 2
+  "version": 2,
+  "routes": [
+    { "src": "^/payer-solde$", "dest": "/payer-solde.html" },
+    { "src": "^/annuler-reservation$", "dest": "/annuler-reservation.html" },
+    { "src": "^/admin$", "dest": "/admin.html" }
+  ]
 }

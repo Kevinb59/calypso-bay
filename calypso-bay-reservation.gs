@@ -1188,8 +1188,8 @@ function buildFinalizationClientEmail_(data, paymentData) {
     return base
   })()
 
-  const cancelUrl = buildSiteUrl_(CANCEL_PATH, { token: data.token || '' })
-  const payBalanceUrl = buildSiteUrl_(PAY_BALANCE_PATH, {
+  const cancelUrl = buildSiteUrl_('/annuler-reservation', { token: data.token || '' })
+  const payBalanceUrl = buildSiteUrl_('/payer-solde', {
     token: data.token || ''
   })
 
