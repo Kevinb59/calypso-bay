@@ -56,7 +56,19 @@ export default async function handler(req, res) {
           childrenAges: Array.isArray(formData?.childrenAges)
             ? formData.childrenAges.slice(0, 5)
             : []
-        })
+        }),
+        // Fallbacks individuels (au cas où 'form' serait vide ou non parsable)
+        name: formData?.name || '',
+        email: formData?.email || '',
+        tel: formData?.tel || '',
+        address: formData?.address || '',
+        city: formData?.city || '',
+        postal: formData?.postal || '',
+        country: formData?.country || '',
+        messageShort: (formData?.message || '').slice(0, 180),
+        childrenAgesCSV: Array.isArray(formData?.childrenAges)
+          ? formData.childrenAges.slice(0, 5).join(',')
+          : ''
       },
       description: `Acompte réservation Calypso Bay - Token: ${token}`
     })

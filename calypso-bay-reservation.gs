@@ -516,9 +516,19 @@ function getReservationData_(token) {
     // Vérifier le statut uniquement
     const currentStatus = String(data[rowIndex][statusColIndex] || '')
     const depositAmountIndex = headers.indexOf('depositAmount')
-    const hasDeposit = depositAmountIndex !== -1 && Number(data[rowIndex][depositAmountIndex] || 0) > 0
-    if (!(currentStatus === 'accepted' || (currentStatus === 'depositPay' && hasDeposit))) {
-      return jsonOut({ status: 'error', message: '❌ Réservation non acceptée' })
+    const hasDeposit =
+      depositAmountIndex !== -1 &&
+      Number(data[rowIndex][depositAmountIndex] || 0) > 0
+    if (
+      !(
+        currentStatus === 'accepted' ||
+        (currentStatus === 'depositPay' && hasDeposit)
+      )
+    ) {
+      return jsonOut({
+        status: 'error',
+        message: '❌ Réservation non acceptée'
+      })
     }
 
     // Récupérer les données de la réservation avec conversion des types
@@ -802,14 +812,15 @@ function finalizeReservationFromWebhook_(token, paymentData, formData) {
       status: 'depositPay',
       depositAt: new Date(),
       depositAmount: Number(paymentData.amount || 0),
-      name: formData.name || '',
-      email: formData.email || '',
-      tel: formData.tel || '',
-      address: formData.address || '',
-      city: formData.city || '',
-      postal: formData.postal || '',
-      country: formData.country || '',
-      finalMessage: formData.message || ''
+      name: formData && formData.name ? String(formData.name) : null,
+      email: formData && formData.email ? String(formData.email) : null,
+      tel: formData && formData.tel ? String(formData.tel) : null,
+      address: formData && formData.address ? String(formData.address) : null,
+      city: formData && formData.city ? String(formData.city) : null,
+      postal: formData && formData.postal ? String(formData.postal) : null,
+      country: formData && formData.country ? String(formData.country) : null,
+      finalMessage:
+        formData && formData.message ? String(formData.message) : null
     }
 
     // Écrire statut
@@ -828,22 +839,25 @@ function finalizeReservationFromWebhook_(token, paymentData, formData) {
         values.depositAmount
       )
     // Écrire infos client
-    if (cols.name !== -1)
-      sh.getRange(rowIndex, cols.name + 1).setValue(values.name)
-    if (cols.email !== -1)
-      sh.getRange(rowIndex, cols.email + 1).setValue(values.email)
-    if (cols.tel !== -1)
-      sh.getRange(rowIndex, cols.tel + 1).setValue(values.tel)
-    if (cols.address !== -1)
-      sh.getRange(rowIndex, cols.address + 1).setValue(values.address)
-    if (cols.city !== -1)
-      sh.getRange(rowIndex, cols.city + 1).setValue(values.city)
-    if (cols.postal !== -1)
-      sh.getRange(rowIndex, cols.postal + 1).setValue(values.postal)
-    if (cols.country !== -1)
-      sh.getRange(rowIndex, cols.country + 1).setValue(values.country)
-    if (cols.finalMessage !== -1)
-      sh.getRange(rowIndex, cols.finalMessage + 1).setValue(values.finalMessage)
+    function writeIfPresent(colIdx, newValue) {
+      if (
+        colIdx !== -1 &&
+        newValue !== undefined &&
+        newValue !== null &&
+        String(newValue).trim() !== ''
+      ) {
+        sh.getRange(rowIndex, colIdx + 1).setValue(newValue)
+      }
+    }
+
+    writeIfPresent(cols.name, values.name)
+    writeIfPresent(cols.email, values.email)
+    writeIfPresent(cols.tel, values.tel)
+    writeIfPresent(cols.address, values.address)
+    writeIfPresent(cols.city, values.city)
+    writeIfPresent(cols.postal, values.postal)
+    writeIfPresent(cols.country, values.country)
+    writeIfPresent(cols.finalMessage, values.finalMessage)
 
     // Calcul solde + échéance si colonnes présentes
     if (cols.balanceAmount !== -1 || cols.balanceDueAt !== -1) {
@@ -872,10 +886,8 @@ function finalizeReservationFromWebhook_(token, paymentData, formData) {
     for (let i = 0; i < 5; i++) {
       const headerKey = 'childAge' + (i + 1)
       const colIdx = cols[headerKey]
-      if (colIdx !== -1) {
-        sh.getRange(rowIndex, colIdx + 1).setValue(
-          ages[i] != null ? Number(ages[i]) : ''
-        )
+      if (colIdx !== -1 && ages[i] != null && String(ages[i]).trim() !== '') {
+        sh.getRange(rowIndex, colIdx + 1).setValue(Number(ages[i]))
       }
     }
 

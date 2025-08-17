@@ -1194,8 +1194,13 @@
           }
 
           const submitButton = document.getElementById('submit-button')
+          const btnTextSpan = document.getElementById('button-text')
           submitButton.disabled = true
-          submitButton.textContent = 'Traitement en cours...'
+          if (btnTextSpan) {
+            btnTextSpan.textContent = 'Traitement en cours...'
+          } else {
+            submitButton.textContent = 'Traitement en cours...'
+          }
 
           try {
             // Préparer les données du formulaire à envoyer en métadonnées Stripe
@@ -1256,37 +1261,13 @@
               throw new Error(error.message)
             }
 
-            // Finaliser la réservation
-            const finalizeResponse = await fetch('/api/finalizeReservation', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                token: token,
-                paymentData: {
-                  amount: paymentResult.amount,
-                  paymentIntentId: paymentIntent.id,
-                  status: paymentIntent.status
-                }
-              })
-            })
-
-            const finalizeResult = await finalizeResponse.json()
-
-            if (finalizeResult.status === 'success') {
-              showSuccess(
-                'Réservation finalisée avec succès ! Vous allez recevoir un email de confirmation.'
-              )
-              // Rediriger vers la page de succès après 3 secondes
-              setTimeout(() => {
-                window.location.href = '/reservation-confirmee.html'
-              }, 3000)
-            } else {
-              throw new Error(
-                finalizeResult.message || 'Erreur lors de la finalisation'
-              )
-            }
+            // Succès Stripe: on s'appuie sur le webhook pour la finalisation.
+            showSuccess(
+              "Paiement confirmé ✔️. Un email de confirmation vient d'être envoyé."
+            )
+            setTimeout(() => {
+              window.location.href = '/reservation-confirmee.html'
+            }, 1500)
           } catch (error) {
             showError(error.message)
             submitButton.disabled = false
@@ -1295,10 +1276,15 @@
               const depositAmount = window.totalAmount * 0.1
               const buttonText = document.getElementById('button-text')
               if (buttonText) {
-                buttonText.textContent = `Payer l'acompte – ${depositAmount.toLocaleString(
-                  'fr-FR',
-                  { minimumFractionDigits: 2, maximumFractionDigits: 2 }
-                )} €`
+                buttonText.textContent = `Payer l'acompte – ${depositAmount.toLocaleString('fr-FR', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })} €`
+              } else {
+                submitButton.textContent = `Payer l'acompte – ${depositAmount.toLocaleString('fr-FR', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })} €`
               }
             }
           }

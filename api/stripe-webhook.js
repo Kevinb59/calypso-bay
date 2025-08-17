@@ -45,6 +45,24 @@ export default async function handler(req, res) {
       } catch (e) {
         formData = {}
       }
+      // Fallbacks si 'form' est vide ou incomplet
+      if (!formData || Object.keys(formData).length === 0) {
+        formData = {}
+      }
+      formData.name = formData.name || metadata.name || ''
+      formData.email = formData.email || metadata.email || ''
+      formData.tel = formData.tel || metadata.tel || ''
+      formData.address = formData.address || metadata.address || ''
+      formData.city = formData.city || metadata.city || ''
+      formData.postal = formData.postal || metadata.postal || ''
+      formData.country = formData.country || metadata.country || ''
+      formData.message = formData.message || metadata.messageShort || ''
+      if (!Array.isArray(formData.childrenAges) || formData.childrenAges.length === 0) {
+        formData.childrenAges = (metadata.childrenAgesCSV || '')
+          .split(',')
+          .map((v) => (v === '' ? null : Number(v)))
+          .filter((v) => v != null && !isNaN(v))
+      }
 
       // Appeler GAS pour finaliser la réservation
       const GAS_URL = process.env.NEXT_PUBLIC_GAS_URL
