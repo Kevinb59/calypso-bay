@@ -513,9 +513,12 @@ function getReservationData_(token) {
       })
     }
 
-    // Vérifier que la réservation est acceptée
-    const currentStatus = data[rowIndex][statusColIndex]
-    if (currentStatus !== 'accepted') {
+    // Vérifier le statut (autoriser accepted/depositPay/balancePay/finalized)
+    const currentStatus = String(data[rowIndex][statusColIndex] || '')
+    // Seul le statut depositPay + depositAmount>0 autorise le paiement du solde
+    const depositAmountIndex = headers.indexOf('depositAmount')
+    const hasDeposit = depositAmountIndex !== -1 && Number(data[rowIndex][depositAmountIndex] || 0) > 0
+    if (!(currentStatus === 'depositPay' && hasDeposit)) {
       return jsonOut({
         status: 'error',
         message: '❌ Réservation non acceptée'
@@ -537,6 +540,7 @@ function getReservationData_(token) {
     const startDateIndex = headers.indexOf('startDate')
     const endDateIndex = headers.indexOf('endDate')
     const timestampIndex = headers.indexOf('timestamp')
+    const depositAtIndex = headers.indexOf('depositAt')
 
     // Log pour déboguer
     console.log('Headers found:', {
@@ -594,6 +598,12 @@ function getReservationData_(token) {
         endDateIndex !== -1 ? String(data[rowIndex][endDateIndex] || '') : '',
       createdAt:
         timestampIndex !== -1 ? data[rowIndex][timestampIndex] : new Date(),
+      status: currentStatus,
+      depositAmount:
+        depositAmountIndex !== -1
+          ? Number(data[rowIndex][depositAmountIndex]) || 0
+          : 0,
+      depositAt: depositAtIndex !== -1 ? data[rowIndex][depositAtIndex] : '',
       token: token
     }
 
@@ -777,6 +787,9 @@ function finalizeReservationFromWebhook_(token, paymentData, formData) {
       'tel',
       'depositAt',
       'depositAmount',
+      'depositPaymentIntentId',
+      'balanceDueAt',
+      'balanceAmount',
       'address',
       'city',
       'postal',
@@ -808,6 +821,9 @@ function finalizeReservationFromWebhook_(token, paymentData, formData) {
     // Écrire timestamp acompte
     if (cols.depositAt !== -1)
       sh.getRange(rowIndex, cols.depositAt + 1).setValue(values.depositAt)
+    // Écrire id PaymentIntent acompte
+    if (cols.depositPaymentIntentId !== -1)
+      sh.getRange(rowIndex, cols.depositPaymentIntentId + 1).setValue(String(paymentData.paymentIntentId || ''))
     // Écrire montant acompte (en euros)
     if (cols.depositAmount !== -1)
       sh.getRange(rowIndex, cols.depositAmount + 1).setValue(
@@ -830,6 +846,22 @@ function finalizeReservationFromWebhook_(token, paymentData, formData) {
       sh.getRange(rowIndex, cols.country + 1).setValue(values.country)
     if (cols.finalMessage !== -1)
       sh.getRange(rowIndex, cols.finalMessage + 1).setValue(values.finalMessage)
+
+    // Calcul solde + échéance si colonnes présentes
+    if (cols.balanceAmount !== -1 || cols.balanceDueAt !== -1) {
+      const totalIdx = headers.indexOf('priceTotal')
+      const startIdx = headers.indexOf('startDate')
+      const totalVal = totalIdx !== -1 ? Number(data[rowIndex - 1][totalIdx] || 0) : 0
+      const balance = Math.max(0, totalVal - values.depositAmount)
+      if (cols.balanceAmount !== -1) sh.getRange(rowIndex, cols.balanceAmount + 1).setValue(balance)
+      if (cols.balanceDueAt !== -1) {
+        const startVal = startIdx !== -1 ? data[rowIndex - 1][startIdx] : ''
+        if (startVal) {
+          const due = new Date(new Date(startVal).getTime() - 7 * 24 * 60 * 60 * 1000)
+          sh.getRange(rowIndex, cols.balanceDueAt + 1).setValue(due)
+        }
+      }
+    }
 
     // Âges enfants
     const ages = Array.isArray(formData.childrenAges)
@@ -1188,7 +1220,9 @@ function buildFinalizationClientEmail_(data, paymentData) {
     return base
   })()
 
-  const cancelUrl = buildSiteUrl_('/annuler-reservation', { token: data.token || '' })
+  const cancelUrl = buildSiteUrl_('/annuler-reservation', {
+    token: data.token || ''
+  })
   const payBalanceUrl = buildSiteUrl_('/payer-solde', {
     token: data.token || ''
   })
