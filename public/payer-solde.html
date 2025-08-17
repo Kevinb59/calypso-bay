@@ -70,7 +70,7 @@
       async function load() {
         if (!token) { recap.textContent = 'Token manquant'; btn.disabled = true; return }
         try {
-          const res = await fetch(`/api/getReservation?token=${encodeURIComponent(token)}`)
+          const res = await fetch(`/api/getReservation?token=${encodeURIComponent(token)}&stage=balance`)
           const json = await res.json()
           if (json.status !== 'success') { recap.textContent = json.message || 'Réservation introuvable'; btn.disabled = true; return }
           const d = json.data

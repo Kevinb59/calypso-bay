@@ -960,7 +960,7 @@
 
           console.log('Loading reservation data for token:', token)
           const response = await fetch(
-            `/api/getReservation?token=${encodeURIComponent(token)}`
+            `/api/getReservation?token=${encodeURIComponent(token)}&stage=deposit`
           )
           const result = await response.json()
 

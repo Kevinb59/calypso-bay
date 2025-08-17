@@ -38,7 +38,7 @@ function doGet(e) {
 
     // Récupération des données de réservation pour finalisation
     if (p.action === 'getReservation') {
-      return getReservationData_(p.token)
+      return getReservationData_(p.token, p.stage || p.for || '')
     }
 
     // Diagnostic de la structure du Sheet
@@ -513,16 +513,21 @@ function getReservationData_(token) {
       })
     }
 
-    // Vérifier le statut (autoriser accepted/depositPay/balancePay/finalized)
+    // Vérifier le statut selon l'étape (stage)
     const currentStatus = String(data[rowIndex][statusColIndex] || '')
-    // Seul le statut depositPay + depositAmount>0 autorise le paiement du solde
     const depositAmountIndex = headers.indexOf('depositAmount')
     const hasDeposit = depositAmountIndex !== -1 && Number(data[rowIndex][depositAmountIndex] || 0) > 0
-    if (!(currentStatus === 'depositPay' && hasDeposit)) {
-      return jsonOut({
-        status: 'error',
-        message: '❌ Réservation non acceptée'
-      })
+    const stageLower = String(stage || '').toLowerCase()
+    if (stageLower === 'deposit') {
+      // étape acompte: il faut juste que la réservation soit acceptée
+      if (currentStatus !== 'accepted') {
+        return jsonOut({ status: 'error', message: '❌ Réservation non acceptée' })
+      }
+    } else if (stageLower === 'balance') {
+      // étape solde: acompte payé
+      if (!(currentStatus === 'depositPay' && hasDeposit)) {
+        return jsonOut({ status: 'error', message: '❌ Réservation non acceptée' })
+      }
     }
 
     // Récupérer les données de la réservation avec conversion des types
@@ -823,7 +828,9 @@ function finalizeReservationFromWebhook_(token, paymentData, formData) {
       sh.getRange(rowIndex, cols.depositAt + 1).setValue(values.depositAt)
     // Écrire id PaymentIntent acompte
     if (cols.depositPaymentIntentId !== -1)
-      sh.getRange(rowIndex, cols.depositPaymentIntentId + 1).setValue(String(paymentData.paymentIntentId || ''))
+      sh.getRange(rowIndex, cols.depositPaymentIntentId + 1).setValue(
+        String(paymentData.paymentIntentId || '')
+      )
     // Écrire montant acompte (en euros)
     if (cols.depositAmount !== -1)
       sh.getRange(rowIndex, cols.depositAmount + 1).setValue(
@@ -851,13 +858,17 @@ function finalizeReservationFromWebhook_(token, paymentData, formData) {
     if (cols.balanceAmount !== -1 || cols.balanceDueAt !== -1) {
       const totalIdx = headers.indexOf('priceTotal')
       const startIdx = headers.indexOf('startDate')
-      const totalVal = totalIdx !== -1 ? Number(data[rowIndex - 1][totalIdx] || 0) : 0
+      const totalVal =
+        totalIdx !== -1 ? Number(data[rowIndex - 1][totalIdx] || 0) : 0
       const balance = Math.max(0, totalVal - values.depositAmount)
-      if (cols.balanceAmount !== -1) sh.getRange(rowIndex, cols.balanceAmount + 1).setValue(balance)
+      if (cols.balanceAmount !== -1)
+        sh.getRange(rowIndex, cols.balanceAmount + 1).setValue(balance)
       if (cols.balanceDueAt !== -1) {
         const startVal = startIdx !== -1 ? data[rowIndex - 1][startIdx] : ''
         if (startVal) {
-          const due = new Date(new Date(startVal).getTime() - 7 * 24 * 60 * 60 * 1000)
+          const due = new Date(
+            new Date(startVal).getTime() - 7 * 24 * 60 * 60 * 1000
+          )
           sh.getRange(rowIndex, cols.balanceDueAt + 1).setValue(due)
         }
       }
