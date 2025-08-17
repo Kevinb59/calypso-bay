@@ -38,6 +38,7 @@ export default async function handler(req, res) {
       const paymentIntent = event.data.object
       const metadata = paymentIntent.metadata || {}
       const token = metadata.token
+      const type = metadata.type || 'deposit'
       let formData = {}
       try {
         formData = metadata.form ? JSON.parse(metadata.form) : {}
@@ -47,10 +48,10 @@ export default async function handler(req, res) {
 
       // Appeler GAS pour finaliser la réservation
       const GAS_URL = process.env.NEXT_PUBLIC_GAS_URL
+      const action =
+        type === 'balance' ? 'finalizeBalance' : 'finalizeReservation'
       const resp = await fetch(
-        `${GAS_URL}?action=finalizeReservation&token=${encodeURIComponent(
-          token
-        )}`,
+        `${GAS_URL}?action=${action}&token=${encodeURIComponent(token)}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -81,5 +82,3 @@ export default async function handler(req, res) {
     res.status(500).json({ error: 'Erreur serveur' })
   }
 }
-
-

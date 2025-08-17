@@ -128,6 +128,19 @@ function doPost(e) {
       return finalizeReservationFromWebhook_(token, paymentData, formData)
     }
 
+    if (p.action === 'finalizeBalance') {
+      const token = p.token || body.token
+      const paymentData = body.paymentData || {}
+      // finalise le paiement de solde
+      return finalizeBalanceFromWebhook_(token, paymentData)
+    }
+
+    if (p.action === 'requestCancellation') {
+      const token = p.token || body.token
+      const reason = (body && body.reason) || ''
+      return requestCancellation_(token, reason)
+    }
+
     return jsonOut({ status: 'error', message: '❌ Action POST inconnue' })
   } catch (err) {
     return jsonOut({
@@ -385,11 +398,11 @@ function buildClientEmailHtml_(data, action) {
     '<style>' +
     "body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f2f4f8;padding:40px 20px;margin:0;}" +
     '.container{max-width:600px;margin:auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.05);}' +
-    '.header{background:linear-gradient(120deg,' +
+    '.header{background:' +
     color +
-    ',' +
+    ';background-color:' +
     color +
-    'dd);color:#ffffff;text-align:center;padding:30px;}' +
+    ';color:#ffffff;text-align:center;padding:30px;}' +
     '.header h1{margin:0;font-size:24px;letter-spacing:1px;}' +
     '.section{padding:30px;border-bottom:1px solid #eee;}' +
     '.section:last-child{border-bottom:none;}' +
@@ -438,8 +451,10 @@ function buildClientEmailHtml_(data, action) {
         SITE_BASE +
         '/finaliser-reservation.html?token=' +
         encodeURIComponent(data.token) +
-        '" class="btn">Finaliser ma réservation</a>'
-      : '<a href="' + SITE_BASE + '" class="btn">Visiter Calypso Bay</a>') +
+        '" class="btn"><span style="color:#ffffff !important; text-decoration:none !important;">Finaliser ma réservation</span></a>'
+      : '<a href="' +
+        SITE_BASE +
+        '" class="btn"><span style="color:#ffffff !important; text-decoration:none !important;">Visiter Calypso Bay</span></a>') +
     '</div>' +
     '<div class="footer" style="text-align:center;font-size:13px;color:#888;padding:20px;">Calypso Bay – Villa de standing à Bouillante, Guadeloupe</div>' +
     '</div>' +
@@ -761,6 +776,7 @@ function finalizeReservationFromWebhook_(token, paymentData, formData) {
       'email',
       'tel',
       'depositAt',
+      'depositAmount',
       'address',
       'city',
       'postal',
@@ -776,6 +792,7 @@ function finalizeReservationFromWebhook_(token, paymentData, formData) {
     const values = {
       status: 'depositPay',
       depositAt: new Date(),
+      depositAmount: Number(paymentData.amount || 0),
       name: formData.name || '',
       email: formData.email || '',
       tel: formData.tel || '',
@@ -791,6 +808,11 @@ function finalizeReservationFromWebhook_(token, paymentData, formData) {
     // Écrire timestamp acompte
     if (cols.depositAt !== -1)
       sh.getRange(rowIndex, cols.depositAt + 1).setValue(values.depositAt)
+    // Écrire montant acompte (en euros)
+    if (cols.depositAmount !== -1)
+      sh.getRange(rowIndex, cols.depositAmount + 1).setValue(
+        values.depositAmount
+      )
     // Écrire infos client
     if (cols.name !== -1)
       sh.getRange(rowIndex, cols.name + 1).setValue(values.name)
@@ -883,6 +905,201 @@ function headerIndexes_(headers, keys) {
   const map = {}
   keys.forEach((k) => (map[k] = headers.indexOf(k)))
   return map
+}
+
+// ======================================
+// Finalisation du solde (webhook Stripe)
+// ======================================
+function finalizeBalanceFromWebhook_(token, paymentData) {
+  try {
+    if (!token)
+      return jsonOut({ status: 'error', message: '❌ Token manquant' })
+    const ss = SpreadsheetApp.openById(SHEET_ID)
+    const sh = ss.getSheetByName(SHEET_NAME)
+    if (!sh)
+      return jsonOut({
+        status: 'error',
+        message: '❌ Onglet ReservationsTemp non trouvé'
+      })
+
+    const data = sh.getDataRange().getValues()
+    const headers = data[0]
+    const tokenColIndex = headers.indexOf('id')
+    const statusColIndex = headers.indexOf('status')
+    if (tokenColIndex === -1 || statusColIndex === -1)
+      return jsonOut({
+        status: 'error',
+        message: '❌ Structure de données invalide'
+      })
+
+    let rowIndex = -1
+    for (let i = 1; i < data.length; i++) {
+      if (data[i][tokenColIndex] === token) {
+        rowIndex = i + 1
+        break
+      }
+    }
+    if (rowIndex === -1)
+      return jsonOut({ status: 'error', message: '❌ Réservation non trouvée' })
+
+    const cols = headerIndexes_(headers, [
+      'balanceAmount',
+      'balancePaymentIntentId',
+      'balancePaidAt'
+    ])
+
+    // Écritures
+    if (cols.balanceAmount !== -1)
+      sh.getRange(rowIndex, cols.balanceAmount + 1).setValue(
+        Number(paymentData.amount || 0)
+      )
+    if (cols.balancePaymentIntentId !== -1)
+      sh.getRange(rowIndex, cols.balancePaymentIntentId + 1).setValue(
+        String(paymentData.paymentIntentId || '')
+      )
+    if (cols.balancePaidAt !== -1)
+      sh.getRange(rowIndex, cols.balancePaidAt + 1).setValue(new Date())
+
+    // Statut
+    sh.getRange(rowIndex, statusColIndex + 1).setValue('balancePay')
+
+    // Notification emails (client + gestionnaire)
+    const row = sh.getRange(rowIndex, 1, 1, sh.getLastColumn()).getValues()[0]
+    const h = headers
+    const reservationData = {
+      name: row[h.indexOf('name')],
+      email: row[h.indexOf('email')],
+      tel: row[h.indexOf('tel')],
+      nbAdults: row[h.indexOf('nbAdults')],
+      nbChilds: row[h.indexOf('nbChilds')],
+      nbNights: row[h.indexOf('nbNights')],
+      priceNights: row[h.indexOf('priceNights')],
+      priceClean: row[h.indexOf('priceClean')],
+      priceTax: row[h.indexOf('priceTax')],
+      priceTotal: row[h.indexOf('priceTotal')],
+      startDate: row[h.indexOf('startDate')],
+      endDate: row[h.indexOf('endDate')]
+    }
+    sendBalanceEmails_(reservationData, paymentData)
+
+    return jsonOut({ status: 'success', message: '✅ Solde enregistré' })
+  } catch (err) {
+    return jsonOut({
+      status: 'error',
+      message: '❌ Erreur: ' + (err && err.message ? err.message : String(err))
+    })
+  }
+}
+
+// Emails solde
+function sendBalanceEmails_(data, paymentData) {
+  const color = '#5d3fd3'
+  const amount = Number(paymentData.amount || 0).toLocaleString('fr-FR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  })
+  // Client
+  const subjectClient = 'Solde payé – Calypso Bay'
+  const htmlClient =
+    '<div style="background:' +
+    color +
+    ';height:56px;border-radius:16px 16px 0 0"></div>'
+  MailApp.sendEmail({
+    to: data.email,
+    replyTo: RECIPIENT_EMAIL,
+    subject: subjectClient,
+    htmlBody: buildFinalizationClientEmail_(data, {
+      amount: paymentData.amount,
+      paymentIntentId: paymentData.paymentIntentId
+    })
+  })
+  // Gestionnaire
+  const subjectManager = 'Solde reçu de ' + (data.name || 'Client')
+  const htmlManager =
+    '<div style="background:' +
+    color +
+    ';height:56px;border-radius:16px 16px 0 0"></div>'
+  MailApp.sendEmail({
+    to: RECIPIENT_EMAIL,
+    subject: subjectManager,
+    htmlBody: htmlManager
+  })
+}
+
+// ======================================
+// Demande d'annulation (client)
+// ======================================
+function requestCancellation_(token, reason) {
+  try {
+    if (!token)
+      return jsonOut({ status: 'error', message: '❌ Token manquant' })
+    const ss = SpreadsheetApp.openById(SHEET_ID)
+    const sh = ss.getSheetByName(SHEET_NAME)
+    if (!sh)
+      return jsonOut({
+        status: 'error',
+        message: '❌ Onglet ReservationsTemp non trouvé'
+      })
+
+    const data = sh.getDataRange().getValues()
+    const headers = data[0]
+    const tokenColIndex = headers.indexOf('id')
+    if (tokenColIndex === -1)
+      return jsonOut({
+        status: 'error',
+        message: '❌ Structure de données invalide'
+      })
+
+    let rowIndex = -1
+    for (let i = 1; i < data.length; i++) {
+      if (data[i][tokenColIndex] === token) {
+        rowIndex = i + 1
+        break
+      }
+    }
+    if (rowIndex === -1)
+      return jsonOut({ status: 'error', message: '❌ Réservation non trouvée' })
+
+    const cols = headerIndexes_(headers, [
+      'cancelRequestedAt',
+      'cancelReason',
+      'cancelStatus'
+    ])
+    if (cols.cancelRequestedAt !== -1)
+      sh.getRange(rowIndex, cols.cancelRequestedAt + 1).setValue(new Date())
+    if (cols.cancelReason !== -1)
+      sh.getRange(rowIndex, cols.cancelReason + 1).setValue(
+        String(reason || '')
+      )
+    if (cols.cancelStatus !== -1)
+      sh.getRange(rowIndex, cols.cancelStatus + 1).setValue('pending')
+
+    // Mails d’accusé (simple)
+    const email = data[rowIndex - 1][headers.indexOf('email')]
+    const name = data[rowIndex - 1][headers.indexOf('name')]
+    MailApp.sendEmail({
+      to: String(email),
+      replyTo: RECIPIENT_EMAIL,
+      subject: "Votre demande d'annulation – Calypso Bay",
+      htmlBody:
+        '<div style="background:#5d3fd3;height:56px;border-radius:16px 16px 0 0"></div><div style="padding:24px;font-family:Arial,sans-serif">Bonjour ' +
+        escapeHtml_(name) +
+        ",<br>Votre demande d'annulation a bien été enregistrée. Notre équipe va la traiter rapidement.</div>"
+    })
+    MailApp.sendEmail({
+      to: RECIPIENT_EMAIL,
+      subject: "Demande d'annulation reçue",
+      htmlBody:
+        '<div style="background:#5d3fd3;height:56px;border-radius:16px 16px 0 0"></div><div style="padding:24px;font-family:Arial,sans-serif">Une nouvelle demande d\'annulation a été reçue.</div>'
+    })
+
+    return jsonOut({ status: 'success', message: '✅ Demande enregistrée' })
+  } catch (err) {
+    return jsonOut({
+      status: 'error',
+      message: '❌ Erreur: ' + (err && err.message ? err.message : String(err))
+    })
+  }
 }
 
 // ======================================
@@ -1003,7 +1220,7 @@ function buildFinalizationClientEmail_(data, paymentData) {
     '</head>' +
     '<body>' +
     '<div class="container">' +
-    '<div class="header"><h1>Calypso Bay</h1></div>' +
+    '<div class="header"><h1>🏖️ Calypso Bay</h1></div>' +
     '<div class="section">' +
     '<p>Bonjour ' +
     escapeHtml_(data.name) +
@@ -1028,10 +1245,10 @@ function buildFinalizationClientEmail_(data, paymentData) {
     '<div class="section" style="text-align:center;">' +
     '<a href="' +
     escapeHtml_(payBalanceUrl) +
-    '" class="btn">Régler le solde restant</a>' +
+    '" class="btn"><span style="color:#ffffff !important;text-decoration:none !important;">Régler le solde restant</span></a>' +
     '<a href="' +
     escapeHtml_(cancelUrl) +
-    '" class="btn" style="background:#ef4444">Annuler ma réservation</a>' +
+    '" class="btn" style="background:#ef4444"><span style="color:#ffffff !important;text-decoration:none !important;">Annuler ma réservation</span></a>' +
     '</div>' +
     '<div class="section" style="text-align:center;color:#666;font-size:13px">Nous vous souhaitons un excellent séjour à Calypso Bay.</div>' +
     '</div>' +
@@ -1201,7 +1418,7 @@ function buildEmailHtml_(data, links) {
     '<style>' +
     "body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f2f4f8;padding:40px 20px;margin:0;}" +
     '.container{max-width:600px;margin:auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.05);}' +
-    '.header{background:linear-gradient(120deg,#5d3fd3,#8b5cf6);color:#ffffff;text-align:center;padding:30px;}' +
+    '.header{background:#5d3fd3;background-color:#5d3fd3;color:#ffffff;text-align:center;padding:30px;}' +
     '.header h1{margin:0;font-size:24px;letter-spacing:1px;}' +
     '.section{padding:30px;border-bottom:1px solid #eee;}' +
     '.section:last-child{border-bottom:none;}' +
@@ -1252,13 +1469,13 @@ function buildEmailHtml_(data, links) {
     '<td align="center" style="padding:20px 10px;">' +
     '<a href="' +
     replyHref +
-    '" target="_blank" style="display:inline-block;background:#6366f1;border-radius:8px;padding:12px 18px;text-decoration:none;color:#ffffff !important;font-weight:700;font-size:14px;line-height:1.2;margin:0 6px;">📩 Répondre</a>' +
+    '" target="_blank" style="display:inline-block;background:#6366f1;border-radius:8px;padding:12px 18px;text-decoration:none;color:#ffffff !important;font-weight:700;font-size:14px;line-height:1.2;margin:0 6px;"><span style="color:#ffffff !important;text-decoration:none !important;">📩 Répondre</span></a>' +
     '<a href="' +
     escapeHtml_(acceptUrl) +
-    '" target="_blank" style="display:inline-block;background:#10b981;border-radius:8px;padding:12px 18px;text-decoration:none;color:#ffffff !important;font-weight:700;font-size:14px;line-height:1.2;margin:0 6px;">✅ Accepter</a>' +
+    '" target="_blank" style="display:inline-block;background:#10b981;border-radius:8px;padding:12px 18px;text-decoration:none;color:#ffffff !important;font-weight:700;font-size:14px;line-height:1.2;margin:0 6px;"><span style="color:#ffffff !important;text-decoration:none !important;">✅ Accepter</span></a>' +
     '<a href="' +
     escapeHtml_(refuseUrl) +
-    '" target="_blank" style="display:inline-block;background:#ef4444;border-radius:8px;padding:12px 18px;text-decoration:none;color:#ffffff !important;font-weight:700;font-size:14px;line-height:1.2;margin:0 6px;">❌ Refuser</a>' +
+    '" target="_blank" style="display:inline-block;background:#ef4444;border-radius:8px;padding:12px 18px;text-decoration:none;color:#ffffff !important;font-weight:700;font-size:14px;line-height:1.2;margin:0 6px;"><span style="color:#ffffff !important;text-decoration:none !important;">❌ Refuser</span></a>' +
     '</td>' +
     '</tr>' +
     '</table>' +
