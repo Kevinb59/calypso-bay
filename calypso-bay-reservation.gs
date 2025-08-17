@@ -38,7 +38,7 @@ function doGet(e) {
 
     // Récupération des données de réservation pour finalisation
     if (p.action === 'getReservation') {
-      return getReservationData_(p.token, p.stage || p.for || '')
+      return getReservationData_(p.token)
     }
 
     // Diagnostic de la structure du Sheet
@@ -513,21 +513,12 @@ function getReservationData_(token) {
       })
     }
 
-    // Vérifier le statut selon l'étape (stage)
+    // Vérifier le statut uniquement
     const currentStatus = String(data[rowIndex][statusColIndex] || '')
     const depositAmountIndex = headers.indexOf('depositAmount')
     const hasDeposit = depositAmountIndex !== -1 && Number(data[rowIndex][depositAmountIndex] || 0) > 0
-    const stageLower = String(stage || '').toLowerCase()
-    if (stageLower === 'deposit') {
-      // étape acompte: il faut juste que la réservation soit acceptée
-      if (currentStatus !== 'accepted') {
-        return jsonOut({ status: 'error', message: '❌ Réservation non acceptée' })
-      }
-    } else if (stageLower === 'balance') {
-      // étape solde: acompte payé
-      if (!(currentStatus === 'depositPay' && hasDeposit)) {
-        return jsonOut({ status: 'error', message: '❌ Réservation non acceptée' })
-      }
+    if (!(currentStatus === 'accepted' || (currentStatus === 'depositPay' && hasDeposit))) {
+      return jsonOut({ status: 'error', message: '❌ Réservation non acceptée' })
     }
 
     // Récupérer les données de la réservation avec conversion des types
