@@ -3,18 +3,47 @@
   <head>
     <title>Admin – Calypso Bay</title>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
     <link rel="stylesheet" href="assets/css/main.css" />
     <link rel="stylesheet" href="assets/css/custom.css" />
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <noscript
+      ><link rel="stylesheet" href="assets/css/noscript.css"
+    /></noscript>
     <style>
-      body { color: white; }
-      .panel { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 16px; }
-      table { width: 100%; border-collapse: collapse; }
-      th, td { border-bottom: 1px solid rgba(255,255,255,0.2); padding: 8px; font-size: 0.9rem; }
-      .actions button { margin-right: 6px; }
-      .tag { background: rgba(255,255,255,0.15); border-radius: 8px; padding: 2px 8px; font-size: 0.8rem; }
-      .login { margin-bottom: 12px; }
+      body {
+        color: white;
+      }
+      .panel {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        padding: 16px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 8px;
+        font-size: 0.9rem;
+      }
+      .actions button {
+        margin-right: 6px;
+      }
+      .tag {
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 8px;
+        padding: 2px 8px;
+        font-size: 0.8rem;
+      }
+      .login {
+        margin-bottom: 12px;
+      }
     </style>
   </head>
   <body class="is-preload">
@@ -23,10 +52,33 @@
         <h2 class="major">Tableau de bord</h2>
         <div class="panel">
           <div class="login">
-            Clé d'accès: <input id="key" type="password" placeholder="ADMIN_KEY" style="padding:6px;border-radius:8px;border:1px solid rgba(255,255,255,0.3);width:200px;"/>
+            Clé d'accès:
+            <input
+              id="key"
+              type="password"
+              placeholder="ADMIN_KEY"
+              style="
+                padding: 6px;
+                border-radius: 8px;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                width: 200px;
+              "
+            />
             <button id="loginBtn">Se connecter</button>
           </div>
-          <div style="margin-bottom:10px;">Filtre: <input id="query" placeholder="Rechercher par nom/email/token" style="padding:6px;border-radius:8px;border:1px solid rgba(255,255,255,0.3);width:260px;"/></div>
+          <div style="margin-bottom: 10px">
+            Filtre:
+            <input
+              id="query"
+              placeholder="Rechercher par nom/email/token"
+              style="
+                padding: 6px;
+                border-radius: 8px;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                width: 260px;
+              "
+            />
+          </div>
           <table id="table">
             <thead>
               <tr>
@@ -46,8 +98,10 @@
     </div>
 
     <script>
-      async function fetchReservations(adminKey, q='') {
-        const r = await fetch(`/api/admin/list?q=${encodeURIComponent(q)}`, { headers: { 'x-admin-key': adminKey || '' } })
+      async function fetchReservations(adminKey, q = '') {
+        const r = await fetch(`/api/admin/list?q=${encodeURIComponent(q)}`, {
+          headers: { 'x-admin-key': adminKey || '' }
+        })
         if (!r.ok) throw new Error('Erreur API')
         const j = await r.json()
         if (j.status !== 'success') throw new Error(j.message || 'Erreur')
@@ -55,31 +109,41 @@
       }
       function render(rows) {
         const tb = document.querySelector('#table tbody')
-        tb.innerHTML = rows.map(r => `<tr>
-          <td>${r.name||''}</td>
-          <td>${r.email||''}</td>
-          <td>${r.startDate||''} → ${r.endDate||''}</td>
-          <td><span class="tag">${r.status||''}</span></td>
-          <td>${(r.depositAmount||0).toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})} €</td>
-          <td>${(r.balanceAmount||0).toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})} €</td>
+        tb.innerHTML = rows
+          .map(
+            (r) => `<tr>
+          <td>${r.name || ''}</td>
+          <td>${r.email || ''}</td>
+          <td>${r.startDate || ''} → ${r.endDate || ''}</td>
+          <td><span class="tag">${r.status || ''}</span></td>
+          <td>${(r.depositAmount || 0).toLocaleString('fr-FR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          })} €</td>
+          <td>${(r.balanceAmount || 0).toLocaleString('fr-FR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          })} €</td>
           <td class="actions">
             <button disabled>Remb. acompte</button>
             <button disabled>Remb. solde</button>
           </td>
-        </tr>`).join('')
+        </tr>`
+          )
+          .join('')
       }
-      document.getElementById('loginBtn').addEventListener('click', async () => {
-        try {
-          const key = document.getElementById('key').value
-          const q = document.getElementById('query').value
-          const rows = await fetchReservations(key, q)
-          render(rows)
-        } catch (e) {
-          alert(e.message)
-        }
-      })
+      document
+        .getElementById('loginBtn')
+        .addEventListener('click', async () => {
+          try {
+            const key = document.getElementById('key').value
+            const q = document.getElementById('query').value
+            const rows = await fetchReservations(key, q)
+            render(rows)
+          } catch (e) {
+            alert(e.message)
+          }
+        })
     </script>
   </body>
 </html>
-
-

@@ -678,7 +678,10 @@ function listReservations_(q) {
     const ss = SpreadsheetApp.openById(SHEET_ID)
     const sh = ss.getSheetByName(SHEET_NAME)
     if (!sh) {
-      return jsonOut({ status: 'error', message: '❌ Onglet ReservationsTemp non trouvé' })
+      return jsonOut({
+        status: 'error',
+        message: '❌ Onglet ReservationsTemp non trouvé'
+      })
     }
 
     const values = sh.getDataRange().getValues()
@@ -713,7 +716,10 @@ function listReservations_(q) {
 
     return jsonOut({ status: 'success', data: out })
   } catch (err) {
-    return jsonOut({ status: 'error', message: '❌ Erreur: ' + (err && err.message ? err.message : String(err)) })
+    return jsonOut({
+      status: 'error',
+      message: '❌ Erreur: ' + (err && err.message ? err.message : String(err))
+    })
   }
 }
 
