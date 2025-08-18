@@ -702,6 +702,7 @@ function listReservations_(q) {
         startDate: row[idx('startDate')],
         endDate: row[idx('endDate')],
         status: row[idx('status')],
+        priceTotal: Number(row[idx('priceTotal')] || 0),
         depositAmount: Number(row[idx('depositAmount')] || 0),
         balanceAmount: Number(row[idx('balanceAmount')] || 0)
       }
