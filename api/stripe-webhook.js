@@ -57,7 +57,10 @@ export default async function handler(req, res) {
       formData.postal = formData.postal || metadata.postal || ''
       formData.country = formData.country || metadata.country || ''
       formData.message = formData.message || metadata.messageShort || ''
-      if (!Array.isArray(formData.childrenAges) || formData.childrenAges.length === 0) {
+      if (
+        !Array.isArray(formData.childrenAges) ||
+        formData.childrenAges.length === 0
+      ) {
         formData.childrenAges = (metadata.childrenAgesCSV || '')
           .split(',')
           .map((v) => (v === '' ? null : Number(v)))

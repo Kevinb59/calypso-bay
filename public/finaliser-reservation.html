@@ -1276,15 +1276,21 @@
               const depositAmount = window.totalAmount * 0.1
               const buttonText = document.getElementById('button-text')
               if (buttonText) {
-                buttonText.textContent = `Payer l'acompte – ${depositAmount.toLocaleString('fr-FR', {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2
-                })} €`
+                buttonText.textContent = `Payer l'acompte – ${depositAmount.toLocaleString(
+                  'fr-FR',
+                  {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  }
+                )} €`
               } else {
-                submitButton.textContent = `Payer l'acompte – ${depositAmount.toLocaleString('fr-FR', {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2
-                })} €`
+                submitButton.textContent = `Payer l'acompte – ${depositAmount.toLocaleString(
+                  'fr-FR',
+                  {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  }
+                )} €`
               }
             }
           }
