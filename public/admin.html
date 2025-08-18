@@ -1,157 +1,221 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
-    <title>Admin – Calypso Bay</title>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, user-scalable=no"
-    />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="stylesheet" href="assets/css/custom.css" />
-    <noscript
-      ><link rel="stylesheet" href="assets/css/noscript.css"
-    /></noscript>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tableau de bord – Réservations</title>
     <style>
-      body { color: white; }
-      .panel { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 16px; }
-      .login { display:flex; gap:12px; align-items:center; margin-bottom:12px; }
-      .login input { padding:8px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.9); color:#111; }
-      .login button { padding:8px 12px; border-radius:8px; border:none; background:#5d3fd3; color:#fff; font-weight:600; }
-      .toolbar { display:flex; gap:16px; align-items:center; justify-content:space-between; margin-bottom:10px; }
-      .toolbar .search { display:flex; gap:8px; align-items:center; }
-      .search input { padding:8px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.9); color:#111; min-width:260px; }
-      .table-wrap { overflow:auto; max-height: 60vh; border-radius:10px; }
-      table { width: 100%; border-collapse: collapse; }
-      thead th { position: sticky; top:0; background: rgba(0,0,0,0.35); backdrop-filter: blur(6px); }
-      th, td { border-bottom: 1px solid rgba(255,255,255,0.12); padding: 10px 8px; font-size: 0.95rem; white-space: nowrap; }
-      tbody tr:hover { background: rgba(255,255,255,0.06); }
-      .tag { padding: 4px 10px; border-radius: 999px; font-size: 0.8rem; font-weight:600; }
-      .tag.accepted { background: rgba(59,130,246,.2); color:#dbeafe; }
-      .tag.depositPay { background: rgba(16,185,129,.25); color:#dcfce7; }
-      .tag.balancePay { background: rgba(99,102,241,.25); color:#e0e7ff; }
-      .empty { color: rgba(255,255,255,0.8); padding: 20px; text-align:center; }
+      :root {
+        --bg: #0b0d10;
+        --panel: #ffffff;
+        --text: #0f172a;
+        --muted: #6b7280;
+        --primary: #5d3fd3;
+        --border: #e5e7eb;
+        --row: #f8fafc;
+        --badge-bg: #eef2ff;
+        --badge-text: #4338ca;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: var(--bg); font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; color: var(--text); }
+      .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+      .card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,.12); }
+      .header { display:flex; align-items: center; justify-content: space-between; padding: 22px 22px 0 22px; }
+      .title { margin: 0; font-size: 26px; font-weight: 800; letter-spacing: .2px; }
+      .subtitle { margin: 8px 0 18px 0; color: var(--muted); }
+      .filters { display:flex; gap: 10px; align-items:center; }
+      .input, .select { height: 36px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px; background: #fff; color: var(--text); }
+      .toolbar { display:flex; align-items:center; justify-content: space-between; padding: 0 22px 16px 22px; border-bottom: 1px solid var(--border); }
+      .table-wrap { overflow:auto; }
+      table { width:100%; border-collapse: collapse; }
+      thead th { text-align:left; font-weight: 700; color: var(--muted); padding: 12px 16px; border-bottom: 1px solid var(--border); position: sticky; top:0; background:#fff; }
+      tbody td { padding: 12px 16px; border-bottom: 1px solid var(--border); background:#fff; }
+      tbody tr:hover td { background: var(--row); }
+      .badge { display:inline-block; padding: 4px 10px; border-radius: 999px; font-weight: 700; font-size: 12px; }
+      .b-pending { background:#fff7ed; color:#9a3412; }
+      .b-accepted { background:#ecfeff; color:#155e75; }
+      .b-depositPay { background:#ecfdf5; color:#065f46; }
+      .b-refused { background:#fef2f2; color:#991b1b; }
+      .b-canceled { background:#f1f5f9; color:#0f172a; }
+      .b-balancePay { background:#eef2ff; color:#3730a3; }
+      .btn { height: 32px; padding: 0 12px; border: 1px solid var(--border); background:#fff; border-radius:8px; cursor:pointer; }
+      .btn-primary { background: var(--primary); color:#fff; border-color: var(--primary); }
+      .login-modal { position: fixed; inset:0; background: rgba(0,0,0,.55); display:flex; align-items:center; justify-content:center; }
+      .login-card { background:#fff; padding:18px; border-radius:12px; width: 360px; border:1px solid var(--border); box-shadow:0 10px 30px rgba(0,0,0,.2); }
+      .login-card h3 { margin:0 0 10px 0; }
+      .muted { color: var(--muted); }
+      .detail-modal { position: fixed; inset:0; background: rgba(0,0,0,.5); display:none; align-items:center; justify-content:center; }
+      .detail-card { width: 720px; max-height: 80vh; overflow:auto; background:#fff; border:1px solid var(--border); border-radius:12px; padding:18px; }
+      .grid { display:grid; grid-template-columns: 1fr 1fr; gap:10px 16px; }
+      .grid div { padding:6px 8px; background:#f8fafc; border-radius:8px; border:1px solid var(--border); }
+      .grid label { display:block; font-size:12px; color:var(--muted); margin-bottom:4px; }
     </style>
   </head>
-  <body class="is-preload">
-    <div id="page-wrapper">
-      <div id="wrapper" class="inner">
-        <h2 class="major">Tableau de bord</h2>
-        <div class="panel">
-          <div class="toolbar">
-            <div class="login">
-              <span>Clé d'accès:</span>
-              <input id="key" type="password" placeholder="ADMIN_KEY" />
-              <button id="loginBtn">Se connecter</button>
-            </div>
-            <div class="search">
-              <span>Filtre:</span>
-              <input id="query" placeholder="Rechercher par nom/email/token" />
-            </div>
+  <body>
+    <div class="container">
+      <div class="card">
+        <div class="header">
+          <div>
+            <h1 class="title">Tableau de bord – Réservations</h1>
+            <div class="subtitle">Suivi complet des séjours, paiements et annulations</div>
           </div>
-          <div class="table-wrap">
+          <div class="filters">
+            <input id="filterText" class="input" placeholder="Filtrer" />
+            <select id="filterStatus" class="select">
+              <option value="">Tous les statuts</option>
+              <option value="pending">En attente</option>
+              <option value="accepted">Acceptée</option>
+              <option value="depositPay">Acompte OK</option>
+              <option value="refused">Refusée</option>
+              <option value="canceled">Annulée</option>
+              <option value="balancePay">Solde OK</option>
+            </select>
+          </div>
+        </div>
+        <div class="toolbar">
+          <div class="muted">Tri par arrivée croissante</div>
+          <button id="refreshBtn" class="btn">Rafraîchir</button>
+        </div>
+        <div class="table-wrap">
           <table id="table">
             <thead>
               <tr>
-                <th>Nom</th>
-                <th>Email</th>
-                <th>Dates</th>
-                <th>Status</th>
-                <th>Dépot</th>
-                <th>Solde</th>
-                <th>Actions</th>
+                <th>Statut</th>
+                <th>Client</th>
+                <th>Arrivée</th>
+                <th>Départ</th>
+                <th>Nuits</th>
+                <th>Adulte(s)</th>
+                <th>Enfant(s)</th>
+                <th>Prix</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody></tbody>
           </table>
-          <div id="empty" class="empty" style="display:none;">Aucune réservation trouvée.</div>
-          </div>
         </div>
       </div>
     </div>
 
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/main.js"></script>
+    <!-- Login modal -->
+    <div id="login" class="login-modal">
+      <div class="login-card">
+        <h3>Connexion administrateur</h3>
+        <div class="muted" style="margin-bottom:10px;">Entrez la clé d'accès pour consulter les réservations.</div>
+        <div style="display:flex; gap:8px;">
+          <input id="adminKey" class="input" type="password" placeholder="ADMIN_KEY" style="flex:1" />
+          <button id="loginBtn" class="btn btn-primary">Se connecter</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detail modal -->
+    <div id="detailModal" class="detail-modal">
+      <div class="detail-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <h3 style="margin:0">Détails de la réservation</h3>
+          <button id="detailClose" class="btn">Fermer</button>
+        </div>
+        <div id="detailContent" class="grid"></div>
+        <div style="margin-top:12px; display:flex; gap:8px;">
+          <button class="btn" disabled>Rembourser acompte</button>
+          <button class="btn" disabled>Rembourser solde</button>
+        </div>
+      </div>
+    </div>
+
     <script>
-      async function fetchReservations(adminKey, q = '') {
-        const r = await fetch(`/api/admin/list?q=${encodeURIComponent(q)}`, {
-          headers: { 'x-admin-key': adminKey || '' }
-        })
-        if (!r.ok) throw new Error('Erreur API')
+      const API_LIST = '/api/admin/list'
+      const API_DETAIL = '/api/admin/detail'
+      let ADMIN_KEY = ''
+      let currentRows = []
+
+      function frStatus(s){
+        return s==='pending'?'En attente': s==='accepted'?'Acceptée': s==='depositPay'?'Acompte OK': s==='refused'?'Refusée': s==='canceled'?'Annulée': s==='balancePay'?'Solde OK': (s||'')
+      }
+      function badgeClass(s){
+        return s==='pending'?'b-pending': s==='accepted'?'b-accepted': s==='depositPay'?'b-depositPay': s==='refused'?'b-refused': s==='canceled'?'b-canceled': s==='balancePay'?'b-balancePay': ''
+      }
+      function fmtDate(d){ const t=new Date(d); return isNaN(t)?(d||''): t.toLocaleDateString('fr-FR') }
+      function fmtMoney(n){ return Number(n||0).toLocaleString('fr-FR',{minimumFractionDigits:2, maximumFractionDigits:2}) + ' €' }
+
+      async function fetchRows(q=''){
+        const r = await fetch(API_LIST+`?q=${encodeURIComponent(q)}`, { headers: { 'x-admin-key': ADMIN_KEY } })
         const j = await r.json()
-        if (j.status !== 'success') throw new Error(j.message || 'Erreur')
+        if (j.status !== 'success') throw new Error(j.message||'Erreur')
         return j.data || []
       }
-      function formatDate(d) {
-        if (!d) return ''
-        const dt = new Date(d)
-        if (isNaN(dt.getTime())) return d
-        return dt.toLocaleDateString('fr-FR')
-      }
-      function render(rows) {
-        const tb = document.querySelector('#table tbody')
-        tb.innerHTML = rows
-          .map(
-            (r) => `<tr>
-          <td>${r.name || ''}</td>
-          <td>${r.email || ''}</td>
-          <td>${formatDate(r.startDate)} → ${formatDate(r.endDate)}</td>
-          <td><span class="tag ${r.status||''}">${r.status || ''}</span></td>
-          <td>${(r.depositAmount || 0).toLocaleString('fr-FR', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          })} €</td>
-          <td>${(r.balanceAmount || Math.max(0,(r.priceTotal||0)-(r.depositAmount||0))).toLocaleString('fr-FR', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          })} €</td>
-          <td class="actions">
-            <button disabled>Remb. acompte</button>
-            <button disabled>Remb. solde</button>
-          </td>
-        </tr>`
-          )
-          .join('')
-        document.getElementById('empty').style.display = rows.length ? 'none' : 'block'
-      }
-      // Filtre live après login
-      document.getElementById('query').addEventListener('input', async () => {
-        const key = document.getElementById('key').value
-        if (!key) return
-        try { const rows = await fetchReservations(key, document.getElementById('query').value); render(rows) } catch(e){}
-      })
-      document
-        .getElementById('loginBtn')
-        .addEventListener('click', async () => {
-          try {
-            const key = document.getElementById('key').value
-            const q = document.getElementById('query').value
-            const rows = await fetchReservations(key, q)
-            render(rows)
-          } catch (e) {
-            alert(e.message)
-          }
-        })
 
-      // Connexion avec la touche Entrée
-      document.getElementById('key').addEventListener('keydown', (ev) => {
-        if (ev.key === 'Enter') document.getElementById('loginBtn').click()
-      })
-      document.getElementById('query').addEventListener('keydown', (ev) => {
-        if (ev.key === 'Enter') document.getElementById('loginBtn').click()
-      })(
-        // Auto-login si clé fournie dans l'URL (?key=...)
-        function () {
-          const params = new URLSearchParams(window.location.search)
-          const initKey = params.get('key')
-          if (initKey) {
-            document.getElementById('key').value = initKey
-            document.getElementById('loginBtn').click()
-          }
+      function renderRows(rows){
+        const tbody = document.querySelector('#table tbody')
+        const status = document.getElementById('filterStatus').value
+        const text = document.getElementById('filterText').value.trim().toLowerCase()
+        let data = rows
+        if (status) data = data.filter(r => r.status === status)
+        if (text) {
+          data = data.filter(r => `${r.name||''} ${r.email||''} ${r.token||''}`.toLowerCase().includes(text))
         }
-      )()
+        data = data.sort((a,b)=> new Date(a.startDate) - new Date(b.startDate))
+        tbody.innerHTML = data.map(r => `
+          <tr>
+            <td><span class="badge ${badgeClass(r.status)}">${frStatus(r.status)}</span></td>
+            <td>${r.name||''}</td>
+            <td>${fmtDate(r.startDate)}</td>
+            <td>${fmtDate(r.endDate)}</td>
+            <td>${r.nbNights||0}</td>
+            <td>${r.nbAdults||0}</td>
+            <td>${r.nbChilds||0}</td>
+            <td>${fmtMoney(r.priceTotal)}</td>
+            <td><button class="btn btn-primary" data-token="${r.token}" data-action="detail">Détails</button></td>
+          </tr>
+        `).join('')
+      }
+
+      async function openDetail(token){
+        const r = await fetch(API_DETAIL+`?token=${encodeURIComponent(token)}`, { headers: { 'x-admin-key': ADMIN_KEY } })
+        const j = await r.json()
+        if (j.status !== 'success') { alert(j.message||'Erreur'); return }
+        const d = j.data || {}
+        const container = document.getElementById('detailContent')
+        const entries = Object.entries(d).filter(([k,v]) => v !== '' && v != null)
+        container.innerHTML = entries.map(([k,v]) => `
+          <div><label>${k}</label><div>${Array.isArray(v)? v.join(', ') : v}</div></div>
+        `).join('')
+        document.getElementById('detailModal').style.display = 'flex'
+      }
+
+      // Events
+      document.getElementById('detailClose').addEventListener('click', ()=>{
+        document.getElementById('detailModal').style.display = 'none'
+      })
+      document.addEventListener('click', (ev)=>{
+        const btn = ev.target.closest('button[data-action="detail"]')
+        if (btn) openDetail(btn.getAttribute('data-token'))
+      })
+      document.getElementById('refreshBtn').addEventListener('click', async ()=>{
+        currentRows = await fetchRows()
+        renderRows(currentRows)
+      })
+      document.getElementById('filterText').addEventListener('input', ()=> renderRows(currentRows))
+      document.getElementById('filterStatus').addEventListener('change', ()=> renderRows(currentRows))
+
+      // Login
+      async function doLogin(){
+        ADMIN_KEY = document.getElementById('adminKey').value.trim()
+        if (!ADMIN_KEY) return
+        localStorage.setItem('ADMIN_KEY', ADMIN_KEY)
+        document.getElementById('login').style.display = 'none'
+        currentRows = await fetchRows()
+        renderRows(currentRows)
+      }
+      document.getElementById('loginBtn').addEventListener('click', doLogin)
+      document.getElementById('adminKey').addEventListener('keydown', (e)=>{ if(e.key==='Enter') doLogin() })
+      // Autologin via localStorage ou query ?key=
+      (function(){
+        const p = new URLSearchParams(location.search)
+        const key = p.get('key') || localStorage.getItem('ADMIN_KEY') || ''
+        if (key) { document.getElementById('adminKey').value = key; doLogin() }
+      })()
     </script>
   </body>
-</html>
+  </html>

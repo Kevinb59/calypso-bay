@@ -46,6 +46,11 @@ function doGet(e) {
       return listReservations_(p.q || '')
     }
 
+    // Détails admin d'une réservation (lecture seule, sans validation de statut)
+    if (p.action === 'getReservationAdmin') {
+      return getReservationAdmin_(p.token)
+    }
+
     // Diagnostic de la structure du Sheet
     if (p.action === 'debug') {
       return debugSheetStructure_()
@@ -699,9 +704,13 @@ function listReservations_(q) {
         token: row[idx('id')],
         name: row[idx('name')],
         email: row[idx('email')],
+        tel: row[idx('tel')],
         startDate: row[idx('startDate')],
         endDate: row[idx('endDate')],
         status: row[idx('status')],
+        nbNights: Number(row[idx('nbNights')] || 0),
+        nbAdults: Number(row[idx('nbAdults')] || 0),
+        nbChilds: Number(row[idx('nbChilds')] || 0),
         priceTotal: Number(row[idx('priceTotal')] || 0),
         depositAmount: Number(row[idx('depositAmount')] || 0),
         balanceAmount: Number(row[idx('balanceAmount')] || 0)
@@ -721,6 +730,30 @@ function listReservations_(q) {
       status: 'error',
       message: '❌ Erreur: ' + (err && err.message ? err.message : String(err))
     })
+  }
+}
+
+// Détails complets pour admin (toutes colonnes connues)
+function getReservationAdmin_(token) {
+  try {
+    if (!token) return jsonOut({ status: 'error', message: 'Token manquant' })
+    const ss = SpreadsheetApp.openById(SHEET_ID)
+    const sh = ss.getSheetByName(SHEET_NAME)
+    if (!sh) return jsonOut({ status: 'error', message: 'Onglet introuvable' })
+    const data = sh.getDataRange().getValues()
+    const headers = data[0]
+    const idIdx = headers.indexOf('id')
+    if (idIdx === -1) return jsonOut({ status: 'error', message: 'Structure invalide' })
+    let row = null
+    for (let i = 1; i < data.length; i++) {
+      if (data[i][idIdx] === token) { row = data[i]; break }
+    }
+    if (!row) return jsonOut({ status: 'error', message: 'Réservation non trouvée' })
+    const out = {}
+    headers.forEach(function(h, i){ out[h] = row[i] })
+    return jsonOut({ status: 'success', data: out })
+  } catch (err) {
+    return jsonOut({ status: 'error', message: 'Erreur: ' + (err && err.message ? err.message : String(err)) })
   }
 }
 
