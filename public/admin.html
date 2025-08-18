@@ -16,39 +16,190 @@
         --badge-bg: #eef2ff;
         --badge-text: #4338ca;
       }
-      * { box-sizing: border-box; }
-      body { margin: 0; background: var(--bg); font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; color: var(--text); }
-      .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
-      .card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,.12); }
-      .header { display:flex; align-items: center; justify-content: space-between; padding: 22px 22px 0 22px; }
-      .title { margin: 0; font-size: 26px; font-weight: 800; letter-spacing: .2px; }
-      .subtitle { margin: 8px 0 18px 0; color: var(--muted); }
-      .filters { display:flex; gap: 10px; align-items:center; }
-      .input, .select { height: 36px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px; background: #fff; color: var(--text); }
-      .toolbar { display:flex; align-items:center; justify-content: space-between; padding: 0 22px 16px 22px; border-bottom: 1px solid var(--border); }
-      .table-wrap { overflow:auto; }
-      table { width:100%; border-collapse: collapse; }
-      thead th { text-align:left; font-weight: 700; color: var(--muted); padding: 12px 16px; border-bottom: 1px solid var(--border); position: sticky; top:0; background:#fff; }
-      tbody td { padding: 12px 16px; border-bottom: 1px solid var(--border); background:#fff; }
-      tbody tr:hover td { background: var(--row); }
-      .badge { display:inline-block; padding: 4px 10px; border-radius: 999px; font-weight: 700; font-size: 12px; }
-      .b-pending { background:#fff7ed; color:#9a3412; }
-      .b-accepted { background:#ecfeff; color:#155e75; }
-      .b-depositPay { background:#ecfdf5; color:#065f46; }
-      .b-refused { background:#fef2f2; color:#991b1b; }
-      .b-canceled { background:#f1f5f9; color:#0f172a; }
-      .b-balancePay { background:#eef2ff; color:#3730a3; }
-      .btn { height: 32px; padding: 0 12px; border: 1px solid var(--border); background:#fff; border-radius:8px; cursor:pointer; }
-      .btn-primary { background: var(--primary); color:#fff; border-color: var(--primary); }
-      .login-modal { position: fixed; inset:0; background: rgba(0,0,0,.55); display:flex; align-items:center; justify-content:center; }
-      .login-card { background:#fff; padding:18px; border-radius:12px; width: 360px; border:1px solid var(--border); box-shadow:0 10px 30px rgba(0,0,0,.2); }
-      .login-card h3 { margin:0 0 10px 0; }
-      .muted { color: var(--muted); }
-      .detail-modal { position: fixed; inset:0; background: rgba(0,0,0,.5); display:none; align-items:center; justify-content:center; }
-      .detail-card { width: 720px; max-height: 80vh; overflow:auto; background:#fff; border:1px solid var(--border); border-radius:12px; padding:18px; }
-      .grid { display:grid; grid-template-columns: 1fr 1fr; gap:10px 16px; }
-      .grid div { padding:6px 8px; background:#f8fafc; border-radius:8px; border:1px solid var(--border); }
-      .grid label { display:block; font-size:12px; color:var(--muted); margin-bottom:4px; }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu,
+          Cantarell, Noto Sans, Helvetica, Arial, 'Apple Color Emoji',
+          'Segoe UI Emoji';
+        color: var(--text);
+      }
+      .container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      }
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 22px 22px 0 22px;
+      }
+      .title {
+        margin: 0;
+        font-size: 26px;
+        font-weight: 800;
+        letter-spacing: 0.2px;
+      }
+      .subtitle {
+        margin: 8px 0 18px 0;
+        color: var(--muted);
+      }
+      .filters {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .input,
+      .select {
+        height: 36px;
+        padding: 6px 10px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: #fff;
+        color: var(--text);
+      }
+      .toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 22px 16px 22px;
+        border-bottom: 1px solid var(--border);
+      }
+      .table-wrap {
+        overflow: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      thead th {
+        text-align: left;
+        font-weight: 700;
+        color: var(--muted);
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        background: #fff;
+      }
+      tbody td {
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--border);
+        background: #fff;
+      }
+      tbody tr:hover td {
+        background: var(--row);
+      }
+      .badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 12px;
+      }
+      .b-pending {
+        background: #fff7ed;
+        color: #9a3412;
+      }
+      .b-accepted {
+        background: #ecfeff;
+        color: #155e75;
+      }
+      .b-depositPay {
+        background: #ecfdf5;
+        color: #065f46;
+      }
+      .b-refused {
+        background: #fef2f2;
+        color: #991b1b;
+      }
+      .b-canceled {
+        background: #f1f5f9;
+        color: #0f172a;
+      }
+      .b-balancePay {
+        background: #eef2ff;
+        color: #3730a3;
+      }
+      .btn {
+        height: 32px;
+        padding: 0 12px;
+        border: 1px solid var(--border);
+        background: #fff;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-primary {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+      }
+      .login-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .login-card {
+        background: #fff;
+        padding: 18px;
+        border-radius: 12px;
+        width: 360px;
+        border: 1px solid var(--border);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+      .login-card h3 {
+        margin: 0 0 10px 0;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .detail-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        align-items: center;
+        justify-content: center;
+      }
+      .detail-card {
+        width: 720px;
+        max-height: 80vh;
+        overflow: auto;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 18px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px 16px;
+      }
+      .grid div {
+        padding: 6px 8px;
+        background: #f8fafc;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .grid label {
+        display: block;
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 4px;
+      }
     </style>
   </head>
   <body>
@@ -57,7 +208,9 @@
         <div class="header">
           <div>
             <h1 class="title">Tableau de bord – Réservations</h1>
-            <div class="subtitle">Suivi complet des séjours, paiements et annulations</div>
+            <div class="subtitle">
+              Suivi complet des séjours, paiements et annulations
+            </div>
           </div>
           <div class="filters">
             <input id="filterText" class="input" placeholder="Filtrer" />
@@ -101,9 +254,17 @@
     <div id="login" class="login-modal">
       <div class="login-card">
         <h3>Connexion administrateur</h3>
-        <div class="muted" style="margin-bottom:10px;">Entrez la clé d'accès pour consulter les réservations.</div>
-        <div style="display:flex; gap:8px;">
-          <input id="adminKey" class="input" type="password" placeholder="ADMIN_KEY" style="flex:1" />
+        <div class="muted" style="margin-bottom: 10px">
+          Entrez la clé d'accès pour consulter les réservations.
+        </div>
+        <div style="display: flex; gap: 8px">
+          <input
+            id="adminKey"
+            class="input"
+            type="password"
+            placeholder="ADMIN_KEY"
+            style="flex: 1"
+          />
           <button id="loginBtn" class="btn btn-primary">Se connecter</button>
         </div>
       </div>
@@ -112,12 +273,19 @@
     <!-- Detail modal -->
     <div id="detailModal" class="detail-modal">
       <div class="detail-card">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-          <h3 style="margin:0">Détails de la réservation</h3>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+          "
+        >
+          <h3 style="margin: 0">Détails de la réservation</h3>
           <button id="detailClose" class="btn">Fermer</button>
         </div>
         <div id="detailContent" class="grid"></div>
-        <div style="margin-top:12px; display:flex; gap:8px;">
+        <div style="margin-top: 12px; display: flex; gap: 8px">
           <button class="btn" disabled>Rembourser acompte</button>
           <button class="btn" disabled>Rembourser solde</button>
         </div>
@@ -130,77 +298,150 @@
       let ADMIN_KEY = ''
       let currentRows = []
 
-      function frStatus(s){
-        return s==='pending'?'En attente': s==='accepted'?'Acceptée': s==='depositPay'?'Acompte OK': s==='refused'?'Refusée': s==='canceled'?'Annulée': s==='balancePay'?'Solde OK': (s||'')
+      function frStatus(s) {
+        return s === 'pending'
+          ? 'En attente'
+          : s === 'accepted'
+          ? 'Acceptée'
+          : s === 'depositPay'
+          ? 'Acompte OK'
+          : s === 'refused'
+          ? 'Refusée'
+          : s === 'canceled'
+          ? 'Annulée'
+          : s === 'balancePay'
+          ? 'Solde OK'
+          : s || ''
       }
-      function badgeClass(s){
-        return s==='pending'?'b-pending': s==='accepted'?'b-accepted': s==='depositPay'?'b-depositPay': s==='refused'?'b-refused': s==='canceled'?'b-canceled': s==='balancePay'?'b-balancePay': ''
+      function badgeClass(s) {
+        return s === 'pending'
+          ? 'b-pending'
+          : s === 'accepted'
+          ? 'b-accepted'
+          : s === 'depositPay'
+          ? 'b-depositPay'
+          : s === 'refused'
+          ? 'b-refused'
+          : s === 'canceled'
+          ? 'b-canceled'
+          : s === 'balancePay'
+          ? 'b-balancePay'
+          : ''
       }
-      function fmtDate(d){ const t=new Date(d); return isNaN(t)?(d||''): t.toLocaleDateString('fr-FR') }
-      function fmtMoney(n){ return Number(n||0).toLocaleString('fr-FR',{minimumFractionDigits:2, maximumFractionDigits:2}) + ' €' }
+      function fmtDate(d) {
+        const t = new Date(d)
+        return isNaN(t) ? d || '' : t.toLocaleDateString('fr-FR')
+      }
+      function fmtMoney(n) {
+        return (
+          Number(n || 0).toLocaleString('fr-FR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          }) + ' €'
+        )
+      }
 
-      async function fetchRows(q=''){
-        const r = await fetch(API_LIST+`?q=${encodeURIComponent(q)}`, { headers: { 'x-admin-key': ADMIN_KEY } })
+      async function fetchRows(q = '') {
+        const r = await fetch(API_LIST + `?q=${encodeURIComponent(q)}`, {
+          headers: { 'x-admin-key': ADMIN_KEY }
+        })
         const j = await r.json()
-        if (j.status !== 'success') throw new Error(j.message||'Erreur')
+        if (j.status !== 'success') throw new Error(j.message || 'Erreur')
         return j.data || []
       }
 
-      function renderRows(rows){
+      function renderRows(rows) {
         const tbody = document.querySelector('#table tbody')
         const status = document.getElementById('filterStatus').value
-        const text = document.getElementById('filterText').value.trim().toLowerCase()
+        const text = document
+          .getElementById('filterText')
+          .value.trim()
+          .toLowerCase()
         let data = rows
-        if (status) data = data.filter(r => r.status === status)
+        if (status) data = data.filter((r) => r.status === status)
         if (text) {
-          data = data.filter(r => `${r.name||''} ${r.email||''} ${r.token||''}`.toLowerCase().includes(text))
+          data = data.filter((r) =>
+            `${r.name || ''} ${r.email || ''} ${r.token || ''}`
+              .toLowerCase()
+              .includes(text)
+          )
         }
-        data = data.sort((a,b)=> new Date(a.startDate) - new Date(b.startDate))
-        tbody.innerHTML = data.map(r => `
+        data = data.sort(
+          (a, b) => new Date(a.startDate) - new Date(b.startDate)
+        )
+        tbody.innerHTML = data
+          .map(
+            (r) => `
           <tr>
-            <td><span class="badge ${badgeClass(r.status)}">${frStatus(r.status)}</span></td>
-            <td>${r.name||''}</td>
+            <td><span class="badge ${badgeClass(r.status)}">${frStatus(
+              r.status
+            )}</span></td>
+            <td>${r.name || ''}</td>
             <td>${fmtDate(r.startDate)}</td>
             <td>${fmtDate(r.endDate)}</td>
-            <td>${r.nbNights||0}</td>
-            <td>${r.nbAdults||0}</td>
-            <td>${r.nbChilds||0}</td>
+            <td>${r.nbNights || 0}</td>
+            <td>${r.nbAdults || 0}</td>
+            <td>${r.nbChilds || 0}</td>
             <td>${fmtMoney(r.priceTotal)}</td>
-            <td><button class="btn btn-primary" data-token="${r.token}" data-action="detail">Détails</button></td>
+            <td><button class="btn btn-primary" data-token="${
+              r.token
+            }" data-action="detail">Détails</button></td>
           </tr>
-        `).join('')
+        `
+          )
+          .join('')
       }
 
-      async function openDetail(token){
-        const r = await fetch(API_DETAIL+`?token=${encodeURIComponent(token)}`, { headers: { 'x-admin-key': ADMIN_KEY } })
+      async function openDetail(token) {
+        const r = await fetch(
+          API_DETAIL + `?token=${encodeURIComponent(token)}`,
+          { headers: { 'x-admin-key': ADMIN_KEY } }
+        )
         const j = await r.json()
-        if (j.status !== 'success') { alert(j.message||'Erreur'); return }
+        if (j.status !== 'success') {
+          alert(j.message || 'Erreur')
+          return
+        }
         const d = j.data || {}
         const container = document.getElementById('detailContent')
-        const entries = Object.entries(d).filter(([k,v]) => v !== '' && v != null)
-        container.innerHTML = entries.map(([k,v]) => `
-          <div><label>${k}</label><div>${Array.isArray(v)? v.join(', ') : v}</div></div>
-        `).join('')
+        const entries = Object.entries(d).filter(
+          ([k, v]) => v !== '' && v != null
+        )
+        container.innerHTML = entries
+          .map(
+            ([k, v]) => `
+          <div><label>${k}</label><div>${
+              Array.isArray(v) ? v.join(', ') : v
+            }</div></div>
+        `
+          )
+          .join('')
         document.getElementById('detailModal').style.display = 'flex'
       }
 
       // Events
-      document.getElementById('detailClose').addEventListener('click', ()=>{
+      document.getElementById('detailClose').addEventListener('click', () => {
         document.getElementById('detailModal').style.display = 'none'
       })
-      document.addEventListener('click', (ev)=>{
+      document.addEventListener('click', (ev) => {
         const btn = ev.target.closest('button[data-action="detail"]')
         if (btn) openDetail(btn.getAttribute('data-token'))
       })
-      document.getElementById('refreshBtn').addEventListener('click', async ()=>{
-        currentRows = await fetchRows()
-        renderRows(currentRows)
-      })
-      document.getElementById('filterText').addEventListener('input', ()=> renderRows(currentRows))
-      document.getElementById('filterStatus').addEventListener('change', ()=> renderRows(currentRows))
+      document
+        .getElementById('refreshBtn')
+        .addEventListener('click', async () => {
+          currentRows = await fetchRows()
+          renderRows(currentRows)
+        })
+      document
+        .getElementById('filterText')
+        .addEventListener('input', () => renderRows(currentRows))
+      document
+        .getElementById('filterStatus')
+        .addEventListener('change', () => renderRows(currentRows))
 
       // Login
-      async function doLogin(){
+      async function doLogin() {
         ADMIN_KEY = document.getElementById('adminKey').value.trim()
         if (!ADMIN_KEY) return
         localStorage.setItem('ADMIN_KEY', ADMIN_KEY)
@@ -209,13 +450,19 @@
         renderRows(currentRows)
       }
       document.getElementById('loginBtn').addEventListener('click', doLogin)
-      document.getElementById('adminKey').addEventListener('keydown', (e)=>{ if(e.key==='Enter') doLogin() })
-      // Autologin via localStorage ou query ?key=
-      (function(){
-        const p = new URLSearchParams(location.search)
-        const key = p.get('key') || localStorage.getItem('ADMIN_KEY') || ''
-        if (key) { document.getElementById('adminKey').value = key; doLogin() }
-      })()
+      document.getElementById('adminKey').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') doLogin()
+      })(
+        // Autologin via localStorage ou query ?key=
+        function () {
+          const p = new URLSearchParams(location.search)
+          const key = p.get('key') || localStorage.getItem('ADMIN_KEY') || ''
+          if (key) {
+            document.getElementById('adminKey').value = key
+            doLogin()
+          }
+        }
+      )()
     </script>
   </body>
-  </html>
+</html>

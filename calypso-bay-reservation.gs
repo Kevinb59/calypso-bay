@@ -743,17 +743,27 @@ function getReservationAdmin_(token) {
     const data = sh.getDataRange().getValues()
     const headers = data[0]
     const idIdx = headers.indexOf('id')
-    if (idIdx === -1) return jsonOut({ status: 'error', message: 'Structure invalide' })
+    if (idIdx === -1)
+      return jsonOut({ status: 'error', message: 'Structure invalide' })
     let row = null
     for (let i = 1; i < data.length; i++) {
-      if (data[i][idIdx] === token) { row = data[i]; break }
+      if (data[i][idIdx] === token) {
+        row = data[i]
+        break
+      }
     }
-    if (!row) return jsonOut({ status: 'error', message: 'Réservation non trouvée' })
+    if (!row)
+      return jsonOut({ status: 'error', message: 'Réservation non trouvée' })
     const out = {}
-    headers.forEach(function(h, i){ out[h] = row[i] })
+    headers.forEach(function (h, i) {
+      out[h] = row[i]
+    })
     return jsonOut({ status: 'success', data: out })
   } catch (err) {
-    return jsonOut({ status: 'error', message: 'Erreur: ' + (err && err.message ? err.message : String(err)) })
+    return jsonOut({
+      status: 'error',
+      message: 'Erreur: ' + (err && err.message ? err.message : String(err))
+    })
   }
 }
 
