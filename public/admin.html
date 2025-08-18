@@ -97,6 +97,10 @@
       </div>
     </div>
 
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/main.js"></script>
     <script>
       async function fetchReservations(adminKey, q = '') {
         const r = await fetch(`/api/admin/list?q=${encodeURIComponent(q)}`, {
@@ -144,6 +148,24 @@
             alert(e.message)
           }
         })
+
+      // Connexion avec la touche Entrée
+      document.getElementById('key').addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter') document.getElementById('loginBtn').click()
+      })
+      document.getElementById('query').addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter') document.getElementById('loginBtn').click()
+      })
+
+      // Auto-login si clé fournie dans l'URL (?key=...)
+      (function () {
+        const params = new URLSearchParams(window.location.search)
+        const initKey = params.get('key')
+        if (initKey) {
+          document.getElementById('key').value = initKey
+          document.getElementById('loginBtn').click()
+        }
+      })()
     </script>
   </body>
 </html>
