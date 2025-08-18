@@ -471,7 +471,8 @@
               r.status === 'depositPay' ||
               r.status === 'balancePay'
             const balancePaid =
-              Number(r.balanceAmount || 0) > 0 || r.status === 'balancePay'
+              r.status === 'balancePay' ||
+              (r.balancePaidAt && String(r.balancePaidAt).length > 0)
             return `
           <tr>
             <td><span class="badge ${badgeClass(r.status)}">${frStatus(
