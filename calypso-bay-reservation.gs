@@ -547,6 +547,15 @@ function getReservationData_(token) {
     const endDateIndex = headers.indexOf('endDate')
     const timestampIndex = headers.indexOf('timestamp')
     const depositAtIndex = headers.indexOf('depositAt')
+    const addressIndex = headers.indexOf('address')
+    const cityIndex = headers.indexOf('city')
+    const postalIndex = headers.indexOf('postal')
+    const countryIndex = headers.indexOf('country')
+    const childAge1Index = headers.indexOf('childAge1')
+    const childAge2Index = headers.indexOf('childAge2')
+    const childAge3Index = headers.indexOf('childAge3')
+    const childAge4Index = headers.indexOf('childAge4')
+    const childAge5Index = headers.indexOf('childAge5')
 
     // Log pour déboguer
     console.log('Headers found:', {
@@ -563,7 +572,16 @@ function getReservationData_(token) {
       priceTotal: priceTotalIndex,
       startDate: startDateIndex,
       endDate: endDateIndex,
-      timestamp: timestampIndex
+      timestamp: timestampIndex,
+      address: addressIndex,
+      city: cityIndex,
+      postal: postalIndex,
+      country: countryIndex,
+      childAge1: childAge1Index,
+      childAge2: childAge2Index,
+      childAge3: childAge3Index,
+      childAge4: childAge4Index,
+      childAge5: childAge5Index
     })
 
     console.log('Raw row data:', data[rowIndex])
@@ -610,6 +628,23 @@ function getReservationData_(token) {
           ? Number(data[rowIndex][depositAmountIndex]) || 0
           : 0,
       depositAt: depositAtIndex !== -1 ? data[rowIndex][depositAtIndex] : '',
+      address: addressIndex !== -1 ? String(data[rowIndex][addressIndex] || '') : '',
+      city: cityIndex !== -1 ? String(data[rowIndex][cityIndex] || '') : '',
+      postal: postalIndex !== -1 ? String(data[rowIndex][postalIndex] || '') : '',
+      country: countryIndex !== -1 ? String(data[rowIndex][countryIndex] || '') : '',
+      childrenAges: [
+        childAge1Index !== -1 ? data[rowIndex][childAge1Index] : '',
+        childAge2Index !== -1 ? data[rowIndex][childAge2Index] : '',
+        childAge3Index !== -1 ? data[rowIndex][childAge3Index] : '',
+        childAge4Index !== -1 ? data[rowIndex][childAge4Index] : '',
+        childAge5Index !== -1 ? data[rowIndex][childAge5Index] : ''
+      ]
+        .filter(function (v) {
+          return v !== '' && v != null
+        })
+        .map(function (v) {
+          return Number(v)
+        }),
       token: token
     }
 
