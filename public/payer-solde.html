@@ -37,33 +37,43 @@
           <div class="image filtered span-1-75" data-position="25% 25%"><img src="images/pic01.jpg" alt="" /></div>
         </section>
 
-        <section class="panel spotlight medium right" id="form">
-          <div class="content span-9-5">
-            <h3 class="major">💳 Paiement du solde</h3>
-            <div id="messages"></div>
+        <!-- Détails de la réservation (section séparée) -->
+        <section class="panel spotlight medium right color1" id="details">
+          <div class="intro joined span-3-5">
+            <h2 class="major">📅 Détails de la réservation</h2>
+            <p>Vérifiez les informations de votre séjour avant de procéder au paiement du solde.</p>
+          </div>
+          <div class="inner">
             <div class="form-section">
-              <!-- Détails de la réservation -->
               <div class="reservation-details" id="reservation-details">Chargement en cours…</div>
-
-              <!-- Récapitulatif du paiement -->
-              <div class="payment-card">
-                <h4 style="margin:0 0 10px 0;">Récapitulatif du paiement</h4>
-                <div class="payment-row"><span>Total</span><span id="total-amount">—</span></div>
-                <div class="payment-row deposit"><span>Acompte déjà versé (<span id="deposit-percent">0%</span>)</span><span id="deposit-amount">—</span></div>
-                <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-                <div class="payment-row" style="border-top:1px solid rgba(255,255,255,0.25); padding-top:12px; margin-top:4px;"><span>Solde restant</span><span id="remaining-amount">—</span></div>
-
-                <div style="margin-top:16px">
-                  <label for="card-element" style="color:white; font-weight:600;">Carte de paiement</label>
-                  <div id="card-element" style="background: rgba(255,255,255,0.9); border-radius: 10px; padding: 12px;"></div>
-                  <div id="card-errors" role="alert"></div>
-                </div>
-                <button id="pay-btn" class="btn-submit" style="margin-top:16px"><span id="btn-text">Payer le solde</span></button>
-                <p class="payment-disclaimer">Paiement sécurisé via Stripe. Aucune donnée bancaire n'est stockée par Calypso Bay.</p>
-              </div>
             </div>
           </div>
           <div class="image filtered tinted" data-position="center"><img src="images/pic02.jpg" alt="" /></div>
+        </section>
+
+        <!-- Paiement du solde (section dédiée) -->
+        <section class="panel color4-alt" id="form">
+          <div class="intro color4">
+            <h2 class="major">💳 Paiement du solde</h2>
+            <p>Renseignez votre carte pour régler le solde restant de votre réservation.</p>
+          </div>
+          <div class="inner">
+            <div class="payment-card">
+              <h4 style="margin:0 0 10px 0;">Récapitulatif du paiement</h4>
+              <div class="payment-row"><span>Total</span><span id="total-amount">—</span></div>
+              <div class="payment-row deposit"><span>Acompte déjà versé (<span id="deposit-percent">0%</span>)</span><span id="deposit-amount">—</span></div>
+              <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+              <div class="payment-row" style="border-top:1px solid rgba(255,255,255,0.25); padding-top:12px; margin-top:4px;"><span>Solde restant</span><span id="remaining-amount">—</span></div>
+
+              <div style="margin-top:16px">
+                <label for="card-element" style="color:white; font-weight:600;">Carte de paiement</label>
+                <div id="card-element" style="background: rgba(255,255,255,0.9); border-radius: 10px; padding: 12px;"></div>
+                <div id="card-errors" role="alert"></div>
+              </div>
+              <button id="pay-btn" class="btn-submit" style="margin-top:16px"><span id="btn-text">Payer le solde</span></button>
+              <p class="payment-disclaimer">Paiement sécurisé via Stripe. Aucune donnée bancaire n'est stockée par Calypso Bay.</p>
+            </div>
+          </div>
         </section>
 
         <div class="copyright"><span>&copy; Calypso Bay | By</span> <a href="https://moriarty-design.fr" target="_blank" rel="noopener" style="font-family: 'Engagement', 'Brush Script MT', cursive; font-size: 2.2em; line-height: 1; margin-left: 0.25em; text-decoration: none; color: inherit;">Moriarty</a>.</div>
@@ -88,7 +98,7 @@
       const btnText = document.getElementById('btn-text')
 
       async function load() {
-        if (!token) { recap.textContent = 'Token manquant'; btn.disabled = true; return }
+        if (!token) { detailsBox.textContent = 'Token manquant'; btn.disabled = true; return }
         try {
           const res = await fetch(`/api/getReservation?token=${encodeURIComponent(token)}`)
           const json = await res.json()
@@ -134,7 +144,7 @@
           document.getElementById('deposit-percent').textContent = total>0 ? `${Math.round((deposit/total)*100)}%` : '0%'
           document.getElementById('progress-fill').style.width = total>0 ? `${Math.min(100,(deposit/total)*100)}%` : '0%'
           btnText.textContent = `Payer le solde – ${balance.toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})} €`
-        } catch (e) { recap.textContent = 'Erreur de chargement' }
+        } catch (e) { detailsBox.textContent = 'Erreur de chargement' }
       }
 
       load()
