@@ -452,17 +452,19 @@
       document.getElementById('loginBtn').addEventListener('click', doLogin)
       document.getElementById('adminKey').addEventListener('keydown', (e) => {
         if (e.key === 'Enter') doLogin()
-      })(
-        // Autologin via localStorage ou query ?key=
-        function () {
-          const p = new URLSearchParams(location.search)
-          const key = p.get('key') || localStorage.getItem('ADMIN_KEY') || ''
-          if (key) {
-            document.getElementById('adminKey').value = key
-            doLogin()
-          }
+      })
+      // Autologin via localStorage ou query ?key=
+      ;(function () {
+        const p = new URLSearchParams(location.search)
+        const key = p.get('key') || localStorage.getItem('ADMIN_KEY') || ''
+        if (key) {
+          document.getElementById('adminKey').value = key
+          doLogin()
         }
-      )()
+      })()
     </script>
   </body>
+  <footer style="text-align:center; color:#9aa0a6; padding: 12px 0 24px; font: 13px system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, 'Apple Color Emoji','Segoe UI Emoji';">
+    Calypso Bay Reservations Dashboard
+  </footer>
 </html>
