@@ -51,6 +51,11 @@ function doGet(e) {
       return getReservationAdmin_(p.token)
     }
 
+    // Tests d'emails pour QA
+    if (p.action === 'testSendEmail') {
+      return testSendEmail_(p)
+    }
+
     // Diagnostic de la structure du Sheet
     if (p.action === 'debug') {
       return debugSheetStructure_()
@@ -767,6 +772,66 @@ function getReservationAdmin_(token) {
   }
 }
 
+// Envoi de mails de test (client/gestionnaire, acompte/solde)
+function testSendEmail_(p) {
+  try {
+    const token = p.token
+    const to = p.to
+    const kind = p.kind
+    if (!token || !to || !kind)
+      return jsonOut({ status: 'error', message: 'Paramètres manquants' })
+    const ss = SpreadsheetApp.openById(SHEET_ID)
+    const sh = ss.getSheetByName(SHEET_NAME)
+    const data = sh.getDataRange().getValues()
+    const headers = data[0]
+    const idIdx = headers.indexOf('id')
+    let rowIndex = -1
+    for (let i = 1; i < data.length; i++) if (data[i][idIdx] === token) { rowIndex = i; break }
+    if (rowIndex === -1) return jsonOut({ status: 'error', message: 'Réservation non trouvée' })
+    const row = data[rowIndex]
+    const h = function (k) { return headers.indexOf(k) }
+    const d = {
+      token: token,
+      name: row[h('name')],
+      email: row[h('email')],
+      tel: row[h('tel')],
+      nbAdults: row[h('nbAdults')],
+      nbChilds: row[h('nbChilds')],
+      nbNights: row[h('nbNights')],
+      priceNights: row[h('priceNights')],
+      priceClean: row[h('priceClean')],
+      priceTax: row[h('priceTax')],
+      priceTotal: row[h('priceTotal')],
+      startDate: row[h('startDate')],
+      endDate: row[h('endDate')],
+      address: h('address') !== -1 ? row[h('address')] : '',
+      city: h('city') !== -1 ? row[h('city')] : '',
+      postal: h('postal') !== -1 ? row[h('postal')] : '',
+      country: h('country') !== -1 ? row[h('country')] : '',
+      childrenAges: [row[h('childAge1')], row[h('childAge2')], row[h('childAge3')], row[h('childAge4')], row[h('childAge5')]].filter(function(v){return v!=='' && v!=null})
+    }
+    const pay = {
+      amount: Number(row[h('balanceAmount')] || row[h('depositAmount')] || 0),
+      paymentIntentId: String(row[h('balancePaymentIntentId')] || row[h('depositPaymentIntentId')] || ''),
+      status: 'succeeded'
+    }
+    if (kind === 'balanceClient') {
+      MailApp.sendEmail({ to: to, replyTo: RECIPIENT_EMAIL, subject: 'Solde payé – Calypso Bay', htmlBody: buildBalanceClientEmail_(d, pay) })
+    } else if (kind === 'balanceManager') {
+      MailApp.sendEmail({ to: to, replyTo: RECIPIENT_EMAIL, subject: 'Solde reçu – Calypso Bay', htmlBody: buildBalanceManagerEmail_(d, pay) })
+    } else if (kind === 'depositClient') {
+      MailApp.sendEmail({ to: to, replyTo: RECIPIENT_EMAIL, subject: 'Acompte reçu – Calypso Bay', htmlBody: buildFinalizationClientEmail_(d, pay) })
+    } else if (kind === 'depositManager') {
+      MailApp.sendEmail({ to: to, replyTo: RECIPIENT_EMAIL, subject: 'Acompte reçu – Calypso Bay', htmlBody: buildFinalizationManagerEmail_(d, pay) })
+    } else {
+      return jsonOut({ status: 'error', message: 'Type invalide' })
+    }
+    return jsonOut({ status: 'success' })
+  } catch (err) {
+    return jsonOut({ status: 'error', message: 'Erreur: ' + (err && err.message ? err.message : String(err)) })
+  }
+}
+
 // ======================================
 // Finalisation de la réservation (après paiement)
 // ======================================
@@ -1186,30 +1251,90 @@ function sendBalanceEmails_(data, paymentData) {
   })
   // Client
   const subjectClient = 'Solde payé – Calypso Bay'
-  const htmlClient =
-    '<div style="background:' +
-    color +
-    ';height:56px;border-radius:16px 16px 0 0"></div>'
   MailApp.sendEmail({
     to: data.email,
     replyTo: RECIPIENT_EMAIL,
     subject: subjectClient,
-    htmlBody: buildFinalizationClientEmail_(data, {
+    htmlBody: buildBalanceClientEmail_(data, {
       amount: paymentData.amount,
       paymentIntentId: paymentData.paymentIntentId
     })
   })
   // Gestionnaire
   const subjectManager = 'Solde reçu de ' + (data.name || 'Client')
-  const htmlManager =
-    '<div style="background:' +
-    color +
-    ';height:56px;border-radius:16px 16px 0 0"></div>'
   MailApp.sendEmail({
     to: RECIPIENT_EMAIL,
     subject: subjectManager,
-    htmlBody: htmlManager
+    htmlBody: buildBalanceManagerEmail_(data, {
+      amount: paymentData.amount,
+      paymentIntentId: paymentData.paymentIntentId
+    })
   })
+}
+
+// Email client: solde payé (contenu dédié)
+function buildBalanceClientEmail_(data, paymentData) {
+  const color = '#5d3fd3'
+  const fmt = function (n) {
+    return Number(n || 0).toLocaleString('fr-FR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })
+  }
+  const bloc = formatReservationDetails_(data)
+  return (
+    '<div style="background:' +
+    color +
+    ';height:56px;border-radius:16px 16px 0 0"></div>' +
+    '<div style="padding:24px;font-family:Arial,Helvetica,sans-serif">' +
+    '<h2 style="margin:0 0 16px 0;color:#111">🎉 Solde payé – Calypso Bay</h2>' +
+    '<p>Bonjour ' +
+    escapeHtml_(data.name || '') +
+    ',</p><p>Nous avons bien reçu le <strong>paiement du solde</strong> pour votre séjour à <strong>Calypso Bay</strong>. Félicitations et bienvenue !</p>' +
+    '<p>Pour rappel, vous pouvez encore annuler selon les conditions prévues dans notre notice:<br/>• Annulation gratuite jusqu’à 3 mois avant le début du séjour.<br/>• Au-delà, l’acompte reste acquis.</p>' +
+    '<h3 style="margin:24px 0 8px 0;color:#111">Récapitulatif</h3>' +
+    '<div style="background:#f7f8fa;border:1px solid #e5e7eb;border-radius:12px;padding:16px;color:#111">' +
+    bloc +
+    '<br><br><strong>Solde payé :</strong> ' +
+    fmt(paymentData.amount) +
+    ' €' +
+    '</div>' +
+    '<div style="margin-top:18px">' +
+    '<a href="' +
+    buildSiteUrl_('/annuler-reservation', { token: data.token || '' }) +
+    '" style="display:inline-block;background:#ef4444;color:#fff;text-decoration:none;padding:12px 16px;border-radius:10px">Annuler ma réservation</a>' +
+    '</div>' +
+    '</div>'
+  )
+}
+
+// Email gestionnaire: solde payé
+function buildBalanceManagerEmail_(data, paymentData) {
+  const color = '#5d3fd3'
+  const fmt = function (n) {
+    return Number(n || 0).toLocaleString('fr-FR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })
+  }
+  const bloc = formatReservationDetails_(data)
+  return (
+    '<div style="background:' +
+    color +
+    ';height:56px;border-radius:16px 16px 0 0"></div>' +
+    '<div style="padding:24px;font-family:Arial,Helvetica,sans-serif">' +
+    '<h2 style="margin:0 0 16px 0;color:#111">✅ Solde reçu</h2>' +
+    '<p>Le solde de <strong>' +
+    fmt(paymentData.amount) +
+    ' €</strong> a été reçu pour la réservation de <strong>' +
+    escapeHtml_(data.name || '') +
+    '</strong>.</p>' +
+    '<h3 style="margin:24px 0 8px 0;color:#111">Récapitulatif</h3>' +
+    '<div style="background:#f7f8fa;border:1px solid #e5e7eb;border-radius:12px;padding:16px;color:#111">' +
+    bloc +
+    '</div>' +
+    '</div>'
+  )
 }
 
 // ======================================

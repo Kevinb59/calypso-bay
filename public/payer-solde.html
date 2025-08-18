@@ -160,6 +160,7 @@
           const { error, paymentIntent } = await stripe.confirmCardPayment(piJson.clientSecret, { payment_method: { card } })
           if (error) throw new Error(error.message)
           btnText.textContent = 'Paiement confirmé ✔'
+          setTimeout(()=>{ window.location.href = '/reservation-confirmee.html' }, 1200)
         } catch (e) {
           document.getElementById('card-errors').textContent = e.message
           btn.disabled = false; btnText.textContent = 'Payer le solde'
