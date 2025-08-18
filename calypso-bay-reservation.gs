@@ -41,6 +41,11 @@ function doGet(e) {
       return getReservationData_(p.token)
     }
 
+    // Liste admin des réservations (lecture seule)
+    if (p.action === 'listReservations') {
+      return listReservations_(p.q || '')
+    }
+
     // Diagnostic de la structure du Sheet
     if (p.action === 'debug') {
       return debugSheetStructure_()
@@ -628,10 +633,13 @@ function getReservationData_(token) {
           ? Number(data[rowIndex][depositAmountIndex]) || 0
           : 0,
       depositAt: depositAtIndex !== -1 ? data[rowIndex][depositAtIndex] : '',
-      address: addressIndex !== -1 ? String(data[rowIndex][addressIndex] || '') : '',
+      address:
+        addressIndex !== -1 ? String(data[rowIndex][addressIndex] || '') : '',
       city: cityIndex !== -1 ? String(data[rowIndex][cityIndex] || '') : '',
-      postal: postalIndex !== -1 ? String(data[rowIndex][postalIndex] || '') : '',
-      country: countryIndex !== -1 ? String(data[rowIndex][countryIndex] || '') : '',
+      postal:
+        postalIndex !== -1 ? String(data[rowIndex][postalIndex] || '') : '',
+      country:
+        countryIndex !== -1 ? String(data[rowIndex][countryIndex] || '') : '',
       childrenAges: [
         childAge1Index !== -1 ? data[rowIndex][childAge1Index] : '',
         childAge2Index !== -1 ? data[rowIndex][childAge2Index] : '',
@@ -659,6 +667,53 @@ function getReservationData_(token) {
       status: 'error',
       message: '❌ Erreur: ' + (err && err.message ? err.message : String(err))
     })
+  }
+}
+
+// ======================================
+// Admin: liste simple des réservations
+// ======================================
+function listReservations_(q) {
+  try {
+    const ss = SpreadsheetApp.openById(SHEET_ID)
+    const sh = ss.getSheetByName(SHEET_NAME)
+    if (!sh) {
+      return jsonOut({ status: 'error', message: '❌ Onglet ReservationsTemp non trouvé' })
+    }
+
+    const values = sh.getDataRange().getValues()
+    if (!values || values.length <= 1) {
+      return jsonOut({ status: 'success', data: [] })
+    }
+
+    const headers = values[0]
+    const idx = (h) => headers.indexOf(h)
+    const out = []
+
+    for (let i = 1; i < values.length; i++) {
+      const row = values[i]
+      const item = {
+        token: row[idx('id')],
+        name: row[idx('name')],
+        email: row[idx('email')],
+        startDate: row[idx('startDate')],
+        endDate: row[idx('endDate')],
+        status: row[idx('status')],
+        depositAmount: Number(row[idx('depositAmount')] || 0),
+        balanceAmount: Number(row[idx('balanceAmount')] || 0)
+      }
+      if (!q) {
+        out.push(item)
+      } else {
+        const qq = String(q).toLowerCase()
+        const hay = [item.token, item.name, item.email].join(' ').toLowerCase()
+        if (hay.indexOf(qq) !== -1) out.push(item)
+      }
+    }
+
+    return jsonOut({ status: 'success', data: out })
+  } catch (err) {
+    return jsonOut({ status: 'error', message: '❌ Erreur: ' + (err && err.message ? err.message : String(err)) })
   }
 }
 

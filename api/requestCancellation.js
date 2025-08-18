@@ -1,3 +1,23 @@
+import { NextResponse } from 'next/server'
+
+export const config = { runtime: 'edge' }
+
+export default async function handler(req) {
+  const adminKey = req.headers.get('x-admin-key') || ''
+  const expected = process.env.ADMIN_KEY || ''
+  if (!expected || adminKey !== expected) {
+    return new NextResponse(JSON.stringify({ status: 'error', message: 'Accès refusé' }), { status: 401 })
+  }
+
+  const url = new URL(req.url)
+  const q = url.searchParams.get('q') || ''
+
+  const GAS_URL = process.env.NEXT_PUBLIC_GAS_URL
+  const resp = await fetch(`${GAS_URL}?action=listReservations&q=${encodeURIComponent(q)}`)
+  const data = await resp.json()
+  return new NextResponse(JSON.stringify(data), { status: 200 })
+}
+
 /**
  * Enregistre une demande d'annulation côté Sheet via GAS et envoie les mails
  */

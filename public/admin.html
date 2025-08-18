@@ -14,6 +14,7 @@
       th, td { border-bottom: 1px solid rgba(255,255,255,0.2); padding: 8px; font-size: 0.9rem; }
       .actions button { margin-right: 6px; }
       .tag { background: rgba(255,255,255,0.15); border-radius: 8px; padding: 2px 8px; font-size: 0.8rem; }
+      .login { margin-bottom: 12px; }
     </style>
   </head>
   <body class="is-preload">
@@ -21,6 +22,10 @@
       <div id="wrapper" class="inner">
         <h2 class="major">Tableau de bord</h2>
         <div class="panel">
+          <div class="login">
+            Clé d'accès: <input id="key" type="password" placeholder="ADMIN_KEY" style="padding:6px;border-radius:8px;border:1px solid rgba(255,255,255,0.3);width:200px;"/>
+            <button id="loginBtn">Se connecter</button>
+          </div>
           <div style="margin-bottom:10px;">Filtre: <input id="query" placeholder="Rechercher par nom/email/token" style="padding:6px;border-radius:8px;border:1px solid rgba(255,255,255,0.3);width:260px;"/></div>
           <table id="table">
             <thead>
@@ -41,10 +46,12 @@
     </div>
 
     <script>
-      async function fetchReservations() {
-        // Minimal: on réutilise l'endpoint getReservation par token dans une boucle côté admin
-        // En prod, on exposera /api/admin/reservations côté Vercel qui lit un export GAS.
-        return []
+      async function fetchReservations(adminKey, q='') {
+        const r = await fetch(`/api/admin/list?q=${encodeURIComponent(q)}`, { headers: { 'x-admin-key': adminKey || '' } })
+        if (!r.ok) throw new Error('Erreur API')
+        const j = await r.json()
+        if (j.status !== 'success') throw new Error(j.message || 'Erreur')
+        return j.data || []
       }
       function render(rows) {
         const tb = document.querySelector('#table tbody')
@@ -61,7 +68,16 @@
           </td>
         </tr>`).join('')
       }
-      (async function(){ const rows = await fetchReservations(); render(rows) })()
+      document.getElementById('loginBtn').addEventListener('click', async () => {
+        try {
+          const key = document.getElementById('key').value
+          const q = document.getElementById('query').value
+          const rows = await fetchReservations(key, q)
+          render(rows)
+        } catch (e) {
+          alert(e.message)
+        }
+      })
     </script>
   </body>
 </html>
