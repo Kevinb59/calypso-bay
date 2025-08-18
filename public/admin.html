@@ -109,6 +109,23 @@
       tbody tr:hover td {
         background: var(--row);
       }
+      .pay-dots {
+        display: inline-flex;
+        gap: 6px;
+        margin-left: 8px;
+        vertical-align: middle;
+      }
+      .pay-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #cbd5e1;
+        box-shadow: inset 0 0 0 1px #94a3b8;
+      }
+      .pay-dot.on {
+        background: #16a34a;
+        box-shadow: inset 0 0 0 1px #15803d;
+      }
       .badge {
         display: inline-block;
         padding: 4px 10px;
@@ -211,16 +228,58 @@
       }
 
       /* Background from Uiverse.io by chase2k25 (renamed classes to avoid conflicts) */
-      .bg-container { position: fixed; inset: 0; z-index: 0; background: #181c21; display:flex; align-items:stretch; justify-content:stretch; }
-      .pattern-bg { width:100%; height:100%; overflow:hidden; background: repeating-linear-gradient(135deg,#232526 0px,#232526 60px,#23252699 70px,#414345 130px); }
-      .cube-svg { position:absolute; width:200%; height:200%; left:-30%; top:-20%; background:transparent; opacity:.7; z-index:1; animation: cubeMove 18s linear infinite alternate; }
-      @keyframes cubeMove { from { transform: translateY(0) scale(1); } to { transform: translateY(-20%) scale(1.02) rotate(1deg); } }
+      .bg-container {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        background: #181c21;
+        display: flex;
+        align-items: stretch;
+        justify-content: stretch;
+      }
+      .pattern-bg {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: repeating-linear-gradient(
+          135deg,
+          #232526 0px,
+          #232526 60px,
+          #23252699 70px,
+          #414345 130px
+        );
+      }
+      .cube-svg {
+        position: absolute;
+        width: 200%;
+        height: 200%;
+        left: -30%;
+        top: -20%;
+        background: transparent;
+        opacity: 0.7;
+        z-index: 1;
+        animation: cubeMove 18s linear infinite alternate;
+      }
+      @keyframes cubeMove {
+        from {
+          transform: translateY(0) scale(1);
+        }
+        to {
+          transform: translateY(-20%) scale(1.02) rotate(1deg);
+        }
+      }
     </style>
   </head>
   <body>
     <div class="bg-container">
       <div class="pattern-bg">
-        <svg preserveAspectRatio="xMidYMid slice" height="100%" width="100%" class="cube-svg" viewBox="0 0 120 104">
+        <svg
+          preserveAspectRatio="xMidYMid slice"
+          height="100%"
+          width="100%"
+          class="cube-svg"
+          viewBox="0 0 120 104"
+        >
           <defs>
             <linearGradient y2="100%" x2="100%" y1="0%" x1="0%" id="cube-dark">
               <stop stop-color="#232526" offset="0%"></stop>
@@ -406,8 +465,14 @@
           (a, b) => new Date(a.startDate) - new Date(b.startDate)
         )
         tbody.innerHTML = data
-          .map(
-            (r) => `
+          .map((r) => {
+            const depositPaid =
+              Number(r.depositAmount || 0) > 0 ||
+              r.status === 'depositPay' ||
+              r.status === 'balancePay'
+            const balancePaid =
+              Number(r.balanceAmount || 0) > 0 || r.status === 'balancePay'
+            return `
           <tr>
             <td><span class="badge ${badgeClass(r.status)}">${frStatus(
               r.status
@@ -418,13 +483,19 @@
             <td>${r.nbNights || 0}</td>
             <td>${r.nbAdults || 0}</td>
             <td>${r.nbChilds || 0}</td>
-            <td>${fmtMoney(r.priceTotal)}</td>
+            <td>${fmtMoney(
+              r.priceTotal
+            )}<span class="pay-dots"><span class="pay-dot ${
+              depositPaid ? 'on' : ''
+            }" title="Acompte"></span><span class="pay-dot ${
+              balancePaid ? 'on' : ''
+            }" title="Solde"></span></span></td>
             <td><button class="btn btn-primary" data-token="${
               r.token
             }" data-action="detail">Détails</button></td>
           </tr>
         `
-          )
+          })
           .join('')
       }
 
