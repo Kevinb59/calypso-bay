@@ -177,6 +177,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        z-index: 10000;
       }
       .login-card {
         background: #fff;
@@ -199,6 +200,7 @@
         display: none;
         align-items: center;
         justify-content: center;
+        z-index: 10001;
       }
       .detail-card {
         width: 720px;
@@ -366,14 +368,30 @@
     </div>
 
     <!-- Page test emails -->
-    <div class="card" style="max-width:1200px;margin:16px auto;padding:16px;">
-      <h3 style="margin:0 0 12px 0;">Tests emails</h3>
-      <div style="display:flex; gap:8px; flex-wrap:wrap;">
-        <button class="btn" data-mail="depositClient">Envoyer client – Acompte</button>
-        <button class="btn" data-mail="depositManager">Envoyer gestionnaire – Acompte</button>
-        <button class="btn" data-mail="balanceClient">Envoyer client – Solde</button>
-        <button class="btn" data-mail="balanceManager">Envoyer gestionnaire – Solde</button>
-        <input id="testToken" class="input" placeholder="Token de réservation" style="min-width:260px;"/>
+    <div
+      class="card"
+      style="max-width: 1200px; margin: 16px auto; padding: 16px"
+    >
+      <h3 style="margin: 0 0 12px 0">Tests emails</h3>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap">
+        <button class="btn" data-mail="depositClient">
+          Envoyer client – Acompte
+        </button>
+        <button class="btn" data-mail="depositManager">
+          Envoyer gestionnaire – Acompte
+        </button>
+        <button class="btn" data-mail="balanceClient">
+          Envoyer client – Solde
+        </button>
+        <button class="btn" data-mail="balanceManager">
+          Envoyer gestionnaire – Solde
+        </button>
+        <input
+          id="testToken"
+          class="input"
+          placeholder="Token de réservation"
+          style="min-width: 260px"
+        />
       </div>
     </div>
 
@@ -589,14 +607,25 @@
         if (!b) return
         const kind = b.getAttribute('data-mail')
         const token = document.getElementById('testToken').value.trim()
-        if (!token) { alert('Renseignez un token'); return }
-        const to = kind.includes('Manager') ? 'contact.calypso.bay@gmail.com' : 'kevinblart@live.fr'
+        if (!token) {
+          alert('Renseignez un token')
+          return
+        }
+        const to = kind.includes('Manager')
+          ? 'contact.calypso.bay@gmail.com'
+          : 'kevinblart@live.fr'
         try {
-          const url = `${window.appConfig?.NEXT_PUBLIC_GAS_URL || (new URL(window.location.origin)).origin}?action=testSendEmail&kind=${encodeURIComponent(kind)}&to=${encodeURIComponent(to)}&token=${encodeURIComponent(token)}`
+          const url = `${
+            window.appConfig?.NEXT_PUBLIC_GAS_URL ||
+            new URL(window.location.origin).origin
+          }?action=testSendEmail&kind=${encodeURIComponent(
+            kind
+          )}&to=${encodeURIComponent(to)}&token=${encodeURIComponent(token)}`
           const r = await fetch(url)
           const j = await r.json()
-          if (j.status !== 'success') throw new Error(j.message || 'Erreur envoi')
-          alert('Email test envoyé ('+kind+')')
+          if (j.status !== 'success')
+            throw new Error(j.message || 'Erreur envoi')
+          alert('Email test envoyé (' + kind + ')')
         } catch (err) {
           alert(err.message)
         }

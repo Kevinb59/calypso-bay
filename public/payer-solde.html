@@ -3,26 +3,108 @@
   <head>
     <title>Payer le solde – Calypso Bay</title>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
     <link rel="stylesheet" href="assets/css/main.css" />
     <link rel="stylesheet" href="assets/css/custom.css" />
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <noscript
+      ><link rel="stylesheet" href="assets/css/noscript.css"
+    /></noscript>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
     <script src="https://js.stripe.com/v3/"></script>
     <style>
-      .form-section { background: rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; box-shadow: 0 12px 40px rgba(0,0,0,0.15); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.3); }
-      .reservation-details { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.25); border-radius: 12px; padding: 16px; margin-top: 16px; color: white; }
-      .detail-item { display:flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.25); font-size: 0.95rem; }
-      .detail-item:last-child { border-bottom: none; margin-top: 10px; padding-top: 10px; }
-      .payment-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.25); border-radius: 12px; padding: 16px; margin-top: 16px; color: white; }
-      .payment-row { display:flex; justify-content: space-between; padding: 8px 0; }
-      .payment-row.deposit { color:#3b82f6; font-weight:600; }
-      .progress-bar { width:100%; height:8px; background: rgba(255,255,255,0.25); border-radius:4px; overflow:hidden; margin: 8px 0 12px; }
-      .progress-fill { height:100%; width:0%; background:#3b82f6; transition: width .3s ease; }
-      .btn-submit { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; padding: 14px 24px; border: none; border-radius: 12px; font-weight: 600; width: 100%; display: flex; align-items: center; justify-content: center; min-height: 50px; box-shadow: 0 6px 20px rgba(59,130,246,0.3); }
-      .btn-submit:disabled { background: #9ca3af; }
-      #card-errors { color: #ef4444; margin-top: 10px; font-size: 0.9rem; }
-      .payment-disclaimer { text-align:center; color: rgba(255,255,255,0.9); font-size: .85rem; margin-top: 10px; }
+      .form-section {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+      .reservation-details {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 12px;
+        padding: 16px;
+        margin-top: 16px;
+        color: white;
+      }
+      .detail-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+        font-size: 0.95rem;
+      }
+      .detail-item:last-child {
+        border-bottom: none;
+        margin-top: 10px;
+        padding-top: 10px;
+      }
+      .payment-card {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 12px;
+        padding: 16px;
+        margin-top: 16px;
+        color: white;
+      }
+      .payment-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+      }
+      .payment-row.deposit {
+        color: #3b82f6;
+        font-weight: 600;
+      }
+      .progress-bar {
+        width: 100%;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.25);
+        border-radius: 4px;
+        overflow: hidden;
+        margin: 8px 0 12px;
+      }
+      .progress-fill {
+        height: 100%;
+        width: 0%;
+        background: #3b82f6;
+        transition: width 0.3s ease;
+      }
+      .btn-submit {
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: white;
+        padding: 14px 24px;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 50px;
+        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+      }
+      .btn-submit:disabled {
+        background: #9ca3af;
+      }
+      #card-errors {
+        color: #ef4444;
+        margin-top: 10px;
+        font-size: 0.9rem;
+      }
+      .payment-disclaimer {
+        text-align: center;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.85rem;
+        margin-top: 10px;
+      }
     </style>
   </head>
   <body class="is-preload">
@@ -30,53 +112,126 @@
       <div id="wrapper">
         <section class="panel banner right">
           <div class="content color0 span-3-75">
-            <h2 class="major">Payer le<br /><span class="themysion">Solde</span></h2>
-            <p>Renseignez votre carte pour régler le solde restant de votre réservation.</p>
-            <ul class="actions"><li><a href="#form" class="button primary color1 circle icon solid fa-angle-right">Continuer</a></li></ul>
+            <h2 class="major">
+              Payer le<br /><span class="themysion">Solde</span>
+            </h2>
+            <p>
+              Renseignez votre carte pour régler le solde restant de votre
+              réservation.
+            </p>
+            <ul class="actions">
+              <li>
+                <a
+                  href="#form"
+                  class="button primary color1 circle icon solid fa-angle-right"
+                  >Continuer</a
+                >
+              </li>
+            </ul>
           </div>
-          <div class="image filtered span-1-75" data-position="25% 25%"><img src="images/pic01.jpg" alt="" /></div>
+          <div class="image filtered span-1-75" data-position="25% 25%">
+            <img src="images/pic01.jpg" alt="" />
+          </div>
         </section>
 
         <!-- Détails de la réservation (section séparée) -->
         <section class="panel spotlight medium right color1" id="details">
           <div class="intro joined span-3-5">
             <h2 class="major">📅 Détails de la réservation</h2>
-            <p>Vérifiez les informations de votre séjour avant de procéder au paiement du solde.</p>
+            <p>
+              Vérifiez les informations de votre séjour avant de procéder au
+              paiement du solde.
+            </p>
           </div>
           <div class="inner">
             <div class="form-section">
-              <div class="reservation-details" id="reservation-details">Chargement en cours…</div>
+              <div class="reservation-details" id="reservation-details">
+                Chargement en cours…
+              </div>
             </div>
           </div>
-          <div class="image filtered tinted" data-position="center"><img src="images/pic02.jpg" alt="" /></div>
+          <div class="image filtered tinted" data-position="center">
+            <img src="images/pic02.jpg" alt="" />
+          </div>
         </section>
 
         <!-- Paiement du solde (section dédiée) -->
         <section class="panel color4-alt" id="form">
           <div class="intro color4">
             <h2 class="major">💳 Paiement du solde</h2>
-            <p>Renseignez votre carte pour régler le solde restant de votre réservation.</p>
+            <p>
+              Renseignez votre carte pour régler le solde restant de votre
+              réservation.
+            </p>
           </div>
           <div class="inner">
             <div class="payment-card">
-              <h4 style="margin:0 0 10px 0;">Récapitulatif du paiement</h4>
-              <div class="payment-row"><span>Total</span><span id="total-amount">—</span></div>
-              <div class="payment-row deposit"><span>Acompte déjà versé (<span id="deposit-percent">0%</span>)</span><span id="deposit-amount">—</span></div>
-              <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-              <div class="payment-row" style="border-top:1px solid rgba(255,255,255,0.25); padding-top:12px; margin-top:4px;"><span>Solde restant</span><span id="remaining-amount">—</span></div>
+              <h4 style="margin: 0 0 10px 0">Récapitulatif du paiement</h4>
+              <div class="payment-row">
+                <span>Total</span><span id="total-amount">—</span>
+              </div>
+              <div class="payment-row deposit">
+                <span
+                  >Acompte déjà versé (<span id="deposit-percent">0%</span
+                  >)</span
+                ><span id="deposit-amount">—</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+              </div>
+              <div
+                class="payment-row"
+                style="
+                  border-top: 1px solid rgba(255, 255, 255, 0.25);
+                  padding-top: 12px;
+                  margin-top: 4px;
+                "
+              >
+                <span>Solde restant</span><span id="remaining-amount">—</span>
+              </div>
 
-              <div style="margin-top:16px">
-                <label for="card-element" style="color:white; font-weight:600;">Carte de paiement</label>
-                <div id="card-element" style="background: rgba(255,255,255,0.9); border-radius: 10px; padding: 12px;"></div>
+              <div style="margin-top: 16px">
+                <label for="card-element" style="color: white; font-weight: 600"
+                  >Carte de paiement</label
+                >
+                <div
+                  id="card-element"
+                  style="
+                    background: rgba(255, 255, 255, 0.9);
+                    border-radius: 10px;
+                    padding: 12px;
+                  "
+                ></div>
                 <div id="card-errors" role="alert"></div>
               </div>
-              <button id="pay-btn" class="btn-submit" style="margin-top:16px"><span id="btn-text">Payer le solde</span></button>
-              <p class="payment-disclaimer">Paiement sécurisé via Stripe. Aucune donnée bancaire n'est stockée par Calypso Bay.</p>
+              <button id="pay-btn" class="btn-submit" style="margin-top: 16px">
+                <span id="btn-text">Payer le solde</span>
+              </button>
+              <p class="payment-disclaimer">
+                Paiement sécurisé via Stripe. Aucune donnée bancaire n'est
+                stockée par Calypso Bay.
+              </p>
             </div>
           </div>
         </section>
 
-        <div class="copyright"><span>&copy; Calypso Bay | By</span> <a href="https://moriarty-design.fr" target="_blank" rel="noopener" style="font-family: 'Engagement', 'Brush Script MT', cursive; font-size: 2.2em; line-height: 1; margin-left: 0.25em; text-decoration: none; color: inherit;">Moriarty</a>.</div>
+        <div class="copyright">
+          <span>&copy; Calypso Bay | By</span>
+          <a
+            href="https://moriarty-design.fr"
+            target="_blank"
+            rel="noopener"
+            style="
+              font-family: 'Engagement', 'Brush Script MT', cursive;
+              font-size: 2.2em;
+              line-height: 1;
+              margin-left: 0.25em;
+              text-decoration: none;
+              color: inherit;
+            "
+            >Moriarty</a
+          >.
+        </div>
       </div>
     </div>
 
@@ -85,11 +240,21 @@
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script>
-      const stripe = Stripe('%STRIPE_PUBLIC_KEY%'.replace('%STRIPE_PUBLIC_KEY%', 'pk_live_51RuYagJuxMM0V1wvWkNbfWITDKf6J6Q8BaoCPCwWrd6juAMlGekc3RADsm9VfcFcfkk7dYmY8dgDr0DqHOBw3qtb006Bbqn4e4'))
+      const stripe = Stripe(
+        '%STRIPE_PUBLIC_KEY%'.replace(
+          '%STRIPE_PUBLIC_KEY%',
+          'pk_live_51RuYagJuxMM0V1wvWkNbfWITDKf6J6Q8BaoCPCwWrd6juAMlGekc3RADsm9VfcFcfkk7dYmY8dgDr0DqHOBw3qtb006Bbqn4e4'
+        )
+      )
       const elements = stripe.elements()
-      const card = elements.create('card', { style: { base: { fontSize: '16px' } } })
+      const card = elements.create('card', {
+        style: { base: { fontSize: '16px' } }
+      })
       card.mount('#card-element')
-      card.addEventListener('change', function (event) { const displayError = document.getElementById('card-errors'); displayError.textContent = event.error ? event.error.message : '' })
+      card.addEventListener('change', function (event) {
+        const displayError = document.getElementById('card-errors')
+        displayError.textContent = event.error ? event.error.message : ''
+      })
 
       const params = new URLSearchParams(window.location.search)
       const token = params.get('token')
@@ -98,76 +263,155 @@
       const btnText = document.getElementById('btn-text')
 
       async function load() {
-        if (!token) { detailsBox.textContent = 'Token manquant'; btn.disabled = true; return }
+        if (!token) {
+          detailsBox.textContent = 'Token manquant'
+          btn.disabled = true
+          return
+        }
         try {
-          const res = await fetch(`/api/getReservation?token=${encodeURIComponent(token)}`)
+          const res = await fetch(
+            `/api/getReservation?token=${encodeURIComponent(token)}`
+          )
           const json = await res.json()
-          if (json.status !== 'success') { detailsBox.textContent = json.message || 'Réservation introuvable'; btn.disabled = true; return }
+          if (json.status !== 'success') {
+            detailsBox.textContent = json.message || 'Réservation introuvable'
+            btn.disabled = true
+            return
+          }
           const d = json.data
           const total = Number(d.priceTotal || 0)
           const deposit = Number(d.depositAmount || 0)
           const balance = Math.max(0, total - deposit)
           // Détails formatés comme demandé
-          const formatMoney = (v) => Number(v || 0).toLocaleString('fr-FR', { minimumFractionDigits: 1, maximumFractionDigits: 1 })
-          const formatMoney2 = (v) => Number(v || 0).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-          const ages = Array.isArray(d.childrenAges) && d.childrenAges.length
-            ? d.childrenAges.join(', ')
-            : ''
+          const formatMoney = (v) =>
+            Number(v || 0).toLocaleString('fr-FR', {
+              minimumFractionDigits: 1,
+              maximumFractionDigits: 1
+            })
+          const formatMoney2 = (v) =>
+            Number(v || 0).toLocaleString('fr-FR', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            })
+          const ages =
+            Array.isArray(d.childrenAges) && d.childrenAges.length
+              ? d.childrenAges.join(', ')
+              : ''
           const dates = new Date(d.startDate)
           const datee = new Date(d.endDate)
-          const fmt = (dt) => dt.toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' })
+          const fmt = (dt) =>
+            dt.toLocaleDateString('fr-FR', {
+              day: '2-digit',
+              month: 'long',
+              year: 'numeric'
+            })
           const lines = []
-          lines.push(`<div class="detail-item"><strong>Dates :</strong> <span>${fmt(dates)} au ${fmt(datee)} (${d.nbNights} nuits)</span></div>`)
-          lines.push(`<div class="detail-item"><strong>Voyageurs :</strong> <span>${d.nbAdults} adulte${d.nbAdults>1?'s':''}${d.nbChilds>0?', '+d.nbChilds+' enfant'+(d.nbChilds>1?'s':''):''}</span></div>`)
+          lines.push(
+            `<div class="detail-item"><strong>Dates :</strong> <span>${fmt(
+              dates
+            )} au ${fmt(datee)} (${d.nbNights} nuits)</span></div>`
+          )
+          lines.push(
+            `<div class="detail-item"><strong>Voyageurs :</strong> <span>${
+              d.nbAdults
+            } adulte${d.nbAdults > 1 ? 's' : ''}${
+              d.nbChilds > 0
+                ? ', ' + d.nbChilds + ' enfant' + (d.nbChilds > 1 ? 's' : '')
+                : ''
+            }</span></div>`
+          )
           if (d.nbChilds > 0 && ages) {
-            lines.push(`<div class="detail-item"><strong>Âges des enfants :</strong> <span>${ages}</span></div>`)
+            lines.push(
+              `<div class="detail-item"><strong>Âges des enfants :</strong> <span>${ages}</span></div>`
+            )
           }
-          lines.push('<div class="detail-item" style="border-bottom:none; display:block; padding-bottom:0;">\
+          lines.push(
+            '<div class="detail-item" style="border-bottom:none; display:block; padding-bottom:0;">\
             <div><strong>Détail du prix :</strong></div>\
-            <div style="padding-top:8px">• Total des nuits ('+d.nbNights+`) : ${formatMoney(d.priceNights)} €</div>\
+            <div style="padding-top:8px">• Total des nuits (' +
+              d.nbNights +
+              `) : ${formatMoney(d.priceNights)} €</div>\
             <div>• Frais de ménage : ${formatMoney(d.priceClean)} €</div>\
-            <div>• Taxes (${d.nbAdults} adulte${d.nbAdults>1?'s':''}) : ${formatMoney(d.priceTax)} €</div>\
-            <div>• <strong>Total : ${formatMoney(d.priceTotal)} €</strong></div>\
-          </div>`)
-          lines.push('<div class="detail-item" style="border-bottom:none; display:block; padding-bottom:0;">\
+            <div>• Taxes (${d.nbAdults} adulte${
+                d.nbAdults > 1 ? 's' : ''
+              }) : ${formatMoney(d.priceTax)} €</div>\
+            <div>• <strong>Total : ${formatMoney(
+              d.priceTotal
+            )} €</strong></div>\
+          </div>`
+          )
+          lines.push(
+            '<div class="detail-item" style="border-bottom:none; display:block; padding-bottom:0;">\
             <div><strong>Adresse de facturation :</strong></div>\
-            <div style="padding-top:8px">'+(d.address||'')+'</div>\
-            <div>'+((d.postal||''))+' '+(d.city||'')+'</div>\
-            <div>'+(d.country||'')+'</div>\
-          </div>')
+            <div style="padding-top:8px">' +
+              (d.address || '') +
+              '</div>\
+            <div>' +
+              (d.postal || '') +
+              ' ' +
+              (d.city || '') +
+              '</div>\
+            <div>' +
+              (d.country || '') +
+              '</div>\
+          </div>'
+          )
           detailsBox.innerHTML = lines.join('')
 
           // Récap paiement
-          document.getElementById('total-amount').textContent = `${formatMoney2(total)} €`
-          document.getElementById('deposit-amount').textContent = `${formatMoney2(deposit)} €`
-          document.getElementById('remaining-amount').textContent = `${formatMoney2(balance)} €`
-          document.getElementById('deposit-percent').textContent = total>0 ? `${Math.round((deposit/total)*100)}%` : '0%'
-          document.getElementById('progress-fill').style.width = total>0 ? `${Math.min(100,(deposit/total)*100)}%` : '0%'
-          btnText.textContent = `Payer le solde – ${balance.toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})} €`
-        } catch (e) { detailsBox.textContent = 'Erreur de chargement' }
+          document.getElementById('total-amount').textContent = `${formatMoney2(
+            total
+          )} €`
+          document.getElementById(
+            'deposit-amount'
+          ).textContent = `${formatMoney2(deposit)} €`
+          document.getElementById(
+            'remaining-amount'
+          ).textContent = `${formatMoney2(balance)} €`
+          document.getElementById('deposit-percent').textContent =
+            total > 0 ? `${Math.round((deposit / total) * 100)}%` : '0%'
+          document.getElementById('progress-fill').style.width =
+            total > 0 ? `${Math.min(100, (deposit / total) * 100)}%` : '0%'
+          btnText.textContent = `Payer le solde – ${balance.toLocaleString(
+            'fr-FR',
+            { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+          )} €`
+        } catch (e) {
+          detailsBox.textContent = 'Erreur de chargement'
+        }
       }
 
       load()
 
       btn.addEventListener('click', async () => {
         if (!token) return
-        btn.disabled = true; btnText.textContent = 'Création du paiement…'
+        btn.disabled = true
+        btnText.textContent = 'Création du paiement…'
         try {
-          const piRes = await fetch('/api/createBalancePaymentIntent', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ token }) })
+          const piRes = await fetch('/api/createBalancePaymentIntent', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token })
+          })
           const piJson = await piRes.json()
-          if (!piRes.ok || !piJson.clientSecret) throw new Error(piJson.error || 'Erreur création paiement')
+          if (!piRes.ok || !piJson.clientSecret)
+            throw new Error(piJson.error || 'Erreur création paiement')
           btnText.textContent = 'Confirmation…'
-          const { error, paymentIntent } = await stripe.confirmCardPayment(piJson.clientSecret, { payment_method: { card } })
+          const { error, paymentIntent } = await stripe.confirmCardPayment(
+            piJson.clientSecret,
+            { payment_method: { card } }
+          )
           if (error) throw new Error(error.message)
           btnText.textContent = 'Paiement confirmé ✔'
-          setTimeout(()=>{ window.location.href = '/reservation-confirmee.html' }, 1200)
+          setTimeout(() => {
+            window.location.href = '/reservation-solde-confirme.html'
+          }, 1200)
         } catch (e) {
           document.getElementById('card-errors').textContent = e.message
-          btn.disabled = false; btnText.textContent = 'Payer le solde'
+          btn.disabled = false
+          btnText.textContent = 'Payer le solde'
         }
       })
     </script>
   </body>
 </html>
-
-
