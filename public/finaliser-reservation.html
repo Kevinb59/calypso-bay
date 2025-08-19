@@ -115,6 +115,9 @@
         border: 2px solid rgba(255, 255, 255, 0.3);
         position: relative;
       }
+      /* Overlay de verrouillage paiement */
+      .payment-lock{ position:absolute; inset:0; display:none; align-items:center; justify-content:center; backdrop-filter: blur(3px); background: rgba(17,24,39,.35); z-index: 5; }
+      .payment-lock .lock-box{ background: rgba(255,255,255,.95); color:#111827; padding:14px 18px; border-radius:12px; font-weight:700; box-shadow:0 10px 25px rgba(0,0,0,.25); }
       .payment-section::before {
         content: '';
         position: absolute;
@@ -771,6 +774,7 @@
           </div>
           <div class="inner">
             <div class="payment-card">
+              <div class="payment-lock" id="payment-lock"><div class="lock-box" id="payment-lock-text"></div></div>
               <h3>Récapitulatif du paiement</h3>
               <div class="payment-breakdown">
                 <div class="payment-row">
@@ -975,6 +979,22 @@
             window.reservationData = result.data
             populateForm(result.data)
             calculatePaymentAmount(result.data)
+            // Verrouiller la section paiement si nécessaire
+            const st = String(result.data.status || '')
+            const lock = document.getElementById('payment-lock')
+            const lockText = document.getElementById('payment-lock-text')
+            if (lock && lockText) {
+              if (st === 'depositPay') {
+                lockText.textContent = 'Acompte déjà réglé'
+                lock.style.display = 'flex'
+              } else if (st === 'balancePay') {
+                lockText.textContent = 'Acompte et solde déjà réglés'
+                lock.style.display = 'flex'
+              } else if (st === 'canceled') {
+                lockText.textContent = 'Réservation annulée'
+                lock.style.display = 'flex'
+              }
+            }
           } else {
             showError(result.message || 'Erreur lors du chargement des données')
           }
