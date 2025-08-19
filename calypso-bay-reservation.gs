@@ -1260,6 +1260,7 @@ function finalizeBalanceFromWebhook_(token, paymentData) {
     const row = sh.getRange(rowIndex, 1, 1, sh.getLastColumn()).getValues()[0]
     const h = headers
     const reservationData = {
+      token: token,
       name: row[h.indexOf('name')],
       email: row[h.indexOf('email')],
       tel: row[h.indexOf('tel')],
@@ -1317,65 +1318,54 @@ function sendBalanceEmails_(data, paymentData) {
 // Email client: solde payé (contenu dédié)
 function buildBalanceClientEmail_(data, paymentData) {
   const color = '#5d3fd3'
-  const fmt = function (n) {
-    return Number(n || 0).toLocaleString('fr-FR', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    })
-  }
-  const bloc = formatReservationDetails_(data)
+  const fmt = (n) => Number(n || 0).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+  const details = formatReservationDetails_(data)
+  const cancelUrl = buildSiteUrl_('/annuler-reservation', { token: data.token || '' })
   return (
-    '<div style="background:' +
-    color +
-    ';height:56px;border-radius:16px 16px 0 0"></div>' +
-    '<div style="padding:24px;font-family:Arial,Helvetica,sans-serif">' +
-    '<h2 style="margin:0 0 16px 0;color:#111">🎉 Solde payé – Calypso Bay</h2>' +
-    '<p>Bonjour ' +
-    escapeHtml_(data.name || '') +
-    ',</p><p>Nous avons bien reçu le <strong>paiement du solde</strong> pour votre séjour à <strong>Calypso Bay</strong>. Félicitations et bienvenue !</p>' +
-    '<p>Pour rappel, vous pouvez encore annuler selon les conditions prévues dans notre notice:<br/>• Annulation gratuite jusqu’à 3 mois avant le début du séjour.<br/>• Au-delà, l’acompte reste acquis.</p>' +
-    '<h3 style="margin:24px 0 8px 0;color:#111">Récapitulatif</h3>' +
-    '<div style="background:#f7f8fa;border:1px solid #e5e7eb;border-radius:12px;padding:16px;color:#111">' +
-    bloc +
-    '<br><br><strong>Solde payé :</strong> ' +
-    fmt(paymentData.amount) +
-    ' €' +
+    '<!DOCTYPE html>' +
+    '<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">' +
+    '<title>Solde payé</title>' +
+    '<style>' +
+    "body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f2f4f8;padding:40px 20px;margin:0;}" +
+    '.container{max-width:640px;margin:auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.05);}' +
+    '.header{background:' + color + ';color:#ffffff;text-align:center;padding:28px;}' +
+    '.header h1{margin:0;font-size:24px;letter-spacing:0.5px;}' +
+    '.section{padding:26px 28px;border-bottom:1px solid #eee;}' +
+    '.section:last-child{border-bottom:none;}' +
+    'p{margin:8px 0;line-height:1.6;color:#333;}' +
+    '.details{background:#f9fafb;padding:16px;border-left:3px solid ' + color + ';border-radius:8px;margin-top:12px;}' +
+    '.btn{display:block;background:#ef4444;color:#ffffff !important;text-decoration:none;padding:12px 20px;border-radius:10px;font-weight:700;margin-top:12px;text-align:center;}' +
+    '</style></head><body>' +
+    '<div class="container">' +
+    '<div class="header"><h1>🏖️ Calypso Bay</h1></div>' +
+    '<div class="section">' +
+    '<p>Bonjour ' + escapeHtml_(data.name || '') + ',</p>' +
+    '<p>Nous avons bien reçu le <strong>paiement du solde</strong> pour votre séjour à <strong>Calypso Bay</strong>. Félicitations et bienvenue !</p>' +
+    '<p>Pour rappel, vous pouvez encore annuler selon les conditions prévues dans notre notice :<br/>• Annulation gratuite jusqu’à 3 mois avant le début du séjour.<br/>• Au‑delà, l’acompte reste acquis.</p>' +
     '</div>' +
-    '<div style="margin-top:18px">' +
-    '<a href="' +
-    buildSiteUrl_('/annuler-reservation', { token: data.token || '' }) +
-    '" style="display:inline-block;background:#ef4444;color:#fff;text-decoration:none;padding:12px 16px;border-radius:10px">Annuler ma réservation</a>' +
+    '<div class="section"><h3 style="margin:0 0 10px;color:' + color + '">📋 Récapitulatif</h3><div class="details">' +
+    details + '<br><br><strong>Solde payé :</strong> ' + fmt(paymentData.amount) + ' €</div></div>' +
+    '<div class="section" style="text-align:center;">' +
+    '<a href="' + escapeHtml_(cancelUrl) + '" class="btn"><span style="color:#ffffff !important;text-decoration:none !important;">Annuler ma réservation</span></a>' +
     '</div>' +
-    '</div>'
+    '<div class="section" style="text-align:center;color:#666;font-size:13px">Nous vous souhaitons un excellent séjour à Calypso Bay.</div>' +
+    '</div></body></html>'
   )
 }
 
 // Email gestionnaire: solde payé
 function buildBalanceManagerEmail_(data, paymentData) {
   const color = '#5d3fd3'
-  const fmt = function (n) {
-    return Number(n || 0).toLocaleString('fr-FR', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    })
-  }
-  const bloc = formatReservationDetails_(data)
+  const fmt = (n)=> Number(n||0).toLocaleString('fr-FR',{minimumFractionDigits:2, maximumFractionDigits:2})
+  const details = formatReservationDetails_(data)
   return (
-    '<div style="background:' +
-    color +
-    ';height:56px;border-radius:16px 16px 0 0"></div>' +
-    '<div style="padding:24px;font-family:Arial,Helvetica,sans-serif">' +
-    '<h2 style="margin:0 0 16px 0;color:#111">✅ Solde reçu</h2>' +
-    '<p>Le solde de <strong>' +
-    fmt(paymentData.amount) +
-    ' €</strong> a été reçu pour la réservation de <strong>' +
-    escapeHtml_(data.name || '') +
-    '</strong>.</p>' +
-    '<h3 style="margin:24px 0 8px 0;color:#111">Récapitulatif</h3>' +
-    '<div style="background:#f7f8fa;border:1px solid #e5e7eb;border-radius:12px;padding:16px;color:#111">' +
-    bloc +
-    '</div>' +
-    '</div>'
+    '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Solde reçu</title>' +
+    '<style>body{font-family:\'Helvetica Neue\',Arial,sans-serif;background:#f2f4f8;padding:40px 20px;margin:0;}.container{max-width:640px;margin:auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.05);}.header{background:' + color + ';color:#ffffff;text-align:center;padding:28px;}.header h1{margin:0;font-size:22px;letter-spacing:0.5px;}.section{padding:24px 28px;border-bottom:1px solid #eee;}.section:last-child{border-bottom:none;}.details{background:#f9fafb;padding:16px;border-left:3px solid ' + color + ';border-radius:8px;margin-top:12px;}</style></head><body>' +
+    '<div class="container"><div class="header"><h1>✅ Solde reçu</h1></div>' +
+    '<div class="section"><p><strong>Client :</strong> ' + escapeHtml_(data.name||'') + '</p><p><strong>Email :</strong> ' + escapeHtml_(data.email||'') + '</p><p><strong>Téléphone :</strong> ' + (data.tel?escapeHtml_(data.tel):'Non renseigné') + '</p></div>' +
+    '<div class="section"><p><strong>Montant solde :</strong> ' + fmt(paymentData.amount) + ' €</p><p><strong>Référence Stripe :</strong> ' + escapeHtml_(paymentData.paymentIntentId||'') + '</p></div>' +
+    '<div class="section"><h3 style="margin:0 0 10px;color:' + color + '">📋 Récapitulatif</h3><div class="details">' + details + '</div></div>' +
+    '</div></body></html>'
   )
 }
 
