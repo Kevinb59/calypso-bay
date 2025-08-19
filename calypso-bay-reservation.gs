@@ -786,10 +786,17 @@ function testSendEmail_(p) {
     const headers = data[0]
     const idIdx = headers.indexOf('id')
     let rowIndex = -1
-    for (let i = 1; i < data.length; i++) if (data[i][idIdx] === token) { rowIndex = i; break }
-    if (rowIndex === -1) return jsonOut({ status: 'error', message: 'Réservation non trouvée' })
+    for (let i = 1; i < data.length; i++)
+      if (data[i][idIdx] === token) {
+        rowIndex = i
+        break
+      }
+    if (rowIndex === -1)
+      return jsonOut({ status: 'error', message: 'Réservation non trouvée' })
     const row = data[rowIndex]
-    const h = function (k) { return headers.indexOf(k) }
+    const h = function (k) {
+      return headers.indexOf(k)
+    }
     const d = {
       token: token,
       name: row[h('name')],
@@ -808,27 +815,62 @@ function testSendEmail_(p) {
       city: h('city') !== -1 ? row[h('city')] : '',
       postal: h('postal') !== -1 ? row[h('postal')] : '',
       country: h('country') !== -1 ? row[h('country')] : '',
-      childrenAges: [row[h('childAge1')], row[h('childAge2')], row[h('childAge3')], row[h('childAge4')], row[h('childAge5')]].filter(function(v){return v!=='' && v!=null})
+      childrenAges: [
+        row[h('childAge1')],
+        row[h('childAge2')],
+        row[h('childAge3')],
+        row[h('childAge4')],
+        row[h('childAge5')]
+      ].filter(function (v) {
+        return v !== '' && v != null
+      })
     }
     const pay = {
       amount: Number(row[h('balanceAmount')] || row[h('depositAmount')] || 0),
-      paymentIntentId: String(row[h('balancePaymentIntentId')] || row[h('depositPaymentIntentId')] || ''),
+      paymentIntentId: String(
+        row[h('balancePaymentIntentId')] ||
+          row[h('depositPaymentIntentId')] ||
+          ''
+      ),
       status: 'succeeded'
     }
     if (kind === 'balanceClient') {
-      MailApp.sendEmail({ to: to, replyTo: RECIPIENT_EMAIL, subject: 'Solde payé – Calypso Bay', htmlBody: buildBalanceClientEmail_(d, pay) })
+      MailApp.sendEmail({
+        to: to,
+        replyTo: RECIPIENT_EMAIL,
+        subject: 'Solde payé – Calypso Bay',
+        htmlBody: buildBalanceClientEmail_(d, pay)
+      })
     } else if (kind === 'balanceManager') {
-      MailApp.sendEmail({ to: to, replyTo: RECIPIENT_EMAIL, subject: 'Solde reçu – Calypso Bay', htmlBody: buildBalanceManagerEmail_(d, pay) })
+      MailApp.sendEmail({
+        to: to,
+        replyTo: RECIPIENT_EMAIL,
+        subject: 'Solde reçu – Calypso Bay',
+        htmlBody: buildBalanceManagerEmail_(d, pay)
+      })
     } else if (kind === 'depositClient') {
-      MailApp.sendEmail({ to: to, replyTo: RECIPIENT_EMAIL, subject: 'Acompte reçu – Calypso Bay', htmlBody: buildFinalizationClientEmail_(d, pay) })
+      MailApp.sendEmail({
+        to: to,
+        replyTo: RECIPIENT_EMAIL,
+        subject: 'Acompte reçu – Calypso Bay',
+        htmlBody: buildFinalizationClientEmail_(d, pay)
+      })
     } else if (kind === 'depositManager') {
-      MailApp.sendEmail({ to: to, replyTo: RECIPIENT_EMAIL, subject: 'Acompte reçu – Calypso Bay', htmlBody: buildFinalizationManagerEmail_(d, pay) })
+      MailApp.sendEmail({
+        to: to,
+        replyTo: RECIPIENT_EMAIL,
+        subject: 'Acompte reçu – Calypso Bay',
+        htmlBody: buildFinalizationManagerEmail_(d, pay)
+      })
     } else {
       return jsonOut({ status: 'error', message: 'Type invalide' })
     }
     return jsonOut({ status: 'success' })
   } catch (err) {
-    return jsonOut({ status: 'error', message: 'Erreur: ' + (err && err.message ? err.message : String(err)) })
+    return jsonOut({
+      status: 'error',
+      message: 'Erreur: ' + (err && err.message ? err.message : String(err))
+    })
   }
 }
 
