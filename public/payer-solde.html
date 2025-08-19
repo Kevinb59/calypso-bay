@@ -55,8 +55,24 @@
         color: white;
         position: relative;
       }
-      .payment-lock{ position:absolute; inset:0; display:none; align-items:center; justify-content:center; backdrop-filter: blur(3px); background: rgba(17,24,39,.35); z-index: 5; }
-      .payment-lock .lock-box{ background: rgba(255,255,255,.95); color:#111827; padding:14px 18px; border-radius:12px; font-weight:700; box-shadow:0 10px 25px rgba(0,0,0,.25); }
+      .payment-lock {
+        position: absolute;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(3px);
+        background: rgba(17, 24, 39, 0.35);
+        z-index: 5;
+      }
+      .payment-lock .lock-box {
+        background: rgba(255, 255, 255, 0.95);
+        color: #111827;
+        padding: 14px 18px;
+        border-radius: 12px;
+        font-weight: 700;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      }
       .payment-row {
         display: flex;
         justify-content: space-between;
@@ -169,7 +185,9 @@
           </div>
           <div class="inner">
             <div class="payment-card">
-              <div class="payment-lock" id="balance-lock"><div class="lock-box" id="balance-lock-text"></div></div>
+              <div class="payment-lock" id="balance-lock">
+                <div class="lock-box" id="balance-lock-text"></div>
+              </div>
               <h4 style="margin: 0 0 10px 0">Récapitulatif du paiement</h4>
               <div class="payment-row">
                 <span>Total</span><span id="total-amount">—</span>
