@@ -82,6 +82,19 @@
           </div>
         </section>
 
+        <!-- Récapitulatif de la réservation -->
+        <section class="panel spotlight medium right color1" id="recap">
+          <div class="content span-9-5">
+            <h3 class="major">📅 Détails de la réservation</h3>
+            <div class="form-section">
+              <div id="reservation-recap" class="recap-card">Chargement du récapitulatif…</div>
+            </div>
+          </div>
+          <div class="image filtered tinted" data-position="center">
+            <img src="images/pic02.jpg" alt="" />
+          </div>
+        </section>
+
         <section class="panel spotlight medium right" id="form">
           <div class="content span-9-5">
             <h3 class="major">🧾 Demande d’annulation</h3>
@@ -142,6 +155,20 @@
       const token = params.get('token')
       const policyBox = document.getElementById('policy')
       const btn = document.getElementById('cancel-btn')
+      
+      // Styles minimaux pour la carte récap et pastilles
+      const style = document.createElement('style')
+      style.textContent = `
+        .recap-card { color:#fff; }
+        .detail-item{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.25); }
+        .detail-item:last-child{ border-bottom:none; }
+        .detail-item strong{ font-weight:700; }
+        .pills{ margin-top:12px; display:flex; gap:8px; flex-wrap:wrap; }
+        .pill{ padding:6px 10px; border-radius:8px; font-weight:600; }
+        .pill.green{ background:rgba(16,185,129,.18); border:1px solid rgba(16,185,129,.45); }
+        .pill.red{ background:rgba(239,68,68,.18); border:1px solid rgba(239,68,68,.45); }
+      `
+      document.head.appendChild(style)
 
       async function load() {
         if (!token) {

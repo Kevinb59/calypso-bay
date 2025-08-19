@@ -534,10 +534,13 @@ function getReservationData_(token) {
     const hasDeposit =
       depositAmountIndex !== -1 &&
       Number(data[rowIndex][depositAmountIndex] || 0) > 0
+    // Autoriser la consultation si la réservation est acceptée,
+    // si l'acompte est payé, ou si le solde est déjà payé
     if (
       !(
         currentStatus === 'accepted' ||
-        (currentStatus === 'depositPay' && hasDeposit)
+        (currentStatus === 'depositPay' && hasDeposit) ||
+        currentStatus === 'balancePay'
       )
     ) {
       return jsonOut({
@@ -1465,7 +1468,10 @@ function requestCancellation_(token, reason) {
       to: String(email),
       replyTo: RECIPIENT_EMAIL,
       subject: "Votre demande d'annulation – Calypso Bay",
-      htmlBody: buildCancelClientEmail_({ name: name, email: email }, String(reason || ''))
+      htmlBody: buildCancelClientEmail_(
+        { name: name, email: email },
+        String(reason || '')
+      )
     })
     // Préparer données pour le gestionnaire
     const dataManager = {
@@ -1982,10 +1988,16 @@ function buildCancelClientEmail_(data, reason) {
   const color = '#5d3fd3'
   return (
     '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Annulation demandée</title>' +
-    "<style>body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f2f4f8;padding:40px 20px;margin:0;}.container{max-width:640px;margin:auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.05);}.header{background:" + color + ';color:#ffffff;text-align:center;padding:28px;}.header h1{margin:0;font-size:22px;}.section{padding:24px 28px;border-bottom:1px solid #eee;}.section:last-child{border-bottom:none;}</style></head><body>' +
+    "<style>body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f2f4f8;padding:40px 20px;margin:0;}.container{max-width:640px;margin:auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.05);}.header{background:" +
+    color +
+    ';color:#ffffff;text-align:center;padding:28px;}.header h1{margin:0;font-size:22px;}.section{padding:24px 28px;border-bottom:1px solid #eee;}.section:last-child{border-bottom:none;}</style></head><body>' +
     '<div class="container"><div class="header"><h1>🏖️ Calypso Bay</h1></div>' +
-    '<div class="section"><p>Bonjour ' + escapeHtml_(data.name || '') + ',</p><p>Nous avons bien reçu votre <strong>demande d’annulation</strong>. Notre équipe va l’examiner rapidement et revenir vers vous.</p>' +
-    (reason ? '<p><strong>Motif communiqué :</strong> ' + escapeHtml_(reason) + '</p>' : '') +
+    '<div class="section"><p>Bonjour ' +
+    escapeHtml_(data.name || '') +
+    ',</p><p>Nous avons bien reçu votre <strong>demande d’annulation</strong>. Notre équipe va l’examiner rapidement et revenir vers vous.</p>' +
+    (reason
+      ? '<p><strong>Motif communiqué :</strong> ' + escapeHtml_(reason) + '</p>'
+      : '') +
     '</div><div class="section" style="text-align:center;color:#666;font-size:13px">Merci de votre compréhension.</div></div></body></html>'
   )
 }
@@ -1995,10 +2007,26 @@ function buildCancelManagerEmail_(data, reason) {
   const details = formatReservationDetails_(data)
   return (
     '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Demande d\'annulation reçue</title>' +
-    "<style>body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f2f4f8;padding:40px 20px;margin:0;}.container{max-width:640px;margin:auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.05);}.header{background:" + color + ';color:#ffffff;text-align:center;padding:28px;}.header h1{margin:0;font-size:22px;}.section{padding:24px 28px;border-bottom:1px solid #eee;}.section:last-child{border-bottom:none;}.details{background:#f9fafb;padding:16px;border-left:3px solid ' + color + ';border-radius:8px;margin-top:12px;}</style></head><body>' +
+    "<style>body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f2f4f8;padding:40px 20px;margin:0;}.container{max-width:640px;margin:auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.05);}.header{background:" +
+    color +
+    ';color:#ffffff;text-align:center;padding:28px;}.header h1{margin:0;font-size:22px;}.section{padding:24px 28px;border-bottom:1px solid #eee;}.section:last-child{border-bottom:none;}.details{background:#f9fafb;padding:16px;border-left:3px solid ' +
+    color +
+    ';border-radius:8px;margin-top:12px;}</style></head><body>' +
     '<div class="container"><div class="header"><h1>🛑 Demande d’annulation</h1></div>' +
-    '<div class="section"><p><strong>Client :</strong> ' + escapeHtml_(data.name || '') + '</p><p><strong>Email :</strong> ' + escapeHtml_(data.email || '') + '</p>' + (reason ? '<p><strong>Motif :</strong> ' + escapeHtml_(reason) + '</p>' : '') + '</div>' +
-    '<div class="section"><h3 style="margin:0 0 10px;color:' + color + '">📋 Récapitulatif</h3><div class="details">' + details + '</div></div>' +
+    '<div class="section"><p><strong>Client :</strong> ' +
+    escapeHtml_(data.name || '') +
+    '</p><p><strong>Email :</strong> ' +
+    escapeHtml_(data.email || '') +
+    '</p>' +
+    (reason
+      ? '<p><strong>Motif :</strong> ' + escapeHtml_(reason) + '</p>'
+      : '') +
+    '</div>' +
+    '<div class="section"><h3 style="margin:0 0 10px;color:' +
+    color +
+    '">📋 Récapitulatif</h3><div class="details">' +
+    details +
+    '</div></div>' +
     '</div></body></html>'
   )
 }
