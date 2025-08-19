@@ -52,6 +52,18 @@
         padding: 12px;
         border: 1px solid rgba(255, 255, 255, 0.4);
         background: rgba(255, 255, 255, 0.9);
+        color: #111827;
+      }
+      textarea::placeholder {
+        color: #6b7280;
+        opacity: 1;
+      }
+      .panel.color4-alt .inner {
+        max-width: 980px;
+      }
+      .panel.color4-alt .inner .form-section {
+        max-width: 720px;
+        margin: 0 auto;
       }
     </style>
   </head>
@@ -166,6 +178,13 @@
         .pill{ padding:6px 10px; border-radius:8px; font-weight:600; }
         .pill.green{ background:rgba(16,185,129,.18); border:1px solid rgba(16,185,129,.45); }
         .pill.red{ background:rgba(239,68,68,.18); border:1px solid rgba(239,68,68,.45); }
+        .confirm-overlay{ position:fixed !important; inset:0; background:rgba(0,0,0,.35); backdrop-filter: blur(3px); display:none; align-items:center; justify-content:center; z-index: 999999; }
+        .confirm-box{ background: rgba(255,255,255,0.95); padding:20px; border-radius:14px; max-width: 460px; width: calc(100% - 40px); box-shadow:0 10px 30px rgba(0,0,0,0.25); }
+        .confirm-box h4{ margin:0 0 8px 0; color:#111827; }
+        .confirm-actions{ display:flex; gap:10px; justify-content:flex-end; margin-top:14px; }
+        .btn{ border:none; border-radius:10px; padding:10px 14px; font-weight:600; cursor:pointer; }
+        .btn.cancel{ background:#e5e7eb; color:#111827; }
+        .btn.danger{ background:linear-gradient(135deg,#ef4444,#dc2626); color:#fff; }
       `
       document.head.appendChild(style)
 
