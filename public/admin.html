@@ -526,9 +526,12 @@
 
       async function fetchRows(q = '') {
         showLoader(true)
-        const r = await fetch(API_LIST + `?q=${encodeURIComponent(q)}`, {
-          headers: { 'x-admin-key': ADMIN_KEY }
-        })
+        const r = await fetch(
+          API_LIST + (q ? `&q=${encodeURIComponent(q)}` : ''),
+          {
+            headers: { 'x-admin-key': ADMIN_KEY }
+          }
+        )
         const j = await r.json()
         showLoader(false)
         if (j.status !== 'success') throw new Error(j.message || 'Erreur')
@@ -593,7 +596,7 @@
       async function openDetail(token) {
         showLoader(true)
         const r = await fetch(
-          API_DETAIL + `?token=${encodeURIComponent(token)}`,
+          API_DETAIL + `&token=${encodeURIComponent(token)}`,
           { headers: { 'x-admin-key': ADMIN_KEY } }
         )
         const j = await r.json()
