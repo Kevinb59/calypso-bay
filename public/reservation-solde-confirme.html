@@ -4,76 +4,459 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Solde payé – Calypso Bay</title>
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="stylesheet" href="assets/css/custom.css" />
+    <!-- Polices -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Engagement&display=swap"
+      rel="stylesheet"
+    />
     <style>
-      .success-container {
-        min-height: 100vh;
+      /* Police signature */
+      @font-face {
+        font-family: 'Themysion';
+        src: local('Themysion'),
+          url('assets/fonts/Themysion.ttf') format('truetype');
+        font-display: swap;
+      }
+      :root {
+        --brand-1: #14b8a6;
+        --brand-2: #a3e635;
+        --brand-3: #8b5cf6;
+        --text: #0b1220;
+        --muted: #5b6475;
+        --card: rgba(255, 255, 255, 0.76);
+        --card-border: rgba(255, 255, 255, 0.6);
+        --ring: rgba(20, 184, 166, 0.35);
+        --success: #16a34a;
+        --hero-img: url('images/gallery/fulls/Jardin/13.jpg');
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: 'Source Sans Pro', system-ui, -apple-system, Segoe UI,
+          Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
+        color: var(--text);
+        background: radial-gradient(
+            1200px 800px at 10% -10%,
+            rgba(255, 255, 255, 0.83),
+            transparent 60%
+          ),
+          radial-gradient(
+            1300px 900px at 90% 110%,
+            rgba(255, 255, 255, 0.7),
+            transparent 60%
+          ),
+          linear-gradient(135deg, #f5f7fb 0%, #f1f0ff 100%);
+      }
+
+      .wrap {
+        min-height: 100%;
+        display: grid;
+        place-items: center;
+        padding: 32px;
+      }
+
+      .stage {
+        position: relative;
+        width: min(1180px, 95vw);
+      }
+
+      .copyright {
+        position: absolute;
+        right: -10px;
+        bottom: -20px;
+        z-index: 5;
         display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 24px;
-        background: #0b0d10;
+        align-items: baseline;
+        gap: 0.35em;
+        font: 600 12px 'Source Sans Pro', sans-serif;
+        color: rgba(11, 18, 32, 0.55);
+        background: rgba(255, 255, 255, 0.82);
+        border: 1px solid rgba(2, 6, 23, 0.1);
+        border-radius: 999px;
+        padding: 6px 10px;
+        box-shadow: 0 10px 24px rgba(2, 6, 23, 0.08);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
       }
-      .card {
-        max-width: 720px;
+      .copyright .sig {
+        font-family: 'Engagement', 'Brush Script MT', cursive;
+        font-size: 2.2em;
+        line-height: 1;
+        margin-left: 0.25em;
+        text-decoration: none;
+        color: inherit;
+        font-weight: 400;
+      }
+
+      @media (max-width: 600px) {
+        .copyright {
+          right: 0;
+          bottom: -14px;
+          padding: 6px 8px;
+        }
+      }
+
+      .panel {
         width: 100%;
-        background: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 16px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        border-radius: 28px;
         overflow: hidden;
+        position: relative;
+        box-shadow: 0 22px 70px rgba(10, 17, 32, 0.18),
+          0 2px 10px rgba(2, 6, 23, 0.12);
+        isolation: isolate;
       }
-      .card-header {
-        background: #5d3fd3;
-        height: 56px;
+      .panel::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background-image: repeating-radial-gradient(
+          rgba(0, 0, 0, 0.02) 0 1px,
+          transparent 1px 4px
+        );
+        mix-blend-mode: multiply;
       }
-      .card-body {
-        padding: 24px;
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica,
-          Arial, sans-serif;
-        color: #0f172a;
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
       }
-      .title {
-        margin: 0 0 12px 0;
-        font-size: 22px;
-        font-weight: 800;
+      @media (max-width: 860px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
       }
-      .subtitle {
-        color: #475569;
-        margin-bottom: 14px;
+
+      .left {
+        background: linear-gradient(
+          120deg,
+          color-mix(in oklab, var(--brand-1) 88%, #fff 12%),
+          color-mix(in oklab, var(--brand-2) 88%, #fff 12%)
+        );
+        padding: clamp(24px, 5vw, 48px);
+        position: relative;
       }
+      .glass {
+        background: var(--card);
+        border: 1px solid var(--card-border);
+        backdrop-filter: blur(12px) saturate(1.15);
+        -webkit-backdrop-filter: blur(12px) saturate(1.15);
+        border-radius: 22px;
+        padding: clamp(18px, 3.8vw, 28px);
+        box-shadow: 0 18px 48px rgba(2, 6, 23, 0.12);
+      }
+
+      h1 {
+        font-family: 'Source Sans Pro', sans-serif;
+        font-weight: 700;
+        font-size: clamp(26px, 4vw, 34px);
+        line-height: 1.2;
+        margin: 10px 0 2px;
+      }
+      .lead {
+        color: #15202b;
+        opacity: 0.9;
+        margin: 0 0 18px;
+        font-size: clamp(15px, 2.2vw, 16px);
+        line-height: 1.6;
+      }
+
+      .divider {
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.5),
+          rgba(0, 0, 0, 0.05),
+          rgba(255, 255, 255, 0.4)
+        );
+        margin: 12px 0 16px;
+      }
+
+      .badge {
+        width: 68px;
+        height: 68px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        margin: 4px 0 14px;
+        background: radial-gradient(
+          circle at 30% 30%,
+          rgba(255, 255, 255, 0.9),
+          rgba(255, 255, 255, 0.7)
+        );
+        position: relative;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9),
+          0 10px 25px rgba(22, 163, 74, 0.25);
+      }
+      .badge::after {
+        content: '';
+        position: absolute;
+        inset: -2px;
+        border-radius: 50%;
+        padding: 3px;
+        background: conic-gradient(
+          from 200deg,
+          var(--success),
+          color-mix(in oklab, var(--brand-1) 60%, #fff 40%),
+          var(--brand-2),
+          var(--success)
+        );
+        -webkit-mask: linear-gradient(#000 0 0) content-box,
+          linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        animation: spin 6s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(1turn);
+        }
+      }
+      .badge span {
+        font-size: 32px;
+        line-height: 1;
+        color: var(--success);
+      }
+
+      .status {
+        display: grid;
+        grid-template-columns: 40px 1fr;
+        gap: 12px;
+        padding: 14px 16px;
+        border-radius: 14px;
+        border: 1px solid rgba(22, 163, 74, 0.35);
+        background: linear-gradient(
+          0deg,
+          rgba(22, 163, 74, 0.08),
+          rgba(22, 163, 74, 0.06)
+        );
+      }
+      .status .icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        background: rgba(22, 163, 74, 0.16);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        color: var(--success);
+        font-weight: 700;
+      }
+      .status strong {
+        display: block;
+        font-weight: 600;
+      }
+      .status small {
+        display: block;
+        color: color-mix(in oklab, var(--muted) 85%, #000 15%);
+      }
+
+      .muted {
+        color: var(--text);
+        opacity: 0.7;
+        margin: 10px 0 22px;
+      }
+
       .actions {
-        margin-top: 18px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
       }
       .btn {
-        display: inline-block;
-        padding: 12px 16px;
-        border-radius: 10px;
+        --h: 46px;
+        height: var(--h);
+        padding: 0 18px;
+        border-radius: 14px;
+        border: 1px solid transparent;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-weight: 600;
         text-decoration: none;
         cursor: pointer;
+        transition: transform 0.06s ease, box-shadow 0.2s ease,
+          background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        box-shadow: 0 8px 20px rgba(2, 6, 23, 0.08);
       }
-      .btn-primary {
-        background: #5d3fd3;
+      .btn:active {
+        transform: translateY(1px);
+      }
+      .btn.primary {
+        background: linear-gradient(
+          180deg,
+          color-mix(in oklab, var(--brand-1) 86%, #fff 14%),
+          color-mix(in oklab, var(--brand-2) 86%, #000 14%)
+        );
         color: #fff;
+        border-color: color-mix(
+          in oklab,
+          var(--brand-1) 40%,
+          var(--brand-2) 60%
+        );
+      }
+      .btn.primary:hover {
+        box-shadow: 0 14px 28px rgba(20, 184, 166, 0.28);
+      }
+      .btn.ghost {
+        background: rgba(255, 255, 255, 0.82);
+        color: #0b1220;
+        border-color: rgba(2, 6, 23, 0.1);
+      }
+      .btn.ghost:hover {
+        border-color: var(--ring);
+        box-shadow: 0 10px 26px rgba(2, 6, 23, 0.12);
+      }
+
+      .right {
+        position: relative;
+        min-height: 360px;
+        background: var(--brand-3);
+      }
+      .hero {
+        position: absolute;
+        inset: 0;
+        background-image: var(
+          --hero-img,
+          url('images/gallery/fulls/Jardin/13.jpg')
+        );
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      .hero::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          90deg,
+          rgba(10, 22, 43, 0.55) 0%,
+          rgba(10, 22, 43, 0.15) 55%,
+          rgba(10, 22, 43, 0.05) 100%
+        );
+      }
+      .hero-caption {
+        position: absolute;
+        z-index: 2;
+        left: clamp(18px, 4vw, 28px);
+        bottom: clamp(18px, 4vw, 28px);
+        color: #fff;
+        max-width: 85%;
+      }
+      .hero-caption .hero-brand {
+        font-family: 'Themysion', 'Great Vibes', cursive;
+        font-size: clamp(40px, 8vw, 76px);
+        line-height: 1;
+        letter-spacing: 0.5px;
+        text-shadow: 0 8px 30px rgba(0, 0, 0, 0.28);
+        margin: 0 0 6px;
+        opacity: 0.98;
+      }
+      .hero-caption h2 {
+        font: 700 clamp(18px, 3.2vw, 24px) / 1.25 'Source Sans Pro', sans-serif;
+        margin: 0 0 6px;
+      }
+      .hero-caption p {
+        margin: 0;
+        opacity: 0.9;
+        font-size: clamp(13px, 2.2vw, 14px);
+      }
+
+      @media (max-width: 860px) {
+        .right {
+          min-height: 240px;
+        }
       }
     </style>
   </head>
   <body>
-    <div class="success-container">
-      <div class="card">
-        <div class="card-header"></div>
-        <div class="card-body">
-          <h1 class="title">🎉 Solde payé – Merci !</h1>
-          <p class="subtitle">
-            Votre paiement du solde a bien été pris en compte. Nous avons envoyé
-            un email de confirmation avec le récapitulatif de votre réservation.
-          </p>
-          <div class="actions">
-            <a class="btn btn-primary" href="/">Retour à l'accueil</a>
+    <main class="wrap">
+      <div class="stage">
+        <section class="panel">
+          <div class="grid">
+            <!-- Colonne message -->
+            <div class="left">
+              <div class="glass" role="status" aria-live="polite">
+                <div class="badge" aria-hidden="true"><span>✓</span></div>
+                <h1>Solde payé&nbsp;!</h1>
+                <div class="divider"></div>
+                <p class="lead">
+                  Merci&nbsp;! Votre paiement du solde a bien été reçu. Votre
+                  réservation est désormais entièrement réglée.
+                </p>
+
+                <div class="status" aria-label="Statut du paiement">
+                  <div class="icon" aria-hidden="true">✓</div>
+                  <div>
+                    <strong>Paiement du solde validé</strong>
+                    <small
+                      >Un e‑mail de confirmation vous a été envoyé avec le
+                      récapitulatif de votre réservation. Vous y trouverez aussi
+                      un lien pour annuler votre réservation si besoin.</small
+                    >
+                  </div>
+                </div>
+
+                <p class="muted">
+                  Besoin d’aide ou d’un complément d’information&nbsp;?
+                  Écrivez‑nous, nous répondons rapidement.
+                </p>
+
+                <div class="actions">
+                  <a class="btn primary" href="index.html"
+                    ><i class="fa-solid fa-house" aria-hidden="true"></i
+                    ><span>Retour à l’accueil</span></a
+                  >
+                  <a class="btn ghost" href="mailto:contact@calypso-bay.com"
+                    ><i class="fa-solid fa-envelope" aria-hidden="true"></i
+                    ><span>Nous contacter</span></a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Colonne photo -->
+            <aside class="right" aria-hidden="true">
+              <div class="hero"></div>
+              <div class="hero-caption">
+                <div class="hero-brand">Calypso Bay</div>
+                <h2>On a hâte de vous accueillir</h2>
+                <p>Vue mer, piscine à débordement & atmosphère tropicale.</p>
+              </div>
+            </aside>
           </div>
+        </section>
+        <div class="copyright">
+          <span>&copy; Calypso Bay | By</span>
+          <a
+            href="https://moriarty-design.fr"
+            target="_blank"
+            rel="noopener"
+            class="sig"
+            >Moriarty</a
+          >
         </div>
       </div>
-    </div>
+    </main>
   </body>
 </html>
