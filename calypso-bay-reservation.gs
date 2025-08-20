@@ -725,7 +725,8 @@ function listReservations_(q) {
         nbChilds: Number(row[idx('nbChilds')] || 0),
         priceTotal: Number(row[idx('priceTotal')] || 0),
         depositAmount: Number(row[idx('depositAmount')] || 0),
-        balanceAmount: Number(row[idx('balanceAmount')] || 0)
+        balanceAmount: Number(row[idx('balanceAmount')] || 0),
+        cancelStatus: row[idx('cancelStatus')]
       }
       if (!q) {
         out.push(item)
