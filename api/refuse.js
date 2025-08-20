@@ -1,6 +1,6 @@
 /**
- * Route Vercel pour gérer les actions de réservation (accepter/refuser)
- * Met à jour le statut dans Google Sheets et envoie un email de confirmation
+ * Route Vercel pour refuser une réservation
+ * Met à jour le statut dans Google Sheets et envoie un email de refus
  */
 
 // Configuration
@@ -23,22 +23,16 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Méthode non autorisée' })
   }
 
-  const { token, action } = req.query
+  const { token } = req.query
 
   if (!token) {
     return res.status(400).json({ error: 'Token manquant' })
   }
 
-  if (!action || !['accept', 'refuse'].includes(action)) {
-    return res
-      .status(400)
-      .json({ error: 'Action invalide. Doit être "accept" ou "refuse"' })
-  }
-
   try {
-    // Appeler Google Apps Script pour traiter l'action
+    // Appeler Google Apps Script pour traiter le refus
     const response = await fetch(
-      `${GAS_URL}?action=${action}&token=${encodeURIComponent(token)}`,
+      `${GAS_URL}?action=refuse&token=${encodeURIComponent(token)}`,
       {
         method: 'GET',
         headers: {
@@ -54,18 +48,11 @@ export default async function handler(req, res) {
     const result = await response.json()
 
     if (result.status === 'success') {
-      // Rediriger vers la page appropriée selon l'action
-      if (action === 'accept') {
-        res.redirect(
-          302,
-          '/reservation-acceptee.html?token=' + encodeURIComponent(token)
-        )
-      } else {
-        res.redirect(
-          302,
-          '/reservation-refusee.html?token=' + encodeURIComponent(token)
-        )
-      }
+      // Rediriger vers une page de confirmation
+      res.redirect(
+        302,
+        '/reservation-refusee.html?token=' + encodeURIComponent(token)
+      )
     } else {
       // Rediriger vers une page d'erreur
       res.redirect(
@@ -74,7 +61,7 @@ export default async function handler(req, res) {
       )
     }
   } catch (error) {
-    console.error(`Erreur lors de l'action ${action}:`, error)
+    console.error('Erreur lors du refus:', error)
     res.redirect(
       302,
       '/erreur-reservation.html?error=' +
