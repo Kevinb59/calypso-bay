@@ -64,19 +64,21 @@
             transparent 60%
           ),
           linear-gradient(135deg, #f5f7fb 0%, #f1f0ff 100%);
+        overflow-x: hidden;
       }
 
       .wrap {
         min-height: 100%;
         display: grid;
         place-items: center;
-        padding: 32px;
+        padding: clamp(16px, 4vw, 32px);
       }
 
       /* Conteneur autour du panneau pour positionner le copyright hors cadre */
       .stage {
         position: relative;
-        width: min(1180px, 95vw);
+        width: min(1180px, 100%);
+        margin-inline: auto;
       }
 
       .copyright {
