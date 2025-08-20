@@ -285,10 +285,10 @@
             lines.join('') +
             `<div class="pills">
              <span class="pill ${deposit > 0 ? 'green' : 'red'}">${
-              deposit > 0 ? '✔️' : '✖️'
+              deposit > 0 ? '✅' : '❌'
             } Acompte : ${fmtMoney(deposit)} €</span>
              <span class="pill ${balancePaid ? 'green' : 'red'}">${
-              balancePaid ? '✔️' : '✖️'
+              balancePaid ? '✅' : '❌'
             } Solde : ${fmtMoney(balanceAmount)} €</span>
            </div>`
 
