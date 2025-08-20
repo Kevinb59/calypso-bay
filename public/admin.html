@@ -109,6 +109,20 @@
       tbody tr:hover td {
         background: var(--row);
       }
+      /* Ligne avec demande d'annulation en attente */
+      tbody tr.cancel-pending td {
+        background: rgba(239, 68, 68, 0.1) !important;
+      }
+      tbody tr.cancel-pending:hover td {
+        background: rgba(239, 68, 68, 0.15) !important;
+      }
+      /* Ligne avec séjour terminé (plus d'un jour) */
+      tbody tr.past-stay {
+        opacity: 0.4;
+      }
+      tbody tr.past-stay:hover {
+        opacity: 0.6;
+      }
       .pay-dots {
         display: inline-flex;
         gap: 6px;
@@ -566,8 +580,25 @@
             const balancePaid =
               r.status === 'balancePay' ||
               (r.balancePaidAt && String(r.balancePaidAt).length > 0)
+
+            // Vérifier si demande d'annulation en attente
+            const hasCancelPending = r.cancelStatus === 'pending'
+
+            // Vérifier si séjour terminé (plus d'un jour)
+            const now = new Date()
+            const endDate = new Date(r.endDate)
+            const oneDayMs = 24 * 60 * 60 * 1000
+            const isPastStay = endDate && now - endDate > oneDayMs
+
+            // Classes CSS conditionnelles
+            const rowClasses = []
+            if (hasCancelPending) rowClasses.push('cancel-pending')
+            if (isPastStay) rowClasses.push('past-stay')
+            const classAttr =
+              rowClasses.length > 0 ? ` class="${rowClasses.join(' ')}"` : ''
+
             return `
-          <tr>
+          <tr${classAttr}>
             <td><span class="badge ${badgeClass(r.status)}">${frStatus(
               r.status
             )}</span></td>
