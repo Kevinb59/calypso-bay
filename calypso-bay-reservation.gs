@@ -13,8 +13,7 @@ const SHEET_ID = '1r6rmtpCZ3AZSSQKb6Kf51-Vdpkc1uzM2brubh6RK1tk' // Fichier Googl
 const SHEET_NAME = 'ReservationsTemp' // Onglet tampon
 
 const SITE_BASE = 'https://www.calypso-bay.com' // Domaine prod
-const ACCEPT_PATH = '/api/accept' // Route acceptation
-const REFUSE_PATH = '/api/refuse' // Route refus
+const MANAGE_PATH = '/api/manageReservation' // Route fusionnée accept/refuse
 // Liens post-acompte (à implémenter côté site si besoin)
 const CANCEL_PATH = '/annuler-reservation'
 const PAY_BALANCE_PATH = '/payer-solde'
@@ -96,8 +95,8 @@ function doGet(e) {
     const row = writeToSheet_(data, token)
 
     // 3) Construire les URLs d'action (Accepter / Refuser)
-    const acceptUrl = buildSiteUrl_(ACCEPT_PATH, { token })
-    const refuseUrl = buildSiteUrl_(REFUSE_PATH, { token })
+    const acceptUrl = buildSiteUrl_(MANAGE_PATH, { token, action: 'accept' })
+    const refuseUrl = buildSiteUrl_(MANAGE_PATH, { token, action: 'refuse' })
 
     // 4) Construire le HTML de l'email
     const html = buildEmailHtml_(data, { acceptUrl, refuseUrl })
