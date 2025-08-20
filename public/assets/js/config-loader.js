@@ -37,27 +37,31 @@
         return
       }
 
-      // En production, récupérer depuis l'API
-      // Chargement de la configuration depuis l'API (silencieux en prod)
+      // En production, utiliser les variables d'environnement côté client
+      // Ces variables doivent être définies dans le HTML ou via un script global
 
-      const response = await fetch('/api/config')
-
-      if (!response.ok) {
-        throw new Error(`Erreur HTTP: ${response.status}`)
+      // Vérifier si les variables sont déjà définies (par exemple dans index.html)
+      if (window.GAS_URL && window.GAS_CONTACT_URL) {
+        window.APP_CONFIG = { ENVIRONMENT: 'production' }
+        window.dispatchEvent(new CustomEvent('app:config-ready'))
+        return
       }
 
-      const config = await response.json()
+      // Fallback : essayer de récupérer depuis localStorage même en prod
+      const prodGasUrl = localStorage.getItem('GAS_URL')
+      const prodGasContactUrl = localStorage.getItem('GAS_CONTACT_URL')
+      const prodGoogleMapsApiKey = localStorage.getItem('GOOGLE_MAPS_API_KEY')
 
-      // Exposer les variables globalement
-      window.GAS_URL = config.GAS_URL
-      window.GAS_CONTACT_URL = config.GAS_CONTACT_URL
-      window.GOOGLE_MAPS_API_KEY = config.GOOGLE_MAPS_API_KEY
-
-      // N'exposons pas les valeurs en console
-      window.APP_CONFIG = { ENVIRONMENT: config.ENVIRONMENT || 'production' }
-
-      // Signaler aux autres scripts que la config est prête
-      window.dispatchEvent(new CustomEvent('app:config-ready'))
+      if (prodGasUrl && prodGasContactUrl) {
+        window.GAS_URL = prodGasUrl
+        window.GAS_CONTACT_URL = prodGasContactUrl
+        window.GOOGLE_MAPS_API_KEY = prodGoogleMapsApiKey
+        window.APP_CONFIG = { ENVIRONMENT: 'production' }
+        window.dispatchEvent(new CustomEvent('app:config-ready'))
+      } else {
+        console.warn('⚠️ Variables de configuration manquantes en production')
+        window.APP_CONFIG = { ENVIRONMENT: 'fallback' }
+      }
     } catch (error) {
       console.error('❌ Erreur lors du chargement de la configuration:', error)
 

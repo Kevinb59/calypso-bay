@@ -312,6 +312,9 @@ Détail du prix :
   // URL récupérée depuis les variables d'environnement
   const GAS_URL = window.GAS_URL
 
+  // Récupérer l'élément stepToggle avant de l'utiliser
+  const stepToggle = document.getElementById('step-toggle')
+
   // Vérification que l'URL est configurée
   if (!GAS_URL) {
     console.error(
@@ -340,7 +343,6 @@ Détail du prix :
   })
 
   // Mise à jour du bouton pendant l'envoi
-  const stepToggle = document.getElementById('step-toggle')
   const originalText = stepToggle.textContent
   const originalIcon = stepToggle.querySelector('i')?.className || ''
 
