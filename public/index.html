@@ -442,7 +442,20 @@
 		<script src="assets/js/config-loader.js"></script>
 		<script src="assets/js/banner.js"></script>
 		<script src="assets/js/map.js"></script>
-		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBz-8y9XxvjP-ptHPgIz8DNpc5YGBJOeuw&callback=initMap"></script>
+		<script>
+			// Charger Google Maps API une fois la configuration prête
+			window.addEventListener('app:config-ready', function() {
+				if (window.GOOGLE_MAPS_API_KEY) {
+					const script = document.createElement('script');
+					script.src = `https://maps.googleapis.com/maps/api/js?key=${window.GOOGLE_MAPS_API_KEY}&callback=initMap`;
+					script.async = true;
+					script.defer = true;
+					document.head.appendChild(script);
+				} else {
+					console.error('❌ Clé API Google Maps non disponible');
+				}
+			});
+		</script>
 		<script src="assets/js/popup-reglement.js"></script>
 		<script src="assets/js/form-contact.js"></script>
 	</body>

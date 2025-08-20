@@ -7,16 +7,18 @@ export default function handler(req, res) {
   // Récupérer les variables d'environnement
   const gasUrl = process.env.NEXT_PUBLIC_GAS_URL
   const gasContactUrl = process.env.NEXT_PUBLIC_GAS_CONTACT_URL
+  const googleMapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
   const depositPercent = Number(process.env.DEPOSIT_PERCENT || '10')
   const depositMinEur = Number(process.env.DEPOSIT_MIN_EUR || '0.5')
 
   // Vérifier que les variables sont configurées
-  if (!gasUrl || !gasContactUrl) {
+  if (!gasUrl || !gasContactUrl || !googleMapsApiKey) {
     return res.status(500).json({
-      error: 'Variables d\'environnement non configurées',
+      error: "Variables d'environnement non configurées",
       missing: {
         gasUrl: !gasUrl,
-        gasContactUrl: !gasContactUrl
+        gasContactUrl: !gasContactUrl,
+        googleMapsApiKey: !googleMapsApiKey
       }
     })
   }
@@ -25,6 +27,7 @@ export default function handler(req, res) {
   res.status(200).json({
     GAS_URL: gasUrl,
     GAS_CONTACT_URL: gasContactUrl,
+    GOOGLE_MAPS_API_KEY: googleMapsApiKey,
     ENVIRONMENT: process.env.NODE_ENV || 'production',
     DEPOSIT_PERCENT: depositPercent,
     DEPOSIT_MIN_EUR: depositMinEur

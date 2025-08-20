@@ -19,15 +19,19 @@
         // Fallback local sans URLs codées en dur: lire depuis localStorage
         const localGasUrl = localStorage.getItem('GAS_URL')
         const localGasContactUrl = localStorage.getItem('GAS_CONTACT_URL')
+        const localGoogleMapsApiKey = localStorage.getItem(
+          'GOOGLE_MAPS_API_KEY'
+        )
 
-        if (localGasUrl && localGasContactUrl) {
+        if (localGasUrl && localGasContactUrl && localGoogleMapsApiKey) {
           window.GAS_URL = localGasUrl
           window.GAS_CONTACT_URL = localGasContactUrl
+          window.GOOGLE_MAPS_API_KEY = localGoogleMapsApiKey
           window.APP_CONFIG = { ENVIRONMENT: 'development' }
           window.dispatchEvent(new CustomEvent('app:config-ready'))
         } else {
           console.warn(
-            "⚠️ Variables locales manquantes. Définissez-les via localStorage: localStorage.setItem('GAS_URL','https://...'); localStorage.setItem('GAS_CONTACT_URL','https://...')"
+            "⚠️ Variables locales manquantes. Définissez-les via localStorage: localStorage.setItem('GAS_URL','https://...'); localStorage.setItem('GAS_CONTACT_URL','https://...'); localStorage.setItem('GOOGLE_MAPS_API_KEY','votre-clé-api')"
           )
         }
         return
@@ -47,6 +51,7 @@
       // Exposer les variables globalement
       window.GAS_URL = config.GAS_URL
       window.GAS_CONTACT_URL = config.GAS_CONTACT_URL
+      window.GOOGLE_MAPS_API_KEY = config.GOOGLE_MAPS_API_KEY
 
       // N'exposons pas les valeurs en console
       window.APP_CONFIG = { ENVIRONMENT: config.ENVIRONMENT || 'production' }
