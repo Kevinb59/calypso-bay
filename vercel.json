@@ -3,6 +3,7 @@
   "routes": [
     { "src": "^/payer-solde$", "dest": "/payer-solde.html" },
     { "src": "^/annuler-reservation$", "dest": "/annuler-reservation.html" },
-    { "src": "^/admin$", "dest": "/admin.html" }
+    { "src": "^/admin$", "dest": "/admin.html" },
+    { "src": "^/annulation-validee$", "dest": "/annulation-validee.html" }
   ]
 }

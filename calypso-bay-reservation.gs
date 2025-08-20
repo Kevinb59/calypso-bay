@@ -156,6 +156,11 @@ function doPost(e) {
       return requestCancellation_(token, reason)
     }
 
+    if (p.action === 'validateCancellation') {
+      const token = p.token || body.token
+      return validateCancellation_(token)
+    }
+
     return jsonOut({ status: 'error', message: '❌ Action POST inconnue' })
   } catch (err) {
     return jsonOut({
@@ -1356,7 +1361,7 @@ function buildBalanceClientEmail_(data, paymentData) {
     escapeHtml_(data.name || '') +
     ',</p>' +
     '<p>Nous avons bien reçu le <strong>paiement du solde</strong> pour votre séjour à <strong>Calypso Bay</strong>. Félicitations et bienvenue !</p>' +
-    '<p>Pour rappel, vous pouvez encore annuler selon les conditions prévues dans notre notice :<br/>• Annulation gratuite jusqu’à 3 mois avant le début du séjour.<br/>• Au‑delà, l’acompte reste acquis.</p>' +
+    '<p>Pour rappel, vous pouvez encore annuler selon les conditions prévues dans notre notice :<br/>• Annulation gratuite jusqu'à 3 mois avant le début du séjour.<br/>• Au‑delà, l'acompte reste acquis.</p>' +
     '</div>' +
     '<div class="section"><h3 style="margin:0 0 10px;color:' +
     color +
@@ -1461,7 +1466,7 @@ function requestCancellation_(token, reason) {
     if (cols.cancelStatus !== -1)
       sh.getRange(rowIndex, cols.cancelStatus + 1).setValue('pending')
 
-    // Mails d’accusé (simple)
+    // Mails d'accusé (simple)
     const email = data[rowIndex - 1][headers.indexOf('email')]
     const name = data[rowIndex - 1][headers.indexOf('name')]
     MailApp.sendEmail({
@@ -1477,6 +1482,7 @@ function requestCancellation_(token, reason) {
     const dataManager = {
       name: name,
       email: email,
+      token: token,
       nbAdults: data[rowIndex - 1][headers.indexOf('nbAdults')],
       nbChilds: data[rowIndex - 1][headers.indexOf('nbChilds')],
       nbNights: data[rowIndex - 1][headers.indexOf('nbNights')],
@@ -1494,6 +1500,81 @@ function requestCancellation_(token, reason) {
     })
 
     return jsonOut({ status: 'success', message: '✅ Demande enregistrée' })
+  } catch (err) {
+    return jsonOut({
+      status: 'error',
+      message: '❌ Erreur: ' + (err && err.message ? err.message : String(err))
+    })
+  }
+}
+
+// ======================================
+// Validation d'annulation
+// ======================================
+function validateCancellation_(token) {
+  try {
+    if (!token)
+      return jsonOut({ status: 'error', message: '❌ Token manquant' })
+    
+    const ss = SpreadsheetApp.openById(SHEET_ID)
+    const sh = ss.getSheetByName(SHEET_NAME)
+    if (!sh)
+      return jsonOut({
+        status: 'error',
+        message: '❌ Onglet ReservationsTemp non trouvé'
+      })
+
+    const data = sh.getDataRange().getValues()
+    const headers = data[0]
+    const tokenColIndex = headers.indexOf('id')
+    const statusColIndex = headers.indexOf('status')
+    const cancelStatusColIndex = headers.indexOf('cancelStatus')
+    
+    if (tokenColIndex === -1 || statusColIndex === -1)
+      return jsonOut({
+        status: 'error',
+        message: '❌ Structure de données invalide'
+      })
+
+    let rowIndex = -1
+    for (let i = 1; i < data.length; i++) {
+      if (data[i][tokenColIndex] === token) {
+        rowIndex = i + 1
+        break
+      }
+    }
+    if (rowIndex === -1)
+      return jsonOut({ status: 'error', message: '❌ Réservation non trouvée' })
+
+    // Vérifier que l'annulation est en attente
+    if (cancelStatusColIndex !== -1) {
+      const currentCancelStatus = data[rowIndex - 1][cancelStatusColIndex]
+      if (currentCancelStatus !== 'pending') {
+        return jsonOut({ 
+          status: 'error', 
+          message: '❌ Cette annulation a déjà été traitée' 
+        })
+      }
+    }
+
+    // Mettre à jour le statut
+    if (statusColIndex !== -1)
+      sh.getRange(rowIndex, statusColIndex + 1).setValue('canceled')
+    if (cancelStatusColIndex !== -1)
+      sh.getRange(rowIndex, cancelStatusColIndex + 1).setValue('validated')
+
+    // Envoyer email de confirmation au client
+    const email = data[rowIndex - 1][headers.indexOf('email')]
+    const name = data[rowIndex - 1][headers.indexOf('name')]
+    
+    MailApp.sendEmail({
+      to: String(email),
+      replyTo: RECIPIENT_EMAIL,
+      subject: "Votre annulation a été validée – Calypso Bay",
+      htmlBody: buildCancellationValidatedEmail_(name)
+    })
+
+    return jsonOut({ status: 'success', message: '✅ Annulation validée' })
   } catch (err) {
     return jsonOut({
       status: 'error',
@@ -1633,8 +1714,8 @@ function buildFinalizationClientEmail_(data, paymentData) {
     '<p>Le solde restant sera à régler au maximum <strong>7 jours avant le début de votre séjour</strong>, soit le <strong>' +
     escapeHtml_(deadlineStr) +
     '</strong>.</p>' +
-    '<p>Comme précisé dans notre notice d’informations, vous pouvez annuler gratuitement votre réservation jusqu’à <strong>3 mois avant</strong> le début du séjour. Au-delà, l’acompte restera acquis.</p>' +
-    '<p>Vous trouverez ci-dessous le récapitulatif de votre réservation, ainsi que deux liens utiles : l’un pour <strong>annuler</strong> votre réservation, l’autre pour <strong>régler le solde restant</strong>.</p>' +
+    '<p>Comme précisé dans notre notice d'informations, vous pouvez annuler gratuitement votre réservation jusqu'à <strong>3 mois avant</strong> le début du séjour. Au-delà, l'acompte restera acquis.</p>' +
+    '<p>Vous trouverez ci-dessous le récapitulatif de votre réservation, ainsi que deux liens utiles : l'un pour <strong>annuler</strong> votre réservation, l'autre pour <strong>régler le solde restant</strong>.</p>' +
     '</div>' +
     '<div class="section">' +
     '<h3 style="margin:0 0 10px; color:' +
@@ -1994,7 +2075,7 @@ function buildCancelClientEmail_(data, reason) {
     '<div class="container"><div class="header"><h1>🏖️ Calypso Bay</h1></div>' +
     '<div class="section"><p>Bonjour ' +
     escapeHtml_(data.name || '') +
-    ',</p><p>Nous avons bien reçu votre <strong>demande d’annulation</strong>. Notre équipe va l’examiner rapidement et revenir vers vous.</p>' +
+    ',</p><p>Nous avons bien reçu votre <strong>demande d'annulation</strong>. Notre équipe va l'examiner rapidement et revenir vers vous.</p>' +
     (reason
       ? '<p><strong>Motif communiqué :</strong> ' + escapeHtml_(reason) + '</p>'
       : '') +
@@ -2005,14 +2086,16 @@ function buildCancelClientEmail_(data, reason) {
 function buildCancelManagerEmail_(data, reason) {
   const color = '#5d3fd3'
   const details = formatReservationDetails_(data)
+  const validateUrl = buildSiteUrl_('/api/validateCancellation', { token: data.token })
+  
   return (
     '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Demande d\'annulation reçue</title>' +
     "<style>body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f2f4f8;padding:40px 20px;margin:0;}.container{max-width:640px;margin:auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.05);}.header{background:" +
     color +
     ';color:#ffffff;text-align:center;padding:28px;}.header h1{margin:0;font-size:22px;}.section{padding:24px 28px;border-bottom:1px solid #eee;}.section:last-child{border-bottom:none;}.details{background:#f9fafb;padding:16px;border-left:3px solid ' +
     color +
-    ';border-radius:8px;margin-top:12px;}</style></head><body>' +
-    '<div class="container"><div class="header"><h1>🛑 Demande d’annulation</h1></div>' +
+    ';border-radius:8px;margin-top:12px;}.btn{display:inline-block;background:linear-gradient(135deg,#ef4444,#dc2626);color:#ffffff;text-decoration:none;padding:14px 24px;border-radius:10px;font-weight:600;margin:8px 4px;text-align:center;box-shadow:0 4px 12px rgba(239,68,68,0.3);}</style></head><body>' +
+    '<div class="container"><div class="header"><h1>🛑 Demande d'annulation</h1></div>' +
     '<div class="section"><p><strong>Client :</strong> ' +
     escapeHtml_(data.name || '') +
     '</p><p><strong>Email :</strong> ' +
@@ -2027,6 +2110,24 @@ function buildCancelManagerEmail_(data, reason) {
     '">📋 Récapitulatif</h3><div class="details">' +
     details +
     '</div></div>' +
+    '<div class="section" style="text-align:center;"><p style="margin-bottom:16px;color:#666;">Cliquez sur le bouton ci-dessous pour valider cette annulation :</p><a href="' +
+    validateUrl +
+    '" class="btn" style="color:#ffffff !important; text-decoration:none !important;"><span style="color:#ffffff !important; text-decoration:none !important;">✅ Valider l\'annulation</span></a></div>' +
     '</div></body></html>'
+  )
+}
+
+function buildCancellationValidatedEmail_(name) {
+  const color = '#5d3fd3'
+  return (
+    '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Annulation validée</title>' +
+    "<style>body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f2f4f8;padding:40px 20px;margin:0;}.container{max-width:640px;margin:auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.05);}.header{background:" +
+    color +
+    ';color:#ffffff;text-align:center;padding:28px;}.header h1{margin:0;font-size:22px;}.section{padding:24px 28px;border-bottom:1px solid #eee;}.section:last-child{border-bottom:none;}</style></head><body>' +
+    '<div class="container"><div class="header"><h1>✅ Calypso Bay</h1></div>' +
+    '<div class="section"><p>Bonjour ' +
+    escapeHtml_(name || '') +
+    ',</p><p>Votre <strong>demande d\'annulation a été validée</strong>.</p><p>Votre réservation a été annulée avec succès.</p></div>' +
+    '<div class="section" style="text-align:center;color:#666;font-size:13px">Merci de votre confiance.</div></div></body></html>'
   )
 }
