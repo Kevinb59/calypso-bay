@@ -1261,13 +1261,14 @@
             }
 
             // Créer le PaymentIntent
-            const paymentResponse = await fetch('/api/createPaymentIntent', {
+            const paymentResponse = await fetch('/api/createPayment', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
               },
               body: JSON.stringify({
                 token: token,
+                type: 'deposit',
                 totalAmount: window.totalAmount,
                 formData
               })

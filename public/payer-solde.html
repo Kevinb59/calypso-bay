@@ -426,10 +426,10 @@
         btn.disabled = true
         btnText.textContent = 'Création du paiement…'
         try {
-          const piRes = await fetch('/api/createBalancePaymentIntent', {
+          const piRes = await fetch('/api/createPayment', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token })
+            body: JSON.stringify({ token, type: 'balance' })
           })
           const piJson = await piRes.json()
           if (!piRes.ok || !piJson.clientSecret)
