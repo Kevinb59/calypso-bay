@@ -1,5 +1,5 @@
 /**
- * Route Vercel pour gérer une réservation (accepter ou refuser)
+ * Route Vercel pour gérer les actions de réservation (accepter/refuser)
  * Met à jour le statut dans Google Sheets et envoie un email de confirmation
  */
 
@@ -30,7 +30,9 @@ export default async function handler(req, res) {
   }
 
   if (!action || !['accept', 'refuse'].includes(action)) {
-    return res.status(400).json({ error: 'Action invalide. Doit être "accept" ou "refuse"' })
+    return res
+      .status(400)
+      .json({ error: 'Action invalide. Doit être "accept" ou "refuse"' })
   }
 
   try {
@@ -53,14 +55,17 @@ export default async function handler(req, res) {
 
     if (result.status === 'success') {
       // Rediriger vers la page appropriée selon l'action
-      const redirectPage = action === 'accept' 
-        ? '/reservation-acceptee.html' 
-        : '/reservation-refusee.html'
-      
-      res.redirect(
-        302,
-        redirectPage + '?token=' + encodeURIComponent(token)
-      )
+      if (action === 'accept') {
+        res.redirect(
+          302,
+          '/reservation-acceptee.html?token=' + encodeURIComponent(token)
+        )
+      } else {
+        res.redirect(
+          302,
+          '/reservation-refusee.html?token=' + encodeURIComponent(token)
+        )
+      }
     } else {
       // Rediriger vers une page d'erreur
       res.redirect(
@@ -69,7 +74,7 @@ export default async function handler(req, res) {
       )
     }
   } catch (error) {
-    console.error(`Erreur lors de l'${action}:`, error)
+    console.error(`Erreur lors de l'action ${action}:`, error)
     res.redirect(
       302,
       '/erreur-reservation.html?error=' +
