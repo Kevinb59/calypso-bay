@@ -1,86 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
-    <title>Annulation validée – Calypso Bay</title>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, user-scalable=no"
-    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Annulation Validée - Calypso Bay</title>
     <link rel="stylesheet" href="assets/css/main.css" />
     <link rel="stylesheet" href="assets/css/custom.css" />
-    <noscript
-      ><link rel="stylesheet" href="assets/css/noscript.css"
-    /></noscript>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
+    <style>
+      .validated-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 20px;
+      }
+      .validated-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        text-align: center;
+        max-width: 500px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+      .validated-icon {
+        font-size: 80px;
+        color: #10b981;
+        margin-bottom: 20px;
+      }
+      .validated-title {
+        font-size: 28px;
+        color: #1f2937;
+        margin-bottom: 15px;
+        font-weight: 700;
+      }
+      .validated-message {
+        color: #6b7280;
+        line-height: 1.6;
+        margin-bottom: 30px;
+      }
+      .btn-home {
+        display: inline-block;
+        background: #10b981;
+        color: white;
+        padding: 15px 30px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+      .btn-home:hover {
+        background: #059669;
+        transform: translateY(-2px);
+      }
+    </style>
   </head>
-  <body class="is-preload">
-    <div id="page-wrapper">
-      <div id="wrapper">
-        <section class="panel banner right">
-          <div class="content color0 span-3-75">
-            <h2 class="major">
-              Annulation<br /><span class="themysion">Validée</span>
-            </h2>
-            <p>
-              Votre demande d'annulation a été validée avec succès. Votre réservation a été annulée.
-            </p>
-            <ul class="actions">
-              <li>
-                <a
-                  href="/"
-                  class="button primary color1 circle icon solid fa-home"
-                  >Retour à l'accueil</a
-                >
-              </li>
-            </ul>
-          </div>
-          <div class="image filtered span-1-75" data-position="25% 25%">
-            <img src="images/pic04.jpg" alt="" />
-          </div>
-        </section>
-
-        <section class="panel spotlight medium right color1">
-          <div class="content span-9-5">
-            <h3 class="major">✅ Confirmation</h3>
-            <div class="form-section" style="background: rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 20px; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.3);">
-              <p style="color: white; margin: 0; text-align: center; font-size: 18px;">
-                Votre demande d'annulation a été traitée avec succès.<br>
-                Votre réservation a été annulée.
-              </p>
-            </div>
-          </div>
-          <div class="image filtered tinted" data-position="center">
-            <img src="images/pic02.jpg" alt="" />
-          </div>
-        </section>
-
-        <div class="copyright">
-          <span>&copy; Calypso Bay | By</span>
-          <a
-            href="https://moriarty-design.fr"
-            target="_blank"
-            rel="noopener"
-            style="
-              font-family: 'Engagement', 'Brush Script MT', cursive;
-              font-size: 2.2em;
-              line-height: 1;
-              margin-left: 0.25em;
-              text-decoration: none;
-              color: inherit;
-            "
-            >Moriarty</a
-          >.
-        </div>
+  <body>
+    <div class="validated-container">
+      <div class="validated-card">
+        <div class="validated-icon">✅</div>
+        <h1 class="validated-title">Annulation Validée</h1>
+        <p class="validated-message">
+          La demande d'annulation a été validée avec succès.<br />
+          Le client a reçu un email de confirmation.
+        </p>
+        <a href="/" class="btn-home">Retour à l'accueil</a>
+        <p style="margin-top: 20px; font-size: 14px; color: #6b7280">
+          La réservation a été marquée comme annulée dans le système.
+        </p>
       </div>
     </div>
-
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/main.js"></script>
   </body>
 </html>
