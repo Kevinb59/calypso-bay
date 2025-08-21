@@ -5,18 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Tableau de bord – Réservations</title>
     <style>
-             :root {
-         --bg: #0b0d10;
-         --panel: #ffffff;
-         --text: #0f172a;
-         --muted: #6b7280;
-         --primary: #5d3fd3;
-         --border: #e5e7eb;
-         --row: #f8fafc;
-         --badge-bg: #eef2ff;
-         --badge-text: #4338ca;
-         --radius: 14px;
-       }
+      :root {
+        --bg: #0b0d10;
+        --panel: #ffffff;
+        --text: #0f172a;
+        --muted: #6b7280;
+        --primary: #5d3fd3;
+        --border: #e5e7eb;
+        --row: #f8fafc;
+        --badge-bg: #eef2ff;
+        --badge-text: #4338ca;
+        --radius: 14px;
+      }
       * {
         box-sizing: border-box;
       }
@@ -35,12 +35,12 @@
         position: relative;
         z-index: 1;
       }
-             .card {
-         background: var(--panel);
-         border: 1px solid var(--border);
-         border-radius: var(--radius);
-         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-       }
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      }
       .header {
         display: flex;
         align-items: center;
@@ -57,46 +57,47 @@
         margin: 8px 0 18px 0;
         color: var(--muted);
       }
-             .filters {
-         display: flex;
-         gap: 10px;
-         align-items: center;
-       }
-       .tabs {
-         display: flex;
-         gap: 2px;
-         padding: 0 22px;
-         border-bottom: 1px solid var(--border);
-         background: #fff;
-       }
-       .tab-btn {
-         padding: 12px 20px;
-         border: none;
-         background: transparent;
-         color: var(--muted);
-         cursor: pointer;
-         border-bottom: 2px solid transparent;
-         font-weight: 500;
-         transition: all 0.2s ease;
-       }
-       .tab-btn:hover {
-         color: var(--text);
-         background: rgba(0, 0, 0, 0.02);
-       }
-       .tab-btn.active {
-         color: var(--primary);
-         border-bottom-color: var(--primary);
-         background: rgba(93, 63, 211, 0.05);
-       }
-       .sub-filters {
-         padding: 16px 22px 0 22px;
-         background: #fff;
-       }
-       .sub-filter-group {
-         display: flex;
-         gap: 10px;
-         align-items: center;
-       }
+      .filters {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .tabs {
+        display: flex;
+        gap: 2px;
+        padding: 0 22px;
+        border-bottom: 1px solid var(--border);
+        background: #fff;
+      }
+      .tab-btn {
+        padding: 12px 20px;
+        border: none;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+      .tab-btn:hover {
+        color: var(--text);
+        background: rgba(0, 0, 0, 0.02);
+      }
+      .tab-btn.active {
+        color: var(--primary);
+        border-bottom-color: var(--primary);
+        background: rgba(93, 63, 211, 0.05);
+      }
+      .sub-filters {
+        padding: 16px 22px 0 22px;
+        background: #fff;
+        border-bottom: none;
+      }
+      .sub-filter-group {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
       .input,
       .select {
         height: 36px;
@@ -106,41 +107,43 @@
         background: #fff;
         color: var(--text);
       }
-             .toolbar {
-         display: flex;
-         align-items: center;
-         justify-content: space-between;
-         padding: 0 22px 16px 22px;
-         /* border-bottom: 1px solid var(--border); */ /* Supprimé pour enlever le séparateur */
-         background: #fff;
-       }
-             .table-wrap {
-         overflow: auto;
-         background: #fff;
-         border-bottom-left-radius: var(--radius);
-         border-bottom-right-radius: var(--radius);
-       }
-             .card-footer {
-         padding: 12px 22px 18px 22px;
-         border-top: 1px solid var(--border);
-         text-align: center;
-         color: var(--muted);
-         font-size: 13px;
-         border-bottom-left-radius: var(--radius);
-         border-bottom-right-radius: var(--radius);
-       }
-             table {
-         width: 100%;
-         border-collapse: collapse;
-         border-bottom-left-radius: var(--radius);
-         border-bottom-right-radius: var(--radius);
-       }
+      .toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 22px 16px 22px;
+        border-bottom: none;
+        background: #fff;
+      }
+      .table-wrap {
+        overflow: auto;
+        background: #fff;
+        border-bottom-left-radius: var(--radius);
+        border-bottom-right-radius: var(--radius);
+        border-bottom: none;
+      }
+      .card-footer {
+        padding: 12px 22px 18px 22px;
+        border-top: 1px solid var(--border);
+        text-align: center;
+        color: var(--muted);
+        font-size: 13px;
+        border-bottom-left-radius: var(--radius);
+        border-bottom-right-radius: var(--radius);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        border-bottom-left-radius: var(--radius);
+        border-bottom-right-radius: var(--radius);
+        border-bottom: none;
+      }
       thead th {
         text-align: left;
         font-weight: 700;
         color: var(--muted);
         padding: 12px 16px;
-        border-bottom: 1px solid var(--border);
+        border-bottom: none;
         position: sticky;
         top: 0;
         background: #fff;
@@ -159,18 +162,21 @@
         /* Prix */
         text-align: right;
       }
-             tbody td {
-         padding: 12px 16px;
-         border-bottom: 1px solid var(--border);
-         background: #fff;
-       }
-       /* Supprimer les bordures qui créent les "marqueurs" en L */
-       tbody tr:last-child td:first-child {
-         border-bottom-left-radius: var(--radius);
-       }
-       tbody tr:last-child td:last-child {
-         border-bottom-right-radius: var(--radius);
-       }
+      tbody td {
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--border);
+        background: #fff;
+      }
+      /* Supprimer les bordures qui créent les "marqueurs" en L */
+      tbody tr:last-child td {
+        border-bottom: none;
+      }
+      tbody tr:last-child td:first-child {
+        border-bottom-left-radius: var(--radius);
+      }
+      tbody tr:last-child td:last-child {
+        border-bottom-right-radius: var(--radius);
+      }
       /* Alignement spécifique des cellules */
       tbody td:nth-child(3), /* Arrivée */
        tbody td:nth-child(4), /* Départ */
@@ -467,42 +473,45 @@
               Suivi complet des séjours, paiements et annulations
             </div>
           </div>
-                     <div class="filters">
-             <input id="filterText" class="input" placeholder="Filtrer" />
-             <select id="filterStatus" class="select">
-               <option value="">Tous les statuts</option>
-               <option value="pending">En attente</option>
-               <option value="accepted">Acceptée</option>
-               <option value="depositPay">Acompte OK</option>
-               <option value="refused">Refusée</option>
-               <option value="canceled">Annulée</option>
-               <option value="balancePay">Solde OK</option>
-             </select>
-           </div>
-         </div>
-         <div class="tabs">
-           <button class="tab-btn active" data-tab="actives">Actives</button>
-           <button class="tab-btn" data-tab="archives">Archives</button>
-           <button class="tab-btn" data-tab="all">Toutes</button>
-         </div>
-         <div class="sub-filters">
-           <div id="activesSubFilters" class="sub-filter-group">
-             <select id="activesFilter" class="select">
-               <option value="all">Tout</option>
-               <option value="current">En cours</option>
-               <option value="future">Futures</option>
-             </select>
-           </div>
-           <div id="archivesSubFilters" class="sub-filter-group" style="display: none;">
-             <select id="archivesFilter" class="select">
-               <option value="1month">1 mois</option>
-               <option value="3months">3 mois</option>
-               <option value="6months">6 mois</option>
-               <option value="1year">1 an</option>
-               <option value="all">Tout</option>
-             </select>
-           </div>
-         </div>
+          <div class="filters">
+            <input id="filterText" class="input" placeholder="Filtrer" />
+            <select id="filterStatus" class="select">
+              <option value="">Tous les statuts</option>
+              <option value="pending">En attente</option>
+              <option value="accepted">Acceptée</option>
+              <option value="depositPay">Acompte OK</option>
+              <option value="refused">Refusée</option>
+              <option value="canceled">Annulée</option>
+              <option value="balancePay">Solde OK</option>
+            </select>
+          </div>
+        </div>
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="actives">Actives</button>
+          <button class="tab-btn" data-tab="archives">Archives</button>
+          <button class="tab-btn" data-tab="all">Toutes</button>
+        </div>
+        <div class="sub-filters">
+          <div id="activesSubFilters" class="sub-filter-group">
+            <select id="activesFilter" class="select">
+              <option value="all">Tout</option>
+              <option value="current">En cours</option>
+              <option value="future">Futures</option>
+            </select>
+          </div>
+          <div
+            id="archivesSubFilters"
+            class="sub-filter-group"
+            style="display: none"
+          >
+            <select id="archivesFilter" class="select">
+              <option value="1month">1 mois</option>
+              <option value="3months">3 mois</option>
+              <option value="6months">6 mois</option>
+              <option value="1year">1 an</option>
+              <option value="all">Tout</option>
+            </select>
+          </div>
         </div>
         <div class="toolbar">
           <div class="muted">Tri par arrivée croissante</div>
@@ -602,10 +611,10 @@
     <script>
       const API_LIST = '/api/admin?action=list'
       const API_DETAIL = '/api/admin?action=detail'
-             let ADMIN_KEY = ''
-       let currentRows = []
-       let currentTab = 'actives'
-       let currentSubFilter = 'all'
+      let ADMIN_KEY = ''
+      let currentRows = []
+      let currentTab = 'actives'
+      let currentSubFilter = 'all'
 
       function frStatus(s) {
         return s === 'pending'
@@ -664,81 +673,83 @@
         return j.data || []
       }
 
-             function renderRows(rows) {
-         const tbody = document.querySelector('#table tbody')
-         const status = document.getElementById('filterStatus').value
-         const text = document
-           .getElementById('filterText')
-           .value.trim()
-           .toLowerCase()
-         let data = rows
+      function renderRows(rows) {
+        const tbody = document.querySelector('#table tbody')
+        const status = document.getElementById('filterStatus').value
+        const text = document
+          .getElementById('filterText')
+          .value.trim()
+          .toLowerCase()
+        let data = rows
 
-         // Filtrage par onglet principal
-         const now = new Date()
-         const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
+        // Filtrage par onglet principal
+        const now = new Date()
+        const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
 
-         if (currentTab === 'actives') {
-           // Réservations actives : futures + en cours + terminées depuis moins d'1 mois
-           data = data.filter((r) => {
-             const endDate = new Date(r.endDate)
-             return endDate >= oneMonthAgo
-           })
-         } else if (currentTab === 'archives') {
-           // Réservations archivées : terminées depuis plus d'1 mois
-           data = data.filter((r) => {
-             const endDate = new Date(r.endDate)
-             return endDate < oneMonthAgo
-           })
-         }
-         // currentTab === 'all' : pas de filtrage
+        if (currentTab === 'actives') {
+          // Réservations actives : futures + en cours + terminées depuis moins d'1 mois
+          data = data.filter((r) => {
+            const endDate = new Date(r.endDate)
+            return endDate >= oneMonthAgo
+          })
+        } else if (currentTab === 'archives') {
+          // Réservations archivées : terminées depuis plus d'1 mois
+          data = data.filter((r) => {
+            const endDate = new Date(r.endDate)
+            return endDate < oneMonthAgo
+          })
+        }
+        // currentTab === 'all' : pas de filtrage
 
-         // Filtrage par sous-filtre
-         if (currentTab === 'actives' && currentSubFilter !== 'all') {
-           if (currentSubFilter === 'current') {
-             // Séjours en cours uniquement
-             data = data.filter((r) => {
-               const startDate = new Date(r.startDate)
-               const endDate = new Date(r.endDate)
-               return now >= startDate && now <= endDate
-             })
-           } else if (currentSubFilter === 'future') {
-             // Séjours futurs uniquement
-             data = data.filter((r) => {
-               const startDate = new Date(r.startDate)
-               return now < startDate
-             })
-           }
-         } else if (currentTab === 'archives' && currentSubFilter !== 'all') {
-           const periods = {
-             '1month': 30,
-             '3months': 90,
-             '6months': 180,
-             '1year': 365
-           }
-           const daysAgo = periods[currentSubFilter]
-           const periodAgo = new Date(now.getTime() - daysAgo * 24 * 60 * 60 * 1000)
+        // Filtrage par sous-filtre
+        if (currentTab === 'actives' && currentSubFilter !== 'all') {
+          if (currentSubFilter === 'current') {
+            // Séjours en cours uniquement
+            data = data.filter((r) => {
+              const startDate = new Date(r.startDate)
+              const endDate = new Date(r.endDate)
+              return now >= startDate && now <= endDate
+            })
+          } else if (currentSubFilter === 'future') {
+            // Séjours futurs uniquement
+            data = data.filter((r) => {
+              const startDate = new Date(r.startDate)
+              return now < startDate
+            })
+          }
+        } else if (currentTab === 'archives' && currentSubFilter !== 'all') {
+          const periods = {
+            '1month': 30,
+            '3months': 90,
+            '6months': 180,
+            '1year': 365
+          }
+          const daysAgo = periods[currentSubFilter]
+          const periodAgo = new Date(
+            now.getTime() - daysAgo * 24 * 60 * 60 * 1000
+          )
 
-           data = data.filter((r) => {
-             const endDate = new Date(r.endDate)
-             return endDate >= periodAgo
-           })
-         }
+          data = data.filter((r) => {
+            const endDate = new Date(r.endDate)
+            return endDate >= periodAgo
+          })
+        }
 
-         // Filtrage par statut
-         if (status) data = data.filter((r) => r.status === status)
+        // Filtrage par statut
+        if (status) data = data.filter((r) => r.status === status)
 
-         // Filtrage par texte
-         if (text) {
-           data = data.filter((r) =>
-             `${r.name || ''} ${r.email || ''} ${r.token || ''}`
-               .toLowerCase()
-               .includes(text)
-           )
-         }
+        // Filtrage par texte
+        if (text) {
+          data = data.filter((r) =>
+            `${r.name || ''} ${r.email || ''} ${r.token || ''}`
+              .toLowerCase()
+              .includes(text)
+          )
+        }
 
-         data = data.sort(
-           (a, b) => new Date(a.startDate) - new Date(b.startDate)
-         )
+        data = data.sort(
+          (a, b) => new Date(a.startDate) - new Date(b.startDate)
+        )
         tbody.innerHTML = data
           .map((r) => {
             const depositPaid =
@@ -927,48 +938,56 @@
       document
         .getElementById('filterText')
         .addEventListener('input', () => renderRows(currentRows))
-             document
-         .getElementById('filterStatus')
-         .addEventListener('change', () => renderRows(currentRows))
+      document
+        .getElementById('filterStatus')
+        .addEventListener('change', () => renderRows(currentRows))
 
-       // Gestion des onglets
-       document.addEventListener('click', (ev) => {
-         const tabBtn = ev.target.closest('.tab-btn')
-         if (tabBtn) {
-           const tab = tabBtn.getAttribute('data-tab')
-           if (tab !== currentTab) {
-             // Mettre à jour l'onglet actif
-             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'))
-             tabBtn.classList.add('active')
-             currentTab = tab
+      // Gestion des onglets
+      document.addEventListener('click', (ev) => {
+        const tabBtn = ev.target.closest('.tab-btn')
+        if (tabBtn) {
+          const tab = tabBtn.getAttribute('data-tab')
+          if (tab !== currentTab) {
+            // Mettre à jour l'onglet actif
+            document
+              .querySelectorAll('.tab-btn')
+              .forEach((btn) => btn.classList.remove('active'))
+            tabBtn.classList.add('active')
+            currentTab = tab
 
-             // Réinitialiser le sous-filtre
-             currentSubFilter = 'all'
+            // Réinitialiser le sous-filtre
+            currentSubFilter = 'all'
 
-             // Afficher/masquer les sous-filtres appropriés
-             document.getElementById('activesSubFilters').style.display = tab === 'actives' ? 'block' : 'none'
-             document.getElementById('archivesSubFilters').style.display = tab === 'archives' ? 'block' : 'none'
+            // Afficher/masquer les sous-filtres appropriés
+            document.getElementById('activesSubFilters').style.display =
+              tab === 'actives' ? 'block' : 'none'
+            document.getElementById('archivesSubFilters').style.display =
+              tab === 'archives' ? 'block' : 'none'
 
-             // Réinitialiser les sélecteurs
-             document.getElementById('activesFilter').value = 'all'
-             document.getElementById('archivesFilter').value = '1month'
+            // Réinitialiser les sélecteurs
+            document.getElementById('activesFilter').value = 'all'
+            document.getElementById('archivesFilter').value = '1month'
 
-             // Re-rendre les données
-             renderRows(currentRows)
-           }
-         }
-       })
+            // Re-rendre les données
+            renderRows(currentRows)
+          }
+        }
+      })
 
-       // Gestion des sous-filtres
-       document.getElementById('activesFilter').addEventListener('change', (e) => {
-         currentSubFilter = e.target.value
-         renderRows(currentRows)
-       })
+      // Gestion des sous-filtres
+      document
+        .getElementById('activesFilter')
+        .addEventListener('change', (e) => {
+          currentSubFilter = e.target.value
+          renderRows(currentRows)
+        })
 
-       document.getElementById('archivesFilter').addEventListener('change', (e) => {
-         currentSubFilter = e.target.value
-         renderRows(currentRows)
-       })
+      document
+        .getElementById('archivesFilter')
+        .addEventListener('change', (e) => {
+          currentSubFilter = e.target.value
+          renderRows(currentRows)
+        })
 
       // Login
       async function doLogin() {
