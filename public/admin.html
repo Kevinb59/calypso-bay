@@ -144,6 +144,13 @@
       tbody tr.cancel-pending:hover td {
         background: rgba(239, 68, 68, 0.15) !important;
       }
+      /* Ligne avec séjour en cours */
+      tbody tr.current-stay td {
+        background: rgba(34, 197, 94, 0.1) !important;
+      }
+      tbody tr.current-stay:hover td {
+        background: rgba(34, 197, 94, 0.15) !important;
+      }
       /* Ligne avec séjour terminé (plus d'un jour) */
       tbody tr.past-stay {
         opacity: 0.4;
@@ -612,15 +619,21 @@
             // Vérifier si demande d'annulation en attente
             const hasCancelPending = r.cancelStatus === 'pending'
 
-            // Vérifier si séjour terminé (plus d'un jour)
+            // Vérifier si séjour en cours
             const now = new Date()
+            const startDate = new Date(r.startDate)
             const endDate = new Date(r.endDate)
+            const isCurrentStay =
+              startDate && endDate && now >= startDate && now <= endDate
+
+            // Vérifier si séjour terminé (plus d'un jour)
             const oneDayMs = 24 * 60 * 60 * 1000
             const isPastStay = endDate && now - endDate > oneDayMs
 
             // Classes CSS conditionnelles
             const rowClasses = []
             if (hasCancelPending) rowClasses.push('cancel-pending')
+            if (isCurrentStay) rowClasses.push('current-stay')
             if (isPastStay) rowClasses.push('past-stay')
             const classAttr =
               rowClasses.length > 0 ? ` class="${rowClasses.join(' ')}"` : ''
