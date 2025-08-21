@@ -2086,7 +2086,7 @@ function buildCancelClientEmail_(data, reason) {
 function buildCancelManagerEmail_(data, reason) {
   const color = '#5d3fd3'
   const details = formatReservationDetails_(data)
-  const validateUrl = buildSiteUrl_('/api/validateCancellation', {
+  const validateUrl = buildSiteUrl_('/api/cancellation?action=validate', {
     token: data.token
   })
 
