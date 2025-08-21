@@ -101,10 +101,38 @@
         top: 0;
         background: #fff;
       }
+      /* Alignement spécifique des colonnes */
+      thead th:nth-child(3), /* Arrivée */
+       thead th:nth-child(4), /* Départ */
+       thead th:nth-child(5), /* Nuits */
+       thead th:nth-child(6), /* Adulte(s) */
+       thead th:nth-child(7), /* Enfant(s) */
+       thead th:nth-child(9) {
+        /* Action */
+        text-align: center;
+      }
+      thead th:nth-child(8) {
+        /* Prix */
+        text-align: right;
+      }
       tbody td {
         padding: 12px 16px;
         border-bottom: 1px solid var(--border);
         background: #fff;
+      }
+      /* Alignement spécifique des cellules */
+      tbody td:nth-child(3), /* Arrivée */
+       tbody td:nth-child(4), /* Départ */
+       tbody td:nth-child(5), /* Nuits */
+       tbody td:nth-child(6), /* Adulte(s) */
+       tbody td:nth-child(7), /* Enfant(s) */
+       tbody td:nth-child(9) {
+        /* Action */
+        text-align: center;
+      }
+      tbody td:nth-child(8) {
+        /* Prix */
+        text-align: right;
       }
       tbody tr:hover td {
         background: var(--row);
