@@ -146,7 +146,7 @@
         border-bottom: none;
         position: sticky;
         top: 0;
-        background: #fff;
+        background: #f8fafc;
       }
       /* Alignement spécifique des colonnes */
       thead th:nth-child(3), /* Arrivée */
@@ -362,9 +362,11 @@
         overflow: auto;
       }
       .detail-actions {
-        padding: 0 18px 18px 18px;
+        padding: 18px 18px 18px 18px;
         display: flex;
         gap: 10px;
+        border-top: 1px solid var(--border);
+        margin-top: 12px;
       }
       .grid {
         display: grid;
@@ -391,6 +393,55 @@
       .btn-danger:hover {
         background: #dc2626;
         border-color: #dc2626;
+      }
+
+      /* Styles pour les checkboxes personnalisées */
+      .refund-options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        flex: 1;
+      }
+      .checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 6px;
+        transition: background-color 0.2s ease;
+      }
+      .checkbox-label:hover {
+        background: rgba(0, 0, 0, 0.02);
+      }
+      .checkbox-label input[type='checkbox'] {
+        display: none;
+      }
+      .checkmark {
+        width: 18px;
+        height: 18px;
+        border: 2px solid var(--border);
+        border-radius: 4px;
+        position: relative;
+        transition: all 0.2s ease;
+      }
+      .checkbox-label input[type='checkbox']:checked + .checkmark {
+        background: var(--primary);
+        border-color: var(--primary);
+      }
+      .checkbox-label input[type='checkbox']:checked + .checkmark::after {
+        content: '✓';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+      }
+      .label-text {
+        font-size: 14px;
+        color: var(--text);
       }
 
       /* Background from Uiverse.io by chase2k25 (renamed classes to avoid conflicts) */
@@ -598,11 +649,43 @@
           <div id="detailContent" class="grid"></div>
         </div>
         <div class="detail-actions">
-          <button id="refundDepositBtn" class="btn btn-danger" disabled>
-            Rembourser l'acompte
+          <div class="refund-options">
+            <label class="checkbox-label">
+              <input type="checkbox" id="refundDepositCheck" />
+              <span class="checkmark"></span>
+              <span class="label-text">Rembourser l'acompte</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="refundBalanceCheck" />
+              <span class="checkmark"></span>
+              <span class="label-text">Rembourser le solde</span>
+            </label>
+          </div>
+          <button id="refundBtn" class="btn btn-danger" disabled>
+            Effectuer le(s) remboursement(s)
           </button>
-          <button id="refundBalanceBtn" class="btn" disabled>
-            Rembourser le solde
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirmation modal -->
+    <div id="confirmModal" class="detail-modal">
+      <div class="detail-card" style="width: 480px">
+        <div class="detail-head">
+          <h3 style="margin: 0">Confirmation de remboursement</h3>
+          <button id="confirmClose" class="btn">Fermer</button>
+        </div>
+        <div class="detail-body">
+          <p>
+            Êtes-vous sûr de vouloir effectuer le(s) remboursement(s) suivant(s)
+            ?
+          </p>
+          <div id="confirmRefunds"></div>
+        </div>
+        <div class="detail-actions">
+          <button id="confirmCancel" class="btn">Annuler</button>
+          <button id="confirmProceed" class="btn btn-danger">
+            Confirmer le(s) remboursement(s)
           </button>
         </div>
       </div>
@@ -908,8 +991,23 @@
           .join('')
         // Rendre visible et actions
         document.getElementById('detailModal').style.display = 'flex'
-        // Date limite remboursement acompte (J - 3 mois)
-        const btn = document.getElementById('refundDepositBtn')
+
+        // Gestion des checkboxes de remboursement
+        const depositCheck = document.getElementById('refundDepositCheck')
+        const balanceCheck = document.getElementById('refundBalanceCheck')
+        const refundBtn = document.getElementById('refundBtn')
+
+        // Réinitialiser les checkboxes
+        depositCheck.checked = false
+        balanceCheck.checked = false
+        refundBtn.disabled = true
+
+        // Mettre à jour les labels avec les dates limites
+        const depositLabel =
+          depositCheck.parentElement.querySelector('.label-text')
+        const balanceLabel =
+          balanceCheck.parentElement.querySelector('.label-text')
+
         if (d.startDate) {
           const lim = new Date(d.startDate)
           lim.setMonth(lim.getMonth() - 3)
@@ -917,14 +1015,123 @@
           const limStr = `${pad(lim.getDate())}/${pad(
             lim.getMonth() + 1
           )}/${lim.getFullYear()}`
-          btn.textContent = `Rembourser l'acompte (date limite: ${limStr})`
+          depositLabel.textContent = `Rembourser l'acompte (date limite: ${limStr})`
         }
+
+        // Vérifier si les remboursements sont possibles
+        const canRefundDeposit =
+          d.depositAmount &&
+          Number(d.depositAmount) > 0 &&
+          (!d.depositRefundedAmount || Number(d.depositRefundedAmount) === 0)
+        const canRefundBalance =
+          d.balanceAmount &&
+          Number(d.balanceAmount) > 0 &&
+          (!d.balanceRefundedAmount || Number(d.balanceRefundedAmount) === 0)
+
+        depositCheck.disabled = !canRefundDeposit
+        balanceCheck.disabled = !canRefundBalance
+
+        if (!canRefundDeposit) {
+          depositLabel.textContent += ' (déjà remboursé)'
+        }
+        if (!canRefundBalance) {
+          balanceLabel.textContent += ' (déjà remboursé)'
+        }
+
+        // Stocker les données pour le remboursement
+        window.currentReservationData = d
       }
 
       // Events
       document.getElementById('detailClose').addEventListener('click', () => {
         document.getElementById('detailModal').style.display = 'none'
       })
+      document.getElementById('confirmClose').addEventListener('click', () => {
+        document.getElementById('confirmModal').style.display = 'none'
+      })
+      document.getElementById('confirmCancel').addEventListener('click', () => {
+        document.getElementById('confirmModal').style.display = 'none'
+      })
+
+      // Gestion des checkboxes de remboursement
+      document
+        .getElementById('refundDepositCheck')
+        .addEventListener('change', updateRefundButton)
+      document
+        .getElementById('refundBalanceCheck')
+        .addEventListener('change', updateRefundButton)
+
+      function updateRefundButton() {
+        const depositCheck = document.getElementById('refundDepositCheck')
+        const balanceCheck = document.getElementById('refundBalanceCheck')
+        const refundBtn = document.getElementById('refundBtn')
+
+        refundBtn.disabled = !depositCheck.checked && !balanceCheck.checked
+      }
+
+      // Gestion du bouton de remboursement
+      document.getElementById('refundBtn').addEventListener('click', () => {
+        const depositCheck = document.getElementById('refundDepositCheck')
+        const balanceCheck = document.getElementById('refundBalanceCheck')
+
+        if (!depositCheck.checked && !balanceCheck.checked) return
+
+        // Afficher le modal de confirmation
+        const confirmRefunds = document.getElementById('confirmRefunds')
+        const refunds = []
+
+        if (depositCheck.checked) {
+          refunds.push(
+            `• Acompte: ${fmtMoney(
+              window.currentReservationData.depositAmount
+            )}`
+          )
+        }
+        if (balanceCheck.checked) {
+          refunds.push(
+            `• Solde: ${fmtMoney(window.currentReservationData.balanceAmount)}`
+          )
+        }
+
+        confirmRefunds.innerHTML = refunds
+          .map(
+            (r) =>
+              `<div style="margin: 8px 0; padding: 8px; background: #f8fafc; border-radius: 6px;">${r}</div>`
+          )
+          .join('')
+
+        document.getElementById('confirmModal').style.display = 'flex'
+      })
+
+      // Gestion de la confirmation finale
+      document
+        .getElementById('confirmProceed')
+        .addEventListener('click', async () => {
+          const depositCheck = document.getElementById('refundDepositCheck')
+          const balanceCheck = document.getElementById('refundBalanceCheck')
+
+          try {
+            showLoader(true)
+
+            // Ici vous pouvez ajouter l'appel API pour effectuer les remboursements
+            // Pour l'instant, on simule juste la fermeture
+
+            alert('Fonctionnalité de remboursement à implémenter')
+
+            // Fermer les modals
+            document.getElementById('confirmModal').style.display = 'none'
+            document.getElementById('detailModal').style.display = 'none'
+
+            // Recharger les données
+            currentRows = await fetchRows()
+            renderRows(currentRows)
+          } catch (err) {
+            alert('Erreur lors du remboursement: ' + err.message)
+          } finally {
+            showLoader(false)
+          }
+        })
+
       document.addEventListener('click', (ev) => {
         const btn = ev.target.closest('button[data-action="detail"]')
         if (btn) openDetail(btn.getAttribute('data-token'))
