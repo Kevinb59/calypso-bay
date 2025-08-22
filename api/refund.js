@@ -82,7 +82,8 @@ export default async function handler(req, res) {
 
       try {
         const paymentIntent = await stripe.paymentIntents.retrieve(
-          reservation.depositPaymentIntentId
+          reservation.depositPaymentIntentId,
+          { expand: ['charges'] }
         )
 
         console.log('PaymentIntent récupéré pour acompte:', {
@@ -92,18 +93,32 @@ export default async function handler(req, res) {
           chargesData: paymentIntent.charges?.data
         })
 
-        // Vérification plus robuste de la structure des charges
-        if (
-          !paymentIntent.charges ||
-          !paymentIntent.charges.data ||
-          paymentIntent.charges.data.length === 0
-        ) {
+        // Récupérer les charges directement depuis l'API Stripe si pas disponibles
+        let charges = paymentIntent.charges?.data
+        if (!charges || charges.length === 0) {
+          console.log(
+            'Charges non disponibles dans PaymentIntent, récupération directe...'
+          )
+          const chargesResponse = await stripe.charges.list({
+            payment_intent: reservation.depositPaymentIntentId,
+            limit: 1
+          })
+          charges = chargesResponse.data
+        }
+
+        if (!charges || charges.length === 0) {
           return res.status(400).json({
             error: "Impossible de rembourser l'acompte : aucune charge trouvée"
           })
         }
 
-        const charge = paymentIntent.charges.data[0]
+        const charge = charges[0]
+        console.log('Charge trouvée pour acompte:', {
+          id: charge.id,
+          amount: charge.amount,
+          status: charge.status
+        })
+
         const refund = await stripe.refunds.create({
           charge: charge.id,
           // Pas de amount = remboursement complet automatique
@@ -112,6 +127,12 @@ export default async function handler(req, res) {
             refund_type: 'deposit',
             refunded_at: new Date().toISOString()
           }
+        })
+
+        console.log('Remboursement acompte créé:', {
+          id: refund.id,
+          amount: refund.amount,
+          status: refund.status
         })
 
         refunds.push({
@@ -140,7 +161,8 @@ export default async function handler(req, res) {
 
       try {
         const paymentIntent = await stripe.paymentIntents.retrieve(
-          reservation.balancePaymentIntentId
+          reservation.balancePaymentIntentId,
+          { expand: ['charges'] }
         )
 
         console.log('PaymentIntent récupéré pour solde:', {
@@ -150,18 +172,32 @@ export default async function handler(req, res) {
           chargesData: paymentIntent.charges?.data
         })
 
-        // Vérification plus robuste de la structure des charges
-        if (
-          !paymentIntent.charges ||
-          !paymentIntent.charges.data ||
-          paymentIntent.charges.data.length === 0
-        ) {
+        // Récupérer les charges directement depuis l'API Stripe si pas disponibles
+        let charges = paymentIntent.charges?.data
+        if (!charges || charges.length === 0) {
+          console.log(
+            'Charges non disponibles dans PaymentIntent, récupération directe...'
+          )
+          const chargesResponse = await stripe.charges.list({
+            payment_intent: reservation.balancePaymentIntentId,
+            limit: 1
+          })
+          charges = chargesResponse.data
+        }
+
+        if (!charges || charges.length === 0) {
           return res.status(400).json({
             error: 'Impossible de rembourser le solde : aucune charge trouvée'
           })
         }
 
-        const charge = paymentIntent.charges.data[0]
+        const charge = charges[0]
+        console.log('Charge trouvée pour solde:', {
+          id: charge.id,
+          amount: charge.amount,
+          status: charge.status
+        })
+
         const refund = await stripe.refunds.create({
           charge: charge.id,
           // Pas de amount = remboursement complet automatique
@@ -170,6 +206,12 @@ export default async function handler(req, res) {
             refund_type: 'balance',
             refunded_at: new Date().toISOString()
           }
+        })
+
+        console.log('Remboursement solde créé:', {
+          id: refund.id,
+          amount: refund.amount,
+          status: refund.status
         })
 
         refunds.push({
