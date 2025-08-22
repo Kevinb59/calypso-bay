@@ -91,13 +91,12 @@ export default async function handler(req, res) {
       refunds: refunds
     })
 
-    const updateResponse = await fetch(`${gasUrl}`, {
+    const updateResponse = await fetch(`${gasUrl}?action=updateRefunds`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        action: 'updateRefunds',
         token: token,
         refunds: refunds
       })
@@ -124,13 +123,12 @@ export default async function handler(req, res) {
       refunds: refunds
     })
 
-    const emailResponse = await fetch(`${gasUrl}`, {
+    const emailResponse = await fetch(`${gasUrl}?action=sendRefundEmail`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        action: 'sendRefundEmail',
         token: token,
         refunds: refunds
       })
