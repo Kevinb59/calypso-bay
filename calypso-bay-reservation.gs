@@ -739,7 +739,9 @@ function listReservations_(q) {
         depositAmount: Number(row[idx('depositAmount')] || 0),
         balanceAmount: Number(row[idx('balanceAmount')] || 0),
         balancePaidAt: row[idx('balancePaidAt')],
-        cancelStatus: row[idx('cancelStatus')]
+        cancelStatus: row[idx('cancelStatus')],
+        depositRefundedAmount: Number(row[idx('depositRefundedAmount')] || 0),
+        balanceRefundedAmount: Number(row[idx('balanceRefundedAmount')] || 0)
       }
       if (!q) {
         out.push(item)

@@ -1184,9 +1184,11 @@
               document.getElementById('confirmModal').style.display = 'none'
               document.getElementById('detailModal').style.display = 'none'
 
-              // Recharger les données
+              // Recharger les données pour afficher les pastilles bleues
+              console.log('Rechargement des données après remboursement...')
               currentRows = await fetchRows()
               renderRows(currentRows)
+              console.log('Données rechargées, pastilles mises à jour')
             } else {
               throw new Error(result.error || 'Erreur lors du remboursement')
             }
