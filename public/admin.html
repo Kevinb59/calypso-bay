@@ -840,8 +840,7 @@
               r.status === 'depositPay' ||
               r.status === 'balancePay'
             const balancePaid =
-              r.status === 'balancePay' ||
-              (r.balancePaidAt && String(r.balancePaidAt).length > 0)
+              r.balancePaidAt && String(r.balancePaidAt).length > 0
 
             // Vérifier si demande d'annulation en attente ou validée
             const hasCancelPending =
