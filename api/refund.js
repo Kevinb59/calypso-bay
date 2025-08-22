@@ -230,6 +230,12 @@ export default async function handler(req, res) {
     }
 
     // Mettre à jour la réservation dans Google Sheets
+    console.log('Mise à jour Google Sheets avec les remboursements:', {
+      action: 'updateRefunds',
+      token: token,
+      refunds: refunds
+    })
+
     const updateResponse = await fetch(`${gasUrl}`, {
       method: 'POST',
       headers: {
@@ -242,16 +248,27 @@ export default async function handler(req, res) {
       })
     })
 
+    console.log('Réponse mise à jour reçue, statut:', updateResponse.status)
     const updateData = await updateResponse.json()
+    console.log('Données mise à jour reçues:', updateData)
 
     if (updateData.status !== 'success') {
+      console.error('Erreur mise à jour Google Sheets:', updateData)
       return res.status(500).json({
         error: 'Erreur lors de la mise à jour de la réservation',
-        details: updateData.message
+        details: updateData.message || 'Réponse invalide de Google Apps Script'
       })
     }
 
+    console.log('Mise à jour Google Sheets réussie')
+
     // Envoyer l'email de confirmation de remboursement
+    console.log('Envoi email de confirmation de remboursement:', {
+      action: 'sendRefundEmail',
+      token: token,
+      refunds: refunds
+    })
+
     const emailResponse = await fetch(`${gasUrl}`, {
       method: 'POST',
       headers: {
@@ -263,6 +280,10 @@ export default async function handler(req, res) {
         refunds: refunds
       })
     })
+
+    console.log('Réponse email reçue, statut:', emailResponse.status)
+    const emailData = await emailResponse.json()
+    console.log('Données email reçues:', emailData)
 
     return res.status(200).json({
       status: 'success',
