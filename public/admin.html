@@ -1062,6 +1062,7 @@
 
         // Stocker les données pour le remboursement
         window.currentReservationData = d
+        console.log('Données de réservation stockées:', d)
       }
 
       // Events
@@ -1097,6 +1098,17 @@
         const balanceCheck = document.getElementById('refundBalanceCheck')
 
         if (!depositCheck.checked && !balanceCheck.checked) return
+
+        // Vérifier que les données de réservation sont disponibles
+        if (
+          !window.currentReservationData ||
+          !window.currentReservationData.token
+        ) {
+          alert(
+            'Erreur: Données de réservation manquantes. Veuillez fermer et rouvrir les détails.'
+          )
+          return
+        }
 
         // Afficher le modal de confirmation
         const confirmRefunds = document.getElementById('confirmRefunds')
@@ -1134,6 +1146,20 @@
 
           try {
             showLoader(true)
+
+            // Vérifier que les données de réservation sont disponibles
+            if (
+              !window.currentReservationData ||
+              !window.currentReservationData.token
+            ) {
+              throw new Error('Données de réservation manquantes')
+            }
+
+            console.log('Données de remboursement:', {
+              token: window.currentReservationData.token,
+              refundDeposit: depositCheck.checked,
+              refundBalance: balanceCheck.checked
+            })
 
             // Appel API pour effectuer les remboursements
             const response = await fetch('/api/refund', {
