@@ -232,6 +232,10 @@
         background: #16a34a;
         box-shadow: inset 0 0 0 1px #15803d;
       }
+      .pay-dot.refunded {
+        background: #3b82f6;
+        box-shadow: inset 0 0 0 1px #2563eb;
+      }
       .badge {
         display: inline-block;
         padding: 4px 10px;
@@ -842,6 +846,12 @@
             const balancePaid =
               r.balancePaidAt && String(r.balancePaidAt).length > 0
 
+            // Vérifier si des remboursements ont été effectués
+            const depositRefunded =
+              r.depositRefundedAmount && Number(r.depositRefundedAmount) > 0
+            const balanceRefunded =
+              r.balanceRefundedAmount && Number(r.balanceRefundedAmount) > 0
+
             // Vérifier si demande d'annulation en attente ou validée
             const hasCancelPending =
               r.cancelStatus === 'pending' || r.cancelStatus === 'validated'
@@ -876,13 +886,25 @@
             <td>${r.nbNights || 0}</td>
             <td>${r.nbAdults || 0}</td>
             <td>${r.nbChilds || 0}</td>
-            <td>${fmtMoney(
-              r.priceTotal
-            )}<span class="pay-dots"><span class="pay-dot ${
-              depositPaid ? 'on' : ''
-            }" title="Acompte"></span><span class="pay-dot ${
-              balancePaid ? 'on' : ''
-            }" title="Solde"></span></span></td>
+                         <td>${fmtMoney(
+                           r.priceTotal
+                         )}<span class="pay-dots"><span class="pay-dot ${
+              depositRefunded ? 'refunded' : depositPaid ? 'on' : ''
+            }" title="${
+              depositRefunded
+                ? 'Acompte remboursé'
+                : depositPaid
+                ? 'Acompte payé'
+                : 'Acompte non payé'
+            }"></span><span class="pay-dot ${
+              balanceRefunded ? 'refunded' : balancePaid ? 'on' : ''
+            }" title="${
+              balanceRefunded
+                ? 'Solde remboursé'
+                : balancePaid
+                ? 'Solde payé'
+                : 'Solde non payé'
+            }"></span></span></td>
             <td><button class="btn btn-primary" data-token="${
               r.token
             }" data-action="detail">Détails</button></td>
