@@ -160,6 +160,12 @@ function doPost(e) {
       return validateCancellation_(token)
     }
 
+    if (p.action === 'updateRefunds') {
+      const token = p.token || body.token
+      const refunds = body.refunds || []
+      return updateRefunds_(token, refunds)
+    }
+
     return jsonOut({ status: 'error', message: '❌ Action POST inconnue' })
   } catch (err) {
     return jsonOut({
@@ -2134,4 +2140,104 @@ function buildCancellationValidatedEmail_(name) {
     ",</p><p>Votre <strong>demande d'annulation a été validée</strong>.</p><p>Votre réservation a été annulée avec succès.</p></div>" +
     '<div class="section" style="text-align:center;color:#666;font-size:13px">Merci de votre confiance.</div></div></body></html>'
   )
+}
+
+// ======================================
+// Mise à jour des remboursements
+// ======================================
+function updateRefunds_(token, refunds) {
+  try {
+    if (!token) {
+      return jsonOut({ status: 'error', message: '❌ Token manquant' })
+    }
+
+    const ss = SpreadsheetApp.openById(SHEET_ID)
+    const sh = ss.getSheetByName(SHEET_NAME)
+    if (!sh) {
+      return jsonOut({
+        status: 'error',
+        message: '❌ Onglet ReservationsTemp non trouvé'
+      })
+    }
+
+    const data = sh.getDataRange().getValues()
+    const headers = data[0]
+    const tokenColIndex = headers.indexOf('id')
+
+    if (tokenColIndex === -1) {
+      return jsonOut({
+        status: 'error',
+        message: '❌ Structure de données invalide'
+      })
+    }
+
+    let rowIndex = -1
+    for (let i = 1; i < data.length; i++) {
+      if (data[i][tokenColIndex] === token) {
+        rowIndex = i + 1
+        break
+      }
+    }
+
+    if (rowIndex === -1) {
+      return jsonOut({ status: 'error', message: '❌ Réservation non trouvée' })
+    }
+
+    // Traiter chaque remboursement
+    for (const refund of refunds) {
+      if (refund.type === 'deposit') {
+        // Mettre à jour les colonnes d'acompte remboursé
+        const depositRefundedAmountIndex = headers.indexOf(
+          'depositRefundedAmount'
+        )
+        const depositRefundIdsIndex = headers.indexOf('depositRefundIds')
+
+        if (depositRefundedAmountIndex !== -1) {
+          sh.getRange(rowIndex, depositRefundedAmountIndex + 1).setValue(
+            Number(refund.amount)
+          )
+        }
+
+        if (depositRefundIdsIndex !== -1) {
+          const existingRefunds =
+            data[rowIndex - 1][depositRefundIdsIndex] || ''
+          const newRefunds = existingRefunds
+            ? existingRefunds + ', ' + refund.refundId
+            : refund.refundId
+          sh.getRange(rowIndex, depositRefundIdsIndex + 1).setValue(newRefunds)
+        }
+      } else if (refund.type === 'balance') {
+        // Mettre à jour les colonnes de solde remboursé
+        const balanceRefundedAmountIndex = headers.indexOf(
+          'balanceRefundedAmount'
+        )
+        const balanceRefundIdsIndex = headers.indexOf('balanceRefundIds')
+
+        if (balanceRefundedAmountIndex !== -1) {
+          sh.getRange(rowIndex, balanceRefundedAmountIndex + 1).setValue(
+            Number(refund.amount)
+          )
+        }
+
+        if (balanceRefundIdsIndex !== -1) {
+          const existingRefunds =
+            data[rowIndex - 1][balanceRefundIdsIndex] || ''
+          const newRefunds = existingRefunds
+            ? existingRefunds + ', ' + refund.refundId
+            : refund.refundId
+          sh.getRange(rowIndex, balanceRefundIdsIndex + 1).setValue(newRefunds)
+        }
+      }
+    }
+
+    return jsonOut({
+      status: 'success',
+      message: '✅ Remboursements enregistrés avec succès'
+    })
+  } catch (err) {
+    return jsonOut({
+      status: 'error',
+      message: '❌ Erreur: ' + (err && err.message ? err.message : String(err))
+    })
+  }
 }

@@ -1113,18 +1113,35 @@
           try {
             showLoader(true)
 
-            // Ici vous pouvez ajouter l'appel API pour effectuer les remboursements
-            // Pour l'instant, on simule juste la fermeture
+            // Appel API pour effectuer les remboursements
+            const response = await fetch('/api/refund', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'x-admin-key': ADMIN_KEY
+              },
+              body: JSON.stringify({
+                token: window.currentReservationData.token,
+                refundDeposit: depositCheck.checked,
+                refundBalance: balanceCheck.checked
+              })
+            })
 
-            alert('Fonctionnalité de remboursement à implémenter')
+            const result = await response.json()
 
-            // Fermer les modals
-            document.getElementById('confirmModal').style.display = 'none'
-            document.getElementById('detailModal').style.display = 'none'
+            if (result.status === 'success') {
+              alert('Remboursement(s) effectué(s) avec succès !')
 
-            // Recharger les données
-            currentRows = await fetchRows()
-            renderRows(currentRows)
+              // Fermer les modals
+              document.getElementById('confirmModal').style.display = 'none'
+              document.getElementById('detailModal').style.display = 'none'
+
+              // Recharger les données
+              currentRows = await fetchRows()
+              renderRows(currentRows)
+            } else {
+              throw new Error(result.error || 'Erreur lors du remboursement')
+            }
           } catch (err) {
             alert('Erreur lors du remboursement: ' + err.message)
           } finally {

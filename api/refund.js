@@ -1,0 +1,144 @@
+/**
+ * Route Vercel pour gérer les remboursements
+ * Permet de rembourser l'acompte et/ou le solde d'une réservation
+ */
+
+import Stripe from 'stripe'
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Méthode non autorisée' })
+  }
+
+  try {
+    const { token, refundDeposit, refundBalance } = req.body
+
+    if (!token) {
+      return res.status(400).json({ error: 'Token de réservation manquant' })
+    }
+
+    if (!refundDeposit && !refundBalance) {
+      return res.status(400).json({ error: 'Aucun remboursement demandé' })
+    }
+
+    // Récupérer les données de la réservation depuis Google Apps Script
+    const gasUrl = process.env.NEXT_PUBLIC_GAS_URL
+    const response = await fetch(
+      `${gasUrl}?action=getReservationAdmin&token=${encodeURIComponent(token)}`
+    )
+    const data = await response.json()
+
+    if (data.status !== 'success') {
+      return res.status(404).json({ error: 'Réservation non trouvée' })
+    }
+
+    const reservation = data.data
+    const refunds = []
+
+    // Rembourser l'acompte si demandé
+    if (refundDeposit && reservation.depositPaymentIntentId) {
+      try {
+        const paymentIntent = await stripe.paymentIntents.retrieve(
+          reservation.depositPaymentIntentId
+        )
+
+        if (paymentIntent.charges.data.length > 0) {
+          const charge = paymentIntent.charges.data[0]
+          const refund = await stripe.refunds.create({
+            charge: charge.id,
+            // Pas de amount = remboursement complet automatique
+            metadata: {
+              reservation_token: token,
+              refund_type: 'deposit',
+              refunded_at: new Date().toISOString()
+            }
+          })
+
+          refunds.push({
+            type: 'deposit',
+            amount: refund.amount / 100, // Récupérer le montant réel remboursé
+            refundId: refund.id,
+            status: refund.status
+          })
+        }
+      } catch (error) {
+        console.error('Erreur remboursement acompte:', error)
+        return res.status(500).json({
+          error: "Erreur lors du remboursement de l'acompte",
+          details: error.message
+        })
+      }
+    }
+
+    // Rembourser le solde si demandé
+    if (refundBalance && reservation.balancePaymentIntentId) {
+      try {
+        const paymentIntent = await stripe.paymentIntents.retrieve(
+          reservation.balancePaymentIntentId
+        )
+
+        if (paymentIntent.charges.data.length > 0) {
+          const charge = paymentIntent.charges.data[0]
+          const refund = await stripe.refunds.create({
+            charge: charge.id,
+            // Pas de amount = remboursement complet automatique
+            metadata: {
+              reservation_token: token,
+              refund_type: 'balance',
+              refunded_at: new Date().toISOString()
+            }
+          })
+
+          refunds.push({
+            type: 'balance',
+            amount: refund.amount / 100, // Récupérer le montant réel remboursé
+            refundId: refund.id,
+            status: refund.status
+          })
+        }
+      } catch (error) {
+        console.error('Erreur remboursement solde:', error)
+        return res.status(500).json({
+          error: 'Erreur lors du remboursement du solde',
+          details: error.message
+        })
+      }
+    }
+
+    // Mettre à jour la réservation dans Google Sheets
+    const updateResponse = await fetch(`${gasUrl}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        action: 'updateRefunds',
+        token: token,
+        refunds: refunds
+      })
+    })
+
+    const updateData = await updateResponse.json()
+
+    if (updateData.status !== 'success') {
+      return res.status(500).json({
+        error: 'Erreur lors de la mise à jour de la réservation',
+        details: updateData.message
+      })
+    }
+
+    return res.status(200).json({
+      status: 'success',
+      message: 'Remboursement(s) effectué(s) avec succès',
+      refunds: refunds
+    })
+  } catch (error) {
+    console.error('Erreur générale remboursement:', error)
+    return res.status(500).json({
+      error: 'Erreur interne du serveur',
+      details: error.message
+    })
+  }
+}
