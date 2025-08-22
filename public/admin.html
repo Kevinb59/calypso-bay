@@ -1161,8 +1161,8 @@
               refundBalance: balanceCheck.checked
             })
 
-            // Appel API pour effectuer les remboursements (VERSION TEST)
-            const response = await fetch('/api/refund-test-sheet', {
+            // Appel API pour effectuer les remboursements (VERSION RÉELLE)
+            const response = await fetch('/api/refund', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
