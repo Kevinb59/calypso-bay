@@ -129,6 +129,19 @@ export default async function handler(req, res) {
       })
     }
 
+    // Envoyer l'email de confirmation de remboursement
+    const emailResponse = await fetch(`${gasUrl}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        action: 'sendRefundEmail',
+        token: token,
+        refunds: refunds
+      })
+    })
+
     return res.status(200).json({
       status: 'success',
       message: 'Remboursement(s) effectué(s) avec succès',

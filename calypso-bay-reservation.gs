@@ -166,6 +166,12 @@ function doPost(e) {
       return updateRefunds_(token, refunds)
     }
 
+    if (p.action === 'sendRefundEmail') {
+      const token = p.token || body.token
+      const refunds = body.refunds || []
+      return sendRefundEmail_(token, refunds)
+    }
+
     return jsonOut({ status: 'error', message: '❌ Action POST inconnue' })
   } catch (err) {
     return jsonOut({
@@ -2240,4 +2246,183 @@ function updateRefunds_(token, refunds) {
       message: '❌ Erreur: ' + (err && err.message ? err.message : String(err))
     })
   }
+}
+
+// ======================================
+// Envoi email de confirmation de remboursement
+// ======================================
+function sendRefundEmail_(token, refunds) {
+  try {
+    if (!token) {
+      return jsonOut({ status: 'error', message: '❌ Token manquant' })
+    }
+
+    const ss = SpreadsheetApp.openById(SHEET_ID)
+    const sh = ss.getSheetByName(SHEET_NAME)
+    if (!sh) {
+      return jsonOut({
+        status: 'error',
+        message: '❌ Onglet ReservationsTemp non trouvé'
+      })
+    }
+
+    const data = sh.getDataRange().getValues()
+    const headers = data[0]
+    const tokenColIndex = headers.indexOf('id')
+
+    if (tokenColIndex === -1) {
+      return jsonOut({
+        status: 'error',
+        message: '❌ Structure de données invalide'
+      })
+    }
+
+    let rowIndex = -1
+    for (let i = 1; i < data.length; i++) {
+      if (data[i][tokenColIndex] === token) {
+        rowIndex = i
+        break
+      }
+    }
+
+    if (rowIndex === -1) {
+      return jsonOut({ status: 'error', message: '❌ Réservation non trouvée' })
+    }
+
+    // Récupérer les données de la réservation
+    const row = data[rowIndex]
+    const reservationData = {
+      name: row[headers.indexOf('name')],
+      email: row[headers.indexOf('email')],
+      startDate: row[headers.indexOf('startDate')],
+      endDate: row[headers.indexOf('endDate')],
+      token: token
+    }
+
+    // Envoyer l'email de confirmation
+    const subject = 'Confirmation de remboursement de votre réservation'
+    const html = buildRefundEmailHtml_(reservationData, refunds)
+
+    MailApp.sendEmail({
+      to: reservationData.email,
+      replyTo: RECIPIENT_EMAIL,
+      subject,
+      htmlBody: html
+    })
+
+    return jsonOut({
+      status: 'success',
+      message: '✅ Email de confirmation de remboursement envoyé'
+    })
+  } catch (err) {
+    return jsonOut({
+      status: 'error',
+      message: '❌ Erreur: ' + (err && err.message ? err.message : String(err))
+    })
+  }
+}
+
+// ======================================
+// Construction email de confirmation de remboursement
+// ======================================
+function buildRefundEmailHtml_(data, refunds) {
+  const color = '#5d3fd3'
+
+  // Déterminer le type de remboursement
+  const hasDepositRefund = refunds.some((r) => r.type === 'deposit')
+  const hasBalanceRefund = refunds.some((r) => r.type === 'balance')
+
+  // Construire le message selon le type de remboursement
+  let refundType = ''
+  if (hasDepositRefund && hasBalanceRefund) {
+    refundType = "à l'acompte et au solde"
+  } else if (hasDepositRefund) {
+    refundType = "à l'acompte"
+  } else if (hasBalanceRefund) {
+    refundType = 'au solde'
+  }
+
+  // Construire les détails du remboursement
+  let refundDetails = ''
+  let totalAmount = 0
+
+  if (hasDepositRefund) {
+    const depositRefund = refunds.find((r) => r.type === 'deposit')
+    const amount = Number(depositRefund.amount).toLocaleString('fr-FR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })
+    refundDetails += `<strong>Acompte :</strong> ${amount} €<br>`
+    totalAmount += depositRefund.amount
+  }
+
+  if (hasBalanceRefund) {
+    const balanceRefund = refunds.find((r) => r.type === 'balance')
+    const amount = Number(balanceRefund.amount).toLocaleString('fr-FR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })
+    refundDetails += `<strong>Solde :</strong> ${amount} €<br>`
+    totalAmount += balanceRefund.amount
+  }
+
+  if (hasDepositRefund && hasBalanceRefund) {
+    const totalFormatted = totalAmount.toLocaleString('fr-FR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })
+    refundDetails += `<br><strong>Total :</strong> ${totalFormatted} €`
+  }
+
+  return (
+    '<!DOCTYPE html>' +
+    '<html lang="fr">' +
+    '<head>' +
+    '<meta charset="UTF-8">' +
+    '<meta name="viewport" content="width=device-width, initial-scale=1.0">' +
+    '<title>Confirmation de remboursement</title>' +
+    '<style>' +
+    "body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f2f4f8;padding:40px 20px;margin:0;}" +
+    '.container{max-width:640px;margin:auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.05);}' +
+    '.header{background:' +
+    color +
+    ';color:#ffffff;text-align:center;padding:28px;}' +
+    '.header h1{margin:0;font-size:24px;letter-spacing:0.5px;}' +
+    '.section{padding:26px 28px;border-bottom:1px solid #eee;}' +
+    '.section:last-child{border-bottom:none;}' +
+    'p{margin:8px 0;line-height:1.6;color:#333;}' +
+    '.details{background:#f9fafb;padding:16px;border-left:3px solid ' +
+    color +
+    ';border-radius:8px;margin-top:12px;}' +
+    '</style>' +
+    '</head>' +
+    '<body>' +
+    '<div class="container">' +
+    '<div class="header"><h1>🏖️ Calypso Bay</h1></div>' +
+    '<div class="section">' +
+    '<p>Bonjour ' +
+    escapeHtml_(data.name || '') +
+    ',</p>' +
+    "<p>Suite à votre demande d'annulation, nous vous confirmons avoir procédé au remboursement de votre réservation.</p>" +
+    '<p>Le montant correspondant ' +
+    refundType +
+    ' a été recrédité sur le moyen de paiement utilisé lors de votre réservation.</p>' +
+    '</div>' +
+    '<div class="section">' +
+    '<h3 style="margin:0 0 10px;color:' +
+    color +
+    '">📋 Détails du remboursement</h3>' +
+    '<div class="details">' +
+    refundDetails +
+    '</div>' +
+    '</div>' +
+    '<div class="section">' +
+    "<p>Nous vous rappelons que, conformément à nos conditions de réservation, la caution n'est remboursée que si l'annulation intervient plus de trois mois avant la date prévue du séjour.</p>" +
+    '<p>Nous restons à votre disposition pour toute question complémentaire ou précision.</p>' +
+    '</div>' +
+    '<div class="section" style="text-align:center;color:#666;font-size:13px">Merci de votre confiance.</div>' +
+    '</div>' +
+    '</body>' +
+    '</html>'
+  )
 }
