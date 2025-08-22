@@ -18,7 +18,9 @@ export default async function handler(req, res) {
   }
 
   try {
+    console.log('=== DÉBUT FONCTION REFUND ===')
     const { token, refundDeposit, refundBalance } = req.body
+    console.log('Données reçues:', { token, refundDeposit, refundBalance })
 
     if (!token) {
       return res.status(400).json({ error: 'Token de réservation manquant' })
@@ -30,6 +32,7 @@ export default async function handler(req, res) {
 
     // Récupérer les données de la réservation depuis Google Apps Script
     const gasUrl = process.env.NEXT_PUBLIC_GAS_URL
+    console.log('GAS URL:', gasUrl)
 
     if (!gasUrl) {
       console.error("Variable d'environnement NEXT_PUBLIC_GAS_URL manquante")
@@ -39,27 +42,27 @@ export default async function handler(req, res) {
       })
     }
 
-    console.log('GAS URL configurée:', gasUrl)
-    console.log(
-      'Appel GAS URL:',
-      `${gasUrl}?action=getReservationAdmin&token=${encodeURIComponent(token)}`
-    )
+    const gasUrlToCall = `${gasUrl}?action=getReservationAdmin&token=${encodeURIComponent(
+      token
+    )}`
+    console.log('URL à appeler:', gasUrlToCall)
 
-    const response = await fetch(
-      `${gasUrl}?action=getReservationAdmin&token=${encodeURIComponent(token)}`
-    )
+    console.log('Appel à Google Apps Script...')
+    const response = await fetch(gasUrlToCall)
+    console.log('Réponse reçue, statut:', response.status)
+
     const data = await response.json()
-
-    console.log('Réponse GAS:', data)
+    console.log('Données GAS reçues:', data)
 
     if (data.status !== 'success') {
+      console.log('Erreur GAS:', data)
       return res.status(404).json({ error: 'Réservation non trouvée' })
     }
 
     const reservation = data.data
     const refunds = []
 
-    console.log('Données de réservation reçues:', {
+    console.log('Réservation récupérée:', {
       token,
       depositPaymentIntentId: reservation.depositPaymentIntentId,
       balancePaymentIntentId: reservation.balancePaymentIntentId,
