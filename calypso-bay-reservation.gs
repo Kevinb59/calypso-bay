@@ -726,6 +726,7 @@ function listReservations_(q) {
         priceTotal: Number(row[idx('priceTotal')] || 0),
         depositAmount: Number(row[idx('depositAmount')] || 0),
         balanceAmount: Number(row[idx('balanceAmount')] || 0),
+        balancePaidAt: row[idx('balancePaidAt')],
         cancelStatus: row[idx('cancelStatus')]
       }
       if (!q) {
