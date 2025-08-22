@@ -1102,7 +1102,7 @@
         // Vérifier que les données de réservation sont disponibles
         if (
           !window.currentReservationData ||
-          !window.currentReservationData.token
+          !window.currentReservationData.id
         ) {
           alert(
             'Erreur: Données de réservation manquantes. Veuillez fermer et rouvrir les détails.'
@@ -1150,13 +1150,13 @@
             // Vérifier que les données de réservation sont disponibles
             if (
               !window.currentReservationData ||
-              !window.currentReservationData.token
+              !window.currentReservationData.id
             ) {
               throw new Error('Données de réservation manquantes')
             }
 
             console.log('Données de remboursement:', {
-              token: window.currentReservationData.token,
+              token: window.currentReservationData.id,
               refundDeposit: depositCheck.checked,
               refundBalance: balanceCheck.checked
             })
@@ -1169,7 +1169,7 @@
                 'x-admin-key': ADMIN_KEY
               },
               body: JSON.stringify({
-                token: window.currentReservationData.token,
+                token: window.currentReservationData.id,
                 refundDeposit: depositCheck.checked,
                 refundBalance: balanceCheck.checked
               })
