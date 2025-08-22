@@ -843,8 +843,9 @@
               r.status === 'balancePay' ||
               (r.balancePaidAt && String(r.balancePaidAt).length > 0)
 
-            // Vérifier si demande d'annulation en attente
-            const hasCancelPending = r.cancelStatus === 'pending'
+            // Vérifier si demande d'annulation en attente ou validée
+            const hasCancelPending =
+              r.cancelStatus === 'pending' || r.cancelStatus === 'validated'
 
             // Vérifier si séjour en cours
             const now = new Date()
