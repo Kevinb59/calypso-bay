@@ -85,29 +85,41 @@ export default async function handler(req, res) {
           reservation.depositPaymentIntentId
         )
 
-        if (paymentIntent.charges.data.length > 0) {
-          const charge = paymentIntent.charges.data[0]
-          const refund = await stripe.refunds.create({
-            charge: charge.id,
-            // Pas de amount = remboursement complet automatique
-            metadata: {
-              reservation_token: token,
-              refund_type: 'deposit',
-              refunded_at: new Date().toISOString()
-            }
-          })
+        console.log('PaymentIntent récupéré pour acompte:', {
+          id: paymentIntent.id,
+          status: paymentIntent.status,
+          charges: paymentIntent.charges,
+          chargesData: paymentIntent.charges?.data
+        })
 
-          refunds.push({
-            type: 'deposit',
-            amount: refund.amount / 100, // Récupérer le montant réel remboursé
-            refundId: refund.id,
-            status: refund.status
-          })
-        } else {
+        // Vérification plus robuste de la structure des charges
+        if (
+          !paymentIntent.charges ||
+          !paymentIntent.charges.data ||
+          paymentIntent.charges.data.length === 0
+        ) {
           return res.status(400).json({
             error: "Impossible de rembourser l'acompte : aucune charge trouvée"
           })
         }
+
+        const charge = paymentIntent.charges.data[0]
+        const refund = await stripe.refunds.create({
+          charge: charge.id,
+          // Pas de amount = remboursement complet automatique
+          metadata: {
+            reservation_token: token,
+            refund_type: 'deposit',
+            refunded_at: new Date().toISOString()
+          }
+        })
+
+        refunds.push({
+          type: 'deposit',
+          amount: refund.amount / 100, // Récupérer le montant réel remboursé
+          refundId: refund.id,
+          status: refund.status
+        })
       } catch (error) {
         console.error('Erreur remboursement acompte:', error)
         return res.status(500).json({
@@ -131,29 +143,41 @@ export default async function handler(req, res) {
           reservation.balancePaymentIntentId
         )
 
-        if (paymentIntent.charges.data.length > 0) {
-          const charge = paymentIntent.charges.data[0]
-          const refund = await stripe.refunds.create({
-            charge: charge.id,
-            // Pas de amount = remboursement complet automatique
-            metadata: {
-              reservation_token: token,
-              refund_type: 'balance',
-              refunded_at: new Date().toISOString()
-            }
-          })
+        console.log('PaymentIntent récupéré pour solde:', {
+          id: paymentIntent.id,
+          status: paymentIntent.status,
+          charges: paymentIntent.charges,
+          chargesData: paymentIntent.charges?.data
+        })
 
-          refunds.push({
-            type: 'balance',
-            amount: refund.amount / 100, // Récupérer le montant réel remboursé
-            refundId: refund.id,
-            status: refund.status
-          })
-        } else {
+        // Vérification plus robuste de la structure des charges
+        if (
+          !paymentIntent.charges ||
+          !paymentIntent.charges.data ||
+          paymentIntent.charges.data.length === 0
+        ) {
           return res.status(400).json({
             error: 'Impossible de rembourser le solde : aucune charge trouvée'
           })
         }
+
+        const charge = paymentIntent.charges.data[0]
+        const refund = await stripe.refunds.create({
+          charge: charge.id,
+          // Pas de amount = remboursement complet automatique
+          metadata: {
+            reservation_token: token,
+            refund_type: 'balance',
+            refunded_at: new Date().toISOString()
+          }
+        })
+
+        refunds.push({
+          type: 'balance',
+          amount: refund.amount / 100, // Récupérer le montant réel remboursé
+          refundId: refund.id,
+          status: refund.status
+        })
       } catch (error) {
         console.error('Erreur remboursement solde:', error)
         return res.status(500).json({
