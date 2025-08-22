@@ -25,10 +25,17 @@ export default async function handler(req, res) {
 
     // Récupérer les données de la réservation depuis Google Apps Script
     const gasUrl = process.env.NEXT_PUBLIC_GAS_URL
+    console.log(
+      'Appel GAS URL:',
+      `${gasUrl}?action=getReservationAdmin&token=${encodeURIComponent(token)}`
+    )
+
     const response = await fetch(
       `${gasUrl}?action=getReservationAdmin&token=${encodeURIComponent(token)}`
     )
     const data = await response.json()
+
+    console.log('Réponse GAS:', data)
 
     if (data.status !== 'success') {
       return res.status(404).json({ error: 'Réservation non trouvée' })
@@ -37,8 +44,24 @@ export default async function handler(req, res) {
     const reservation = data.data
     const refunds = []
 
+    console.log('Données de réservation reçues:', {
+      token,
+      depositPaymentIntentId: reservation.depositPaymentIntentId,
+      balancePaymentIntentId: reservation.balancePaymentIntentId,
+      depositAmount: reservation.depositAmount,
+      balanceAmount: reservation.balanceAmount,
+      status: reservation.status
+    })
+
     // Rembourser l'acompte si demandé
-    if (refundDeposit && reservation.depositPaymentIntentId) {
+    if (refundDeposit) {
+      if (!reservation.depositPaymentIntentId) {
+        return res.status(400).json({
+          error:
+            "Impossible de rembourser l'acompte : aucun PaymentIntent trouvé"
+        })
+      }
+
       try {
         const paymentIntent = await stripe.paymentIntents.retrieve(
           reservation.depositPaymentIntentId
@@ -62,6 +85,10 @@ export default async function handler(req, res) {
             refundId: refund.id,
             status: refund.status
           })
+        } else {
+          return res.status(400).json({
+            error: "Impossible de rembourser l'acompte : aucune charge trouvée"
+          })
         }
       } catch (error) {
         console.error('Erreur remboursement acompte:', error)
@@ -73,7 +100,14 @@ export default async function handler(req, res) {
     }
 
     // Rembourser le solde si demandé
-    if (refundBalance && reservation.balancePaymentIntentId) {
+    if (refundBalance) {
+      if (!reservation.balancePaymentIntentId) {
+        return res.status(400).json({
+          error:
+            'Impossible de rembourser le solde : aucun PaymentIntent trouvé'
+        })
+      }
+
       try {
         const paymentIntent = await stripe.paymentIntents.retrieve(
           reservation.balancePaymentIntentId
@@ -96,6 +130,10 @@ export default async function handler(req, res) {
             amount: refund.amount / 100, // Récupérer le montant réel remboursé
             refundId: refund.id,
             status: refund.status
+          })
+        } else {
+          return res.status(400).json({
+            error: 'Impossible de rembourser le solde : aucune charge trouvée'
           })
         }
       } catch (error) {
