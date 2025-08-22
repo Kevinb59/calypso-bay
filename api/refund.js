@@ -7,6 +7,11 @@ import Stripe from 'stripe'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
+// Vérifier que la clé Stripe est configurée
+if (!process.env.STRIPE_SECRET_KEY) {
+  console.error("Variable d'environnement STRIPE_SECRET_KEY manquante")
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Méthode non autorisée' })
@@ -25,6 +30,16 @@ export default async function handler(req, res) {
 
     // Récupérer les données de la réservation depuis Google Apps Script
     const gasUrl = process.env.NEXT_PUBLIC_GAS_URL
+
+    if (!gasUrl) {
+      console.error("Variable d'environnement NEXT_PUBLIC_GAS_URL manquante")
+      return res.status(500).json({
+        error: 'Configuration serveur manquante',
+        details: 'NEXT_PUBLIC_GAS_URL non définie'
+      })
+    }
+
+    console.log('GAS URL configurée:', gasUrl)
     console.log(
       'Appel GAS URL:',
       `${gasUrl}?action=getReservationAdmin&token=${encodeURIComponent(token)}`
