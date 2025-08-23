@@ -8,6 +8,7 @@
       "Grille-pain",
       "Plaque de cuisson",
       "Four",
+      "Plancha",
       "Ustensiles de cuisine",
       "Vaisselle et couverts",
       "Bouilloire électrique",
@@ -96,8 +97,7 @@
       "Piscine privée",
       "Espace apéro",
       "Méridienne exotique avec moustiquaire",
-      "Avec vue mer",
-      "Barbecue et ustensiles"
+      "Avec vue mer"
     ]
   },
   "exterieur": {
@@ -110,7 +110,8 @@
       "Verdoyant",
       "Avec vue mer",
       "Barbecue",
-      "Sans vis-à-vis"
+      "Sans vis-à-vis",
+      "Barbecue et ustensiles"
     ]
   },
   "services": {
