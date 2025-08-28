@@ -78,8 +78,10 @@ async function fetchPlanning() {
     .map((r) => r.split(','))
   rows.forEach(([rawDate, rawValue]) => {
     const cleanDate = rawDate.trim().replace(/^"|"$/g, '')
+    // Normaliser les espaces multiples dans les dates
+    const normalizedDate = cleanDate.replace(/\s+/g, ' ')
     const cleanValue = rawValue?.trim().toLowerCase()
-    planningData[cleanDate] = cleanValue
+    planningData[normalizedDate] = cleanValue
   })
   renderCalendar(currentMonth, currentYear)
 }
@@ -119,6 +121,7 @@ function handleDateClick(dateObj, event) {
           year: 'numeric'
         })
         .toLowerCase()
+        .replace(/\s+/g, ' ') // Normaliser les espaces multiples
 
       const value = planningData[key]
       if (!value || value === 'x' || isNaN(parseFloat(value))) {
@@ -208,6 +211,7 @@ function renderCalendar(month, year) {
         year: 'numeric'
       })
       .toLowerCase()
+      .replace(/\s+/g, ' ') // Normaliser les espaces multiples
 
     const value = planningData[dayStr] || ''
     const isReserved = value === 'x'
