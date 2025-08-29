@@ -292,7 +292,7 @@
         }
         try {
           const res = await fetch(
-            `/api/getReservation?token=${encodeURIComponent(token)}`
+            `/api/reservations?action=get&token=${encodeURIComponent(token)}`
           )
           const json = await res.json()
           if (json.status !== 'success') {

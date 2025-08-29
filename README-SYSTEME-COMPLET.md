@@ -71,7 +71,7 @@ Ce système complet permet de gérer les réservations avec :
 
 2. **Remplacer les IDs dans les fichiers API**
 
-   - Dans `api/accept.js`, `api/refuse.js`, `api/getReservation.js`, `api/finalizeReservation.js`
+   - Dans `api/reservations.js` (fusion des anciennes routes)
    - Remplacer `YOUR_SCRIPT_ID` par l'ID de votre script Apps Script
 
 3. **Remplacer la clé Stripe publique**
@@ -102,7 +102,7 @@ Ce système complet permet de gérer les réservations avec :
 
 ## 🔧 Routes API
 
-### GET `/api/getReservation?token=UUID`
+### GET `/api/reservations?action=get&token=UUID`
 
 Récupère les données d'une réservation acceptée
 
@@ -110,7 +110,7 @@ Récupère les données d'une réservation acceptée
 
 Crée un PaymentIntent Stripe pour l'acompte
 
-### POST `/api/finalizeReservation`
+### POST `/api/reservations?action=finalize`
 
 Finalise la réservation après paiement réussi
 
