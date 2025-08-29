@@ -71,7 +71,7 @@ Ce système complet permet de gérer les réservations avec :
 
 2. **Remplacer les IDs dans les fichiers API**
 
-   - Dans `api/reservations.js` (fusion des anciennes routes)
+   - Dans `api/reservations.js` (fusion des anciennes routes incluant les annulations)
    - Remplacer `YOUR_SCRIPT_ID` par l'ID de votre script Apps Script
 
 3. **Remplacer la clé Stripe publique**

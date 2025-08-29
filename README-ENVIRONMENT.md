@@ -98,7 +98,7 @@ vercel env add NEXT_PUBLIC_GAS_CONTACT_URL
 ### API Routes
 
 - `api/accept.js`
-- `api/reservations.js` (fusion de getReservation.js, manageReservation.js et finalizeReservation.js)
+- `api/reservations.js` (fusion de getReservation.js, manageReservation.js, finalizeReservation.js et cancellation.js)
 - `api/refuse.js`
 - `api/config.js` (nouveau)
 

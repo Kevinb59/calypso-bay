@@ -1,6 +1,6 @@
 /**
  * Route Vercel unifiée pour la gestion des réservations
- * Fusionne les anciennes routes getReservation.js, manageReservation.js et finalizeReservation.js
+ * Fusionne les anciennes routes getReservation.js, manageReservation.js, finalizeReservation.js et cancellation.js
  */
 
 // URL du Google Apps Script depuis les variables d'environnement
@@ -21,9 +21,9 @@ export default async function handler(req, res) {
 
   // Vérifier que l'action est spécifiée
   if (!action) {
-    return res
-      .status(400)
-      .json({ error: 'Action requise (get, manage, finalize)' })
+    return res.status(400).json({
+      error: 'Action requise (get, manage, finalize, cancel, validateCancel)'
+    })
   }
 
   try {
@@ -34,9 +34,14 @@ export default async function handler(req, res) {
         return await handleManageReservation(req, res)
       case 'finalize':
         return await handleFinalizeReservation(req, res)
+      case 'cancel':
+        return await handleCancelReservation(req, res)
+      case 'validateCancel':
+        return await handleValidateCancellation(req, res)
       default:
         return res.status(400).json({
-          error: 'Action invalide. Doit être "get", "manage" ou "finalize"'
+          error:
+            'Action invalide. Doit être "get", "manage", "finalize", "cancel" ou "validateCancel"'
         })
     }
   } catch (error) {
@@ -207,5 +212,98 @@ async function handleFinalizeReservation(req, res) {
       status: 'error',
       message: 'Erreur technique lors de la finalisation'
     })
+  }
+}
+
+// Fonction pour demander l'annulation d'une réservation
+async function handleCancelReservation(req, res) {
+  // Vérifier que c'est une requête POST
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Méthode non autorisée' })
+  }
+
+  try {
+    const { token, reason } = req.body || {}
+    if (!token) {
+      return res.status(400).json({ error: 'Token manquant' })
+    }
+
+    const resp = await fetch(
+      `${GAS_URL}?action=requestCancellation&token=${encodeURIComponent(
+        token
+      )}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reason: reason || '' })
+      }
+    )
+
+    const result = await resp.json()
+    if (!resp.ok || result.status !== 'success') {
+      return res.status(400).json({
+        error: result.message || 'Erreur annulation'
+      })
+    }
+
+    res.status(200).json(result)
+  } catch (err) {
+    console.error('Erreur requestCancellation:', err)
+    res.status(500).json({ error: 'Erreur serveur' })
+  }
+}
+
+// Fonction pour valider l'annulation d'une réservation
+async function handleValidateCancellation(req, res) {
+  // Vérifier que c'est une requête GET
+  if (req.method !== 'GET') {
+    return res.status(405).json({ error: 'Méthode non autorisée' })
+  }
+
+  const { token } = req.query
+
+  if (!token) {
+    return res.status(400).json({ error: 'Token manquant' })
+  }
+
+  try {
+    const response = await fetch(
+      `${GAS_URL}?action=validateCancellation&token=${encodeURIComponent(
+        token
+      )}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ token })
+      }
+    )
+
+    const data = await response.json()
+
+    if (data.status === 'success') {
+      // Rediriger vers une page de succès
+      res.writeHead(302, {
+        Location: '/annulation-validee.html'
+      })
+      res.end()
+    } else {
+      // Rediriger vers une page d'erreur
+      res.writeHead(302, {
+        Location: `/erreur-annulation.html?error=${encodeURIComponent(
+          data.message || 'Erreur inconnue'
+        )}`
+      })
+      res.end()
+    }
+  } catch (err) {
+    console.error('Erreur validateCancellation:', err)
+    res.writeHead(302, {
+      Location: `/erreur-annulation.html?error=${encodeURIComponent(
+        'Erreur de connexion'
+      )}`
+    })
+    res.end()
   }
 }
