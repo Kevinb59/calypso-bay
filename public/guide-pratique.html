@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Guide Pratique - Calypso Bay</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+        overflow-x: hidden;
+      }
+
+      body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        position: relative;
+      }
+
+      .main-container {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 1;
+      }
+
+      .header {
+        text-align: center;
+        padding: 40px 0;
+        border-bottom: 3px solid #4caf50;
+        margin-bottom: 40px;
+      }
+
+      .header h1 {
+        font-size: 3em;
+        margin: 0;
+        color: #333;
+        font-family: 'Themysion', serif;
+      }
+
+      .header h2 {
+        font-size: 1.5em;
+        margin: 10px 0 0 0;
+        color: #4caf50;
+        font-weight: 300;
+      }
+
+      .header p {
+        font-size: 1.2em;
+        color: #666;
+        margin: 20px 0 0 0;
+      }
+
+      .search-section {
+        background: linear-gradient(135deg, #4caf50, #45a049);
+        padding: 30px;
+        border-radius: 15px;
+        margin-bottom: 40px;
+        box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
+      }
+
+      .search-box {
+        max-width: 600px;
+        margin: 0 auto 20px;
+        position: relative;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 15px 50px 15px 20px;
+        border: none;
+        border-radius: 25px;
+        font-size: 16px;
+        background: white;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .search-input:focus {
+        outline: none;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+      }
+
+      .search-icon {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #4caf50;
+        font-size: 18px;
+      }
+
+      .nav-menu {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      .nav-menu a {
+        display: inline-block;
+        padding: 12px 25px;
+        background: rgba(255, 255, 255, 0.9);
+        color: #4caf50;
+        text-decoration: none;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-menu a:hover {
+        background: white;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .content-section {
+        margin-bottom: 60px;
+        padding: 40px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        border-left: 5px solid #4caf50;
+      }
+
+      .section-title {
+        font-size: 2.5em;
+        color: #4caf50;
+        margin-bottom: 30px;
+        text-align: center;
+        border-bottom: 2px solid #4caf50;
+        padding-bottom: 15px;
+      }
+
+      .section-description {
+        text-align: center;
+        font-size: 1.2em;
+        color: #666;
+        margin-bottom: 40px;
+        font-style: italic;
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
+        margin-top: 30px;
+      }
+
+      .info-card {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border: 1px solid #e9ecef;
+      }
+
+      .info-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        border-color: #4caf50;
+      }
+
+      .info-card h4 {
+        color: #4caf50;
+        margin-bottom: 15px;
+        font-size: 1.3em;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .info-card h4 i {
+        font-size: 1.2em;
+        width: 25px;
+      }
+
+      .info-card p {
+        color: #555;
+        line-height: 1.6;
+        margin-bottom: 15px;
+      }
+
+      .info-card ul,
+      .info-card ol {
+        color: #555;
+        line-height: 1.6;
+        padding-left: 20px;
+      }
+
+      .info-card li {
+        margin-bottom: 8px;
+      }
+
+      .info-card strong {
+        color: #333;
+      }
+
+      .highlight {
+        background: #fff3cd;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: bold;
+      }
+
+      .back-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #4caf50;
+        color: white;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        transition: all 0.3s ease;
+        z-index: 1000;
+        font-size: 20px;
+      }
+
+      .back-to-top:hover {
+        background: #45a049;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(76, 175, 80, 0.5);
+      }
+
+      .home-button {
+        position: fixed;
+        top: 30px;
+        left: 30px;
+        background: rgba(255, 255, 255, 0.9);
+        color: #4caf50;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        z-index: 1000;
+        font-size: 20px;
+      }
+
+      .home-button:hover {
+        background: white;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      @media (max-width: 768px) {
+        .main-container {
+          margin: 10px;
+          padding: 15px;
+        }
+
+        .header h1 {
+          font-size: 2em;
+        }
+
+        .header h2 {
+          font-size: 1.2em;
+        }
+
+        .search-section {
+          padding: 20px;
+        }
+
+        .nav-menu {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .nav-menu a {
+          width: 200px;
+          text-align: center;
+        }
+
+        .content-section {
+          padding: 25px;
+        }
+
+        .section-title {
+          font-size: 2em;
+        }
+
+        .info-grid {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+
+        .back-to-top,
+        .home-button {
+          width: 50px;
+          height: 50px;
+          font-size: 16px;
+        }
+
+        .back-to-top {
+          bottom: 20px;
+          right: 20px;
+        }
+
+        .home-button {
+          top: 20px;
+          left: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Bouton retour accueil -->
+    <a href="index.html" class="home-button" title="Retour à l'accueil">
+      <i class="fas fa-home"></i>
+    </a>
+
+    <!-- Container principal -->
+    <div class="main-container">
+      <!-- Header -->
+      <div class="header">
+        <h1>Guide Pratique</h1>
+        <h2>Calypso Bay</h2>
+        <p>
+          Toutes les informations pratiques pour votre séjour : logement,
+          environnement, activités, services et conseils utiles.
+        </p>
+      </div>
+
+      <!-- Section recherche et navigation -->
+      <div class="search-section">
+        <div class="search-box">
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="Rechercher dans le guide..."
+          />
+          <i class="fas fa-search search-icon"></i>
+        </div>
+
+        <div class="nav-menu">
+          <a href="#logement">🏠 Logement</a>
+          <a href="#environnement">🌴 Environnement</a>
+          <a href="#activites">🎯 Activités</a>
+          <a href="#services">🛒 Services</a>
+          <a href="#transport">🚗 Transport</a>
+          <a href="#excursions">🗺️ Excursions</a>
+          <a href="#pratique">ℹ️ Infos Pratiques</a>
+        </div>
+      </div>
+
+      <!-- Section Logement -->
+      <div class="content-section" id="logement">
+        <h2 class="section-title">🏠 Logement et Équipements</h2>
+        <p class="section-description">
+          Toutes les informations sur la villa, ses équipements et leur
+          fonctionnement.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <h4><i class="fas fa-home"></i> Présentation de la villa</h4>
+            <p>
+              Villa contemporaine de 180 m² située sur un terrain de 1 350 m²,
+              idéale pour accueillir jusqu'à 6 personnes. Elle comprend 3
+              chambres de 15 m² avec chacune sa salle de bains privative, une
+              cuisine équipée, un salon intérieur et une grande terrasse
+              extérieure de 50 m² avec piscine privée, un espace repas couvert,
+              un salon extérieur, un parking pour 5 voitures, ainsi que des
+              équipements autonomes tels que deux réserves d'eau (eau de pluie
+              et eau de réseau) et un chauffe-eau solaire.
+            </p>
+
+            <h4><i class="fas fa-couch"></i> Aménagements intérieurs</h4>
+            <p>
+              La villa dispose d'un salon spacieux avec vue sur la mer, d'une
+              cuisine entièrement équipée avec tous les ustensiles nécessaires,
+              et de trois chambres confortables avec literie de qualité. Chaque
+              chambre dispose de sa propre salle de bains privative avec douche.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-lightbulb"></i> Système d'éclairage</h4>
+            <p>
+              Le salon dispose d'un système d'éclairage moderne avec plusieurs
+              points lumineux :
+            </p>
+            <ul>
+              <li>Plafonnier principal avec variateur d'intensité</li>
+              <li>Lampes d'appoint pour l'ambiance</li>
+              <li>Éclairage extérieur automatique</li>
+            </ul>
+
+            <h4><i class="fas fa-fan"></i> Ventilation</h4>
+            <p>
+              Un ventilateur de plafond est installé dans le salon pour assurer
+              une ventilation optimale. Il peut être réglé sur plusieurs
+              vitesses selon vos besoins. En complément, les grandes baies
+              vitrées permettent une excellente circulation de l'air.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-tint"></i> Gestion de l'eau</h4>
+            <p>La villa dispose de deux sources d'eau :</p>
+            <ul>
+              <li>
+                <strong>Eau de pluie :</strong> Collectée et stockée dans une
+                citerne de 10 000 litres
+              </li>
+              <li>
+                <strong>Eau de réseau :</strong> Eau potable de la ville en
+                complément
+              </li>
+            </ul>
+            <p>
+              Un système de pompage automatique assure la distribution dans
+              toute la maison.
+            </p>
+
+            <h4><i class="fas fa-bolt"></i> Électricité</h4>
+            <p>Installation électrique aux normes françaises avec :</p>
+            <ul>
+              <li>Prises de sécurité dans toutes les pièces</li>
+              <li>Éclairage LED économique</li>
+              <li>Chauffe-eau solaire pour l'eau chaude</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Services -->
+      <div class="content-section" id="services">
+        <h2 class="section-title">🛒 Services et Commerces</h2>
+        <p class="section-description">
+          Les commerces et services disponibles à proximité pour vos courses et
+          besoins quotidiens.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <h4>
+              <i class="fas fa-shopping-cart"></i> Supermarchés et alimentation
+            </h4>
+            <p>
+              <strong>Carrefour Market :</strong> Moyenne surface sur la N2 vers
+              Pointe-Noire, permet de faire le gros des courses nécessaires au
+              séjour.
+            </p>
+            <p>
+              <strong>Leader Price :</strong> En vis-à-vis de Carrefour Market,
+              plus rustique mais très intéressant au niveau des prix avec des
+              produits de bonne qualité.
+            </p>
+
+            <h4><i class="fas fa-fish"></i> Cap Créole - Poisson frais</h4>
+            <p>
+              Un peu avant Carrefour Market sur la N2. Les pêcheurs locaux
+              déposent leur poisson qui est traité sur place :
+            </p>
+            <ul>
+              <li>Poisson frais nettoyé et préparé</li>
+              <li>Steaks de thon, espadon ou marlin à cuire</li>
+              <li>Rillettes de thon ou marlin</li>
+              <li>Mi-cuit de thon, carpaccio</li>
+            </ul>
+            <p><em>Un peu cher mais qualité extraordinaire !</em></p>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-bread-slice"></i> Boulangerie et traiteur</h4>
+            <p>
+              <strong>Boulangerie :</strong> Juste à côté de Carrefour Market,
+              pain excellent et traiteur (pizzas maison, rôti de porc, poulet
+              grillé, pâtisseries).
+            </p>
+            <p>
+              <strong>Horaires :</strong> Ouvert le dimanche matin, fermé le
+              lundi.
+            </p>
+
+            <h4><i class="fas fa-drumstick-bite"></i> Boucherie</h4>
+            <p>
+              À proximité de Carrefour Market, prendre à pied la petite rue
+              entre le supermarché et la boulangerie. Viandes diverses,
+              brochettes, etc.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>
+              <i class="fas fa-apple-alt"></i> Fruits et légumes - Chez Adèle
+            </h4>
+            <p>
+              Sur la N2, à gauche dans la direction nord. Fruits et légumes
+              excellents.
+            </p>
+            <p>
+              <strong>Conseil :</strong> Bien préciser si c'est pour
+              consommation immédiate ou le lendemain (pour les avocats par
+              exemple). Adèle est incollable sur la qualité de ses produits.
+            </p>
+            <p>
+              <em
+                >Dites que vous venez de la part de Fanny, elle se souviendra
+                peut-être et vous gâtera !</em
+              >
+            </p>
+
+            <!-- Image et lien de navigation -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="https://maps.googleapis.com/maps/api/streetview?size=400x200&location=16.1581,-61.7761&heading=210&pitch=10&key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg"
+                alt="Chez Adèle - Fruits et Légumes"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+                  height: 200px;
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+              />
+
+              <!-- Fallback si l'image ne charge pas -->
+              <div
+                style="
+                  display: none;
+                  width: 100%;
+                  max-width: 400px;
+                  height: 200px;
+                  background: linear-gradient(135deg, #4caf50, #45a049);
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: white;
+                  font-size: 18px;
+                  font-weight: bold;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              >
+                <i
+                  class="fas fa-store"
+                  style="font-size: 48px; margin-right: 15px"
+                ></i>
+                Chez Adèle - Fruits et Légumes
+              </div>
+
+              <a
+                href="geo:16.1581,-61.7761?q=Chez+Adèle+Fruits+Légumes"
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+                  padding: 15px 25px;
+                  background: #4caf50;
+                  color: white;
+                  text-decoration: none;
+                  border-radius: 25px;
+                  font-size: 16px;
+                  font-weight: 500;
+                  transition: all 0.3s ease;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              >
+                <i class="fas fa-location-arrow"></i>
+                Ouvrir la navigation
+              </a>
+
+              <p
+                style="
+                  margin-top: 15px;
+                  font-size: 12px;
+                  color: #666;
+                  font-style: italic;
+                "
+              >
+                Cliquez pour ouvrir votre application de navigation préférée
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Activités -->
+      <div class="content-section" id="activites">
+        <h2 class="section-title">🎯 Activités et Découvertes</h2>
+        <p class="section-description">
+          Les meilleures activités à faire dans la région et les sites à
+          découvrir.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <h4><i class="fas fa-umbrella-beach"></i> Plage de Malendure</h4>
+            <p>
+              Belle plage de sable noir, site idéal pour le snorkeling et
+              observer les tortues :
+            </p>
+            <ul>
+              <li>
+                <strong>Snorkeling :</strong> Les tortues sont souvent dans la
+                partie nord (plage du petit Malendure)
+              </li>
+              <li>
+                <strong>Repérer les tortues :</strong> Cherchez les groupes de
+                plongeurs avec tuba en surface
+              </li>
+              <li>
+                <strong>Stationnement :</strong> Payant le long de la plage,
+                contrôles fréquents
+              </li>
+              <li>
+                <strong>Parking gratuit :</strong> À côté du stade de football,
+                rue des Palétuviers
+              </li>
+            </ul>
+
+            <h4><i class="fas fa-water"></i> Activités nautiques</h4>
+            <ul>
+              <li>Location de canoés ou kayaks sur la plage</li>
+              <li>Snorkeling aux îlets Pigeons</li>
+              <li>Faune abondante dans la réserve Cousteau</li>
+              <li>
+                Plongée bouteille avec "Les Heures Saines" (club très branché
+                sécurité)
+              </li>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-hiking"></i> Randonnées de proximité</h4>
+            <p>
+              <strong>Parc de la Source :</strong> Juste derrière la maison,
+              remonter la rue de Poirier en voiture (à pied c'est mortel) :
+            </p>
+            <ul>
+              <li>Bel endroit mais visite un peu chère</li>
+              <li>
+                Possibilité de se garer et prendre le chemin à droite de
+                l'entrée
+              </li>
+              <li>Chemin ombragé sur les crêtes avec vue dégagée sur la mer</li>
+              <li>À mi-chemin : accès à la cascade du Trou à Diable</li>
+            </ul>
+            <p>
+              <strong>⚠️ Attention :</strong> Éviter les périodes de fortes
+              pluies (crues et risques d'éboulements)
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-utensils"></i> Restaurants recommandés</h4>
+            <p><strong>Sur Bouillante et Malendure :</strong></p>
+            <ul>
+              <li>
+                <strong>La Touna :</strong> Bon niveau de cuisine, environnement
+                sympa
+              </li>
+              <li>
+                <strong>Chez Didier :</strong> Cuisine excellente, patron très
+                sympathique
+              </li>
+              <li>
+                <strong>Le Sunset B :</strong> TOP ! Cadre cosy, produits frais
+              </li>
+              <li>
+                <strong>Les Deux Coquilles, Franko Grill :</strong> Bon et pas
+                cher, plus "local"
+              </li>
+            </ul>
+
+            <h4><i class="fas fa-pizza-slice"></i> Pizzas</h4>
+            <ul>
+              <li><strong>Oganik :</strong> En face du restaurant La Touna</li>
+              <li><strong>Allo Pizza :</strong> Derrière Carrefour Market</li>
+              <li>
+                <strong>Au Cœur de Pigeon :</strong> Excellentes pizzas pâte
+                fine
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Environnement -->
+      <div class="content-section" id="environnement">
+        <h2 class="section-title">🌴 Environnement et Localisation</h2>
+        <p class="section-description">
+          Informations sur la localisation, l'accès à la villa et les
+          précautions à prendre.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <h4>
+              <i class="fas fa-route"></i> Depuis l'aéroport Pôle Caraïbes
+            </h4>
+            <p>Distance : environ 45 minutes en voiture</p>
+            <ol>
+              <li>Sortir de l'aéroport et prendre la N1 vers Pointe-à-Pitre</li>
+              <li>Continuer sur la N1 puis prendre la N2 vers Basse-Terre</li>
+              <li>Suivre la N2 jusqu'à Bouillante</li>
+              <li>À Bouillante, prendre la route côtière vers Malendure</li>
+              <li>Calypso Bay se trouve sur votre droite, après le village</li>
+            </ol>
+
+            <h4><i class="fas fa-map-marker-alt"></i> Coordonnées GPS</h4>
+            <p>16.1234° N, 61.5678° W</p>
+            <p>Adresse : Route de Malendure, 97125 Bouillante, Guadeloupe</p>
+          </div>
+
+          <div class="info-card">
+            <h4>
+              <i class="fas fa-bug"></i> Précautions - Moustiques et insectes
+            </h4>
+            <p><strong>Protection anti-moustiques :</strong></p>
+            <ul>
+              <li>
+                Les moustiques sont actifs au petit déjeuner et à l'apéritif du
+                soir
+              </li>
+              <li>
+                Utiliser des aérosols ("Insect Ecran" ou "Off") sur les zones
+                découvertes
+              </li>
+              <li>Bougies à la citronnelle et spirales antimoustiques</li>
+              <li>
+                Moustiquaires équipent les chambres (pas de problème la nuit)
+              </li>
+            </ul>
+
+            <h4><i class="fas fa-shield-alt"></i> Sécurité</h4>
+            <ul>
+              <li>L'eau du robinet est potable</li>
+              <li>Insectes occasionnels dans la villa (traitement régulier)</li>
+              <li>Aucun insecte dangereux sauf scolopendres et moustiques</li>
+              <li>Pas de paludisme mais risque de dengue</li>
+              <li>Pas de serpents (contrairement à la Martinique)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Transport -->
+      <div class="content-section" id="transport">
+        <h2 class="section-title">🚗 Transport et Accès</h2>
+        <p class="section-description">
+          Informations sur les transports, location de voiture et déplacements.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <h4><i class="fas fa-car"></i> Loueurs recommandés</h4>
+            <ul>
+              <li><strong>Hertz :</strong> Aéroport Pôle Caraïbes</li>
+              <li><strong>Avis :</strong> Aéroport et Pointe-à-Pitre</li>
+              <li><strong>Europcar :</strong> Plusieurs agences sur l'île</li>
+            </ul>
+            <p>
+              <strong>Conseil :</strong> Réservez à l'avance, surtout en haute
+              saison.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-plane"></i> Aéroport Pôle Caraïbes</h4>
+            <p>Distance : 45 minutes en voiture</p>
+            <ul>
+              <li><strong>Taxi :</strong> Environ 80€ l'aller</li>
+              <li><strong>Navette :</strong> Services privés disponibles</li>
+              <li><strong>Location :</strong> Agences sur place</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Informations Pratiques -->
+      <div class="content-section" id="pratique">
+        <h2 class="section-title">ℹ️ Informations Pratiques</h2>
+        <p class="section-description">
+          Conseils et informations importantes pour votre séjour.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <h4>
+              <i class="fas fa-exclamation-triangle"></i> Saison cyclonique
+            </h4>
+            <p>
+              La saison cyclonique s'étend de juin à novembre. En cas d'alerte :
+            </p>
+            <ul>
+              <li>Suivre les consignes des autorités locales</li>
+              <li>Se tenir informé via Météo France Antilles</li>
+              <li>Préparer une trousse d'urgence</li>
+              <li>Rester à l'intérieur pendant les alertes</li>
+            </ul>
+
+            <h4><i class="fas fa-phone"></i> Numéros d'urgence</h4>
+            <ul>
+              <li>Pompiers : 18</li>
+              <li>Police : 17</li>
+              <li>Samu : 15</li>
+              <li>Météo France : 0892 68 08 08</li>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <h4>
+              <i class="fas fa-calendar-alt"></i> Taxe de séjour obligatoire
+            </h4>
+            <p>Une taxe de séjour est perçue par la commune de Bouillante :</p>
+            <ul>
+              <li><strong>Montant :</strong> 1,50€ par personne et par nuit</li>
+              <li><strong>Exonération :</strong> Enfants de moins de 18 ans</li>
+              <li>
+                <strong>Paiement :</strong> Inclus dans le prix de votre séjour
+              </li>
+              <li><strong>Durée :</strong> Séjours de plus de 3 nuits</li>
+            </ul>
+
+            <h4><i class="fas fa-info-circle"></i> Informations légales</h4>
+            <p>
+              Cette taxe contribue au développement touristique de la commune et
+              à l'entretien des équipements publics (plages, sentiers, etc.).
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-suitcase"></i> Préparatifs</h4>
+            <ul>
+              <li>
+                <strong>Vêtements :</strong> Légers et confortables, maillot de
+                bain, chapeau
+              </li>
+              <li>
+                <strong>Chaussures :</strong> Sandales pour la plage, chaussures
+                fermées pour randonnées
+              </li>
+              <li>
+                <strong>Protection solaire :</strong> Crème solaire haute
+                protection, lunettes de soleil
+              </li>
+              <li>
+                <strong>Anti-moustiques :</strong> Répulsif efficace recommandé
+              </li>
+            </ul>
+
+            <h4><i class="fas fa-clock"></i> Informations importantes</h4>
+            <ul>
+              <li>Arrivée : à partir de 16h00</li>
+              <li>Départ : avant 10h00</li>
+              <li>Clé : Retrait dans un coffre sécurisé</li>
+              <li>Contact : Disponible 24h/24 en cas d'urgence</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Excursions -->
+      <div class="content-section" id="excursions">
+        <h2 class="section-title">🗺️ Excursions et Découvertes</h2>
+        <p class="section-description">
+          Sites à découvrir dans les environs et plus loin sur l'île.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <h4><i class="fas fa-map-signs"></i> Vers le Sud (Basse-Terre)</h4>
+            <p><strong>Plage de Petite Anse :</strong></p>
+            <ul>
+              <li>Petite plage sauvage typique, sable blond et cailloux</li>
+              <li>
+                Snorkeling sympa sur le côté gauche (poissons de récif, coraux,
+                calamars, tortues)
+              </li>
+              <li>Restaurants de plage : "Chez Chantal" et "Chez Monette"</li>
+              <li>
+                <em>Conseil :</em> Arriver à midi pile, premiers installés =
+                premiers servis
+              </li>
+            </ul>
+
+            <p><strong>Basse-Terre :</strong></p>
+            <ul>
+              <li>Marché quotidien typique (épices, vanille, rhum arrangé)</li>
+              <li>Distillerie Bologne (ouverte le matin seulement)</li>
+              <li>Fort Delgrès (visite gratuite, site grandiose)</li>
+              <li>Restaurants sur le port de plaisance</li>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-map-signs"></i> Vers le Nord (Deshaies)</h4>
+            <p><strong>Plage Leroux à Ferry :</strong></p>
+            <ul>
+              <li>Petite plage de sable blond, sauvage et très belle</li>
+              <li>
+                Snorkeling riche côté gauche (poissons coffre, bancs de
+                calamars)
+              </li>
+              <li>Matinée quasi déserte, parfois des iguanes herbivores</li>
+              <li>
+                Restaurant "La Terrasse de Leroux" : très bon, pas cher, service
+                rapide
+              </li>
+            </ul>
+
+            <p><strong>Deshaies :</strong></p>
+            <ul>
+              <li>Site de tournage de "Meurtres au Paradis"</li>
+              <li>Restaurants avec terrasse sur la plage</li>
+              <li>"Chez Lélette" : excellent, sympa (service parfois long)</li>
+              <li>Jardin Botanique : promenade de 2h, flore des Caraïbes</li>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-mountain"></i> Sites naturels majeurs</h4>
+            <p><strong>Cascades à découvrir :</strong></p>
+            <ul>
+              <li><strong>Le Saut de la Lézarde :</strong> À Petit-Bourg</li>
+              <li>
+                <strong>Les Chutes du Carbet :</strong> Grandioses à Capesterre
+              </li>
+              <li><strong>Le Saut d'Acomat :</strong> Pointe-Noire</li>
+              <li><em>300 cascades recensées sur l'île !</em></li>
+            </ul>
+
+            <p><strong>Autres sites :</strong></p>
+            <ul>
+              <li>Pointe des Châteaux</li>
+              <li>Sainte-Anne, Saint-François</li>
+              <li>Le Moule</li>
+              <li>Les Saintes</li>
+            </ul>
+
+            <p><strong>En cas de pluie :</strong></p>
+            <ul>
+              <li>Musée du Rhum à Sainte-Rose</li>
+              <li>Maison du Cacao à Pointe-Noire</li>
+              <li>Mémorial ACTe à Pointe-à-Pitre</li>
+              <li>Aquarium de Guadeloupe au Gosier</li>
+              <li>Rhumeries (Bologne, Longueteau, Damoiseau, etc.)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Back to top button -->
+    <a href="#" class="back-to-top" id="backToTop">
+      <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script>
+      // Système de recherche
+      document
+        .getElementById('searchInput')
+        .addEventListener('input', function () {
+          const searchTerm = this.value.toLowerCase()
+          const cards = document.querySelectorAll('.info-card')
+
+          cards.forEach((card) => {
+            const text = card.textContent.toLowerCase()
+            if (text.includes(searchTerm)) {
+              card.style.display = 'block'
+              // Highlight matching text
+              if (searchTerm.length > 2) {
+                highlightText(card, searchTerm)
+              }
+            } else {
+              card.style.display = 'none'
+            }
+          })
+        })
+
+      function highlightText(element, searchTerm) {
+        const walker = document.createTreeWalker(
+          element,
+          NodeFilter.SHOW_TEXT,
+          null,
+          false
+        )
+
+        const textNodes = []
+        let node
+        while ((node = walker.nextNode())) {
+          textNodes.push(node)
+        }
+
+        textNodes.forEach((textNode) => {
+          const text = textNode.textContent
+          const regex = new RegExp(`(${searchTerm})`, 'gi')
+          if (regex.test(text)) {
+            const highlightedText = text.replace(
+              regex,
+              '<span class="highlight">$1</span>'
+            )
+            const span = document.createElement('span')
+            span.innerHTML = highlightedText
+            textNode.parentNode.replaceChild(span, textNode)
+          }
+        })
+      }
+
+      // Back to top functionality
+      window.addEventListener('scroll', function () {
+        const backToTop = document.getElementById('backToTop')
+        if (window.pageYOffset > 300) {
+          backToTop.style.display = 'flex'
+        } else {
+          backToTop.style.display = 'none'
+        }
+      })
+
+      document
+        .getElementById('backToTop')
+        .addEventListener('click', function (e) {
+          e.preventDefault()
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          })
+        })
+
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault()
+          const target = document.querySelector(this.getAttribute('href'))
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            })
+          }
+        })
+      })
+    </script>
+  </body>
+</html>
