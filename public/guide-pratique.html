@@ -246,6 +246,11 @@
         transition: all 0.3s ease;
         z-index: 1000;
         font-size: 20px;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        opacity: 1;
+        visibility: visible;
       }
 
       .back-to-top:hover {
@@ -371,9 +376,12 @@
 
         <div class="nav-menu">
           <a href="#logement">🏠 Logement</a>
-          <a href="#environnement">🌴 Environnement</a>
+          <a href="#environnement">📍 Localisation ✅</a>
           <a href="#activites">🎯 Activités</a>
-          <a href="#services">🛒 Services</a>
+          <a href="#services">🛒 Services ✅</a>
+          <a href="#restaurants">🍽️ Restaurants ✅</a>
+          <a href="#sante">🏥 Soins & Santé ✅</a>
+          <a href="#cyclones">🌀 Cyclones ✅</a>
           <a href="#transport">🚗 Transport</a>
           <a href="#excursions">🗺️ Excursions</a>
           <a href="#pratique">ℹ️ Infos Pratiques</a>
@@ -489,7 +497,7 @@
                 style="
                   width: 100%;
                   max-width: 400px;
-                  height: 200px;
+
                   object-fit: cover;
                   border-radius: 8px;
                   margin-bottom: 15px;
@@ -535,7 +543,7 @@
                 style="
                   width: 100%;
                   max-width: 400px;
-                  height: 200px;
+
                   object-fit: cover;
                   border-radius: 8px;
                   margin-bottom: 15px;
@@ -590,7 +598,7 @@
                 style="
                   width: 100%;
                   max-width: 400px;
-                  height: 200px;
+
                   object-fit: cover;
                   border-radius: 8px;
                   margin-bottom: 15px;
@@ -642,7 +650,7 @@
                 style="
                   width: 100%;
                   max-width: 400px;
-                  height: 200px;
+
                   object-fit: cover;
                   border-radius: 8px;
                   margin-bottom: 15px;
@@ -691,7 +699,7 @@
                 style="
                   width: 100%;
                   max-width: 400px;
-                  height: 200px;
+
                   object-fit: cover;
                   border-radius: 8px;
                   margin-bottom: 15px;
@@ -750,7 +758,7 @@
                 style="
                   width: 100%;
                   max-width: 400px;
-                  height: 200px;
+
                   object-fit: cover;
                   border-radius: 8px;
                   margin-bottom: 15px;
@@ -849,73 +857,524 @@
               pluies (crues et risques d'éboulements)
             </p>
           </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-utensils"></i> Restaurants recommandés</h4>
-            <p><strong>Sur Bouillante et Malendure :</strong></p>
-            <ul>
-              <li>
-                <strong>La Touna :</strong> Bon niveau de cuisine, environnement
-                sympa
-              </li>
-              <li>
-                <strong>Chez Didier :</strong> Cuisine excellente, patron très
-                sympathique
-              </li>
-              <li>
-                <strong>Le Sunset B :</strong> TOP ! Cadre cosy, produits frais
-              </li>
-              <li>
-                <strong>Les Deux Coquilles, Franko Grill :</strong> Bon et pas
-                cher, plus "local"
-              </li>
-            </ul>
-
-            <h4><i class="fas fa-pizza-slice"></i> Pizzas</h4>
-            <ul>
-              <li><strong>Oganik :</strong> En face du restaurant La Touna</li>
-              <li><strong>Allo Pizza :</strong> Derrière Carrefour Market</li>
-              <li>
-                <strong>Au Cœur de Pigeon :</strong> Excellentes pizzas pâte
-                fine
-              </li>
-            </ul>
-          </div>
         </div>
       </div>
 
-      <!-- Section Environnement -->
-      <div class="content-section" id="environnement">
-        <h2 class="section-title">🌴 Environnement et Localisation</h2>
+      <!-- Section Restaurants -->
+      <div class="content-section" id="restaurants">
+        <h2 class="section-title">🍽️ Restaurants et Gastronomie</h2>
         <p class="section-description">
-          Informations sur la localisation, l'accès à la villa et les
-          précautions à prendre.
+          Les meilleurs restaurants de la région pour découvrir la cuisine
+          locale et internationale.
         </p>
 
         <div class="info-grid">
           <div class="info-card">
-            <h4>
-              <i class="fas fa-route"></i> Depuis l'aéroport Pôle Caraïbes
-            </h4>
-            <p>Distance : environ 45 minutes en voiture</p>
-            <ol>
-              <li>Sortir de l'aéroport et prendre la N1 vers Pointe-à-Pitre</li>
-              <li>Continuer sur la N1 puis prendre la N2 vers Basse-Terre</li>
-              <li>Suivre la N2 jusqu'à Bouillante</li>
-              <li>À Bouillante, prendre la route côtière vers Malendure</li>
-              <li>Calypso Bay se trouve sur votre droite, après le village</li>
-            </ol>
+            <h4><i class="fas fa-utensils"></i> Restaurants</h4>
 
-            <h4><i class="fas fa-map-marker-alt"></i> Coordonnées GPS</h4>
-            <p>16.1234° N, 61.5678° W</p>
-            <p>Adresse : Route de Malendure, 97125 Bouillante, Guadeloupe</p>
+            <h5><i class="fas fa-store"></i> La Touna</h5>
+            <p>Bon niveau de cuisine, environnement sympa.</p>
+
+            <!-- Image et lien de navigation pour La Touna -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="images/guide/07.jpg"
+                alt="La Touna - Restaurant"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+
+              <a
+                href="geo:16.1581,-61.7761?q=La+Touna+Restaurant+Bouillante"
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+                  padding: 15px 25px;
+                  background: #4caf50;
+                  color: white;
+                  text-decoration: none;
+                  border-radius: 25px;
+                  font-size: 16px;
+                  font-weight: 500;
+                  transition: all 0.3s ease;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              >
+                <i class="fas fa-location-arrow"></i>
+                Ouvrir la navigation
+              </a>
+            </div>
+
+            <h5 style="margin-top: 30px">
+              <i class="fas fa-store"></i> Chez Didier
+            </h5>
+            <p>Cuisine excellente, patron très sympathique.</p>
+
+            <!-- Image et lien de navigation pour Chez Didier -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="images/guide/08.jpg"
+                alt="Chez Didier - Restaurant"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+
+              <a
+                href="geo:16.1581,-61.7761?q=Chez+Didier+Restaurant+Bouillante"
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+                  padding: 15px 25px;
+                  background: #4caf50;
+                  color: white;
+                  text-decoration: none;
+                  border-radius: 25px;
+                  font-size: 16px;
+                  font-weight: 500;
+                  transition: all 0.3s ease;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              >
+                <i class="fas fa-location-arrow"></i>
+                Ouvrir la navigation
+              </a>
+            </div>
+
+            <h5 style="margin-top: 30px">
+              <i class="fas fa-store"></i> Le Sunset B
+            </h5>
+            <p>TOP ! Cadre cosy, produits frais.</p>
+
+            <!-- Image et lien de navigation pour Le Sunset B -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="images/guide/09.jpg"
+                alt="Le Sunset B - Restaurant"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+
+              <a
+                href="geo:16.1581,-61.7761?q=Le+Sunset+B+Restaurant+Bouillante"
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+                  padding: 15px 25px;
+                  background: #4caf50;
+                  color: white;
+                  text-decoration: none;
+                  border-radius: 25px;
+                  font-size: 16px;
+                  font-weight: 500;
+                  transition: all 0.3s ease;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              >
+                <i class="fas fa-location-arrow"></i>
+                Ouvrir la navigation
+              </a>
+            </div>
           </div>
 
           <div class="info-card">
-            <h4>
-              <i class="fas fa-bug"></i> Précautions - Moustiques et insectes
+            <h4><i class="fas fa-utensils"></i> Restaurants locaux</h4>
+
+            <h5><i class="fas fa-store"></i> Les Deux Coquilles</h5>
+            <p>Bon et pas cher, plus "local".</p>
+
+            <!-- Image et lien de navigation pour Les Deux Coquilles -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="images/guide/10.jpg"
+                alt="Les Deux Coquilles - Restaurant"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+
+              <a
+                href="geo:16.1581,-61.7761?q=Les+Deux+Coquilles+Restaurant+Bouillante"
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+                  padding: 15px 25px;
+                  background: #4caf50;
+                  color: white;
+                  text-decoration: none;
+                  border-radius: 25px;
+                  font-size: 16px;
+                  font-weight: 500;
+                  transition: all 0.3s ease;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              >
+                <i class="fas fa-location-arrow"></i>
+                Ouvrir la navigation
+              </a>
+            </div>
+
+            <h5 style="margin-top: 30px">
+              <i class="fas fa-store"></i> Franko Grill
+            </h5>
+            <p>Bon et pas cher, plus "local".</p>
+
+            <!-- Image et lien de navigation pour Franko Grill -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="images/guide/11.jpg"
+                alt="Franko Grill - Restaurant"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+
+              <a
+                href="geo:16.1581,-61.7761?q=Franko+Grill+Restaurant+Bouillante"
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+                  padding: 15px 25px;
+                  background: #4caf50;
+                  color: white;
+                  text-decoration: none;
+                  border-radius: 25px;
+                  font-size: 16px;
+                  font-weight: 500;
+                  transition: all 0.3s ease;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              >
+                <i class="fas fa-location-arrow"></i>
+                Ouvrir la navigation
+              </a>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-pizza-slice"></i> Pizzas</h4>
+
+            <h5><i class="fas fa-store"></i> Oganik</h5>
+            <p>En face du restaurant La Touna.</p>
+
+            <!-- Image et lien de navigation pour Oganik -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="images/guide/12.jpg"
+                alt="Oganik - Pizzeria"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+
+              <a
+                href="geo:16.1581,-61.7761?q=Oganik+Pizzeria+Bouillante"
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+                  padding: 15px 25px;
+                  background: #4caf50;
+                  color: white;
+                  text-decoration: none;
+                  border-radius: 25px;
+                  font-size: 16px;
+                  font-weight: 500;
+                  transition: all 0.3s ease;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              >
+                <i class="fas fa-location-arrow"></i>
+                Ouvrir la navigation
+              </a>
+            </div>
+
+            <h5 style="margin-top: 30px">
+              <i class="fas fa-store"></i> Allo Pizza
+            </h5>
+            <p>Derrière Carrefour Market.</p>
+
+            <!-- Image et lien de navigation pour Allo Pizza -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="images/guide/13.jpg"
+                alt="Allo Pizza - Pizzeria"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+
+              <a
+                href="geo:16.1581,-61.7761?q=Allo+Pizza+Pizzeria+Bouillante"
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+                  padding: 15px 25px;
+                  background: #4caf50;
+                  color: white;
+                  text-decoration: none;
+                  border-radius: 25px;
+                  font-size: 16px;
+                  font-weight: 500;
+                  transition: all 0.3s ease;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              >
+                <i class="fas fa-location-arrow"></i>
+                Ouvrir la navigation
+              </a>
+            </div>
+
+            <h5 style="margin-top: 30px">
+              <i class="fas fa-store"></i> Le Cœur de Pigeon
+            </h5>
+            <p>Excellentes pizzas pâte fine.</p>
+
+            <!-- Image et lien de navigation pour Le Cœur de Pigeon -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="images/guide/14.jpg"
+                alt="Le Cœur de Pigeon - Pizzeria"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+
+              <a
+                href="geo:16.1581,-61.7761?q=Le+Cœur+de+Pigeon+Pizzeria+Bouillante"
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+                  padding: 15px 25px;
+                  background: #4caf50;
+                  color: white;
+                  text-decoration: none;
+                  border-radius: 25px;
+                  font-size: 16px;
+                  font-weight: 500;
+                  transition: all 0.3s ease;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              >
+                <i class="fas fa-location-arrow"></i>
+                Ouvrir la navigation
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Soins, santé & bonnes pratiques -->
+      <div class="content-section" id="sante">
+        <h2 class="section-title">🏥 Soins, Santé & Prévention</h2>
+        <p class="section-description">
+          Informations essentielles pour votre santé et votre bien-être pendant
+          votre séjour.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <h4><i class="fas fa-pills"></i> Pharmacie</h4>
+
+            <h5><i class="fas fa-store"></i> La pharmacie de Losteau</h5>
+            <p>
+              <strong>Adresse :</strong> Zac de Losteau - Pigeon, Bouillante
+              97125, Guadeloupe
+            </p>
+            <p><strong>Téléphone :</strong> +590 590 99 08 44</p>
+            <p>
+              <strong>Site web :</strong>
+              <a
+                href="https://pharmaciedelosteau.fr"
+                target="_blank"
+                style="color: #4caf50; text-decoration: none; font-weight: 500"
+                >pharmaciedelosteau.fr</a
+              >
+            </p>
+            <p><strong>Horaires :</strong> Ferme à 19:00</p>
+            <p>
+              <strong>Services :</strong> Retrait en magasin, réservation en
+              ligne possible
+            </p>
+            <p>
+              <strong>Conseil :</strong> La carte vitale fonctionne comme en
+              métropole. Pensez à emporter vos médicaments habituels et une
+              trousse de premiers soins.
+            </p>
+
+            <!-- Image et lien de navigation pour La pharmacie de Losteau -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="images/guide/15.jpg"
+                alt="La pharmacie de Losteau"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+
+              <a
+                href="geo:16.1581,-61.7761?q=La+pharmacie+de+Losteau+Bouillante"
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+                  padding: 15px 25px;
+                  background: #4caf50;
+                  color: white;
+                  text-decoration: none;
+                  border-radius: 25px;
+                  font-size: 16px;
+                  font-weight: 500;
+                  transition: all 0.3s ease;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              >
+                <i class="fas fa-location-arrow"></i>
+                Ouvrir la navigation
+              </a>
+            </div>
+
+            <h4 style="margin-top: 30px">
+              <i class="fas fa-phone"></i> Numéros d'urgence
             </h4>
-            <p><strong>Protection anti-moustiques :</strong></p>
+            <ul>
+              <li><strong>Pompiers :</strong> 18</li>
+              <li><strong>Police :</strong> 17</li>
+              <li><strong>Samu :</strong> 15</li>
+              <li><strong>Météo France :</strong> 0892 68 08 08</li>
+            </ul>
+
+            <h4 style="margin-top: 30px">
+              <i class="fas fa-hospital"></i> Hôpital
+            </h4>
+
+            <h5>
+              <i class="fas fa-hospital-alt"></i> Hôpital Maurice Selbonne
+            </h5>
+            <p>
+              <strong>Adresse :</strong> 97125 Rue des Manguiers, Bouillante
+              97125, Guadeloupe
+            </p>
+            <p><strong>Téléphone :</strong> +590 590 80 49 00</p>
+            <p>
+              <strong>Site web :</strong>
+              <a
+                href="https://ch-mauriceselbonne.fr"
+                target="_blank"
+                style="color: #4caf50; text-decoration: none; font-weight: 500"
+                >ch-mauriceselbonne.fr</a
+              >
+            </p>
+            <p>
+              <strong>Services :</strong> Hôpital spécialisé avec services
+              d'urgence
+            </p>
+
+            <!-- Image et lien de navigation pour l'Hôpital Maurice Selbonne -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="images/guide/16.jpg"
+                alt="Hôpital Maurice Selbonne"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+
+              <a
+                href="geo:16.1581,-61.7761?q=Hôpital+Maurice+Selbonne+Bouillante"
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+                  padding: 15px 25px;
+                  background: #4caf50;
+                  color: white;
+                  text-decoration: none;
+                  border-radius: 25px;
+                  font-size: 16px;
+                  font-weight: 500;
+                  transition: all 0.3s ease;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              >
+                <i class="fas fa-location-arrow"></i>
+                Ouvrir la navigation
+              </a>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-bug"></i> Protection anti-moustiques</h4>
+            <p><strong>Précautions importantes :</strong></p>
             <ul>
               <li>
                 Les moustiques sont actifs au petit déjeuner et à l'apéritif du
@@ -929,15 +1388,523 @@
               <li>
                 Moustiquaires équipent les chambres (pas de problème la nuit)
               </li>
+              <li>
+                <strong>Répulsif efficace recommandé</strong> dans vos
+                préparatifs
+              </li>
             </ul>
 
-            <h4><i class="fas fa-shield-alt"></i> Sécurité</h4>
+            <h4><i class="fas fa-shield-alt"></i> Sécurité et santé</h4>
             <ul>
-              <li>L'eau du robinet est potable</li>
-              <li>Insectes occasionnels dans la villa (traitement régulier)</li>
-              <li>Aucun insecte dangereux sauf scolopendres et moustiques</li>
-              <li>Pas de paludisme mais risque de dengue</li>
-              <li>Pas de serpents (contrairement à la Martinique)</li>
+              <li><strong>Eau du robinet :</strong> Potable</li>
+              <li>
+                <strong>Insectes :</strong> Occasionnels dans la villa
+                (traitement régulier)
+              </li>
+              <li>
+                <strong>Dangers :</strong> Aucun insecte dangereux sauf
+                scolopendres et moustiques
+              </li>
+              <li>
+                <strong>Maladies :</strong> Pas de paludisme mais risque de
+                dengue
+              </li>
+              <li>
+                <strong>Serpents :</strong> Aucun (contrairement à la
+                Martinique)
+              </li>
+            </ul>
+
+            <h4><i class="fas fa-sun"></i> Protection solaire</h4>
+            <p><strong>Équipements recommandés :</strong></p>
+            <ul>
+              <li>
+                <strong>Crème solaire :</strong> Haute protection (SPF 50+)
+              </li>
+              <li><strong>Lunettes de soleil :</strong> Protection UV</li>
+              <li>
+                <strong>Chapeau :</strong> Protection de la tête et du visage
+              </li>
+              <li><strong>Hydratation :</strong> Boire beaucoup d'eau</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Cyclones -->
+      <div class="content-section" id="cyclones">
+        <h2 class="section-title">🌀 Cyclones et Alertes Météorologiques</h2>
+        <p class="section-description">
+          Informations essentielles sur la saison cyclonique et les procédures à
+          suivre en cas d'alerte.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <h4><i class="fas fa-info-circle"></i> Saison cyclonique</h4>
+            <p>
+              La Guadeloupe est une zone tropicale exposée au risque cyclonique
+              de <strong>juillet à novembre</strong>. La protection civile,
+              habituée aux phénomènes météorologiques des Antilles, assure une
+              bonne prise en charge des événements climatiques (messages
+              d'avertissement, surveillance, diffusion d'information, gestion
+              des dégâts).
+            </p>
+            <p>
+              Il existe <strong>cinq niveaux d'alerte</strong> auxquels il faut
+              s'adapter en fonction des messages des autorités compétentes.
+            </p>
+
+            <h4>
+              <i class="fas fa-exclamation-triangle"></i> Niveaux d'alerte
+            </h4>
+
+            <h5 style="color: #607d8b; margin-top: 20px">
+              <i class="fas fa-circle" style="color: #607d8b"></i> Alerte Grise
+              : Restez prudents
+            </h5>
+            <ul>
+              <li>
+                Évitez les déplacements avant que tout soit remis en ordre
+              </li>
+              <li>
+                Ne touchez pas aux fils électriques et téléphoniques à terre
+              </li>
+              <li>Buvez de l'eau en bouteille ou traitée avec Micropur</li>
+              <li>
+                Assurez-vous que la circulation soit autorisée avant de
+                reprendre votre véhicule
+              </li>
+              <li>
+                Ne franchissez pas les radiers submergés ou les ravines en crue
+              </li>
+            </ul>
+
+            <h5 style="color: #ffc107; margin-top: 20px">
+              <i class="fas fa-circle" style="color: #ffc107"></i> Alerte Jaune
+              : Soyez attentifs
+            </h5>
+            <ul>
+              <li>
+                Soyez vigilants et tenez-vous informé via Météo France, les
+                médias et la préfecture
+              </li>
+              <li>
+                Vérifiez les réserves nécessaires pour quelques jours (aliments,
+                eau)
+              </li>
+              <li>
+                Évitez les longues randonnées, surtout près des rivières et les
+                sorties en mer
+              </li>
+            </ul>
+
+            <h5 style="color: #ff9800; margin-top: 20px">
+              <i class="fas fa-circle" style="color: #ff9800"></i> Alerte Orange
+              : Finissez vos préparatifs
+            </h5>
+            <ul>
+              <li>
+                Rentrez le mobilier extérieur (transats dans le sous-sol si
+                nécessaire)
+              </li>
+              <li>
+                Mettez en charge les éclairages sur batterie (lampes Fatboy)
+              </li>
+              <li>
+                Constituez une réserve d'eau et de nourriture pour quelques
+                jours
+              </li>
+              <li>Limitez vos déplacements</li>
+              <li>
+                Fermez les volets métalliques de protection et les persiennes
+              </li>
+            </ul>
+
+            <h5 style="color: #9c27b0; margin-top: 20px">
+              <i class="fas fa-circle" style="color: #9c27b0"></i> Alerte
+              Violette : Confinez-vous
+            </h5>
+            <ul>
+              <li>
+                Essayez de rester calmes, la situation va évoluer rapidement
+              </li>
+              <li>Restez réfugiés dans la pièce sécurisée</li>
+              <li>
+                N'en sortez que lorsque tout est redevenu calme à l'extérieur
+              </li>
+              <li>Écoutez la radio pour les messages des autorités</li>
+            </ul>
+
+            <h5 style="color: #f44336; margin-top: 20px">
+              <i class="fas fa-circle" style="color: #f44336"></i> Alerte Rouge
+              : Intégrez les abris
+            </h5>
+            <ul>
+              <li>Assurez-vous que les volets soient bien fermés</li>
+              <li>Vérifiez les réserves d'eau et d'aliments</li>
+              <li>Préparez la pièce la plus sûre de la maison (sous-sol)</li>
+              <li>
+                Écoutez les sources d'information pour vous adapter à
+                l'évolution
+              </li>
+              <li>
+                <strong
+                  >Proscrivez totalement les déplacements en voiture</strong
+                >
+              </li>
+              <li>
+                Si besoin d'intégrer le sous-sol, coupez l'électricité au
+                préalable
+              </li>
+              <li>
+                Coupez momentanément l'arrivée d'eau (manettes perpendiculaires
+                aux tuyaux)
+              </li>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-home"></i> La maison en cas de cyclone</h4>
+            <p><strong>LE PLUS IMPORTANT :</strong></p>
+            <p>
+              La villa a été construite par notre architecte en respectant les
+              <strong>normes cycloniques et sismiques</strong> :
+            </p>
+            <ul>
+              <li>
+                <strong>Fondations :</strong> Ciment armé (même si la maison
+                s'effondre, le sous-sol est un bunker)
+              </li>
+              <li>
+                <strong>Volets :</strong> Métalliques, fermeture électrique ou
+                manuelle (manivelle dans l'angle droit de la pièce principale)
+              </li>
+              <li>
+                <strong>Fenêtres :</strong> Verre avec barreaux de renforcement
+                anti-effraction
+              </li>
+              <li>
+                <strong>Toiture :</strong> Équipée de "casquettes"
+                anti-arrachement (sauf vent à 300 km/h)
+              </li>
+              <li>
+                <strong>Pièces de sécurité :</strong> Deux "panic rooms"
+                disponibles
+              </li>
+            </ul>
+
+            <h4><i class="fas fa-shield-alt"></i> Pièces de sécurité</h4>
+
+            <h5><i class="fas fa-door-closed"></i> Le cellier</h5>
+            <ul>
+              <li>Trois murs béton, plafond béton</li>
+              <li>Très peu de place</li>
+              <li>Boîte "Cyclone" avec équipements d'urgence</li>
+            </ul>
+
+            <h5><i class="fas fa-warehouse"></i> Le sous-sol (recommandé)</h5>
+            <ul>
+              <li>Pièce plus grande et plus confortable</li>
+              <li>Toutes les parois en béton armé</li>
+              <li>Fenêtre moins exposée</li>
+              <li>Contient la réserve de 1200 litres d'eau potable</li>
+              <li>Peut accueillir transats, chaises pliantes, petite table</li>
+            </ul>
+
+            <!-- Image du sous-sol -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="images/guide/19.jpg"
+                alt="Sous-sol - Pièce de sécurité"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+            </div>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-tint"></i> Gestion de l'eau</h4>
+            <p>
+              <strong>IMPORTANT :</strong> La cuve doit être désolidarisée du
+              réseau en cas de cyclone :
+            </p>
+            <ul>
+              <!-- Image de la manette -->
+              <div style="margin-bottom: 15px; text-align: center">
+                <img
+                  src="images/guide/17.jpg"
+                  alt="Manette de désolidarisation de la cuve"
+                  style="
+                    width: 100%;
+                    max-width: 400px;
+
+                    object-fit: cover;
+                    border-radius: 8px;
+                    margin-bottom: 15px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                  "
+                />
+              </div>
+              <li>
+                Tourner la manette rouge et le robinet bronze à côté du filtre
+              </li>
+              <li>Position perpendiculaire au tuyau d'arrivée d'eau</li>
+              <li>
+                Évite la contamination par la boue en cas de rupture de
+                canalisation
+              </li>
+            </ul>
+
+            <h4><i class="fas fa-glass-water"></i> Eau de consommation</h4>
+            <ul>
+              <li><strong>Préférer :</strong> Eau en bouteille</li>
+              <li>
+                <strong>Eau de la cuve :</strong> Consommable directement en
+                temps normal
+              </li>
+              <li>
+                <strong>Traitement :</strong> Comprimés Micropur (1 comprimé
+                pour 1 litre, laisser reposer 120 minutes)
+              </li>
+              <li>
+                <strong>Gourdes :</strong> Métalliques de 1 litre disponibles
+              </li>
+            </ul>
+
+            <h4><i class="fas fa-lightbulb"></i> Éclairage d'urgence</h4>
+            <ul>
+              <!-- Image des lampes Fatboy -->
+              <div style="margin-bottom: 15px; text-align: center">
+                <img
+                  src="images/guide/18.jpg"
+                  alt="Lampes Fatboy d'urgence"
+                  style="
+                    width: 100%;
+                    max-width: 400px;
+
+                    object-fit: cover;
+                    border-radius: 8px;
+                    margin-bottom: 15px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                  "
+                />
+              </div>
+              <li>Lampes Fatboy préalablement chargées</li>
+              <li>Câbles USB dans le meuble sous la télévision</li>
+              <li>
+                <strong>IMPORTANT :</strong> Couper l'électricité avant de
+                descendre au sous-sol (risque d'incendie)
+              </li>
+            </ul>
+
+            <h4><i class="fas fa-box"></i> Boîte "Cyclone"</h4>
+            <p>Contient dans le cellier :</p>
+            <ul>
+              <li>Réchaud au gaz avec cartouche</li>
+              <li>Radio et piles pour suivre les informations</li>
+              <li>Comprimés Micropur pour stériliser l'eau</li>
+              <li>Gourdes métalliques de 1 litre</li>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-phone"></i> Contacts d'urgence</h4>
+            <ul>
+              <li><strong>Police secours :</strong> 17</li>
+              <li><strong>Pompiers :</strong> 18</li>
+              <li><strong>Appel d'urgence européen :</strong> 112</li>
+              <li>
+                <strong>Laurence (renseignements pratiques) :</strong> 06 90 40
+                40 55
+              </li>
+            </ul>
+
+            <h4><i class="fas fa-radio"></i> Sources d'information</h4>
+            <ul>
+              <li>Météo France Antilles</li>
+              <li>Médias locaux</li>
+              <li>Préfecture de Guadeloupe</li>
+              <li>Protection civile</li>
+            </ul>
+
+            <h4>
+              <i class="fas fa-exclamation-triangle"></i> Rappels importants
+            </h4>
+            <ul>
+              <li>Suivre strictement les consignes des autorités</li>
+              <li>Ne pas prendre de risques inutiles</li>
+              <li>Rester informé en permanence</li>
+              <li>Préparer les équipements à l'avance</li>
+              <li>Connaître les pièces de sécurité de la villa</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Localisation -->
+      <div class="content-section" id="environnement">
+        <h2 class="section-title">📍 Localisation</h2>
+        <p class="section-description">
+          Comment venir à Calypso Bay et accéder à la villa depuis l'aéroport.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <h4><i class="fas fa-home"></i> Adresse de Calypso Bay</h4>
+            <p><strong>717 rue de POIRIER, BOUILLANTE</strong></p>
+
+            <h4>
+              <i class="fas fa-route"></i> Depuis l'aéroport Pôle Caraïbes
+            </h4>
+            <p>
+              <strong
+                >Deux possibilités pour arriver sur la côte Ouest :</strong
+              >
+            </p>
+            <ul>
+              <li>
+                <strong>Route côtière nord :</strong> Par Le Lamentin,
+                Sainte-Rose (plus longue et encombrée, mais conseillée par très
+                mauvais temps, plus plate et moins sinueuse)
+              </li>
+              <li>
+                <strong>Route de la traversée :</strong> Plus directe et moins
+                chargée (recommandée par beau temps, plus sinueuse et pentue)
+              </li>
+            </ul>
+            <p>
+              <em
+                >La route de la traversée est magnifique, les Alpes au milieu de
+                la jungle.</em
+              >
+            </p>
+            <p>
+              <strong>Pour emprunter la route côtière nord :</strong> Ajoutez
+              une étape par Sainte-Rose à votre itinéraire, sinon pour la route
+              de la traversée, indiquez simplement l'adresse de la villa.
+            </p>
+
+            <!-- Bouton de navigation pour Calypso Bay -->
+            <div style="margin-top: 20px; text-align: center">
+              <a
+                href="geo:16.1581,-61.7761?q=717+Rue+de+Poirier+Bouillante+Guadeloupe"
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+                  padding: 15px 25px;
+                  background: #4caf50;
+                  color: white;
+                  text-decoration: none;
+                  border-radius: 25px;
+                  font-size: 16px;
+                  font-weight: 500;
+                  transition: all 0.3s ease;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              >
+                <i class="fas fa-location-arrow"></i>
+                Ouvrir la navigation vers Calypso Bay
+              </a>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-map-signs"></i> Itinéraires</h4>
+
+            <h5><i class="fas fa-route"></i> Route côtière nord</h5>
+            <p>Itinéraire plus long mais plus sûr par mauvais temps.</p>
+            <p><strong>Distance : 68 km</strong></p>
+
+            <!-- Image pour la route côtière nord -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="images/guide/20.jpg"
+                alt="Route côtière nord"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+            </div>
+
+            <h5 style="margin-top: 30px">
+              <i class="fas fa-route"></i> Route de la traversée
+            </h5>
+            <p>Itinéraire direct et panoramique recommandé par beau temps.</p>
+            <p><strong>Distance : 46 km</strong></p>
+
+            <!-- Image pour la route de la traversée -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="images/guide/21.jpg"
+                alt="Route de la traversée"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+            </div>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-mountain"></i> Accès à la villa</h4>
+
+            <!-- Image de la rue de Poirier -->
+            <div style="margin-bottom: 20px; text-align: center">
+              <img
+                src="images/guide/22.jpg"
+                alt="Rue de Poirier - Accès à Calypso Bay"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+            </div>
+
+            <p>
+              <strong>La rue de Poirier :</strong> Elle monte de façon assez
+              prononcée. Lors de votre progression :
+            </p>
+            <ul>
+              <li>
+                Dépasser les résidences du <strong>"JARDIN TROPICAL"</strong> à
+                gauche
+              </li>
+              <li>
+                L'entrée de la maison se situe immédiatement après le
+                <strong>"JARDIN ZEN"</strong> (trois petits bungalows blancs et
+                bleus à gauche)
+              </li>
+            </ul>
+            <p><strong>Vous êtes arrivés, BIENVENUE !</strong></p>
+
+            <h4><i class="fas fa-info-circle"></i> Conseils pratiques</h4>
+            <ul>
+              <li>Préférer la route de la traversée (plus rapide)</li>
+              <li>Attention aux lacets et à la montée</li>
+              <li>Éviter par grosse pluie (route glissante)</li>
+              <li>Repérer les panneaux "Parc de la Source" et "Poirier"</li>
             </ul>
           </div>
         </div>
@@ -986,29 +1953,6 @@
         <div class="info-grid">
           <div class="info-card">
             <h4>
-              <i class="fas fa-exclamation-triangle"></i> Saison cyclonique
-            </h4>
-            <p>
-              La saison cyclonique s'étend de juin à novembre. En cas d'alerte :
-            </p>
-            <ul>
-              <li>Suivre les consignes des autorités locales</li>
-              <li>Se tenir informé via Météo France Antilles</li>
-              <li>Préparer une trousse d'urgence</li>
-              <li>Rester à l'intérieur pendant les alertes</li>
-            </ul>
-
-            <h4><i class="fas fa-phone"></i> Numéros d'urgence</h4>
-            <ul>
-              <li>Pompiers : 18</li>
-              <li>Police : 17</li>
-              <li>Samu : 15</li>
-              <li>Météo France : 0892 68 08 08</li>
-            </ul>
-          </div>
-
-          <div class="info-card">
-            <h4>
               <i class="fas fa-calendar-alt"></i> Taxe de séjour obligatoire
             </h4>
             <p>Une taxe de séjour est perçue par la commune de Bouillante :</p>
@@ -1038,13 +1982,6 @@
               <li>
                 <strong>Chaussures :</strong> Sandales pour la plage, chaussures
                 fermées pour randonnées
-              </li>
-              <li>
-                <strong>Protection solaire :</strong> Crème solaire haute
-                protection, lunettes de soleil
-              </li>
-              <li>
-                <strong>Anti-moustiques :</strong> Répulsif efficace recommandé
               </li>
             </ul>
 
@@ -1206,39 +2143,41 @@
         })
       }
 
-      // Back to top functionality
+      // Back to top functionality - Simple and reliable
+      const backToTop = document.getElementById('backToTop')
+
+      // Show/hide button based on scroll position
       window.addEventListener('scroll', function () {
-        const backToTop = document.getElementById('backToTop')
         if (window.pageYOffset > 300) {
-          backToTop.style.display = 'flex'
+          backToTop.style.opacity = '1'
+          backToTop.style.visibility = 'visible'
         } else {
-          backToTop.style.display = 'none'
+          backToTop.style.opacity = '0.3'
+          backToTop.style.visibility = 'visible'
         }
       })
 
+      // Simple click handler
+      backToTop.addEventListener('click', function (e) {
+        e.preventDefault()
+        window.scrollTo(0, 0)
+      })
+
+      // Smooth scrolling for navigation links (excluding back to top button)
       document
-        .getElementById('backToTop')
-        .addEventListener('click', function (e) {
-          e.preventDefault()
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+        .querySelectorAll('a[href^="#"]:not(#backToTop)')
+        .forEach((anchor) => {
+          anchor.addEventListener('click', function (e) {
+            e.preventDefault()
+            const target = document.querySelector(this.getAttribute('href'))
+            if (target) {
+              target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+              })
+            }
           })
         })
-
-      // Smooth scrolling for navigation links
-      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-        anchor.addEventListener('click', function (e) {
-          e.preventDefault()
-          const target = document.querySelector(this.getAttribute('href'))
-          if (target) {
-            target.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start'
-            })
-          }
-        })
-      })
     </script>
   </body>
 </html>
