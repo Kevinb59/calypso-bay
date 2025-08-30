@@ -253,6 +253,7 @@
         outline: none;
         opacity: 1;
         visibility: visible;
+        pointer-events: auto;
       }
 
       .back-to-top:hover {
@@ -2824,10 +2825,32 @@
         }
       })
 
-      // Simple click handler
+      // Simple click handler with console log for debugging
       backToTop.addEventListener('click', function (e) {
+        console.log('Back to top button clicked!')
         e.preventDefault()
-        window.scrollTo(0, 0)
+        e.stopPropagation()
+
+        // Try multiple methods for better compatibility
+        try {
+          // Method 1: Modern scrollTo with smooth behavior
+          window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+          })
+        } catch (error) {
+          console.log('Smooth scroll failed, trying instant scroll')
+          // Method 2: Instant scroll as fallback
+          window.scrollTo(0, 0)
+        }
+
+        // Method 3: Alternative using document.documentElement
+        if (document.documentElement.scrollTop > 0) {
+          document.documentElement.scrollTop = 0
+        } else if (document.body.scrollTop > 0) {
+          document.body.scrollTop = 0
+        }
       })
 
       // Smooth scrolling for navigation links (excluding back to top button)
