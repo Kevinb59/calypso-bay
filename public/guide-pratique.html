@@ -55,17 +55,19 @@
       }
 
       .header h1 {
-        font-size: 3em;
+        font-size: 7.5em;
         margin: 0;
         color: #333;
         font-family: 'Themysion', serif;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
       }
 
       .header h2 {
-        font-size: 1.5em;
-        margin: 10px 0 0 0;
+        font-size: 2.2em;
+        margin: 15px 0 0 0;
         color: #4caf50;
-        font-weight: 300;
+        font-weight: 400;
+        letter-spacing: 2px;
       }
 
       .header p {
@@ -354,8 +356,8 @@
     <div class="main-container">
       <!-- Header -->
       <div class="header">
-        <h1>Guide Pratique</h1>
-        <h2>Calypso Bay</h2>
+        <h1>Calypso Bay</h1>
+        <h2>Guide Pratique</h2>
         <p>
           Toutes les informations pratiques pour votre séjour : logement,
           environnement, activités, services et conseils utiles.
@@ -376,12 +378,13 @@
 
         <div class="nav-menu">
           <a href="#logement">🏠 Logement</a>
-          <a href="#environnement">📍 Localisation ✅</a>
+          <a href="#eau-electricite">💧⚡ Eau & Électricité</a>
+          <a href="#environnement">📍 Localisation</a>
           <a href="#activites">🎯 Activités</a>
-          <a href="#services">🛒 Services ✅</a>
-          <a href="#restaurants">🍽️ Restaurants ✅</a>
-          <a href="#sante">🏥 Soins & Santé ✅</a>
-          <a href="#cyclones">🌀 Cyclones ✅</a>
+          <a href="#services">🛒 Services</a>
+          <a href="#restaurants">🍽️ Restaurants</a>
+          <a href="#sante">🏥 Soins & Santé</a>
+          <a href="#cyclones">🌀 Cyclones</a>
           <a href="#transport">🚗 Transport</a>
           <a href="#excursions">🗺️ Excursions</a>
           <a href="#pratique">ℹ️ Infos Pratiques</a>
@@ -398,74 +401,583 @@
 
         <div class="info-grid">
           <div class="info-card">
-            <h4><i class="fas fa-home"></i> Présentation de la villa</h4>
+            <h4>
+              <i class="fas fa-info-circle"></i> Quelques précisions importantes
+              sur le fonctionnement de la maison
+            </h4>
+
+                         <!-- Image de présentation de la maison -->
+             <div style="margin-top: 20px; text-align: center">
+               <img
+                 src="images/guide/30.jpg"
+                 alt="Présentation de la maison - Architecture écologique"
+                 style="
+                   width: 100%;
+                   max-width: 400px;
+                   object-fit: cover;
+                   border-radius: 8px;
+                   margin-bottom: 15px;
+                   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                 "
+               />
+             </div>
+
+             <h5><i class="fas fa-architect"></i> PRÉAMBULE</h5>
+             <p>
+               L'architecte qui a construit la maison s'appelle Monsieur Laurent
+               DARVIOT. Il est très sensible à l'écologie ce qui explique
+               l'équipement dès le début d'un double système d'alimentation en
+               eau, avec en particulier une utilisation de l'eau de pluie pour
+               les toilettes.
+             </p>
+            <ul>
+              <li>
+                L'eau chaude des douches est produite par chauffe-eau solaire
+              </li>
+              <li>Une partie de l'éclairage extérieur est solaire</li>
+              <li>
+                Monsieur DARVIOT est le premier architecte à avoir construit un
+                immeuble autonome en Guadeloupe (la résidence MALDYVES à GOYAVE)
+                pour lequel il a reçu le prix résidentiel des Trophées Bâtiments
+                Résilients en 2022
+              </li>
+              <li>
+                Dans notre maison, il a prévu les nombreuses ouvertures au
+                niveau de la zone centrale afin de faciliter la création d'une
+                circulation d'air éventuellement complétée par l'action de
+                ventilateurs moins énergivores qu'une climatisation
+              </li>
+              <li>
+                Les chambres ont été cependant climatisées à notre demande afin
+                d'améliorer le confort pendant les périodes de sommeil
+              </li>
+              <li>
+                Tous les ans une société spécialisée passe afin de contrôler
+                l'installation et nettoyer les filtres
+              </li>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <h4>
+              <i class="fas fa-lightbulb"></i> Éclairage et ventilateur du salon
+            </h4>
+
+            <h5><i class="fas fa-power-off"></i> Interrupteur général</h5>
             <p>
-              Villa contemporaine de 180 m² située sur un terrain de 1 350 m²,
-              idéale pour accueillir jusqu'à 6 personnes. Elle comprend 3
-              chambres de 15 m² avec chacune sa salle de bains privative, une
-              cuisine équipée, un salon intérieur et une grande terrasse
-              extérieure de 50 m² avec piscine privée, un espace repas couvert,
-              un salon extérieur, un parking pour 5 voitures, ainsi que des
-              équipements autonomes tels que deux réserves d'eau (eau de pluie
-              et eau de réseau) et un chauffe-eau solaire.
+              L'interrupteur général du salon est celui situé à côté de la porte
+              d'accès à la chambre du fond. Il permet l'alimentation en
+              électricité du ventilateur et de la lampe.
             </p>
 
-            <h4><i class="fas fa-couch"></i> Aménagements intérieurs</h4>
+            <h5><i class="fas fa-tv"></i> Télécommande LEXMAN (éclairage)</h5>
             <p>
-              La villa dispose d'un salon spacieux avec vue sur la mer, d'une
-              cuisine entièrement équipée avec tous les ustensiles nécessaires,
-              et de trois chambres confortables avec literie de qualité. Chaque
-              chambre dispose de sa propre salle de bains privative avec douche.
+              L'éclairage est ensuite dépendant de la petite télécommande
+              LEXMAN. Pour allumer et éteindre, il suffit d'appuyer sur le
+              bouton représentant un cercle interrompu d'une barre.
+            </p>
+
+            <!-- Image de la télécommande LEXMAN -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="images/guide/24.jpg"
+                alt="Télécommande LEXMAN - Éclairage"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+            </div>
+
+            <h5>
+              <i class="fas fa-fan"></i> Télécommande FANELITE (ventilateur)
+            </h5>
+            <p>Le ventilateur dépend de la télécommande FANELITE :</p>
+            <ul>
+              <li>
+                <strong>Mise en route :</strong> Appuyer sur le symbole I en
+                haut de la commande
+              </li>
+              <li><strong>Arrêt :</strong> Appuyer sur le cercle à droite</li>
+            </ul>
+
+            <!-- Image de la télécommande FANELITE -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="images/guide/23.jpg"
+                alt="Télécommande FANELITE - Ventilateur"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+            </div>
+
+            <h5><i class="fas fa-lightbulb"></i> Éclairage du ventilateur</h5>
+            <p>
+              Il existe également un éclairage à la base du ventilateur dont
+              l'utilisation est commandée par le symbole représentant une
+              ampoule.
             </p>
           </div>
 
           <div class="info-card">
-            <h4><i class="fas fa-lightbulb"></i> Système d'éclairage</h4>
+            <h4><i class="fas fa-tint"></i> La distribution de l'eau chaude</h4>
             <p>
-              Le salon dispose d'un système d'éclairage moderne avec plusieurs
-              points lumineux :
+              Ceci concerne l'eau des lavabos et surtout des douches. Comme dans
+              beaucoup de pays où le soleil est souvent présent, la maison est
+              équipée d'un chauffe-eau solaire (panneau solaire et réservoir)
+              dont la position sur la toiture se situe près de l'entrée de la
+              maison.
+            </p>
+            <p>
+              La taille du réservoir est celle préconisée par l'architecte pour
+              une maison de six personnes. Les caractéristiques de l'appareil et
+              sa situation par rapport à la disposition des chambres amènent à
+              deux précisions :
+            </p>
+
+            <!-- Image du chauffe-eau solaire -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="images/guide/28.jpg"
+                alt="Chauffe-eau solaire - Distribution eau chaude"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+            </div>
+            <ul>
+              <li>
+                <strong>Fonctionnement solaire :</strong> Par définition, le
+                dispositif solaire fonctionne la journée et non la nuit. Il en
+                résulte que si la totalité du réservoir a été utilisée dans la
+                soirée, l'eau des douches sera tiède le lendemain matin mais se
+                réchauffera automatiquement au cours de la journée.
+              </li>
+              <li>
+                <strong>Disposition :</strong> Le chauffe-eau est plus proche de
+                l'entrée et des deux premières chambres que de la troisième qui
+                en est plus éloignée. La conséquence en est que les deux
+                premières douches vont bénéficier de l'eau chaude plus
+                rapidement que la troisième en raison de son éloignement, sans
+                pour autant qu'il s'agisse d'un dysfonctionnement.
+              </li>
+            </ul>
+          </div>
+
+
+
+          <div class="info-card">
+            <h4><i class="fas fa-wifi"></i> Internet</h4>
+            <p>
+              La box Orange se situe dans le cellier, les codes pour la
+              connexion dans le livret d'accueil, la TV est reliée à la box.
+            </p>
+            <p><strong>Livebox 66A0 clé :</strong> ES6EZy7ZtLTZoKDTtp</p>
+            <p>
+              <strong>L'équipement est high speed VDSL par le câble :</strong>
             </p>
             <ul>
-              <li>Plafonnier principal avec variateur d'intensité</li>
-              <li>Lampes d'appoint pour l'ambiance</li>
-              <li>Éclairage extérieur automatique</li>
+              <li>Envoi de données : 6.41 mbits</li>
+              <li>Réception de données : 28.8 mbits</li>
             </ul>
-
-            <h4><i class="fas fa-fan"></i> Ventilation</h4>
             <p>
-              Un ventilateur de plafond est installé dans le salon pour assurer
-              une ventilation optimale. Il peut être réglé sur plusieurs
-              vitesses selon vos besoins. En complément, les grandes baies
-              vitrées permettent une excellente circulation de l'air.
+              La commune commence à s'équiper de la fibre mais, à capacité
+              équivalente, le réseau est aérien, fragile, et exposé aux aléas du
+              climat (en particulier aux vents), ce qui explique le choix du
+              câble VDSL pour le moment.
             </p>
           </div>
 
           <div class="info-card">
-            <h4><i class="fas fa-tint"></i> Gestion de l'eau</h4>
-            <p>La villa dispose de deux sources d'eau :</p>
+            <h4><i class="fas fa-toilet"></i> Les WC et les eaux usées</h4>
+            <p>
+              Toutes les nouvelles habitations sur les hauteurs de Basse-Terre
+              doivent maintenant être équipées d'une mini station d'épuration
+              individuelle lors de la construction.
+            </p>
+
+            <!-- Image de la mini station d'épuration -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="images/guide/26.jpg"
+                alt="Mini station d'épuration - WC et eaux usées"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+            </div>
+            <p><strong>Pour préserver leur bon fonctionnement :</strong></p>
             <ul>
               <li>
-                <strong>Eau de pluie :</strong> Collectée et stockée dans une
-                citerne de 10 000 litres
+                Ne mettre dans la cuvette des WC que du papier toilette sec (en
+                rouleaux)
               </li>
               <li>
-                <strong>Eau de réseau :</strong> Eau potable de la ville en
-                complément
+                Ne pas y déposer de lingettes ou autre dispositif (fessnet,
+                lotus, etc.)
+              </li>
+              <li>
+                Le papier sec se délite au contact de l'humidité et ne bouche
+                pas les canalisations
+              </li>
+              <li>
+                Le papier toilette humide relève d'une composition proche de
+                celle des lingettes, obstrue les canalisations et donc perturbe
+                le traitement des eaux usées
               </li>
             </ul>
             <p>
-              Un système de pompage automatique assure la distribution dans
-              toute la maison.
+              <strong
+                >Merci en cas d'utilisation de papier humide de le jeter dans la
+                poubelle et non dans la cuvette des WC.</strong
+              >
             </p>
+            <p>
+              Les produits que nous utilisons (nettoyage du sol, produits WC)
+              sont compatibles avec le bon fonctionnement d'une fosse septique
+              et il convient d'éviter d'utiliser des liquides javellisés.
+            </p>
+          </div>
 
-            <h4><i class="fas fa-bolt"></i> Électricité</h4>
-            <p>Installation électrique aux normes françaises avec :</p>
+          <div class="info-card">
+            <h4>
+              <i class="fas fa-shield-alt"></i> Filet de sécurité et terrasse
+            </h4>
+            <p>
+              La maison est équipée d'un filet de sécurité placé entre la
+              piscine et la terrasse. Malgré sa résistance, ce n'est pas un
+              hamac sur lequel on peut s'allonger (comme sur les catamarans), il
+              se veut un élément de sécurité en cas de chute accidentelle, et
+              donc merci de lui réserver cette vocation afin qu'il garde son
+              efficacité.
+            </p>
+            <!-- Image du filet de sécurité -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="images/guide/25.jpg"
+                alt="Filet de sécurité - Terrasse et piscine"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+            </div>
+
+            <p><strong>IMPORTANT :</strong></p>
             <ul>
-              <li>Prises de sécurité dans toutes les pièces</li>
-              <li>Éclairage LED économique</li>
-              <li>Chauffe-eau solaire pour l'eau chaude</li>
+              <li>
+                La terrasse n'a pas de balustrade, et la piscine pas de barrière
+                de sécurité
+              </li>
+              <li>
+                Cette option est volontaire de notre part afin de préserver une
+                belle vue dégagée sur la baie et les îlets
+              </li>
+              <li>
+                Ce point particulier ne pose pas de problème aux adultes qui
+                apprécient en général l'initiative
+              </li>
+              <li>
+                Pour cette raison, nous déconseillons sur le site de réservation
+                la maison aux familles avec de jeunes enfants (moins de 8 ans)
+                car elle peut se révéler dangereuse dans la zone terrasse -
+                piscine
+              </li>
             </ul>
           </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-trash"></i> La gestion des déchets</h4>
+            <p>
+              Gros problème en Guadeloupe (pour avoir une poubelle il nous a
+              fallu l'acheter dans le commerce, nous attendons toujours celle de
+              la mairie depuis deux ans).
+            </p>
+            <ul>
+              <li>Le ramassage se fait pendant la nuit du dimanche au lundi</li>
+                             <li>
+                 En ce qui concerne les bouteilles en verre ou en plastique, il
+                 existe des bornes de dépôt le long des routes, la plus proche
+                 étant située en face de Carrefour Market
+               </li>
+             </ul>
+
+             <!-- Image des bornes de recyclage -->
+             <div style="margin-top: 20px; text-align: center">
+               <img
+                 src="images/guide/29.jpg"
+                 alt="Bornes de recyclage - Gestion des déchets"
+                 style="
+                   width: 100%;
+                   max-width: 400px;
+                   object-fit: cover;
+                   border-radius: 8px;
+                   margin-bottom: 15px;
+                   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                 "
+               />
+             </div>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <h4>
+              <i class="fas fa-window-maximize"></i> Les volets électriques et
+              les fenêtres des chambres
+            </h4>
+
+            <h5>
+              <i class="fas fa-exclamation-triangle"></i> LES VOLETS ÉLECTRIQUES
+            </h5>
+            <p><strong>ATTENTION :</strong></p>
+            <p>
+              Merci de vérifier que rien ne perturbe la fermeture des volets
+              électriques (fauteuils de terrasse en particulier) au risque de
+              les bloquer et de ne pouvoir fermer efficacement la maison en
+              votre absence (c'est déjà arrivé).
+            </p>
+
+            <!-- Image des volets électriques -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="images/guide/27.jpg"
+                alt="Volets électriques - Précautions"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+            </div>
+
+            <h5>
+              <i class="fas fa-window-restore"></i> LES FENÊTRES DES CHAMBRES
+            </h5>
+            <p>
+              Les volets des fenêtres s'ouvrent et se ferment en utilisant la
+              manivelle fixée sur le côté du cadre.
+            </p>
+            <p>
+              Malheureusement, les cardans de ces manivelles sont très fragiles
+              (c'est un défaut de conception que nous avons signalé au
+              fabricant).
+            </p>
+            <p>
+              <strong
+                >Merci de ne pas forcer lors des manœuvres d'ouverture et
+                fermeture.</strong
+              >
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-snowflake"></i> La Climatisation</h4>
+            <p>
+              L'électricité en Guadeloupe est malheureusement en grande partie
+              d'origine fossile (donc, d'importation). La ville de Bouillante
+              bénéficie d'une participation de la centrale géothermique,
+              salvatrice en cas de coupure d'électricité sur le réseau, mais ne
+              permettant pas de jouir pour autant d'un tarif moins élevé.
+            </p>
+            <p>
+              De façon regrettable, les énergies « propres » sont peu
+              représentées.
+            </p>
+            <p><strong>Pour des raisons d'économie et d'écologie :</strong></p>
+            <ul>
+              <li>
+                Merci de couper les climatiseurs grâce à leur télécommande en
+                dehors des périodes d'occupation des chambres
+              </li>
+              <li>
+                Veiller à ce que portes et fenêtres soient fermées pendant leur
+                fonctionnement
+              </li>
+            </ul>
+            <p>
+              Comme dit précédemment, tous les ans une société spécialisée passe
+              afin de contrôler l'installation et nettoyer les filtres.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Eau & Électricité -->
+      <div class="content-section" id="eau-electricite">
+        <h2 class="section-title">💧⚡ Eau & Électricité</h2>
+        <p class="section-description">
+          Gestion de l'eau et de l'électricité, équipements de secours et procédures en cas de coupure
+        </p>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <h4><i class="fas fa-tint"></i> L'EAU</h4>
+            <p>
+              Pour des raisons de maintenance, d'écologie et d'économie, la maison bénéficie d'une double alimentation en eau.
+            </p>
+            <p>
+              Elle est raccordée au réseau de distribution d'eau de la Guadeloupe avec une cuve de réserve.
+            </p>
+            <p>
+              <strong>La vanne principale de raccordement au réseau de la Guadeloupe</strong> se situe au niveau du portail d'entrée de la maison à côté du compteur, elle sert à couper l'alimentation en cas de rupture d'une tuyauterie par exemple.
+            </p>
+            <p>L'eau est ensuite dirigée vers la pièce du sous-sol.</p>
+                         <p>
+               <strong>Au niveau du sous-sol, il existe une vanne de raccordement à deux positions (réseau, cuve de secours) :</strong>
+             </p>
+
+             <!-- Image de la vanne de raccordement -->
+             <div style="margin-top: 20px; text-align: center">
+               <img
+                 src="images/guide/32.jpg"
+                 alt="Vanne de raccordement - Sous-sol"
+                 style="
+                   width: 100%;
+                   max-width: 400px;
+                   object-fit: cover;
+                   border-radius: 8px;
+                   margin-bottom: 15px;
+                   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                 "
+               />
+             </div>
+            <ul>
+              <li><strong>Position horizontale</strong> = raccordement direct au réseau de distribution</li>
+              <li><strong>Position verticale</strong> = raccordement à la cuve de secours</li>
+            </ul>
+            <p>
+              Cette cuve de secours dans le sous-sol de la maison contient une pompe électrique se déclenchant spontanément en cas de coupure d'eau du réseau, et continuant d'alimenter douches et robinets. Sa fonction de sauvegarde ne se déclenchant que lorsque le niveau baisse et que la cuve est raccordée aux robinets et aux douches.
+            </p>
+            <p><strong>EN CAS DE COUPURE D'EAU :</strong></p>
+            <p>C'est l'eau de la cuve de secours qui est utilisée.</p>
+            <p>
+              Il existe une deuxième alimentation en eau, exclusivement pour les WC qui bénéficient d'une double arrivée d'eau : le robinet de gauche alimente en eau de pluie, celui de droite en eau du réseau.
+            </p>
+
+            <!-- Image de la double alimentation des WC -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="images/guide/31.jpg"
+                alt="Double alimentation WC - Eau de pluie et réseau"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+            </div>
+            <p>
+              En permanence le robinet de gauche est ouvert, celui de droite fermé et la pompe électrique immergée dans la cuve de récupération d'eau de pluie alimente les toilettes automatiquement.
+            </p>
+            <p>
+              En cas de panne sur le réseau d'alimentation, celle des WC, indépendante, se poursuit donc sans interruption alors que les robinets et les douches ne sont plus alimentés si la manette rouge est en position basse.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-bolt"></i> L'ÉLECTRICITÉ</h4>
+            <p>
+              Elle est fournie de deux façons sur Bouillante : la centrale thermique de JARRY et la centrale géothermique de BOUILLANTE.
+            </p>
+            <p>
+              Cette double source fait que nous sommes privilégiés sur Bouillante et rarement concernés par les coupures de longue durée... sauf en cas de « mouvements sociaux ».
+            </p>
+            <p><strong>EN CAS DE COUPURE DE COURANT :</strong></p>
+
+            <h5><i class="fas fa-door-open"></i> Le portail d'entrée</h5>
+            <p>
+              Le portail d'entrée est équipé d'un moteur électrique avec une petite batterie de secours qui permet de ne pas se retrouver, à l'extérieur de la maison, devant un portail fermé.
+            </p>
+            <p>
+              Malheureusement, cette batterie est de faible capacité et nous conseillons en cas de panne de passer en mode manuel.
+            </p>
+            <p>
+              Pour ce faire une petite clé triangulaire est disponible dans le tiroir des couverts de la cuisine (à droite du tiroir). Elle permet de débrayer le moteur électrique et de manipuler le portail de façon manuelle avant le retour du courant.
+            </p>
+
+            <!-- Image de la clé triangulaire -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="images/guide/33.jpg"
+                alt="Clé triangulaire - Portail d'entrée"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+            </div>
+
+            <h5><i class="fas fa-window-maximize"></i> Les volets roulants</h5>
+            <p>
+              Ils sont au nombre de trois, métalliques et électrifiés, deux plus petits de chaque côté encadrant le volet central plus large (et plus lourd aussi).
+            </p>
+            <p>
+              En cas de panne de courant, se trouve à la droite des volets une manivelle sur laquelle s'adapte une pièce intermédiaire métallique (posée dans la petite alcôve juste au-dessus du volet gauche).
+            </p>
+            <p>Ce dispositif permet d'ouvrir et fermer manuellement.</p>
+
+            <h5><i class="fas fa-lightbulb"></i> L'éclairage</h5>
+            <p>
+              Dans la maison nous avons trois lampes « FATBOY » avec batterie incorporée.
+            </p>
+            <p>
+              Les câbles électriques USB afin de permettre leur mise en charge se trouvent dans le meuble sous la télévision. Lors de nos séjours dans la maison nous les mettons en charge en début de vacances, leur lumière est douce et agréable le soir sur la terrasse mais elles peuvent également dépanner... au cas où...
+            </p>
+            <p>
+              Dans le cellier (ou dans le sous-sol selon la place) se trouvent des lampes à alcool en cas de besoin.
+            </p>
+
+            <h5><i class="fas fa-tint"></i> L'alimentation en eau</h5>
+            <p>
+              La pompe immergée dans la cuve de récupération d'eau de pluie n'est plus opérationnelle de même que celle de la cuve de secours.
+            </p>
+            <p>
+              C'est la pression du réseau qui assure l'alimentation des robinets, douches et potentiellement des toilettes.
+            </p>
+            <p>
+              Il convient donc de raccorder pendant la période d'interruption du courant le réservoir des WC au réseau de distribution.
+            </p>
+            <p>
+              Pour cela, il faut simplement vérifier que la manette rouge du sous-sol soit bien en position basse et pour les toilettes, fermer le robinet situé à gauche puis ouvrir celui de droite.
+            </p>
+            <p>La manœuvre inverse étant à réaliser à ce niveau, après retour du courant.</p>
+          </div>
+
+
         </div>
       </div>
 
@@ -791,71 +1303,142 @@
         </div>
       </div>
 
-      <!-- Section Activités -->
-      <div class="content-section" id="activites">
-        <h2 class="section-title">🎯 Activités et Découvertes</h2>
+      <!-- Section Excursions -->
+      <div class="content-section" id="excursions">
+        <h2 class="section-title">🌿 Excursions</h2>
         <p class="section-description">
-          Les meilleures activités à faire dans la région et les sites à
-          découvrir.
+          Randonnées, sorties, balades et découvertes dans la région.
         </p>
 
         <div class="info-grid">
           <div class="info-card">
-            <h4><i class="fas fa-umbrella-beach"></i> Plage de Malendure</h4>
-            <p>
-              Belle plage de sable noir, site idéal pour le snorkeling et
-              observer les tortues :
-            </p>
-            <ul>
-              <li>
-                <strong>Snorkeling :</strong> Les tortues sont souvent dans la
-                partie nord (plage du petit Malendure)
-              </li>
-              <li>
-                <strong>Repérer les tortues :</strong> Cherchez les groupes de
-                plongeurs avec tuba en surface
-              </li>
-              <li>
-                <strong>Stationnement :</strong> Payant le long de la plage,
-                contrôles fréquents
-              </li>
-              <li>
-                <strong>Parking gratuit :</strong> À côté du stade de football,
-                rue des Palétuviers
-              </li>
-            </ul>
+            <h4><i class="fas fa-umbrella-beach"></i> Plages et snorkeling</h4>
 
-            <h4><i class="fas fa-water"></i> Activités nautiques</h4>
-            <ul>
-              <li>Location de canoés ou kayaks sur la plage</li>
-              <li>Snorkeling aux îlets Pigeons</li>
-              <li>Faune abondante dans la réserve Cousteau</li>
-              <li>
-                Plongée bouteille avec "Les Heures Saines" (club très branché
-                sécurité)
-              </li>
-            </ul>
+            <h5><i class="fas fa-water"></i> Plage de Malendure (Bouillante)</h5>
+            <p>Sable noir, observation des tortues (surtout côté nord, Petit Malendure). Snorkeling et location de kayaks pour rejoindre les îlets Pigeon (Réserve Cousteau).</p>
+
+            <h5><i class="fas fa-water"></i> Plage de Petite Anse (Bouillante)</h5>
+            <p>Plage sauvage avec sable blond et galets. Snorkeling riche (poissons de récif, coraux, calamars, parfois tortues).</p>
+
+            <h5><i class="fas fa-water"></i> Plage Leroux (Ferry, Deshaies)</h5>
+            <p>Petite plage de sable blond, très beau site de snorkeling (poissons coffres, calamars…). Fréquentée aussi par des iguanes le matin.</p>
+
+            <h5><i class="fas fa-water"></i> Plages de Grande Anse et Anse de la Perle (Deshaies)</h5>
+            <p>Immenses plages de sable blond, magnifiques mais attention aux rouleaux.</p>
+
+            <h5><i class="fas fa-water"></i> Plage de Petite Anse (Deshaies)</h5>
+            <p>Spot agréable pour une baignade plus calme.</p>
           </div>
 
           <div class="info-card">
-            <h4><i class="fas fa-hiking"></i> Randonnées de proximité</h4>
-            <p>
-              <strong>Parc de la Source :</strong> Juste derrière la maison,
-              remonter la rue de Poirier en voiture (à pied c'est mortel) :
-            </p>
+            <h4><i class="fas fa-mountain"></i> Cascades et randonnées</h4>
+
+            <h5><i class="fas fa-water"></i> Cascade du Trou à Diable (Bouillante)</h5>
+            <p>Près du Parc de la Source, accessible par un sentier agréable et ombragé. Prudence en cas de fortes pluies.</p>
+
+            <h5><i class="fas fa-water"></i> Saut d'Acomat (Pointe-Noire)</h5>
+            <p>Cascade emblématique.</p>
+
+            <h5><i class="fas fa-water"></i> Saut de la Lézarde (Petit-Bourg)</h5>
+            <p>Site superbe, accès sportif mais faisable en 1h aller-retour. Bassin propice à la baignade.</p>
+
+            <h5><i class="fas fa-water"></i> Chutes du Carbet (Capesterre-Belle-Eau)</h5>
             <ul>
-              <li>Bel endroit mais visite un peu chère</li>
-              <li>
-                Possibilité de se garer et prendre le chemin à droite de
-                l'entrée
-              </li>
-              <li>Chemin ombragé sur les crêtes avec vue dégagée sur la mer</li>
-              <li>À mi-chemin : accès à la cascade du Trou à Diable</li>
+              <li><strong>1ʳᵉ chute :</strong> 115 m, randonnée sportive avec passages à gué.</li>
+              <li><strong>2ᵉ chute :</strong> 110 m, la plus accessible, sentier aménagé (enfants possibles).</li>
+              <li><strong>3ᵉ chute :</strong> 20 m, bassin agréable pour la baignade.</li>
             </ul>
-            <p>
-              <strong>⚠️ Attention :</strong> Éviter les périodes de fortes
-              pluies (crues et risques d'éboulements)
-            </p>
+
+            <h5><i class="fas fa-hiking"></i> Randonnée derrière la villa (Bouillante)</h5>
+            <p>Depuis la rue de Poirier jusqu'au Parc de la Source. Beau chemin de crête avec vue sur la mer.</p>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-ship"></i> Découvertes en mer</h4>
+
+            <h5><i class="fas fa-diving-helmet"></i> Plongée bouteille</h5>
+            <p>Club Les Heures Saines (Bouillante), réputé pour sa sécurité et sa convivialité. Exploration de la réserve Cousteau et d'épaves.</p>
+
+            <h5><i class="fas fa-ship"></i> Excursion aux Saintes</h5>
+            <p>Départ en ferry de Trois-Rivières, idéale pour une journée.</p>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-map-marked-alt"></i> Balades et découvertes</h4>
+
+            <h5><i class="fas fa-seedling"></i> Jardin Botanique de Deshaies</h5>
+            <p>Promenade de 2h dans un cadre luxuriant.</p>
+
+            <h5><i class="fas fa-fort-awesome"></i> Fort Delgrès (Basse-Terre)</h5>
+            <p>Site historique majeur, visite gratuite.</p>
+
+            <h5><i class="fas fa-shopping-basket"></i> Marché de Basse-Terre</h5>
+            <p>Marché quotidien (sauf dimanche et lundi), particulièrement animé le samedi. Idéal pour épices, vanille et produits locaux.</p>
+
+            <h5><i class="fas fa-shopping-basket"></i> Marché de Sainte-Anne et son village artisanal</h5>
+            <p>Souvenirs et produits locaux.</p>
+
+            <h5><i class="fas fa-mountain"></i> Pointe des Châteaux (Saint-François)</h5>
+            <p>Paysages impressionnants rappelant la Bretagne.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Activités -->
+      <div class="content-section" id="activites">
+        <h2 class="section-title">🎭 Activités</h2>
+        <p class="section-description">
+          Locations, entreprises, culture et services disponibles.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <h4><i class="fas fa-water"></i> Activités nautiques</h4>
+
+            <h5><i class="fas fa-kayak"></i> Location de kayaks</h5>
+            <p>Sur la plage de Malendure pour explorer la Réserve Cousteau et les îlets Pigeon.</p>
+
+            <h5><i class="fas fa-diving-helmet"></i> Clubs de plongée</h5>
+            <p>Les Heures Saines (Bouillante).</p>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-wine-glass"></i> Dégustations et visites</h4>
+
+            <h5><i class="fas fa-industry"></i> Distilleries</h5>
+            <ul>
+              <li><strong>Bologne (Basse-Terre) :</strong> Visite et boutique souvenirs.</li>
+              <li><strong>Autres distilleries réputées :</strong> Longueteau, Damoiseau, Montebello, Séverin, Rhum Karukera, Rhum Raymonenq.</li>
+            </ul>
+
+            <h5><i class="fas fa-seedling"></i> Maison du Cacao (Pointe-Noire)</h5>
+            <p>Immersion gourmande dans la culture du cacao.</p>
+
+            <h5><i class="fas fa-wine-bottle"></i> Musée du Rhum (Sainte-Rose)</h5>
+            <p>Culture locale et dégustations.</p>
+
+            <h5><i class="fas fa-landmark"></i> Habitation Côte-sous-le-Vent (Pointe-Noire)</h5>
+            <p>Patrimoine et histoire.</p>
+
+            <h5><i class="fas fa-monument"></i> Mémorial ACTe (Pointe-à-Pitre)</h5>
+            <p>Centre caribéen d'expressions et de mémoire de la traite.</p>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-beer"></i> Microbrasserie</h4>
+
+            <h5><i class="fas fa-beer"></i> Microbrasserie de la Lézarde (Petit-Bourg, Vernou)</h5>
+            <p>Située à 500 m de l'entrée du sentier de la cascade. Ouverte à partir de 11h30, fermée dimanche et lundi.</p>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-theater-masks"></i> Autres activités culturelles</h4>
+
+            <h5><i class="fas fa-fish"></i> Aquarium de Guadeloupe (Gosier)</h5>
+            <p>Découverte de la faune marine.</p>
+
+            <h5><i class="fas fa-video"></i> Site de tournage de la série "Meurtres au paradis" (Deshaies)</h5>
+            <p>Promenade dans le village, souvent animé par les équipes de tournage.</p>
           </div>
         </div>
       </div>
@@ -1394,27 +1977,68 @@
               </li>
             </ul>
 
-            <h4><i class="fas fa-shield-alt"></i> Sécurité et santé</h4>
-            <ul>
-              <li><strong>Eau du robinet :</strong> Potable</li>
-              <li>
-                <strong>Insectes :</strong> Occasionnels dans la villa
-                (traitement régulier)
-              </li>
-              <li>
-                <strong>Dangers :</strong> Aucun insecte dangereux sauf
-                scolopendres et moustiques
-              </li>
-              <li>
-                <strong>Maladies :</strong> Pas de paludisme mais risque de
-                dengue
-              </li>
-              <li>
-                <strong>Serpents :</strong> Aucun (contrairement à la
-                Martinique)
-              </li>
-            </ul>
+            <h5><i class="fas fa-plane"></i> Avant de partir</h5>
+            <p>
+              N'oubliez pas d'acheter une bombe d'anti-moustique (OFF ou INSECTECRAN à transporter en soute) afin de pouvoir vous traiter sur les parties découvertes dès l'arrivée.
+            </p>
 
+            <!-- Image des produits anti-moustiques -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="images/guide/34.jpg"
+                alt="Produits anti-moustiques - Protection"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+            </div>
+            <p>
+              En arrivant à l'aéroport, la première envie est de se dévêtir et les moustiques souvent présents le matin et le soir n'attendent que ça.
+            </p>
+            <p>
+              La Dengue est présente dans toutes les Antilles, elle peut se révéler dangereuse et quoiqu'il en soit peut gâcher votre séjour (comme une très grosse grippe).
+            </p>
+            <p>
+              Une fois déclarée, pas de traitement en dehors du Doliprane.
+            </p>
+            <p>
+              Le matin et le soir protégez-vous avec les répulsifs, utilisez des spirales ou des bougies à la citronnelle.
+            </p>
+            <p>
+              N'hésitez pas à consulter le site d'INSECTECRAN qui prodigue des conseils utiles.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-paw"></i> Faune locale</h4>
+            <p><strong>Les moustiques :</strong> Se protéger surtout dès le lever et au coucher du soleil (Insectecran, Off). La nuit, les moustiquaires sont une protection très efficace.</p>
+            <p><strong>En Guadeloupe pas de serpents.</strong></p>
+            <p><strong>Les araignées :</strong> Sont inoffensives même si elles sont quelquefois impressionnantes par leur taille en comparaison avec celles de métropole.</p>
+
+            <h5><i class="fas fa-exclamation-triangle"></i> Les insectes rampants</h5>
+            <p>
+              La maison est traitée sur le sol (Digrain) de façon très régulière par l'équipe de la conciergerie afin d'éviter leur présence malheureusement inévitable malgré la répétition des applications d'insecticide (c'est une constante dans toutes les maisons des Antilles).
+            </p>
+            <p>
+              Ils sont tous sans danger à l'exception des <strong>Scolopendres</strong> (quelquefois d'une dizaine de centimètres).
+            </p>
+            <p>
+              Pendant la saison des pluies, ils ont tendance à chercher refuge dans les maisons ce qui est particulièrement désagréable pour nous les humains.
+            </p>
+            <p>
+              En période sèche, ils vivent sous la terre, mais après les fortes pluies de la saison humide, leurs nids sont noyés et ils cherchent des endroits plus secs.
+            </p>
+            <p>
+              Craintifs, ils s'enfuient quand on en rencontre, mais comme beaucoup d'animaux se défendent et mordent s'ils se sentent acculés. Leur morsure est très douloureuse.
+            </p>
+          </div>
+
+          <div class="info-card">
             <h4><i class="fas fa-sun"></i> Protection solaire</h4>
             <p><strong>Équipements recommandés :</strong></p>
             <ul>
@@ -1426,6 +2050,31 @@
                 <strong>Chapeau :</strong> Protection de la tête et du visage
               </li>
               <li><strong>Hydratation :</strong> Boire beaucoup d'eau</li>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-exclamation-triangle"></i> Attention aux « bains chauds »</h4>
+            <p>
+              Une dernière recommandation concerne exclusivement les « bains chauds ». Ce sont des résurgences d'eau du volcan où l'on peut se baigner.
+            </p>
+            <p>
+              Sur place on les appelle les « bains jaunes », le « bain des amours » etc. La baignade y est agréable et sans danger à condition de ne pas immerger la tête.
+            </p>
+            <p>
+              Selon la température de l'eau elle peut contenir des amibes inoffensives au niveau de la peau, mais agressives pour les muqueuses. En rivière ou en mer il n'y a aucun danger.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-shield-alt"></i> Les bons réflexes</h4>
+            <p><strong>Conseils de prévention :</strong></p>
+            <ul>
+              <li>Pendant la journée, surtout pendant la saison des pluies, fermer les portes et fenêtres des chambres, et laisser les moustiquaires des lits fermées.</li>
+              <li>Malgré cela contrôler la literie avant de se coucher.</li>
+              <li>Si les chaussures « dorment » à l'extérieur des chambres, les secouer avant de les chausser.</li>
+              <li>Même technique avec les vêtements.</li>
+              <li>Préférer marcher avec des sandales ou des tongs que pieds nus.</li>
             </ul>
           </div>
         </div>
@@ -1957,7 +2606,10 @@
             </h4>
             <p>Une taxe de séjour est perçue par la commune de Bouillante :</p>
             <ul>
-              <li><strong>Montant :</strong> 1,50€ par personne et par nuit</li>
+              <li>
+                <strong>Montant :</strong> 2,30€ par personne et par nuit
+                (résidence de tourisme 4 étoiles)
+              </li>
               <li><strong>Exonération :</strong> Enfants de moins de 18 ans</li>
               <li>
                 <strong>Paiement :</strong> Inclus dans le prix de votre séjour
@@ -1987,104 +2639,119 @@
 
             <h4><i class="fas fa-clock"></i> Informations importantes</h4>
             <ul>
-              <li>Arrivée : à partir de 16h00</li>
+              <li>Arrivée : à partir de 15h00</li>
               <li>Départ : avant 10h00</li>
               <li>Clé : Retrait dans un coffre sécurisé</li>
               <li>Contact : Disponible 24h/24 en cas d'urgence</li>
             </ul>
           </div>
+
+                    <div class="info-card">
+            <h4><i class="fas fa-utensils"></i> Équipements disponibles dans la maison</h4>
+            <ul>
+              <li><strong>Masques faciaux :</strong> Plusieurs masques disponibles dans le sous-sol (taille M et S)</li>
+              <li><strong>Serviettes :</strong> Fournies pour la toilette et la piscine (pas de serviettes de plage)</li>
+              <li><strong>Séchoirs pliants :</strong> Prévus pour le séchage des serviettes de plage à l'extérieur</li>
+            </ul>
+
+            <!-- Image des équipements disponibles -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="images/guide/36.jpg"
+                alt="Équipements disponibles - Maison"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+            </div>
+
+            <h4><i class="fas fa-shopping-bag"></i> Équipements à prévoir</h4>
+            <ul>
+              <li><strong>Sac étanche :</strong> Recommandé pour randonnées et plages (protection contre les ondées)</li>
+              <li><strong>Chaussures de randonnée aquatique :</strong> Idéales pour les passages à gué et randonnées</li>
+            </ul>
+
+            <!-- Image des chaussures de randonnée aquatique -->
+            <div style="margin-top: 20px; text-align: center">
+              <img
+                src="images/guide/35.jpg"
+                alt="Chaussures de randonnée aquatique"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+                  object-fit: cover;
+                  border-radius: 8px;
+                  margin-bottom: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                "
+              />
+            </div>
+              <li><strong>Paréos :</strong> Recommandés comme serviettes de plage (sèchent vite, moins volumineux)</li>
+              <li><strong>Répulsif anti-moustiques :</strong> OFF ou INSECTECRAN (à transporter en soute)</li>
+            </ul>
+
+            <h4><i class="fas fa-plug"></i> Équipements électriques</h4>
+            <p>
+              La maison est équipée de prises USB et d'adaptateurs pour les prises Américaines.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4><i class="fas fa-suitcase"></i> QUELQUES PETITS CONSEILS AVANT DE PARTIR</h4>
+
+            <h5><i class="fas fa-bag"></i> Un sac étanche</h5>
+            <p>
+              C'est souvent utile (et pas cher) quand on randonne avec quelquefois des traversées de rivières, mais aussi de façon plus quotidienne quand on va à la plage.
+            </p>
+            <p>
+              En Guadeloupe (voir la végétation), le climat est tropical et une ondée peut vous surprendre alors que vous vous baignez, avec pour désagrément vêtements et serviettes trempées.
+            </p>
+            <p>
+              Même si la pluie est chaude, le faible coût de cet investissement mérite de s'y intéresser.
+            </p>
+
+            <h5><i class="fas fa-umbrella-beach"></i> Pour la plage</h5>
+            <p>
+              Nous utilisons des paréos comme serviette pour deux raisons : on sèche très vite avec la chaleur, et c'est beaucoup moins lourd et volumineux dans les sacs ou les valises.
+            </p>
+            <p>
+              Nous fournissons les serviettes pour la toilette et également pour la piscine, mais pas de serviettes de plage.
+            </p>
+            <p>
+              En ce qui concerne ces dernières nous conseillons d'ailleurs de les laisser sécher à l'extérieur sur les séchoirs pliants prévus à cet effet afin d'éviter d'introduire les puces de sable (yens yens) présentes à certaines périodes de l'année sur les plages et responsables de démangeaisons très désagréables au niveau des jambes.
+            </p>
+
+            <h5><i class="fas fa-hiking"></i> La randonnée</h5>
+            <p>
+              En Guadeloupe, les meilleures chaussures sont celles de randonnée aquatique, elles évitent de glisser lors des passages à gué, sèchent rapidement et ne craignent pas l'eau.
+            </p>
+            <p>
+              En forêt il y a peu de moustiques, en revanche se prémunir si on visite la mangrove.
+            </p>
+
+            <h5><i class="fas fa-swimming-pool"></i> La mer</h5>
+            <p>
+              Quand on aime l'exploration sous-marine, un simple masque facial est suffisant.
+            </p>
+            <p><strong>Quelques idées proches de la maison :</strong></p>
+            <ul>
+              <li>La plage de Malendure pour les tortues</li>
+              <li>La plage Leroux à Ferry (le long des rochers à gauche de l'anse) : petits poissons coffres, calamars, coraux</li>
+              <li>La plage de Petite Anse à Bouillante en direction de Vieux Habitants</li>
+            </ul>
+            <p>
+              S'ils n'ont pas disparu, il y a plusieurs masques faciaux à disposition dans le sous-sol de la maison (taille M et S).
+            </p>
+          </div>
         </div>
       </div>
 
-      <!-- Section Excursions -->
-      <div class="content-section" id="excursions">
-        <h2 class="section-title">🗺️ Excursions et Découvertes</h2>
-        <p class="section-description">
-          Sites à découvrir dans les environs et plus loin sur l'île.
-        </p>
 
-        <div class="info-grid">
-          <div class="info-card">
-            <h4><i class="fas fa-map-signs"></i> Vers le Sud (Basse-Terre)</h4>
-            <p><strong>Plage de Petite Anse :</strong></p>
-            <ul>
-              <li>Petite plage sauvage typique, sable blond et cailloux</li>
-              <li>
-                Snorkeling sympa sur le côté gauche (poissons de récif, coraux,
-                calamars, tortues)
-              </li>
-              <li>Restaurants de plage : "Chez Chantal" et "Chez Monette"</li>
-              <li>
-                <em>Conseil :</em> Arriver à midi pile, premiers installés =
-                premiers servis
-              </li>
-            </ul>
-
-            <p><strong>Basse-Terre :</strong></p>
-            <ul>
-              <li>Marché quotidien typique (épices, vanille, rhum arrangé)</li>
-              <li>Distillerie Bologne (ouverte le matin seulement)</li>
-              <li>Fort Delgrès (visite gratuite, site grandiose)</li>
-              <li>Restaurants sur le port de plaisance</li>
-            </ul>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-map-signs"></i> Vers le Nord (Deshaies)</h4>
-            <p><strong>Plage Leroux à Ferry :</strong></p>
-            <ul>
-              <li>Petite plage de sable blond, sauvage et très belle</li>
-              <li>
-                Snorkeling riche côté gauche (poissons coffre, bancs de
-                calamars)
-              </li>
-              <li>Matinée quasi déserte, parfois des iguanes herbivores</li>
-              <li>
-                Restaurant "La Terrasse de Leroux" : très bon, pas cher, service
-                rapide
-              </li>
-            </ul>
-
-            <p><strong>Deshaies :</strong></p>
-            <ul>
-              <li>Site de tournage de "Meurtres au Paradis"</li>
-              <li>Restaurants avec terrasse sur la plage</li>
-              <li>"Chez Lélette" : excellent, sympa (service parfois long)</li>
-              <li>Jardin Botanique : promenade de 2h, flore des Caraïbes</li>
-            </ul>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-mountain"></i> Sites naturels majeurs</h4>
-            <p><strong>Cascades à découvrir :</strong></p>
-            <ul>
-              <li><strong>Le Saut de la Lézarde :</strong> À Petit-Bourg</li>
-              <li>
-                <strong>Les Chutes du Carbet :</strong> Grandioses à Capesterre
-              </li>
-              <li><strong>Le Saut d'Acomat :</strong> Pointe-Noire</li>
-              <li><em>300 cascades recensées sur l'île !</em></li>
-            </ul>
-
-            <p><strong>Autres sites :</strong></p>
-            <ul>
-              <li>Pointe des Châteaux</li>
-              <li>Sainte-Anne, Saint-François</li>
-              <li>Le Moule</li>
-              <li>Les Saintes</li>
-            </ul>
-
-            <p><strong>En cas de pluie :</strong></p>
-            <ul>
-              <li>Musée du Rhum à Sainte-Rose</li>
-              <li>Maison du Cacao à Pointe-Noire</li>
-              <li>Mémorial ACTe à Pointe-à-Pitre</li>
-              <li>Aquarium de Guadeloupe au Gosier</li>
-              <li>Rhumeries (Bologne, Longueteau, Damoiseau, etc.)</li>
-            </ul>
-          </div>
-        </div>
-      </div>
     </div>
 
     <!-- Back to top button -->
