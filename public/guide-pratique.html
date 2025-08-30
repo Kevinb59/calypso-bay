@@ -2936,6 +2936,9 @@
               // Highlight matching text
               if (searchTerm.length > 2) {
                 highlightText(card, searchTerm)
+              } else {
+                // Remove highlights if search term is too short
+                removeHighlights(card)
               }
             } else {
               card.style.display = 'none'
@@ -2944,6 +2947,9 @@
         })
 
       function highlightText(element, searchTerm) {
+        // First remove any existing highlights
+        removeHighlights(element)
+
         const walker = document.createTreeWalker(
           element,
           NodeFilter.SHOW_TEXT,
@@ -2969,6 +2975,15 @@
             span.innerHTML = highlightedText
             textNode.parentNode.replaceChild(span, textNode)
           }
+        })
+      }
+
+      function removeHighlights(element) {
+        const highlights = element.querySelectorAll('.highlight')
+        highlights.forEach((highlight) => {
+          const parent = highlight.parentNode
+          parent.replaceChild(document.createTextNode(highlight.textContent), highlight)
+          parent.normalize() // Merge adjacent text nodes
         })
       }
 
@@ -3042,6 +3057,9 @@
             // Highlight matching text
             if (searchTerm.length > 2) {
               highlightText(card, searchTerm)
+            } else {
+              // Remove highlights if search term is too short
+              removeHighlights(card)
             }
           } else {
             card.style.display = 'none'
