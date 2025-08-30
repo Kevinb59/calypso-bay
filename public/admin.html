@@ -839,18 +839,23 @@
         )
         tbody.innerHTML = data
           .map((r) => {
+            // Logique complète pour les pastilles de paiement
+            const depositAmount = Number(r.depositAmount || 0)
+            const balanceAmount = Number(r.balanceAmount || 0)
+            const depositRefundedAmount = Number(r.depositRefundedAmount || 0)
+            const balanceRefundedAmount = Number(r.balanceRefundedAmount || 0)
+
+            // Vérifier si les paiements ont été effectués
             const depositPaid =
-              Number(r.depositAmount || 0) > 0 ||
-              r.status === 'depositPay' ||
-              r.status === 'balancePay'
-            const balancePaid =
-              r.balancePaidAt && String(r.balancePaidAt).length > 0
+              depositAmount > 0 &&
+              (r.depositAt ||
+                r.status === 'depositPay' ||
+                r.status === 'balancePay')
+            const balancePaid = balanceAmount > 0 && r.balancePaidAt
 
             // Vérifier si des remboursements ont été effectués
-            const depositRefunded =
-              r.depositRefundedAmount && Number(r.depositRefundedAmount) > 0
-            const balanceRefunded =
-              r.balanceRefundedAmount && Number(r.balanceRefundedAmount) > 0
+            const depositRefunded = depositRefundedAmount > 0
+            const balanceRefunded = balanceRefundedAmount > 0
 
             // Vérifier si demande d'annulation en attente ou validée
             const hasCancelPending =
@@ -1040,24 +1045,53 @@
           depositLabel.textContent = `Rembourser l'acompte (date limite: ${limStr})`
         }
 
+        // Logique complète pour les remboursements
+        const depositAmount = Number(d.depositAmount || 0)
+        const balanceAmount = Number(d.balanceAmount || 0)
+        const depositRefundedAmount = Number(d.depositRefundedAmount || 0)
+        const balanceRefundedAmount = Number(d.balanceRefundedAmount || 0)
+
+        // Vérifier si les paiements ont été effectués
+        const depositPaid =
+          depositAmount > 0 &&
+          (d.depositAt ||
+            d.status === 'depositPay' ||
+            d.status === 'balancePay')
+        const balancePaid = balanceAmount > 0 && d.balancePaidAt
+
         // Vérifier si les remboursements sont possibles
-        const canRefundDeposit =
-          d.depositAmount &&
-          Number(d.depositAmount) > 0 &&
-          (!d.depositRefundedAmount || Number(d.depositRefundedAmount) === 0)
-        const canRefundBalance =
-          d.balanceAmount &&
-          Number(d.balanceAmount) > 0 &&
-          (!d.balanceRefundedAmount || Number(d.balanceRefundedAmount) === 0)
+        const canRefundDeposit = depositPaid && depositRefundedAmount === 0
+        const canRefundBalance = balancePaid && balanceRefundedAmount === 0
 
-        depositCheck.disabled = !canRefundDeposit
-        balanceCheck.disabled = !canRefundBalance
-
-        if (!canRefundDeposit) {
-          depositLabel.textContent += ' (déjà remboursé)'
+        // Mettre à jour les labels et états des checkboxes
+        if (depositPaid) {
+          if (depositRefundedAmount > 0) {
+            depositLabel.textContent = `Rembourser l'acompte (déjà remboursé)`
+            depositCheck.disabled = true
+          } else {
+            depositLabel.textContent = `Rembourser l'acompte (${fmtMoney(
+              depositAmount
+            )})`
+            depositCheck.disabled = false
+          }
+        } else {
+          depositLabel.textContent = `Rembourser l'acompte (non payé)`
+          depositCheck.disabled = true
         }
-        if (!canRefundBalance) {
-          balanceLabel.textContent += ' (déjà remboursé)'
+
+        if (balancePaid) {
+          if (balanceRefundedAmount > 0) {
+            balanceLabel.textContent = `Rembourser le solde (déjà remboursé)`
+            balanceCheck.disabled = true
+          } else {
+            balanceLabel.textContent = `Rembourser le solde (${fmtMoney(
+              balanceAmount
+            )})`
+            balanceCheck.disabled = false
+          }
+        } else {
+          balanceLabel.textContent = `Rembourser le solde (non payé)`
+          balanceCheck.disabled = true
         }
 
         // Stocker les données pour le remboursement
