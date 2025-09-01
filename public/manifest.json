@@ -8,12 +8,12 @@
   "theme_color": "#4a90e2",
   "icons": [
     {
-      "src": "/images/logos/AIRBNB.png",
+      "src": "images/logos/favicons/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/images/logos/BOOKING.png",
+      "src": "images/logos/favicons/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
