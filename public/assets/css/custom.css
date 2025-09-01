@@ -11,6 +11,191 @@
 }
 
 /* ========================================================
+   🏠 BANNIÈRE D'ACCUEIL - TAILLE DU H1 OPTIMISÉE
+======================================================== */
+.panel.banner h1.major {
+  font-size: 2.2rem !important;
+  line-height: 1.3 !important;
+}
+
+/* ========================================================
+   📅 BOUTONS DE NAVIGATION DU CALENDRIER - SANS BORDURES
+======================================================== */
+.nav-arrows button {
+  background: none !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: inherit !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: inherit !important;
+  line-height: 1 !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+}
+
+.nav-arrows button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.nav-arrows button:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.nav-arrows button:hover {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* ========================================================
+   🚧 SECTION PLANNING - BLUR ET DÉSACTIVATION DES INTERACTIONS
+======================================================== */
+.planning-section.construction-mode {
+  pointer-events: none;
+}
+
+.planning-section.construction-mode .construction-notice {
+  pointer-events: auto;
+}
+
+.planning-section.construction-mode #calendar-grid,
+.planning-section.construction-mode #calendar-header,
+.planning-section.construction-mode .nav-arrows {
+  pointer-events: none;
+  user-select: none;
+}
+
+.planning-section.construction-mode .planning-bg {
+  filter: blur(3px);
+}
+
+/* ========================================================
+   🚧 MESSAGE DE CONSTRUCTION - STYLES COMPLETS
+======================================================== */
+.planning-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.construction-notice {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  background: rgba(255, 193, 7, 0.95);
+  border: 3px solid #ffc107;
+  border-radius: 15px;
+  padding: 2rem;
+  text-align: center;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  min-width: 400px;
+  max-width: 500px;
+  pointer-events: auto;
+}
+
+.construction-notice h3 {
+  margin: 0;
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.construction-notice p {
+  margin: 0 0 1.5rem 0;
+  color: #333;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.construction-notice .tools-icon {
+  font-size: 2rem;
+  color: #ffc107;
+}
+
+.construction-notice .construction-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.construction-notice .buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  align-items: center;
+}
+
+/* ========================================================
+   🎨 BOUTONS PLATEFORMES - STYLES COMPLETS
+======================================================== */
+.btn-airbnb {
+  background: #ff5a5f !important;
+  border-color: #ff5a5f !important;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  min-width: 220px;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(255, 90, 95, 0.4);
+  color: white !important;
+}
+
+.btn-airbnb:hover {
+  background: #e04b50 !important;
+  border-color: #e04b50 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 90, 95, 0.6);
+}
+
+.btn-booking {
+  background: #003580 !important;
+  border-color: #003580 !important;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  min-width: 220px;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 53, 128, 0.4);
+  color: white !important;
+}
+
+.btn-booking:hover {
+  background: #002a66 !important;
+  border-color: #002a66 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 53, 128, 0.6);
+}
+
+.btn-platform-icon {
+  font-size: 1.2rem;
+  color: white !important;
+}
+
+/* ========================================================
    ⭐️ STYLES AVIS / PLATEFORMES (Airbnb / Booking)
 ======================================================== */
 .review-item {

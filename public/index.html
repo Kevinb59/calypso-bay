@@ -1,10 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 	<head>
 		<title>Calypso Bay - Bouillante</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<meta name="description" content="Villa de luxe Calypso Bay à Bouillante, Guadeloupe. Villa bois 180m² avec piscine privée, vue mer, 3 chambres, terrasse 50m². Location vacances de standing aux Antilles." />
+
+		<!-- Données structurées Schema.org pour Rich Snippets -->
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "VacationRental",
+			"name": "Calypso Bay",
+			"description": "Villa de luxe en bois de 180m² avec piscine privée, vue imprenable sur la mer, les îlets Pigeon et la réserve Cousteau",
+			"image": [
+				"images/pic01.webp",
+				"images/pic02.webp",
+				"images/pic04.webp"
+			],
+			"address": {
+				"@type": "PostalAddress",
+				"streetAddress": "717 rue de Poirier",
+				"addressLocality": "Bouillante",
+				"postalCode": "97125",
+				"addressCountry": "GP"
+			},
+			"geo": {
+				"@type": "GeoCoordinates",
+				"latitude": 16.1300,
+				"longitude": -61.7683
+			},
+			"amenityFeature": [
+				{"@type": "LocationFeatureSpecification", "name": "Piscine privée", "value": true},
+				{"@type": "LocationFeatureSpecification", "name": "Vue sur la mer", "value": true},
+				{"@type": "LocationFeatureSpecification", "name": "Wi-Fi", "value": true},
+				{"@type": "LocationFeatureSpecification", "name": "Parking", "value": true},
+				{"@type": "LocationFeatureSpecification", "name": "Climatisation", "value": true},
+				{"@type": "LocationFeatureSpecification", "name": "Cuisine équipée", "value": true},
+				{"@type": "LocationFeatureSpecification", "name": "Salle de bains privatives", "value": true}
+			],
+			"numberOfBedrooms": 3,
+			"floorSize": {
+				"@type": "QuantitativeValue",
+				"value": 180,
+				"unitCode": "MTK"
+			},
+			"priceRange": "€€€",
+			"telephone": "0687068315",
+			"checkinTime": "15:00",
+			"checkoutTime": "10:00",
+			"maximumAttendeeCapacity": 6,
+			"petsAllowed": false,
+			"smokingAllowed": true,
+			"review": [
+				{
+					"@type": "Review",
+					"reviewRating": {
+						"@type": "Rating",
+						"ratingValue": "4.92",
+						"bestRating": "5",
+						"worstRating": "1"
+					},
+					"author": {
+						"@type": "Organization",
+						"name": "Airbnb"
+					},
+					"reviewBody": "Villa exceptionnelle avec vue imprenable sur la mer",
+					"url": "https://www.airbnb.fr/rooms/718692761956767082"
+				},
+				{
+					"@type": "Review",
+					"reviewRating": {
+						"@type": "Rating",
+						"ratingValue": "9.5",
+						"bestRating": "10",
+						"worstRating": "1"
+					},
+					"author": {
+						"@type": "Organization",
+						"name": "Booking.com"
+					},
+					"reviewBody": "Villa de luxe avec équipements de qualité",
+					"url": "https://www.booking.com/hotel/gp/calypso-bay.fr.html"
+				}
+			],
+			"url": "https://www.calypso-bay.com"
+		}
+		</script>
 
 		<!-- Favicons -->
 		<link rel="apple-touch-icon" sizes="180x180" href="images/logos/favicons/apple-touch-icon.png">
@@ -12,6 +94,34 @@
 		<link rel="icon" type="image/png" sizes="16x16" href="images/logos/favicons/favicon-16x16.png">
 		<link rel="manifest" href="manifest.json">
 		<link rel="shortcut icon" href="images/logos/favicons/favicon.ico">
+
+		<!-- Balises multilingues pour le SEO -->
+		<link rel="alternate" hreflang="fr" href="https://www.calypso-bay.com/" />
+		<link rel="alternate" hreflang="en" href="https://www.calypso-bay.com/index-en.html" />
+		<link rel="alternate" hreflang="de" href="https://www.calypso-bay.com/index-de.html" />
+		<link rel="alternate" hreflang="x-default" href="https://www.calypso-bay.com/" />
+
+		<!-- Balise canonique pour éviter le contenu dupliqué -->
+		<link rel="canonical" href="https://www.calypso-bay.com/" />
+
+		<!-- Balises Open Graph pour le partage sur réseaux sociaux -->
+		<meta property="og:title" content="Calypso Bay - Villa de luxe à Bouillante, Guadeloupe" />
+		<meta property="og:description" content="Villa de luxe Calypso Bay à Bouillante, Guadeloupe. Villa bois 180m² avec piscine privée, vue mer, 3 chambres, terrasse 50m²." />
+		<meta property="og:image" content="https://www.calypso-bay.com/images/logos/og-cover.jpg" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content="Villa Calypso Bay - Vue extérieure avec piscine et vue sur la mer" />
+		<meta property="og:url" content="https://www.calypso-bay.com/" />
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="Calypso Bay" />
+		<meta property="og:locale" content="fr_FR" />
+
+		<!-- Balises Twitter Cards -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="Calypso Bay - Villa de luxe à Bouillante, Guadeloupe" />
+		<meta name="twitter:description" content="Villa de luxe Calypso Bay à Bouillante, Guadeloupe. Villa bois 180m² avec piscine privée, vue mer, 3 chambres, terrasse 50m²." />
+		<meta name="twitter:image" content="https://www.calypso-bay.com/images/logos/og-cover.jpg" />
+		<meta name="twitter:image:alt" content="Villa Calypso Bay - Vue extérieure avec piscine et vue sur la mer" />
 
 		<!-- Préconnexions réseau pour améliorer les performances -->
 		<link rel="preconnect" href="https://maps.googleapis.com" crossorigin>
@@ -34,10 +144,10 @@
 				<!-- A C C U E I L //////////////////////////////////////////////////////////////////////////////// -->
 				<section class="panel banner right">
 					<div class="content color0 span-3-75">
-						<h2 class="major">
+						<h1 class="major">
 							Bienvenue à<br />
 							<span class="themysion">Calypso Bay</span>
-						</h2>
+						</h1>
 						<p>
 							Jolie villa bois de standing, de 2022, sans vis-à-vis, avec piscine à débordement et vue imprenable sur la mer, les îlets Pigeon et la réserve Cousteau.<br />
 							Pensée pour une vie dedans-dehors, elle offre des prestations de qualité dans un quartier résidentiel calme et très agréable.
@@ -52,11 +162,11 @@
 							</a>
 						</p>
 						<ul class="actions">
-							<li><a href="#first" class="button primary color1 circle icon solid fa-angle-right">Next</a></li>
+							<li><a href="#first" class="button primary color1 circle icon solid fa-angle-right" aria-label="Continuer vers la section suivante">Next</a></li>
 						</ul>
 					</div>
 					<div class="image filtered span-1-75" data-position="25% 25%">
-						<img src="images/pic01.webp" alt="Vue de la piscine de la villa Calypso Bay" />
+						<img src="images/pic01.webp" alt="Vue de la piscine de la villa Calypso Bay" loading="lazy" />
 					</div>
 				</section>
 
@@ -77,7 +187,7 @@
 						</p>
 					</div>
 					<div class="image filtered tinted" data-position="center">
-						<img src="images/pic02.webp" alt="Vue aérienne de la villa avec piscine et jardin tropical" />
+						<img src="images/pic02.webp" alt="Vue aérienne de la villa avec piscine et jardin tropical" loading="lazy" />
 					</div>
 				</section>
 
@@ -139,7 +249,7 @@
 						<div id="equipment-buttons" class="actions" style="display: flex; flex-wrap: wrap; gap: 1rem;"></div>
 					</div>
 					<div class="image filtered tinted" data-position="center">
-						<img src="images/pic04.webp" alt="Vue extérieure de la villa pendant un coucher de soleil" />
+						<img src="images/pic04.webp" alt="Vue extérieure de la villa pendant un coucher de soleil" loading="lazy" />
 					</div>
 				</section>
 
@@ -158,63 +268,63 @@
 					<div class="gallery">
 						<div class="group span-3">
 							<a href="#" class="image filtered span-3" data-room="Salon" data-position="center">
-								<img src="images/gallery/thumbs/01.webp" alt="Vue du salon principal de la villa" />
+								<img src="images/gallery/thumbs/01.webp" alt="Vue du salon principal de la villa" loading="lazy" />
 								<div class="caption">Salon</div>
 							</a>
 							<a href="#" class="image filtered span-1-5" data-room="Cuisine" data-position="center">
-								<img src="images/gallery/thumbs/02.webp" alt="Cuisine équipée moderne" />
+								<img src="images/gallery/thumbs/02.webp" alt="Cuisine équipée moderne" loading="lazy" />
 								<div class="caption">Cuisine</div>
 							</a>
 							<a href="#" class="image filtered span-1-5" data-room="Espace-repas" data-position="center">
-								<img src="images/gallery/thumbs/03.webp" alt="Zone de repas extérieure avec vue sur la mer" />
+								<img src="images/gallery/thumbs/03.webp" alt="Zone de repas extérieure avec vue sur la mer" loading="lazy" />
 								<div class="caption">Espace repas</div>
 							</a>
 						</div>
 						<a href="#" class="image filtered span-1-5" data-room="Chambre1" data-position="center">
-							<img src="images/gallery/thumbs/04.webp" alt="Première chambre avec salle de bains privative et vue sur la mer" />
+							<img src="images/gallery/thumbs/04.webp" alt="Première chambre avec salle de bains privative et vue sur la mer" loading="lazy" />
 							<div class="caption">Chambre 1</div>
 						</a>
 						<div class="group span-4-5">
 							<a href="#" class="image filtered span-3" data-room="Chambre2" data-position="center">
-								<img src="images/gallery/thumbs/05.webp" alt="Deuxième chambre spacieuse avec vue sur la mer" />
+								<img src="images/gallery/thumbs/05.webp" alt="Deuxième chambre spacieuse avec vue sur la mer" loading="lazy" />
 								<div class="caption">Chambre 2</div>
 							</a>
 							<a href="#" class="image filtered span-1-5" data-room="Chambre3" data-position="center">
-								<img src="images/gallery/thumbs/06.webp" alt="Troisième chambre avec vue sur le jardin et la mer" />
+								<img src="images/gallery/thumbs/06.webp" alt="Troisième chambre avec vue sur le jardin et la mer" loading="lazy" />
 								<div class="caption">Chambre 3</div>
 							</a>
 							<a href="#" class="image filtered span-1-5" data-room="SDB1" data-position="center">
-								<img src="images/gallery/thumbs/07.webp" alt="Première salle de bains avec douche" />
+								<img src="images/gallery/thumbs/07.webp" alt="Première salle de bains avec douche" loading="lazy" />
 								<div class="caption">Salle de bain 1</div>
 							</a>
 							<a href="#" class="image filtered span-3" data-room="SDB2" data-position="center">
-								<img src="images/gallery/thumbs/08.webp" alt="Deuxième salle de bains avec douche" />
+								<img src="images/gallery/thumbs/08.webp" alt="Deuxième salle de bains avec douche" loading="lazy" />
 								<div class="caption">Salle de bain 2</div>
 							</a>
 						</div>
 						<a href="#" class="image filtered span-1-5" data-room="SDB3" data-position="center">
-							<img src="images/gallery/thumbs/09.webp" alt="Troisième salle de bains avec douche italienne" />
+							<img src="images/gallery/thumbs/09.webp" alt="Troisième salle de bains avec douche italienne" loading="lazy" />
 							<div class="caption">Salle de bain 3</div>
 						</a>
 						<div class="group span-4-5">
 							<a href="#" class="image filtered span-3" data-room="Jardin" data-position="center">
-								<img src="images/gallery/thumbs/10.webp" alt="Jardin tropical avec végétation luxuriante" />
+								<img src="images/gallery/thumbs/10.webp" alt="Jardin tropical avec végétation luxuriante" loading="lazy" />
 								<div class="caption">Jardin</div>
 							</a>
 							<a href="#" class="image filtered span-1-5" data-room="Terasse" data-position="center">
-								<img src="images/gallery/thumbs/11.webp" alt="Grande terrasse avec espace repas couvert" />
+								<img src="images/gallery/thumbs/11.webp" alt="Grande terrasse avec espace repas couvert" loading="lazy" />
 								<div class="caption">Terrasse</div>
 							</a>
 							<a href="#" class="image filtered span-1-5" data-room="Exterieur" data-position="center">
-								<img src="images/gallery/thumbs/12.webp" alt="Vue extérieure de la villa et ses environs" />
+								<img src="images/gallery/thumbs/12.webp" alt="Vue extérieure de la villa et ses environs" loading="lazy" />
 								<div class="caption">Extérieur</div>
 							</a>
 							<a href="#" class="image filtered span-1-5" data-room="Piscine" data-position="center">
-								<img src="images/gallery/thumbs/13.webp" alt="Piscine à débordement avec vue sur la mer" />
+								<img src="images/gallery/thumbs/13.webp" alt="Piscine à débordement avec vue sur la mer" loading="lazy" />
 								<div class="caption">Piscine</div>
 							</a>
 							<a href="#" class="image filtered span-1-5" data-room="Autres" data-position="center">
-								<img src="images/gallery/thumbs/14.webp" alt="Autres vues et détails de la villa" />
+								<img src="images/gallery/thumbs/14.webp" alt="Autres vues et détails de la villa" loading="lazy" />
 								<div class="caption">Autres</div>
 							</a>
 						</div>
@@ -248,8 +358,35 @@
 				</section>
 
 				<!-- P L A N N I N G //////////////////////////////////////////////////////////////////////////////// -->
-				<section class="panel medium color4-alt planning-section">
+				<section class="panel medium color4-alt planning-section construction-mode" style="position: relative;">
 					<div class="planning-bg"></div>
+
+										<!-- 🚧 CONFIGURATION : Changez "true" en "false" pour désactiver le message de construction -->
+					<!-- CONSTRUCTION_MODE = true -->
+
+					<!-- 🚧 OVERLAY BLUR SUR TOUTE LA SECTION PLANNING -->
+					<div class="planning-overlay"></div>
+
+					<!-- 🚧 MESSAGE SITE EN CONSTRUCTION - SUPERPOSÉ SUR LE CALENDRIER -->
+					<div class="construction-notice">
+						<div class="construction-header">
+							<h3>🚧 Site en construction</h3>
+						</div>
+						<p>
+							<strong>Le service de réservation n'est pas encore disponible pour le moment.</strong><br><br>
+							Vous pouvez réserver directement via nos plateformes partenaires :
+						</p>
+						<div class="buttons-container">
+							<a href="https://www.airbnb.fr/rooms/718692761956767082" target="_blank" rel="noopener" class="button primary btn-airbnb">
+								<i class="fab fa-airbnb btn-platform-icon"></i>
+								Airbnb
+							</a>
+							<a href="https://www.booking.com/hotel/gp/calypso-bay.fr.html" target="_blank" rel="noopener" class="button primary btn-booking">
+								<i class="fas fa-hotel btn-platform-icon"></i>
+								Booking
+							</a>
+						</div>
+					</div>
 
 					<div class="intro planning-blur-style">
 						<h2 class="major">📅 Tarifs & Réservation</h2>
@@ -266,8 +403,8 @@
 							<div class="calendar-header-inner">
 								<h3 id="calendar-title"></h3>
 								<div class="nav-arrows">
-									<i id="prev-month" class="fas fa-arrow-circle-left"></i>
-									<i id="next-month" class="fas fa-arrow-circle-right"></i>
+									<button id="prev-month" class="fas fa-arrow-circle-left" aria-label="Mois précédent" type="button"></button>
+									<button id="next-month" class="fas fa-arrow-circle-right" aria-label="Mois suivant" type="button"></button>
 								</div>
 							</div>
 						</div>
@@ -353,7 +490,7 @@
 							<ul class="contact-icons color1">
 								<li class="review-item">
 									<a href="https://www.airbnb.fr/rooms/718692761956767082" target="_blank" rel="noopener" class="review-link" style="display: flex; align-items: center; gap: 0.75em;">
-										<img src="images/logos/AIRBNB.webp" alt="Logo de la plateforme Airbnb" class="logo-circle" />
+										<img src="images/logos/AIRBNB.webp" alt="Logo de la plateforme Airbnb" class="logo-circle" loading="lazy" />
 										<div class="review-text">
 											<span>Airbnb</span>
 											<div class="review-row">
@@ -372,7 +509,7 @@
 
 								<li class="review-item">
 									<a href="https://www.booking.com/hotel/gp/calypso-bay.fr.html#tab-reviews" target="_blank" rel="noopener" class="review-link" style="display: flex; align-items: center; gap: 0.75em;">
-										<img src="images/logos/BOOKING.webp" alt="Logo de la plateforme Booking.com" class="logo-circle" />
+										<img src="images/logos/BOOKING.webp" alt="Logo de la plateforme Booking.com" class="logo-circle" loading="lazy" />
 										<div class="review-text">
 											<span>Booking</span>
 											<div class="review-row">
@@ -414,7 +551,7 @@
 		        <i class="fas fa-circle" id="step-dot-2" style="color: white; opacity: 0.4;"></i>
 		      </div>
 		    </div>
-		    <button id="toggle-banner" style="background: none; border: none; color: white; font-size: 1.2em;">
+		    <button id="toggle-banner" style="background: none; border: none; color: white; font-size: 1.2em;" aria-label="Réduire ou agrandir la bannière de réservation">
 				<i class="fa-regular fa-circle-up"></i>
 			</button>
 		  </div>
@@ -474,5 +611,6 @@
 		</script>
 		<script src="assets/js/popup-reglement.js"></script>
 		<script src="assets/js/form-contact.js"></script>
+		<script src="config.js"></script>
 	</body>
 </html>
