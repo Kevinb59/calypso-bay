@@ -1,3096 +1,1856 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
-    <title>Guide Pratique - Calypso Bay</title>
     <meta charset="utf-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, user-scalable=no"
     />
-
+    <title>Guide Calypso Bay</title>
+    <link rel="stylesheet" href="assets/css/guide.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      html,
-      body {
-        height: 100%;
-        overflow-x: hidden;
-      }
-
-      body {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-        line-height: 1.6;
-        position: relative;
-      }
-
-      .main-container {
-        max-width: 1200px;
-        margin: 20px auto;
-        padding: 20px;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        position: relative;
-        z-index: 1;
-      }
-
-      .header {
-        text-align: center;
-        padding: 40px 0;
-        border-bottom: 3px solid #4caf50;
-        margin-bottom: 40px;
-      }
-
-      .header h1 {
-        font-size: 7.5em;
-        margin: 0;
-        color: #333;
-        font-family: 'Themysion', serif;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-      }
-
-      .header h2 {
-        font-size: 2.2em;
-        margin: 15px 0 0 0;
-        color: #4caf50;
-        font-weight: 400;
-        letter-spacing: 2px;
-      }
-
-      .header p {
-        font-size: 1.2em;
-        color: #666;
-        margin: 20px 0 0 0;
-      }
-
-      .search-section {
-        background: linear-gradient(135deg, #4caf50, #45a049);
-        padding: 30px;
-        border-radius: 15px;
-        margin-bottom: 40px;
-        box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
-      }
-
-      .search-box {
-        max-width: 600px;
-        margin: 0 auto 20px;
-        position: relative;
-      }
-
-      .search-input {
-        width: 100%;
-        padding: 15px 50px 15px 20px;
-        border: none;
-        border-radius: 25px;
-        font-size: 16px;
-        background: white;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-      }
-
-      .search-input:focus {
-        outline: none;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-        transform: translateY(-2px);
-      }
-
-      .search-icon {
-        position: absolute;
-        right: 20px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #4caf50;
-        font-size: 18px;
-      }
-
-      .nav-menu {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 15px;
-      }
-
-      .nav-menu a {
-        display: inline-block;
-        padding: 12px 25px;
-        background: rgba(255, 255, 255, 0.9);
-        color: #4caf50;
-        text-decoration: none;
-        border-radius: 25px;
-        transition: all 0.3s ease;
-        font-weight: 500;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-      }
-
-      .nav-menu a:hover {
-        background: white;
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-      }
-
-      .content-section {
-        margin-bottom: 60px;
-        padding: 40px;
-        background: white;
-        border-radius: 15px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-        border-left: 5px solid #4caf50;
-      }
-
-      .section-title {
-        font-size: 2.5em;
-        color: #4caf50;
-        margin-bottom: 30px;
-        text-align: center;
-        border-bottom: 2px solid #4caf50;
-        padding-bottom: 15px;
-      }
-
-      .section-description {
-        text-align: center;
-        font-size: 1.2em;
-        color: #666;
-        margin-bottom: 40px;
-        font-style: italic;
-      }
-
-      .info-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 30px;
-        margin-top: 30px;
-      }
-
-      .info-card {
-        background: #f8f9fa;
-        border-radius: 12px;
-        padding: 25px;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-        border: 1px solid #e9ecef;
-      }
-
-      .info-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        border-color: #4caf50;
-      }
-
-      .info-card h4 {
-        color: #4caf50;
-        margin-bottom: 15px;
-        font-size: 1.3em;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .info-card h4 i {
-        font-size: 1.2em;
-        width: 25px;
-      }
-
-      .info-card p {
-        color: #555;
-        line-height: 1.6;
-        margin-bottom: 15px;
-      }
-
-      .info-card ul,
-      .info-card ol {
-        color: #555;
-        line-height: 1.6;
-        padding-left: 20px;
-      }
-
-      .info-card li {
-        margin-bottom: 8px;
-      }
-
-      .info-card strong {
-        color: #333;
-      }
-
-      .highlight {
-        background: #fff3cd;
-        padding: 2px 6px;
-        border-radius: 4px;
-        font-weight: bold;
-      }
-
-      .back-to-top {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        background: #4caf50;
-        color: white;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none;
-        box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
-        transition: all 0.3s ease;
-        z-index: 1000;
-        font-size: 20px;
-        cursor: pointer;
-        border: none;
-        outline: none;
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-      }
-
-      .back-to-top:hover {
-        background: #45a049;
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(76, 175, 80, 0.5);
-      }
-
-      .home-button {
-        position: fixed;
-        top: 30px;
-        left: 30px;
-        background: rgba(255, 255, 255, 0.9);
-        color: #4caf50;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-        z-index: 1000;
-        font-size: 20px;
-      }
-
-      .home-button:hover {
-        background: white;
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-      }
-
-      /* Menu mobile */
-      .mobile-nav {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        background: white;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        z-index: 2000;
-        border-bottom: 2px solid #4caf50;
-        margin: 10px;
-        border-radius: 20px;
-        width: calc(100% - 20px);
-      }
-
-      .mobile-nav-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 20px;
-        background: rgba(76, 175, 80);
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
-        color: white;
-        border-radius: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-      }
-
-      .mobile-nav-title {
-        font-size: 1.2em;
-        font-weight: bold;
-      }
-
-      .mobile-nav-toggle {
-        background: none;
-        border: none;
-        color: white;
-        font-size: 1.5em;
-        cursor: pointer;
-        padding: 5px;
-      }
-
-      .mobile-nav-content {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border-radius: 0 0 20px 20px;
-        margin: 0;
-        padding: 0;
-        opacity: 0;
-        transition: max-height 0.3s ease, opacity 0.3s ease;
-      }
-
-      .mobile-nav-content.active {
-        max-height: 500px;
-        opacity: 1;
-        border-radius: 0 0 20px 20px;
-      }
-
-      .mobile-nav-content.active {
-        max-height: 500px;
-      }
-
-      .mobile-search {
-        position: relative;
-        padding: 15px 20px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        margin: 0;
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-      }
-
-      .mobile-search-input {
-        width: 100%;
-        padding: 12px 40px 12px 15px;
-        border: 2px solid #4caf50;
-        border-radius: 25px;
-        font-size: 16px;
-        outline: none;
-      }
-
-      .mobile-search-input:focus {
-        border-color: #45a049;
-        box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
-      }
-
-      .mobile-search-icon {
-        position: absolute;
-        right: 35px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #4caf50;
-      }
-
-      .mobile-nav-links {
-        padding: 10px 0 0 0;
-        max-height: 300px;
-        overflow-y: auto;
-        border-radius: 0 0 20px 20px;
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-      }
-
-      .mobile-nav-links a {
-        display: block;
-        padding: 12px 20px;
-        color: #333;
-        text-decoration: none;
-        border-bottom: 1px solid #f0f0f0;
-        transition: background-color 0.2s ease;
-      }
-
-      .mobile-nav-links a:hover {
-        background-color: #f8f9fa;
-        color: #4caf50;
-      }
-
-      .mobile-nav-links a:last-child {
-        border-bottom: none;
-        border-radius: 0 0 20px 20px;
-        padding-bottom: 15px;
-      }
-
-      @media (max-width: 768px) {
-        /* Masquer le menu desktop et la section de recherche */
-        .search-section {
-          display: none;
-        }
-
-        /* Afficher le menu mobile */
-        .mobile-nav {
-          display: block;
-        }
-
-        /* Ajuster le container principal pour le menu mobile */
-        .main-container {
-          margin: 10px;
-          padding: 15px;
-          margin-top: 80px; /* Moins d'espace car menu plus fin */
-        }
-
-        .header h1 {
-          font-size: 2em;
-        }
-
-        .header h2 {
-          font-size: 1.2em;
-        }
-
-        .content-section {
-          padding: 25px;
-        }
-
-        .section-title {
-          font-size: 2em;
-        }
-
-        .info-grid {
-          grid-template-columns: 1fr;
-          gap: 20px;
-        }
-
-        .back-to-top,
-        .home-button {
-          width: 50px;
-          height: 50px;
-          font-size: 16px;
-        }
-
-        .back-to-top {
-          bottom: 20px;
-          right: 20px;
-        }
-
-        .home-button {
-          top: 100px; /* Ajusté pour le menu plus fin */
-          left: 20px;
-        }
+      @font-face {
+        font-family: 'Themysion';
+        src: url('assets/fonts/Themysion.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
       }
     </style>
+    <script src="assets/js/guide.js" defer></script>
   </head>
   <body>
-    <!-- Bouton retour accueil -->
-    <a href="index.html" class="home-button" title="Retour à l'accueil">
-      <i class="fas fa-home"></i>
-    </a>
-
-    <!-- Menu mobile ancré en haut -->
-    <div class="mobile-nav" id="mobileNav">
-      <div class="mobile-nav-header">
-        <span class="mobile-nav-title">Menu</span>
-        <button class="mobile-nav-toggle" id="mobileNavToggle">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
-      <div class="mobile-nav-content" id="mobileNavContent">
-        <div class="mobile-search">
-          <input
-            type="text"
-            id="mobileSearchInput"
-            class="mobile-search-input"
-            placeholder="Rechercher..."
-          />
-          <i class="fas fa-search mobile-search-icon"></i>
+    <div class="guide-container">
+      <!-- NAVBAR -->
+      <header class="guide-header">
+        <div class="guide-content">
+          <nav class="guide-nav">
+            <div class="guide-logo">
+              <img
+                src="images/logos/cb.png"
+                alt="Calypso Bay"
+                class="guide-logo-icon"
+              />
+              <div class="guide-logo-text">Guide Calypso Bay</div>
+            </div>
+            <button class="guide-menu-button" onclick="toggleMenu()">
+              <i class="fas fa-bars"></i>
+              <span class="guide-menu-text">Menu</span>
+            </button>
+            <div class="guide-menu-overlay" onclick="closeMenu()"></div>
+            <div class="guide-menu-dropdown">
+              <a href="#logement">Logement</a>
+              <a href="#localisation">Localisation</a>
+              <a href="#transport">Transport</a>
+              <a href="#commerces">Commerces</a>
+              <a href="#restaurants">Restaurants</a>
+              <a href="#activites">Activités</a>
+              <a href="#excursions">Excursions</a>
+              <a href="#sante">Soins & Santé</a>
+              <a href="#eau-electricite">Eau & Électricité</a>
+              <a href="#cyclones">Cyclones</a>
+              <a href="#infos-pratiques">Infos Pratiques</a>
+            </div>
+          </nav>
         </div>
-        <div class="mobile-nav-links">
-          <a href="#logement">🏠 Logement</a>
-          <a href="#eau-electricite">💧⚡ Eau & Électricité</a>
-          <a href="#environnement">📍 Localisation</a>
-          <a href="#activites">🎯 Activités</a>
-          <a href="#services">🛒 Services</a>
-          <a href="#restaurants">🍽️ Restaurants</a>
-          <a href="#sante">🏥 Soins & Santé</a>
-          <a href="#cyclones">🌀 Cyclones</a>
-          <a href="#transport">🚗 Transport</a>
-          <a href="#excursions">🗺️ Excursions</a>
-          <a href="#pratique">ℹ️ Infos Pratiques</a>
-        </div>
-      </div>
-    </div>
+      </header>
 
-    <!-- Container principal -->
-    <div class="main-container">
-      <!-- Header -->
-      <div class="header">
-        <h1>Calypso Bay</h1>
-        <h2>Guide Pratique</h2>
-        <p>
-          Toutes les informations pratiques pour votre séjour : logement,
-          environnement, activités, services et conseils utiles.
-        </p>
-      </div>
-
-      <!-- Section recherche et navigation -->
-      <div class="search-section">
-        <div class="search-box">
-          <input
-            type="text"
-            id="searchInput"
-            class="search-input"
-            placeholder="Rechercher dans le guide..."
-          />
-          <i class="fas fa-search search-icon"></i>
-        </div>
-
-        <div class="nav-menu">
-          <a href="#logement">🏠 Logement</a>
-          <a href="#eau-electricite">💧⚡ Eau & Électricité</a>
-          <a href="#environnement">📍 Localisation</a>
-          <a href="#activites">🎯 Activités</a>
-          <a href="#services">🛒 Services</a>
-          <a href="#restaurants">🍽️ Restaurants</a>
-          <a href="#sante">🏥 Soins & Santé</a>
-          <a href="#cyclones">🌀 Cyclones</a>
-          <a href="#transport">🚗 Transport</a>
-          <a href="#excursions">🗺️ Excursions</a>
-          <a href="#pratique">ℹ️ Infos Pratiques</a>
-        </div>
-      </div>
-
-      <!-- Section Logement -->
-      <div class="content-section" id="logement">
-        <h2 class="section-title">🏠 Logement et Équipements</h2>
-        <p class="section-description">
-          Toutes les informations sur la villa, ses équipements et leur
-          fonctionnement.
-        </p>
-
-        <div class="info-grid">
-          <div class="info-card">
-            <h4>
-              <i class="fas fa-info-circle"></i> Quelques précisions importantes
-              sur le fonctionnement de la maison
-            </h4>
-
-                         <!-- Image de présentation de la maison -->
-             <div style="margin-top: 20px; text-align: center">
-               <img
-                 src="images/guide/30.jpg"
-                 alt="Présentation de la maison - Architecture écologique"
-                 style="
-                   width: 100%;
-                   max-width: 400px;
-                   object-fit: cover;
-                   border-radius: 8px;
-                   margin-bottom: 15px;
-                   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                 "
-               />
-             </div>
-
-             <h5><i class="fas fa-architect"></i> PRÉAMBULE</h5>
-             <p>
-               L'architecte qui a construit la maison s'appelle Monsieur Laurent
-               DARVIOT. Il est très sensible à l'écologie ce qui explique
-               l'équipement dès le début d'un double système d'alimentation en
-               eau, avec en particulier une utilisation de l'eau de pluie pour
-               les toilettes.
-             </p>
-            <ul>
-              <li>
-                L'eau chaude des douches est produite par chauffe-eau solaire
-              </li>
-              <li>Une partie de l'éclairage extérieur est solaire</li>
-              <li>
-                Monsieur DARVIOT est le premier architecte à avoir construit un
-                immeuble autonome en Guadeloupe (la résidence MALDYVES à GOYAVE)
-                pour lequel il a reçu le prix résidentiel des Trophées Bâtiments
-                Résilients en 2022
-              </li>
-              <li>
-                Dans notre maison, il a prévu les nombreuses ouvertures au
-                niveau de la zone centrale afin de faciliter la création d'une
-                circulation d'air éventuellement complétée par l'action de
-                ventilateurs moins énergivores qu'une climatisation
-              </li>
-              <li>
-                Les chambres ont été cependant climatisées à notre demande afin
-                d'améliorer le confort pendant les périodes de sommeil
-              </li>
-              <li>
-                Tous les ans une société spécialisée passe afin de contrôler
-                l'installation et nettoyer les filtres
-              </li>
-            </ul>
-          </div>
-
-          <div class="info-card">
-            <h4>
-              <i class="fas fa-lightbulb"></i> Éclairage et ventilateur du salon
-            </h4>
-
-            <h5><i class="fas fa-power-off"></i> Interrupteur général</h5>
-            <p>
-              L'interrupteur général du salon est celui situé à côté de la porte
-              d'accès à la chambre du fond. Il permet l'alimentation en
-              électricité du ventilateur et de la lampe.
-            </p>
-
-            <h5><i class="fas fa-tv"></i> Télécommande LEXMAN (éclairage)</h5>
-            <p>
-              L'éclairage est ensuite dépendant de la petite télécommande
-              LEXMAN. Pour allumer et éteindre, il suffit d'appuyer sur le
-              bouton représentant un cercle interrompu d'une barre.
-            </p>
-
-            <!-- Image de la télécommande LEXMAN -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/24.jpg"
-                alt="Télécommande LEXMAN - Éclairage"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
+      <!-- HERO -->
+      <section class="guide-hero">
+        <div class="guide-content">
+          <div class="guide-hero-content">
+            <div class="guide-hero-text">
+              <h1 class="guide-hero-title">
+                Bienvenue à<br />
+                <span class="guide-hero-brand">Calypso Bay</span>
+              </h1>
+              <p class="guide-hero-description">
+                Votre maison de vacances à Bouillante, Guadeloupe. Retrouvez ici
+                toutes les informations utiles pour profiter pleinement de votre
+                séjour.
+              </p>
             </div>
-
-            <h5>
-              <i class="fas fa-fan"></i> Télécommande FANELITE (ventilateur)
-            </h5>
-            <p>Le ventilateur dépend de la télécommande FANELITE :</p>
-            <ul>
-              <li>
-                <strong>Mise en route :</strong> Appuyer sur le symbole I en
-                haut de la commande
-              </li>
-              <li><strong>Arrêt :</strong> Appuyer sur le cercle à droite</li>
-            </ul>
-
-            <!-- Image de la télécommande FANELITE -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/23.jpg"
-                alt="Télécommande FANELITE - Ventilateur"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-            </div>
-
-            <h5><i class="fas fa-lightbulb"></i> Éclairage du ventilateur</h5>
-            <p>
-              Il existe également un éclairage à la base du ventilateur dont
-              l'utilisation est commandée par le symbole représentant une
-              ampoule.
-            </p>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-tint"></i> La distribution de l'eau chaude</h4>
-            <p>
-              Ceci concerne l'eau des lavabos et surtout des douches. Comme dans
-              beaucoup de pays où le soleil est souvent présent, la maison est
-              équipée d'un chauffe-eau solaire (panneau solaire et réservoir)
-              dont la position sur la toiture se situe près de l'entrée de la
-              maison.
-            </p>
-            <p>
-              La taille du réservoir est celle préconisée par l'architecte pour
-              une maison de six personnes. Les caractéristiques de l'appareil et
-              sa situation par rapport à la disposition des chambres amènent à
-              deux précisions :
-            </p>
-
-            <!-- Image du chauffe-eau solaire -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/28.jpg"
-                alt="Chauffe-eau solaire - Distribution eau chaude"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-            </div>
-            <ul>
-              <li>
-                <strong>Fonctionnement solaire :</strong> Par définition, le
-                dispositif solaire fonctionne la journée et non la nuit. Il en
-                résulte que si la totalité du réservoir a été utilisée dans la
-                soirée, l'eau des douches sera tiède le lendemain matin mais se
-                réchauffera automatiquement au cours de la journée.
-              </li>
-              <li>
-                <strong>Disposition :</strong> Le chauffe-eau est plus proche de
-                l'entrée et des deux premières chambres que de la troisième qui
-                en est plus éloignée. La conséquence en est que les deux
-                premières douches vont bénéficier de l'eau chaude plus
-                rapidement que la troisième en raison de son éloignement, sans
-                pour autant qu'il s'agisse d'un dysfonctionnement.
-              </li>
-            </ul>
-          </div>
-
-
-
-          <div class="info-card">
-            <h4><i class="fas fa-wifi"></i> Internet</h4>
-            <p>
-              La box Orange se situe dans le cellier, les codes pour la
-              connexion dans le livret d'accueil, la TV est reliée à la box.
-            </p>
-            <p><strong>Livebox 66A0 clé :</strong> ES6EZy7ZtLTZoKDTtp</p>
-            <p>
-              <strong>L'équipement est high speed VDSL par le câble :</strong>
-            </p>
-            <ul>
-              <li>Envoi de données : 6.41 mbits</li>
-              <li>Réception de données : 28.8 mbits</li>
-            </ul>
-            <p>
-              La commune commence à s'équiper de la fibre mais, à capacité
-              équivalente, le réseau est aérien, fragile, et exposé aux aléas du
-              climat (en particulier aux vents), ce qui explique le choix du
-              câble VDSL pour le moment.
-            </p>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-toilet"></i> Les WC et les eaux usées</h4>
-            <p>
-              Toutes les nouvelles habitations sur les hauteurs de Basse-Terre
-              doivent maintenant être équipées d'une mini station d'épuration
-              individuelle lors de la construction.
-            </p>
-
-            <!-- Image de la mini station d'épuration -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/26.jpg"
-                alt="Mini station d'épuration - WC et eaux usées"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-            </div>
-            <p><strong>Pour préserver leur bon fonctionnement :</strong></p>
-            <ul>
-              <li>
-                Ne mettre dans la cuvette des WC que du papier toilette sec (en
-                rouleaux)
-              </li>
-              <li>
-                Ne pas y déposer de lingettes ou autre dispositif (fessnet,
-                lotus, etc.)
-              </li>
-              <li>
-                Le papier sec se délite au contact de l'humidité et ne bouche
-                pas les canalisations
-              </li>
-              <li>
-                Le papier toilette humide relève d'une composition proche de
-                celle des lingettes, obstrue les canalisations et donc perturbe
-                le traitement des eaux usées
-              </li>
-            </ul>
-            <p>
-              <strong
-                >Merci en cas d'utilisation de papier humide de le jeter dans la
-                poubelle et non dans la cuvette des WC.</strong
-              >
-            </p>
-            <p>
-              Les produits que nous utilisons (nettoyage du sol, produits WC)
-              sont compatibles avec le bon fonctionnement d'une fosse septique
-              et il convient d'éviter d'utiliser des liquides javellisés.
-            </p>
-          </div>
-
-          <div class="info-card">
-            <h4>
-              <i class="fas fa-shield-alt"></i> Filet de sécurité et terrasse
-            </h4>
-            <p>
-              La maison est équipée d'un filet de sécurité placé entre la
-              piscine et la terrasse. Malgré sa résistance, ce n'est pas un
-              hamac sur lequel on peut s'allonger (comme sur les catamarans), il
-              se veut un élément de sécurité en cas de chute accidentelle, et
-              donc merci de lui réserver cette vocation afin qu'il garde son
-              efficacité.
-            </p>
-            <!-- Image du filet de sécurité -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/25.jpg"
-                alt="Filet de sécurité - Terrasse et piscine"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-            </div>
-
-            <p><strong>IMPORTANT :</strong></p>
-            <ul>
-              <li>
-                La terrasse n'a pas de balustrade, et la piscine pas de barrière
-                de sécurité
-              </li>
-              <li>
-                Cette option est volontaire de notre part afin de préserver une
-                belle vue dégagée sur la baie et les îlets
-              </li>
-              <li>
-                Ce point particulier ne pose pas de problème aux adultes qui
-                apprécient en général l'initiative
-              </li>
-              <li>
-                Pour cette raison, nous déconseillons sur le site de réservation
-                la maison aux familles avec de jeunes enfants (moins de 8 ans)
-                car elle peut se révéler dangereuse dans la zone terrasse -
-                piscine
-              </li>
-            </ul>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-trash"></i> La gestion des déchets</h4>
-            <p>
-              Gros problème en Guadeloupe (pour avoir une poubelle il nous a
-              fallu l'acheter dans le commerce, nous attendons toujours celle de
-              la mairie depuis deux ans).
-            </p>
-            <ul>
-              <li>Le ramassage se fait pendant la nuit du dimanche au lundi</li>
-                             <li>
-                 En ce qui concerne les bouteilles en verre ou en plastique, il
-                 existe des bornes de dépôt le long des routes, la plus proche
-                 étant située en face de Carrefour Market
-               </li>
-             </ul>
-
-             <!-- Image des bornes de recyclage -->
-             <div style="margin-top: 20px; text-align: center">
-               <img
-                 src="images/guide/29.jpg"
-                 alt="Bornes de recyclage - Gestion des déchets"
-                 style="
-                   width: 100%;
-                   max-width: 400px;
-                   object-fit: cover;
-                   border-radius: 8px;
-                   margin-bottom: 15px;
-                   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                 "
-               />
-             </div>
-            </ul>
-          </div>
-
-          <div class="info-card">
-            <h4>
-              <i class="fas fa-window-maximize"></i> Les volets électriques et
-              les fenêtres des chambres
-            </h4>
-
-            <h5>
-              <i class="fas fa-exclamation-triangle"></i> LES VOLETS ÉLECTRIQUES
-            </h5>
-            <p><strong>ATTENTION :</strong></p>
-            <p>
-              Merci de vérifier que rien ne perturbe la fermeture des volets
-              électriques (fauteuils de terrasse en particulier) au risque de
-              les bloquer et de ne pouvoir fermer efficacement la maison en
-              votre absence (c'est déjà arrivé).
-            </p>
-
-            <!-- Image des volets électriques -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/27.jpg"
-                alt="Volets électriques - Précautions"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-            </div>
-
-            <h5>
-              <i class="fas fa-window-restore"></i> LES FENÊTRES DES CHAMBRES
-            </h5>
-            <p>
-              Les volets des fenêtres s'ouvrent et se ferment en utilisant la
-              manivelle fixée sur le côté du cadre.
-            </p>
-            <p>
-              Malheureusement, les cardans de ces manivelles sont très fragiles
-              (c'est un défaut de conception que nous avons signalé au
-              fabricant).
-            </p>
-            <p>
-              <strong
-                >Merci de ne pas forcer lors des manœuvres d'ouverture et
-                fermeture.</strong
-              >
-            </p>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-snowflake"></i> La Climatisation</h4>
-            <p>
-              L'électricité en Guadeloupe est malheureusement en grande partie
-              d'origine fossile (donc, d'importation). La ville de Bouillante
-              bénéficie d'une participation de la centrale géothermique,
-              salvatrice en cas de coupure d'électricité sur le réseau, mais ne
-              permettant pas de jouir pour autant d'un tarif moins élevé.
-            </p>
-            <p>
-              De façon regrettable, les énergies « propres » sont peu
-              représentées.
-            </p>
-            <p><strong>Pour des raisons d'économie et d'écologie :</strong></p>
-            <ul>
-              <li>
-                Merci de couper les climatiseurs grâce à leur télécommande en
-                dehors des périodes d'occupation des chambres
-              </li>
-              <li>
-                Veiller à ce que portes et fenêtres soient fermées pendant leur
-                fonctionnement
-              </li>
-            </ul>
-            <p>
-              Comme dit précédemment, tous les ans une société spécialisée passe
-              afin de contrôler l'installation et nettoyer les filtres.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Section Eau & Électricité -->
-      <div class="content-section" id="eau-electricite">
-        <h2 class="section-title">💧⚡ Eau & Électricité</h2>
-        <p class="section-description">
-          Gestion de l'eau et de l'électricité, équipements de secours et procédures en cas de coupure
-        </p>
-
-        <div class="info-grid">
-          <div class="info-card">
-            <h4><i class="fas fa-tint"></i> L'EAU</h4>
-            <p>
-              Pour des raisons de maintenance, d'écologie et d'économie, la maison bénéficie d'une double alimentation en eau.
-            </p>
-            <p>
-              Elle est raccordée au réseau de distribution d'eau de la Guadeloupe avec une cuve de réserve.
-            </p>
-            <p>
-              <strong>La vanne principale de raccordement au réseau de la Guadeloupe</strong> se situe au niveau du portail d'entrée de la maison à côté du compteur, elle sert à couper l'alimentation en cas de rupture d'une tuyauterie par exemple.
-            </p>
-            <p>L'eau est ensuite dirigée vers la pièce du sous-sol.</p>
-                         <p>
-               <strong>Au niveau du sous-sol, il existe une vanne de raccordement à deux positions (réseau, cuve de secours) :</strong>
-             </p>
-
-             <!-- Image de la vanne de raccordement -->
-             <div style="margin-top: 20px; text-align: center">
-               <img
-                 src="images/guide/32.jpg"
-                 alt="Vanne de raccordement - Sous-sol"
-                 style="
-                   width: 100%;
-                   max-width: 400px;
-                   object-fit: cover;
-                   border-radius: 8px;
-                   margin-bottom: 15px;
-                   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                 "
-               />
-             </div>
-            <ul>
-              <li><strong>Position horizontale</strong> = raccordement direct au réseau de distribution</li>
-              <li><strong>Position verticale</strong> = raccordement à la cuve de secours</li>
-            </ul>
-            <p>
-              Cette cuve de secours dans le sous-sol de la maison contient une pompe électrique se déclenchant spontanément en cas de coupure d'eau du réseau, et continuant d'alimenter douches et robinets. Sa fonction de sauvegarde ne se déclenchant que lorsque le niveau baisse et que la cuve est raccordée aux robinets et aux douches.
-            </p>
-            <p><strong>EN CAS DE COUPURE D'EAU :</strong></p>
-            <p>C'est l'eau de la cuve de secours qui est utilisée.</p>
-            <p>
-              Il existe une deuxième alimentation en eau, exclusivement pour les WC qui bénéficient d'une double arrivée d'eau : le robinet de gauche alimente en eau de pluie, celui de droite en eau du réseau.
-            </p>
-
-            <!-- Image de la double alimentation des WC -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/31.jpg"
-                alt="Double alimentation WC - Eau de pluie et réseau"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-            </div>
-            <p>
-              En permanence le robinet de gauche est ouvert, celui de droite fermé et la pompe électrique immergée dans la cuve de récupération d'eau de pluie alimente les toilettes automatiquement.
-            </p>
-            <p>
-              En cas de panne sur le réseau d'alimentation, celle des WC, indépendante, se poursuit donc sans interruption alors que les robinets et les douches ne sont plus alimentés si la manette rouge est en position basse.
-            </p>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-bolt"></i> L'ÉLECTRICITÉ</h4>
-            <p>
-              Elle est fournie de deux façons sur Bouillante : la centrale thermique de JARRY et la centrale géothermique de BOUILLANTE.
-            </p>
-            <p>
-              Cette double source fait que nous sommes privilégiés sur Bouillante et rarement concernés par les coupures de longue durée... sauf en cas de « mouvements sociaux ».
-            </p>
-            <p><strong>EN CAS DE COUPURE DE COURANT :</strong></p>
-
-            <h5><i class="fas fa-door-open"></i> Le portail d'entrée</h5>
-            <p>
-              Le portail d'entrée est équipé d'un moteur électrique avec une petite batterie de secours qui permet de ne pas se retrouver, à l'extérieur de la maison, devant un portail fermé.
-            </p>
-            <p>
-              Malheureusement, cette batterie est de faible capacité et nous conseillons en cas de panne de passer en mode manuel.
-            </p>
-            <p>
-              Pour ce faire une petite clé triangulaire est disponible dans le tiroir des couverts de la cuisine (à droite du tiroir). Elle permet de débrayer le moteur électrique et de manipuler le portail de façon manuelle avant le retour du courant.
-            </p>
-
-            <!-- Image de la clé triangulaire -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/33.jpg"
-                alt="Clé triangulaire - Portail d'entrée"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-            </div>
-
-            <h5><i class="fas fa-window-maximize"></i> Les volets roulants</h5>
-            <p>
-              Ils sont au nombre de trois, métalliques et électrifiés, deux plus petits de chaque côté encadrant le volet central plus large (et plus lourd aussi).
-            </p>
-            <p>
-              En cas de panne de courant, se trouve à la droite des volets une manivelle sur laquelle s'adapte une pièce intermédiaire métallique (posée dans la petite alcôve juste au-dessus du volet gauche).
-            </p>
-            <p>Ce dispositif permet d'ouvrir et fermer manuellement.</p>
-
-            <h5><i class="fas fa-lightbulb"></i> L'éclairage</h5>
-            <p>
-              Dans la maison nous avons trois lampes « FATBOY » avec batterie incorporée.
-            </p>
-            <p>
-              Les câbles électriques USB afin de permettre leur mise en charge se trouvent dans le meuble sous la télévision. Lors de nos séjours dans la maison nous les mettons en charge en début de vacances, leur lumière est douce et agréable le soir sur la terrasse mais elles peuvent également dépanner... au cas où...
-            </p>
-            <p>
-              Dans le cellier (ou dans le sous-sol selon la place) se trouvent des lampes à alcool en cas de besoin.
-            </p>
-
-            <h5><i class="fas fa-tint"></i> L'alimentation en eau</h5>
-            <p>
-              La pompe immergée dans la cuve de récupération d'eau de pluie n'est plus opérationnelle de même que celle de la cuve de secours.
-            </p>
-            <p>
-              C'est la pression du réseau qui assure l'alimentation des robinets, douches et potentiellement des toilettes.
-            </p>
-            <p>
-              Il convient donc de raccorder pendant la période d'interruption du courant le réservoir des WC au réseau de distribution.
-            </p>
-            <p>
-              Pour cela, il faut simplement vérifier que la manette rouge du sous-sol soit bien en position basse et pour les toilettes, fermer le robinet situé à gauche puis ouvrir celui de droite.
-            </p>
-            <p>La manœuvre inverse étant à réaliser à ce niveau, après retour du courant.</p>
-          </div>
-
-
-        </div>
-      </div>
-
-      <!-- Section Services -->
-      <div class="content-section" id="services">
-        <h2 class="section-title">🛒 Services et Commerces</h2>
-        <p class="section-description">
-          Les commerces et services disponibles à proximité pour vos courses et
-          besoins quotidiens.
-        </p>
-
-        <div class="info-grid">
-          <div class="info-card">
-            <h4>
-              <i class="fas fa-shopping-cart"></i> Supermarchés et alimentation
-            </h4>
-
-            <h5><i class="fas fa-store"></i> Carrefour Market</h5>
-            <p>
-              Moyenne surface sur la N2 vers Pointe-Noire, permet de faire le
-              gros des courses nécessaires au séjour.
-            </p>
-
-            <!-- Image et lien de navigation pour Carrefour Market -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/02.jpg"
-                alt="Carrefour Market"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-
-              <a
-                href="geo:16.1581,-61.7761?q=Carrefour+Market+Bouillante"
-                style="
-                  display: inline-flex;
-                  align-items: center;
-                  gap: 8px;
-                  padding: 15px 25px;
-                  background: #4caf50;
-                  color: white;
-                  text-decoration: none;
-                  border-radius: 25px;
-                  font-size: 16px;
-                  font-weight: 500;
-                  transition: all 0.3s ease;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              >
-                <i class="fas fa-location-arrow"></i>
-                Ouvrir la navigation
-              </a>
-            </div>
-
-            <h5 style="margin-top: 30px">
-              <i class="fas fa-store"></i> Leader Price
-            </h5>
-            <p>
-              En vis-à-vis de Carrefour Market, plus rustique mais très
-              intéressant au niveau des prix avec des produits de bonne qualité.
-            </p>
-
-            <!-- Image et lien de navigation pour Leader Price -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/03.jpg"
-                alt="Leader Price"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-
-              <a
-                href="geo:16.1581,-61.7761?q=Leader+Price+Pigeon+Bouillante"
-                style="
-                  display: inline-flex;
-                  align-items: center;
-                  gap: 8px;
-                  padding: 15px 25px;
-                  background: #4caf50;
-                  color: white;
-                  text-decoration: none;
-                  border-radius: 25px;
-                  font-size: 16px;
-                  font-weight: 500;
-                  transition: all 0.3s ease;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              >
-                <i class="fas fa-location-arrow"></i>
-                Ouvrir la navigation
-              </a>
-            </div>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-fish"></i> Poissonnerie</h4>
-
-            <h5><i class="fas fa-store"></i> Cap Créole</h5>
-            <p>
-              Un peu avant Carrefour Market sur la N2. Les pêcheurs locaux
-              déposent leur poisson qui est traité sur place :
-            </p>
-            <ul>
-              <li>Poisson frais nettoyé et préparé</li>
-              <li>Steaks de thon, espadon ou marlin à cuire</li>
-              <li>Rillettes de thon ou marlin</li>
-              <li>Mi-cuit de thon, carpaccio</li>
-            </ul>
-            <p><em>Un peu cher mais qualité extraordinaire !</em></p>
-
-            <!-- Image et lien de navigation pour Cap Créole -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/05.jpg"
-                alt="Cap Créole - Poisson frais"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-
-              <a
-                href="geo:16.1598,-61.7751?q=Cap+Créole+Pigeon+Bouillante"
-                style="
-                  display: inline-flex;
-                  align-items: center;
-                  gap: 8px;
-                  padding: 15px 25px;
-                  background: #4caf50;
-                  color: white;
-                  text-decoration: none;
-                  border-radius: 25px;
-                  font-size: 16px;
-                  font-weight: 500;
-                  transition: all 0.3s ease;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              >
-                <i class="fas fa-location-arrow"></i>
-                Ouvrir la navigation
-              </a>
-            </div>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-bread-slice"></i> Boulangerie et traiteur</h4>
-
-            <h5><i class="fas fa-store"></i> Four des Iles</h5>
-            <p>
-              Juste à côté de Carrefour Market, pain excellent et traiteur
-              (pizzas maison, rôti de porc, poulet grillé, pâtisseries).
-            </p>
-            <p>
-              <strong>Horaires :</strong> Ouvert le dimanche matin, fermé le
-              lundi.
-            </p>
-
-            <!-- Image et lien de navigation pour Four des Iles -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/04.jpg"
-                alt="Four des Iles - Boulangerie"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-
-              <a
-                href="geo:16.1610,-61.7745?q=Four+des+Iles+Boulangerie+Pigeon"
-                style="
-                  display: inline-flex;
-                  align-items: center;
-                  gap: 8px;
-                  padding: 15px 25px;
-                  background: #4caf50;
-                  color: white;
-                  text-decoration: none;
-                  border-radius: 25px;
-                  font-size: 16px;
-                  font-weight: 500;
-                  transition: all 0.3s ease;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              >
-                <i class="fas fa-location-arrow"></i>
-                Ouvrir la navigation
-              </a>
-            </div>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-drumstick-bite"></i> Boucherie et traiteur</h4>
-
-            <h5><i class="fas fa-store"></i> Ti Taurus</h5>
-            <p>
-              À proximité de Carrefour Market, prendre à pied la petite rue
-              entre le supermarché et la boulangerie. Viandes diverses,
-              brochettes, etc.
-            </p>
-
-            <!-- Image et lien de navigation pour Ti Taurus -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/06.jpg"
-                alt="Boucherie traiteur Ti Taurus"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-
-              <a
-                href="geo:16.1613,-61.7753?q=Boucherie+traiteur+Ti+Taurus+Bouillante"
-                style="
-                  display: inline-flex;
-                  align-items: center;
-                  gap: 8px;
-                  padding: 15px 25px;
-                  background: #4caf50;
-                  color: white;
-                  text-decoration: none;
-                  border-radius: 25px;
-                  font-size: 16px;
-                  font-weight: 500;
-                  transition: all 0.3s ease;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              >
-                <i class="fas fa-location-arrow"></i>
-                Ouvrir la navigation
-              </a>
-            </div>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-apple-alt"></i> Fruits et légumes</h4>
-
-            <h5><i class="fas fa-store"></i> Chez Adèle</h5>
-            <p>
-              Sur la N2, à gauche dans la direction nord. Fruits et légumes
-              excellents.
-            </p>
-            <p>
-              <strong>Conseil :</strong> Bien préciser si c'est pour
-              consommation immédiate ou le lendemain (pour les avocats par
-              exemple). Adèle est incollable sur la qualité de ses produits.
-            </p>
-            <p>
-              <em
-                >Dites que vous venez de la part de Fanny, elle se souviendra
-                peut-être et vous gâtera !</em
-              >
-            </p>
-
-            <!-- Image et lien de navigation -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/01.jpg"
-                alt="Chez Adèle - Fruits et Légumes"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-
-              <a
-                href="geo:16.1581,-61.7761?q=Chez+Adèle+Fruits+Légumes"
-                style="
-                  display: inline-flex;
-                  align-items: center;
-                  gap: 8px;
-                  padding: 15px 25px;
-                  background: #4caf50;
-                  color: white;
-                  text-decoration: none;
-                  border-radius: 25px;
-                  font-size: 16px;
-                  font-weight: 500;
-                  transition: all 0.3s ease;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              >
-                <i class="fas fa-location-arrow"></i>
-                Ouvrir la navigation
-              </a>
+            <div class="guide-hero-image">
+              <div class="guide-hero-image-container">
+                <img
+                  src="images/gallery/fulls/Terasse/05.jpg"
+                  alt="Vue terrasse Calypso Bay"
+                />
+                <div class="guide-hero-overlay"></div>
+                <div class="guide-hero-badge">Bouillante • Guadeloupe</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <!-- Section Excursions -->
-      <div class="content-section" id="excursions">
-        <h2 class="section-title">🌿 Excursions</h2>
-        <p class="section-description">
-          Randonnées, sorties, balades et découvertes dans la région.
-        </p>
-
-        <div class="info-grid">
-          <div class="info-card">
-            <h4><i class="fas fa-umbrella-beach"></i> Plages et snorkeling</h4>
-
-            <h5><i class="fas fa-water"></i> Plage de Malendure (Bouillante)</h5>
-            <p>Sable noir, observation des tortues (surtout côté nord, Petit Malendure). Snorkeling et location de kayaks pour rejoindre les îlets Pigeon (Réserve Cousteau).</p>
-
-            <h5><i class="fas fa-water"></i> Plage de Petite Anse (Bouillante)</h5>
-            <p>Plage sauvage avec sable blond et galets. Snorkeling riche (poissons de récif, coraux, calamars, parfois tortues).</p>
-
-            <h5><i class="fas fa-water"></i> Plage Leroux (Ferry, Deshaies)</h5>
-            <p>Petite plage de sable blond, très beau site de snorkeling (poissons coffres, calamars…). Fréquentée aussi par des iguanes le matin.</p>
-
-            <h5><i class="fas fa-water"></i> Plages de Grande Anse et Anse de la Perle (Deshaies)</h5>
-            <p>Immenses plages de sable blond, magnifiques mais attention aux rouleaux.</p>
-
-            <h5><i class="fas fa-water"></i> Plage de Petite Anse (Deshaies)</h5>
-            <p>Spot agréable pour une baignade plus calme.</p>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-mountain"></i> Cascades et randonnées</h4>
-
-            <h5><i class="fas fa-water"></i> Cascade du Trou à Diable (Bouillante)</h5>
-            <p>Près du Parc de la Source, accessible par un sentier agréable et ombragé. Prudence en cas de fortes pluies.</p>
-
-            <h5><i class="fas fa-water"></i> Saut d'Acomat (Pointe-Noire)</h5>
-            <p>Cascade emblématique.</p>
-
-            <h5><i class="fas fa-water"></i> Saut de la Lézarde (Petit-Bourg)</h5>
-            <p>Site superbe, accès sportif mais faisable en 1h aller-retour. Bassin propice à la baignade.</p>
-
-            <h5><i class="fas fa-water"></i> Chutes du Carbet (Capesterre-Belle-Eau)</h5>
-            <ul>
-              <li><strong>1ʳᵉ chute :</strong> 115 m, randonnée sportive avec passages à gué.</li>
-              <li><strong>2ᵉ chute :</strong> 110 m, la plus accessible, sentier aménagé (enfants possibles).</li>
-              <li><strong>3ᵉ chute :</strong> 20 m, bassin agréable pour la baignade.</li>
-            </ul>
-
-            <h5><i class="fas fa-hiking"></i> Randonnée derrière la villa (Bouillante)</h5>
-            <p>Depuis la rue de Poirier jusqu'au Parc de la Source. Beau chemin de crête avec vue sur la mer.</p>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-ship"></i> Découvertes en mer</h4>
-
-            <h5><i class="fas fa-diving-helmet"></i> Plongée bouteille</h5>
-            <p>Club Les Heures Saines (Bouillante), réputé pour sa sécurité et sa convivialité. Exploration de la réserve Cousteau et d'épaves.</p>
-
-            <h5><i class="fas fa-ship"></i> Excursion aux Saintes</h5>
-            <p>Départ en ferry de Trois-Rivières, idéale pour une journée.</p>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-map-marked-alt"></i> Balades et découvertes</h4>
-
-            <h5><i class="fas fa-seedling"></i> Jardin Botanique de Deshaies</h5>
-            <p>Promenade de 2h dans un cadre luxuriant.</p>
-
-            <h5><i class="fas fa-fort-awesome"></i> Fort Delgrès (Basse-Terre)</h5>
-            <p>Site historique majeur, visite gratuite.</p>
-
-            <h5><i class="fas fa-shopping-basket"></i> Marché de Basse-Terre</h5>
-            <p>Marché quotidien (sauf dimanche et lundi), particulièrement animé le samedi. Idéal pour épices, vanille et produits locaux.</p>
-
-            <h5><i class="fas fa-shopping-basket"></i> Marché de Sainte-Anne et son village artisanal</h5>
-            <p>Souvenirs et produits locaux.</p>
-
-            <h5><i class="fas fa-mountain"></i> Pointe des Châteaux (Saint-François)</h5>
-            <p>Paysages impressionnants rappelant la Bretagne.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Section Activités -->
-      <div class="content-section" id="activites">
-        <h2 class="section-title">🎭 Activités</h2>
-        <p class="section-description">
-          Locations, entreprises, culture et services disponibles.
-        </p>
-
-        <div class="info-grid">
-          <div class="info-card">
-            <h4><i class="fas fa-water"></i> Activités nautiques</h4>
-
-            <h5><i class="fas fa-kayak"></i> Location de kayaks</h5>
-            <p>Sur la plage de Malendure pour explorer la Réserve Cousteau et les îlets Pigeon.</p>
-
-            <h5><i class="fas fa-diving-helmet"></i> Clubs de plongée</h5>
-            <p>Les Heures Saines (Bouillante).</p>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-wine-glass"></i> Dégustations et visites</h4>
-
-            <h5><i class="fas fa-industry"></i> Distilleries</h5>
-            <ul>
-              <li><strong>Bologne (Basse-Terre) :</strong> Visite et boutique souvenirs.</li>
-              <li><strong>Autres distilleries réputées :</strong> Longueteau, Damoiseau, Montebello, Séverin, Rhum Karukera, Rhum Raymonenq.</li>
-            </ul>
-
-            <h5><i class="fas fa-seedling"></i> Maison du Cacao (Pointe-Noire)</h5>
-            <p>Immersion gourmande dans la culture du cacao.</p>
-
-            <h5><i class="fas fa-wine-bottle"></i> Musée du Rhum (Sainte-Rose)</h5>
-            <p>Culture locale et dégustations.</p>
-
-            <h5><i class="fas fa-landmark"></i> Habitation Côte-sous-le-Vent (Pointe-Noire)</h5>
-            <p>Patrimoine et histoire.</p>
-
-            <h5><i class="fas fa-monument"></i> Mémorial ACTe (Pointe-à-Pitre)</h5>
-            <p>Centre caribéen d'expressions et de mémoire de la traite.</p>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-beer"></i> Microbrasserie</h4>
-
-            <h5><i class="fas fa-beer"></i> Microbrasserie de la Lézarde (Petit-Bourg, Vernou)</h5>
-            <p>Située à 500 m de l'entrée du sentier de la cascade. Ouverte à partir de 11h30, fermée dimanche et lundi.</p>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-theater-masks"></i> Autres activités culturelles</h4>
-
-            <h5><i class="fas fa-fish"></i> Aquarium de Guadeloupe (Gosier)</h5>
-            <p>Découverte de la faune marine.</p>
-
-            <h5><i class="fas fa-video"></i> Site de tournage de la série "Meurtres au paradis" (Deshaies)</h5>
-            <p>Promenade dans le village, souvent animé par les équipes de tournage.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Section Restaurants -->
-      <div class="content-section" id="restaurants">
-        <h2 class="section-title">🍽️ Restaurants et Gastronomie</h2>
-        <p class="section-description">
-          Les meilleurs restaurants de la région pour découvrir la cuisine
-          locale et internationale.
-        </p>
-
-        <div class="info-grid">
-          <div class="info-card">
-            <h4><i class="fas fa-utensils"></i> Restaurants</h4>
-
-            <h5><i class="fas fa-store"></i> La Touna</h5>
-            <p>Bon niveau de cuisine, environnement sympa.</p>
-
-            <!-- Image et lien de navigation pour La Touna -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/07.jpg"
-                alt="La Touna - Restaurant"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-
-              <a
-                href="geo:16.1581,-61.7761?q=La+Touna+Restaurant+Bouillante"
-                style="
-                  display: inline-flex;
-                  align-items: center;
-                  gap: 8px;
-                  padding: 15px 25px;
-                  background: #4caf50;
-                  color: white;
-                  text-decoration: none;
-                  border-radius: 25px;
-                  font-size: 16px;
-                  font-weight: 500;
-                  transition: all 0.3s ease;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              >
-                <i class="fas fa-location-arrow"></i>
-                Ouvrir la navigation
-              </a>
-            </div>
-
-            <h5 style="margin-top: 30px">
-              <i class="fas fa-store"></i> Chez Didier
-            </h5>
-            <p>Cuisine excellente, patron très sympathique.</p>
-
-            <!-- Image et lien de navigation pour Chez Didier -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/08.jpg"
-                alt="Chez Didier - Restaurant"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-
-              <a
-                href="geo:16.1581,-61.7761?q=Chez+Didier+Restaurant+Bouillante"
-                style="
-                  display: inline-flex;
-                  align-items: center;
-                  gap: 8px;
-                  padding: 15px 25px;
-                  background: #4caf50;
-                  color: white;
-                  text-decoration: none;
-                  border-radius: 25px;
-                  font-size: 16px;
-                  font-weight: 500;
-                  transition: all 0.3s ease;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              >
-                <i class="fas fa-location-arrow"></i>
-                Ouvrir la navigation
-              </a>
-            </div>
-
-            <h5 style="margin-top: 30px">
-              <i class="fas fa-store"></i> Le Sunset B
-            </h5>
-            <p>TOP ! Cadre cosy, produits frais.</p>
-
-            <!-- Image et lien de navigation pour Le Sunset B -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/09.jpg"
-                alt="Le Sunset B - Restaurant"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-
-              <a
-                href="geo:16.1581,-61.7761?q=Le+Sunset+B+Restaurant+Bouillante"
-                style="
-                  display: inline-flex;
-                  align-items: center;
-                  gap: 8px;
-                  padding: 15px 25px;
-                  background: #4caf50;
-                  color: white;
-                  text-decoration: none;
-                  border-radius: 25px;
-                  font-size: 16px;
-                  font-weight: 500;
-                  transition: all 0.3s ease;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              >
-                <i class="fas fa-location-arrow"></i>
-                Ouvrir la navigation
-              </a>
-            </div>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-utensils"></i> Restaurants locaux</h4>
-
-            <h5><i class="fas fa-store"></i> Les Deux Coquilles</h5>
-            <p>Bon et pas cher, plus "local".</p>
-
-            <!-- Image et lien de navigation pour Les Deux Coquilles -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/10.jpg"
-                alt="Les Deux Coquilles - Restaurant"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-
-              <a
-                href="geo:16.1581,-61.7761?q=Les+Deux+Coquilles+Restaurant+Bouillante"
-                style="
-                  display: inline-flex;
-                  align-items: center;
-                  gap: 8px;
-                  padding: 15px 25px;
-                  background: #4caf50;
-                  color: white;
-                  text-decoration: none;
-                  border-radius: 25px;
-                  font-size: 16px;
-                  font-weight: 500;
-                  transition: all 0.3s ease;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              >
-                <i class="fas fa-location-arrow"></i>
-                Ouvrir la navigation
-              </a>
-            </div>
-
-            <h5 style="margin-top: 30px">
-              <i class="fas fa-store"></i> Franko Grill
-            </h5>
-            <p>Bon et pas cher, plus "local".</p>
-
-            <!-- Image et lien de navigation pour Franko Grill -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/11.jpg"
-                alt="Franko Grill - Restaurant"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-
-              <a
-                href="geo:16.1581,-61.7761?q=Franko+Grill+Restaurant+Bouillante"
-                style="
-                  display: inline-flex;
-                  align-items: center;
-                  gap: 8px;
-                  padding: 15px 25px;
-                  background: #4caf50;
-                  color: white;
-                  text-decoration: none;
-                  border-radius: 25px;
-                  font-size: 16px;
-                  font-weight: 500;
-                  transition: all 0.3s ease;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              >
-                <i class="fas fa-location-arrow"></i>
-                Ouvrir la navigation
-              </a>
-            </div>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-pizza-slice"></i> Pizzas</h4>
-
-            <h5><i class="fas fa-store"></i> Oganik</h5>
-            <p>En face du restaurant La Touna.</p>
-
-            <!-- Image et lien de navigation pour Oganik -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/12.jpg"
-                alt="Oganik - Pizzeria"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-
-              <a
-                href="geo:16.1581,-61.7761?q=Oganik+Pizzeria+Bouillante"
-                style="
-                  display: inline-flex;
-                  align-items: center;
-                  gap: 8px;
-                  padding: 15px 25px;
-                  background: #4caf50;
-                  color: white;
-                  text-decoration: none;
-                  border-radius: 25px;
-                  font-size: 16px;
-                  font-weight: 500;
-                  transition: all 0.3s ease;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              >
-                <i class="fas fa-location-arrow"></i>
-                Ouvrir la navigation
-              </a>
-            </div>
-
-            <h5 style="margin-top: 30px">
-              <i class="fas fa-store"></i> Allo Pizza
-            </h5>
-            <p>Derrière Carrefour Market.</p>
-
-            <!-- Image et lien de navigation pour Allo Pizza -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/13.jpg"
-                alt="Allo Pizza - Pizzeria"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-
-              <a
-                href="geo:16.1581,-61.7761?q=Allo+Pizza+Pizzeria+Bouillante"
-                style="
-                  display: inline-flex;
-                  align-items: center;
-                  gap: 8px;
-                  padding: 15px 25px;
-                  background: #4caf50;
-                  color: white;
-                  text-decoration: none;
-                  border-radius: 25px;
-                  font-size: 16px;
-                  font-weight: 500;
-                  transition: all 0.3s ease;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              >
-                <i class="fas fa-location-arrow"></i>
-                Ouvrir la navigation
-              </a>
-            </div>
-
-            <h5 style="margin-top: 30px">
-              <i class="fas fa-store"></i> Le Cœur de Pigeon
-            </h5>
-            <p>Excellentes pizzas pâte fine.</p>
-
-            <!-- Image et lien de navigation pour Le Cœur de Pigeon -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/14.jpg"
-                alt="Le Cœur de Pigeon - Pizzeria"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-
-              <a
-                href="geo:16.1581,-61.7761?q=Le+Cœur+de+Pigeon+Pizzeria+Bouillante"
-                style="
-                  display: inline-flex;
-                  align-items: center;
-                  gap: 8px;
-                  padding: 15px 25px;
-                  background: #4caf50;
-                  color: white;
-                  text-decoration: none;
-                  border-radius: 25px;
-                  font-size: 16px;
-                  font-weight: 500;
-                  transition: all 0.3s ease;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              >
-                <i class="fas fa-location-arrow"></i>
-                Ouvrir la navigation
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Section Soins, santé & bonnes pratiques -->
-      <div class="content-section" id="sante">
-        <h2 class="section-title">🏥 Soins, Santé & Prévention</h2>
-        <p class="section-description">
-          Informations essentielles pour votre santé et votre bien-être pendant
-          votre séjour.
-        </p>
-
-        <div class="info-grid">
-          <div class="info-card">
-            <h4><i class="fas fa-pills"></i> Pharmacie</h4>
-
-            <h5><i class="fas fa-store"></i> La pharmacie de Losteau</h5>
-            <p>
-              <strong>Adresse :</strong> Zac de Losteau - Pigeon, Bouillante
-              97125, Guadeloupe
-            </p>
-            <p><strong>Téléphone :</strong> +590 590 99 08 44</p>
-            <p>
-              <strong>Site web :</strong>
-              <a
-                href="https://pharmaciedelosteau.fr"
-                target="_blank"
-                style="color: #4caf50; text-decoration: none; font-weight: 500"
-                >pharmaciedelosteau.fr</a
-              >
-            </p>
-            <p><strong>Horaires :</strong> Ferme à 19:00</p>
-            <p>
-              <strong>Services :</strong> Retrait en magasin, réservation en
-              ligne possible
-            </p>
-            <p>
-              <strong>Conseil :</strong> La carte vitale fonctionne comme en
-              métropole. Pensez à emporter vos médicaments habituels et une
-              trousse de premiers soins.
-            </p>
-
-            <!-- Image et lien de navigation pour La pharmacie de Losteau -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/15.jpg"
-                alt="La pharmacie de Losteau"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-
-              <a
-                href="geo:16.1581,-61.7761?q=La+pharmacie+de+Losteau+Bouillante"
-                style="
-                  display: inline-flex;
-                  align-items: center;
-                  gap: 8px;
-                  padding: 15px 25px;
-                  background: #4caf50;
-                  color: white;
-                  text-decoration: none;
-                  border-radius: 25px;
-                  font-size: 16px;
-                  font-weight: 500;
-                  transition: all 0.3s ease;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              >
-                <i class="fas fa-location-arrow"></i>
-                Ouvrir la navigation
-              </a>
-            </div>
-
-            <h4 style="margin-top: 30px">
-              <i class="fas fa-phone"></i> Numéros d'urgence
-            </h4>
-            <ul>
-              <li><strong>Pompiers :</strong> 18</li>
-              <li><strong>Police :</strong> 17</li>
-              <li><strong>Samu :</strong> 15</li>
-              <li><strong>Météo France :</strong> 0892 68 08 08</li>
-            </ul>
-
-            <h4 style="margin-top: 30px">
-              <i class="fas fa-hospital"></i> Hôpital
-            </h4>
-
-            <h5>
-              <i class="fas fa-hospital-alt"></i> Hôpital Maurice Selbonne
-            </h5>
-            <p>
-              <strong>Adresse :</strong> 97125 Rue des Manguiers, Bouillante
-              97125, Guadeloupe
-            </p>
-            <p><strong>Téléphone :</strong> +590 590 80 49 00</p>
-            <p>
-              <strong>Site web :</strong>
-              <a
-                href="https://ch-mauriceselbonne.fr"
-                target="_blank"
-                style="color: #4caf50; text-decoration: none; font-weight: 500"
-                >ch-mauriceselbonne.fr</a
-              >
-            </p>
-            <p>
-              <strong>Services :</strong> Hôpital spécialisé avec services
-              d'urgence
-            </p>
-
-            <!-- Image et lien de navigation pour l'Hôpital Maurice Selbonne -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/16.jpg"
-                alt="Hôpital Maurice Selbonne"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-
-              <a
-                href="geo:16.1581,-61.7761?q=Hôpital+Maurice+Selbonne+Bouillante"
-                style="
-                  display: inline-flex;
-                  align-items: center;
-                  gap: 8px;
-                  padding: 15px 25px;
-                  background: #4caf50;
-                  color: white;
-                  text-decoration: none;
-                  border-radius: 25px;
-                  font-size: 16px;
-                  font-weight: 500;
-                  transition: all 0.3s ease;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              >
-                <i class="fas fa-location-arrow"></i>
-                Ouvrir la navigation
-              </a>
-            </div>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-bug"></i> Protection anti-moustiques</h4>
-            <p><strong>Précautions importantes :</strong></p>
-            <ul>
-              <li>
-                Les moustiques sont actifs au petit déjeuner et à l'apéritif du
-                soir
-              </li>
-              <li>
-                Utiliser des aérosols ("Insect Ecran" ou "Off") sur les zones
-                découvertes
-              </li>
-              <li>Bougies à la citronnelle et spirales antimoustiques</li>
-              <li>
-                Moustiquaires équipent les chambres (pas de problème la nuit)
-              </li>
-              <li>
-                <strong>Répulsif efficace recommandé</strong> dans vos
-                préparatifs
-              </li>
-            </ul>
-
-            <h5><i class="fas fa-plane"></i> Avant de partir</h5>
-            <p>
-              N'oubliez pas d'acheter une bombe d'anti-moustique (OFF ou INSECTECRAN à transporter en soute) afin de pouvoir vous traiter sur les parties découvertes dès l'arrivée.
-            </p>
-
-            <!-- Image des produits anti-moustiques -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/34.jpg"
-                alt="Produits anti-moustiques - Protection"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-            </div>
-            <p>
-              En arrivant à l'aéroport, la première envie est de se dévêtir et les moustiques souvent présents le matin et le soir n'attendent que ça.
-            </p>
-            <p>
-              La Dengue est présente dans toutes les Antilles, elle peut se révéler dangereuse et quoiqu'il en soit peut gâcher votre séjour (comme une très grosse grippe).
-            </p>
-            <p>
-              Une fois déclarée, pas de traitement en dehors du Doliprane.
-            </p>
-            <p>
-              Le matin et le soir protégez-vous avec les répulsifs, utilisez des spirales ou des bougies à la citronnelle.
-            </p>
-            <p>
-              N'hésitez pas à consulter le site d'INSECTECRAN qui prodigue des conseils utiles.
-            </p>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-paw"></i> Faune locale</h4>
-            <p><strong>Les moustiques :</strong> Se protéger surtout dès le lever et au coucher du soleil (Insectecran, Off). La nuit, les moustiquaires sont une protection très efficace.</p>
-            <p><strong>En Guadeloupe pas de serpents.</strong></p>
-            <p><strong>Les araignées :</strong> Sont inoffensives même si elles sont quelquefois impressionnantes par leur taille en comparaison avec celles de métropole.</p>
-
-            <h5><i class="fas fa-exclamation-triangle"></i> Les insectes rampants</h5>
-            <p>
-              La maison est traitée sur le sol (Digrain) de façon très régulière par l'équipe de la conciergerie afin d'éviter leur présence malheureusement inévitable malgré la répétition des applications d'insecticide (c'est une constante dans toutes les maisons des Antilles).
-            </p>
-            <p>
-              Ils sont tous sans danger à l'exception des <strong>Scolopendres</strong> (quelquefois d'une dizaine de centimètres).
-            </p>
-            <p>
-              Pendant la saison des pluies, ils ont tendance à chercher refuge dans les maisons ce qui est particulièrement désagréable pour nous les humains.
-            </p>
-            <p>
-              En période sèche, ils vivent sous la terre, mais après les fortes pluies de la saison humide, leurs nids sont noyés et ils cherchent des endroits plus secs.
-            </p>
-            <p>
-              Craintifs, ils s'enfuient quand on en rencontre, mais comme beaucoup d'animaux se défendent et mordent s'ils se sentent acculés. Leur morsure est très douloureuse.
-            </p>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-sun"></i> Protection solaire</h4>
-            <p><strong>Équipements recommandés :</strong></p>
-            <ul>
-              <li>
-                <strong>Crème solaire :</strong> Haute protection (SPF 50+)
-              </li>
-              <li><strong>Lunettes de soleil :</strong> Protection UV</li>
-              <li>
-                <strong>Chapeau :</strong> Protection de la tête et du visage
-              </li>
-              <li><strong>Hydratation :</strong> Boire beaucoup d'eau</li>
-            </ul>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-exclamation-triangle"></i> Attention aux « bains chauds »</h4>
-            <p>
-              Une dernière recommandation concerne exclusivement les « bains chauds ». Ce sont des résurgences d'eau du volcan où l'on peut se baigner.
-            </p>
-            <p>
-              Sur place on les appelle les « bains jaunes », le « bain des amours » etc. La baignade y est agréable et sans danger à condition de ne pas immerger la tête.
-            </p>
-            <p>
-              Selon la température de l'eau elle peut contenir des amibes inoffensives au niveau de la peau, mais agressives pour les muqueuses. En rivière ou en mer il n'y a aucun danger.
-            </p>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-shield-alt"></i> Les bons réflexes</h4>
-            <p><strong>Conseils de prévention :</strong></p>
-            <ul>
-              <li>Pendant la journée, surtout pendant la saison des pluies, fermer les portes et fenêtres des chambres, et laisser les moustiquaires des lits fermées.</li>
-              <li>Malgré cela contrôler la literie avant de se coucher.</li>
-              <li>Si les chaussures « dorment » à l'extérieur des chambres, les secouer avant de les chausser.</li>
-              <li>Même technique avec les vêtements.</li>
-              <li>Préférer marcher avec des sandales ou des tongs que pieds nus.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Section Cyclones -->
-      <div class="content-section" id="cyclones">
-        <h2 class="section-title">🌀 Cyclones et Alertes Météorologiques</h2>
-        <p class="section-description">
-          Informations essentielles sur la saison cyclonique et les procédures à
-          suivre en cas d'alerte.
-        </p>
-
-        <div class="info-grid">
-          <div class="info-card">
-            <h4><i class="fas fa-info-circle"></i> Saison cyclonique</h4>
-            <p>
-              La Guadeloupe est une zone tropicale exposée au risque cyclonique
-              de <strong>juillet à novembre</strong>. La protection civile,
-              habituée aux phénomènes météorologiques des Antilles, assure une
-              bonne prise en charge des événements climatiques (messages
-              d'avertissement, surveillance, diffusion d'information, gestion
-              des dégâts).
-            </p>
-            <p>
-              Il existe <strong>cinq niveaux d'alerte</strong> auxquels il faut
-              s'adapter en fonction des messages des autorités compétentes.
-            </p>
-
-            <h4>
-              <i class="fas fa-exclamation-triangle"></i> Niveaux d'alerte
-            </h4>
-
-            <h5 style="color: #607d8b; margin-top: 20px">
-              <i class="fas fa-circle" style="color: #607d8b"></i> Alerte Grise
-              : Restez prudents
-            </h5>
-            <ul>
-              <li>
-                Évitez les déplacements avant que tout soit remis en ordre
-              </li>
-              <li>
-                Ne touchez pas aux fils électriques et téléphoniques à terre
-              </li>
-              <li>Buvez de l'eau en bouteille ou traitée avec Micropur</li>
-              <li>
-                Assurez-vous que la circulation soit autorisée avant de
-                reprendre votre véhicule
-              </li>
-              <li>
-                Ne franchissez pas les radiers submergés ou les ravines en crue
-              </li>
-            </ul>
-
-            <h5 style="color: #ffc107; margin-top: 20px">
-              <i class="fas fa-circle" style="color: #ffc107"></i> Alerte Jaune
-              : Soyez attentifs
-            </h5>
-            <ul>
-              <li>
-                Soyez vigilants et tenez-vous informé via Météo France, les
-                médias et la préfecture
-              </li>
-              <li>
-                Vérifiez les réserves nécessaires pour quelques jours (aliments,
-                eau)
-              </li>
-              <li>
-                Évitez les longues randonnées, surtout près des rivières et les
-                sorties en mer
-              </li>
-            </ul>
-
-            <h5 style="color: #ff9800; margin-top: 20px">
-              <i class="fas fa-circle" style="color: #ff9800"></i> Alerte Orange
-              : Finissez vos préparatifs
-            </h5>
-            <ul>
-              <li>
-                Rentrez le mobilier extérieur (transats dans le sous-sol si
-                nécessaire)
-              </li>
-              <li>
-                Mettez en charge les éclairages sur batterie (lampes Fatboy)
-              </li>
-              <li>
-                Constituez une réserve d'eau et de nourriture pour quelques
-                jours
-              </li>
-              <li>Limitez vos déplacements</li>
-              <li>
-                Fermez les volets métalliques de protection et les persiennes
-              </li>
-            </ul>
-
-            <h5 style="color: #9c27b0; margin-top: 20px">
-              <i class="fas fa-circle" style="color: #9c27b0"></i> Alerte
-              Violette : Confinez-vous
-            </h5>
-            <ul>
-              <li>
-                Essayez de rester calmes, la situation va évoluer rapidement
-              </li>
-              <li>Restez réfugiés dans la pièce sécurisée</li>
-              <li>
-                N'en sortez que lorsque tout est redevenu calme à l'extérieur
-              </li>
-              <li>Écoutez la radio pour les messages des autorités</li>
-            </ul>
-
-            <h5 style="color: #f44336; margin-top: 20px">
-              <i class="fas fa-circle" style="color: #f44336"></i> Alerte Rouge
-              : Intégrez les abris
-            </h5>
-            <ul>
-              <li>Assurez-vous que les volets soient bien fermés</li>
-              <li>Vérifiez les réserves d'eau et d'aliments</li>
-              <li>Préparez la pièce la plus sûre de la maison (sous-sol)</li>
-              <li>
-                Écoutez les sources d'information pour vous adapter à
-                l'évolution
-              </li>
-              <li>
-                <strong
-                  >Proscrivez totalement les déplacements en voiture</strong
+      </section>
+
+      <!-- LOGEMENT ET ÉQUIPEMENTS (carousel) -->
+      <section class="guide-section" id="logement">
+        <div class="guide-content">
+          <h2 class="guide-section-title">Logement et équipements</h2>
+          <div class="guide-carousel">
+            <button
+              id="carousel-left"
+              class="guide-carousel-button left hidden"
+            >
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <div id="carousel-container" class="guide-carousel-container">
+              <div class="guide-carousel-content">
+                <!-- Présentation -->
+                <article onclick="showPopup('presentation')" class="guide-card">
+                  <img
+                    src="https://www.calypso-bay.com/images/guide/30.jpg"
+                    alt="Présentation"
+                    class="guide-card-image"
+                  />
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Présentation</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Éclairage et ventilateur du salon -->
+                <article onclick="showPopup('eclairage')" class="guide-card">
+                  <img
+                    src="https://www.calypso-bay.com/images/gallery/fulls/Salon/04.jpg"
+                    alt="Éclairage et ventilateur du salon"
+                    class="guide-card-image"
+                  />
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">
+                      Éclairage & ventilateur du salon
+                    </h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- La distribution de l'eau chaude -->
+                <article onclick="showPopup('eauchaude')" class="guide-card">
+                  <img
+                    src="https://www.calypso-bay.com/images/guide/28.jpg"
+                    alt="La distribution de l'eau chaude"
+                    class="guide-card-image"
+                  />
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">
+                      La distribution de l'eau chaude
+                    </h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Internet -->
+                <article onclick="showPopup('internet')" class="guide-card">
+                  <img
+                    src="images/guide/37.jpg"
+                    alt="Internet"
+                    class="guide-card-image"
+                  />
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Internet</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Les WC et les eaux usées -->
+                <article onclick="showPopup('wc')" class="guide-card">
+                  <img
+                    src="images/guide/38.jpg"
+                    alt="Les WC et les eaux usées"
+                    class="guide-card-image"
+                  />
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Les WC et les eaux usées</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Filet de sécurité et terrasse -->
+                <article onclick="showPopup('filet')" class="guide-card">
+                  <img
+                    src="images/guide/25.jpg"
+                    alt="Filet de sécurité et terrasse"
+                    class="guide-card-image"
+                  />
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">
+                      Filet de sécurité et terrasse
+                    </h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- La gestion des déchets -->
+                <article onclick="showPopup('dechets')" class="guide-card">
+                  <img
+                    src="images/guide/39.jpg"
+                    alt="La gestion des déchets"
+                    class="guide-card-image"
+                  />
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">La gestion des déchets</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Les volets et les fenêtres -->
+                <article onclick="showPopup('volets')" class="guide-card">
+                  <img
+                    src="images/guide/40.jpg"
+                    alt="Les volets et les fenêtres"
+                    class="guide-card-image"
+                  />
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Les volets et les fenêtres</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- La Climatisation -->
+                <article
+                  onclick="showPopup('climatisation')"
+                  class="guide-card"
                 >
-              </li>
-              <li>
-                Si besoin d'intégrer le sous-sol, coupez l'électricité au
-                préalable
-              </li>
-              <li>
-                Coupez momentanément l'arrivée d'eau (manettes perpendiculaires
-                aux tuyaux)
-              </li>
-            </ul>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-home"></i> La maison en cas de cyclone</h4>
-            <p><strong>LE PLUS IMPORTANT :</strong></p>
-            <p>
-              La villa a été construite par notre architecte en respectant les
-              <strong>normes cycloniques et sismiques</strong> :
-            </p>
-            <ul>
-              <li>
-                <strong>Fondations :</strong> Ciment armé (même si la maison
-                s'effondre, le sous-sol est un bunker)
-              </li>
-              <li>
-                <strong>Volets :</strong> Métalliques, fermeture électrique ou
-                manuelle (manivelle dans l'angle droit de la pièce principale)
-              </li>
-              <li>
-                <strong>Fenêtres :</strong> Verre avec barreaux de renforcement
-                anti-effraction
-              </li>
-              <li>
-                <strong>Toiture :</strong> Équipée de "casquettes"
-                anti-arrachement (sauf vent à 300 km/h)
-              </li>
-              <li>
-                <strong>Pièces de sécurité :</strong> Deux "panic rooms"
-                disponibles
-              </li>
-            </ul>
-
-            <h4><i class="fas fa-shield-alt"></i> Pièces de sécurité</h4>
-
-            <h5><i class="fas fa-door-closed"></i> Le cellier</h5>
-            <ul>
-              <li>Trois murs béton, plafond béton</li>
-              <li>Très peu de place</li>
-              <li>Boîte "Cyclone" avec équipements d'urgence</li>
-            </ul>
-
-            <h5><i class="fas fa-warehouse"></i> Le sous-sol (recommandé)</h5>
-            <ul>
-              <li>Pièce plus grande et plus confortable</li>
-              <li>Toutes les parois en béton armé</li>
-              <li>Fenêtre moins exposée</li>
-              <li>Contient la réserve de 1200 litres d'eau potable</li>
-              <li>Peut accueillir transats, chaises pliantes, petite table</li>
-            </ul>
-
-            <!-- Image du sous-sol -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/19.jpg"
-                alt="Sous-sol - Pièce de sécurité"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-            </div>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-tint"></i> Gestion de l'eau</h4>
-            <p>
-              <strong>IMPORTANT :</strong> La cuve doit être désolidarisée du
-              réseau en cas de cyclone :
-            </p>
-            <ul>
-              <!-- Image de la manette -->
-              <div style="margin-bottom: 15px; text-align: center">
-                <img
-                  src="images/guide/17.jpg"
-                  alt="Manette de désolidarisation de la cuve"
-                  style="
-                    width: 100%;
-                    max-width: 400px;
-
-                    object-fit: cover;
-                    border-radius: 8px;
-                    margin-bottom: 15px;
-                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                  "
-                />
+                  <img
+                    src="images/guide/41.jpg"
+                    alt="La Climatisation"
+                    class="guide-card-image"
+                  />
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">La Climatisation</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
               </div>
-              <li>
-                Tourner la manette rouge et le robinet bronze à côté du filtre
-              </li>
-              <li>Position perpendiculaire au tuyau d'arrivée d'eau</li>
-              <li>
-                Évite la contamination par la boue en cas de rupture de
-                canalisation
-              </li>
-            </ul>
+            </div>
+            <button
+              id="carousel-right"
+              class="guide-carousel-button right hidden"
+            >
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </section>
 
-            <h4><i class="fas fa-glass-water"></i> Eau de consommation</h4>
-            <ul>
-              <li><strong>Préférer :</strong> Eau en bouteille</li>
-              <li>
-                <strong>Eau de la cuve :</strong> Consommable directement en
-                temps normal
-              </li>
-              <li>
-                <strong>Traitement :</strong> Comprimés Micropur (1 comprimé
-                pour 1 litre, laisser reposer 120 minutes)
-              </li>
-              <li>
-                <strong>Gourdes :</strong> Métalliques de 1 litre disponibles
-              </li>
-            </ul>
+      <!-- LOCALISATION ET ITINÉRAIRES (carousel) -->
+      <section class="guide-section" id="localisation">
+        <div class="guide-content">
+          <h2 class="guide-section-title">Localisation et itinéraires</h2>
+          <div class="guide-carousel">
+            <button
+              id="carousel-localisation-left"
+              class="guide-carousel-button left hidden"
+            >
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <div
+              id="carousel-localisation-container"
+              class="guide-carousel-container"
+            >
+              <div class="guide-carousel-content">
+                <!-- Adresse de Calypso Bay -->
+                <article onclick="showPopup('adresse')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/42.jpg"
+                      alt="Adresse de Calypso Bay"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag"
+                        >717 rue de Poirier, BOUILLANTE</span
+                      >
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">Adresse de Calypso Bay</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
 
-            <h4><i class="fas fa-lightbulb"></i> Éclairage d'urgence</h4>
-            <ul>
-              <!-- Image des lampes Fatboy -->
-              <div style="margin-bottom: 15px; text-align: center">
-                <img
-                  src="images/guide/18.jpg"
-                  alt="Lampes Fatboy d'urgence"
-                  style="
-                    width: 100%;
-                    max-width: 400px;
+                <!-- Itinéraires -->
+                <article onclick="showPopup('itineraires')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/43.jpg"
+                      alt="Itinéraires"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Côtière nord</span>
+                      <span class="guide-tag">La traversée</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Itinéraires</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
 
-                    object-fit: cover;
-                    border-radius: 8px;
-                    margin-bottom: 15px;
-                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                  "
-                />
+                <!-- Accès à la villa -->
+                <article onclick="showPopup('acces')" class="guide-card">
+                  <img
+                    src="images/guide/22.jpg"
+                    alt="Accès à la villa"
+                    class="guide-card-image"
+                  />
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Accès à la villa</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
               </div>
-              <li>Lampes Fatboy préalablement chargées</li>
-              <li>Câbles USB dans le meuble sous la télévision</li>
-              <li>
-                <strong>IMPORTANT :</strong> Couper l'électricité avant de
-                descendre au sous-sol (risque d'incendie)
-              </li>
-            </ul>
-
-            <h4><i class="fas fa-box"></i> Boîte "Cyclone"</h4>
-            <p>Contient dans le cellier :</p>
-            <ul>
-              <li>Réchaud au gaz avec cartouche</li>
-              <li>Radio et piles pour suivre les informations</li>
-              <li>Comprimés Micropur pour stériliser l'eau</li>
-              <li>Gourdes métalliques de 1 litre</li>
-            </ul>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-phone"></i> Contacts d'urgence</h4>
-            <ul>
-              <li><strong>Police secours :</strong> 17</li>
-              <li><strong>Pompiers :</strong> 18</li>
-              <li><strong>Appel d'urgence européen :</strong> 112</li>
-              <li>
-                <strong>Laurence (renseignements pratiques) :</strong> 06 90 40
-                40 55
-              </li>
-            </ul>
-
-            <h4><i class="fas fa-radio"></i> Sources d'information</h4>
-            <ul>
-              <li>Météo France Antilles</li>
-              <li>Médias locaux</li>
-              <li>Préfecture de Guadeloupe</li>
-              <li>Protection civile</li>
-            </ul>
-
-            <h4>
-              <i class="fas fa-exclamation-triangle"></i> Rappels importants
-            </h4>
-            <ul>
-              <li>Suivre strictement les consignes des autorités</li>
-              <li>Ne pas prendre de risques inutiles</li>
-              <li>Rester informé en permanence</li>
-              <li>Préparer les équipements à l'avance</li>
-              <li>Connaître les pièces de sécurité de la villa</li>
-            </ul>
+            </div>
+            <button
+              id="carousel-localisation-right"
+              class="guide-carousel-button right hidden"
+            >
+              <i class="fas fa-chevron-right"></i>
+            </button>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Section Localisation -->
-      <div class="content-section" id="environnement">
-        <h2 class="section-title">📍 Localisation</h2>
-        <p class="section-description">
-          Comment venir à Calypso Bay et accéder à la villa depuis l'aéroport.
-        </p>
+      <!-- TRANSPORT ET ACCÈS (carousel) -->
+      <section class="guide-section" id="transport">
+        <div class="guide-content">
+          <h2 class="guide-section-title">Transport et Accès</h2>
+          <div class="guide-carousel">
+            <button
+              id="carousel-transport-left"
+              class="guide-carousel-button left hidden"
+            >
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <div
+              id="carousel-transport-container"
+              class="guide-carousel-container"
+            >
+              <div class="guide-carousel-content">
+                <!-- Loueurs -->
+                <article onclick="showPopup('loueurs')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/45.jpg"
+                      alt="Location de voiture"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <a
+                        href="https://www.hertzantilles.com/fr/location-de-voiture-guadeloupe"
+                        target="_blank"
+                        class="guide-tag-link"
+                        onclick="stopEventPropagation(event)"
+                      >
+                        <span class="guide-tag">Hertz</span>
+                      </a>
+                      <a
+                        href="https://www.europcar-guadeloupe.com/agences/aeroport-pointe-a-pitre"
+                        target="_blank"
+                        class="guide-tag-link"
+                        onclick="stopEventPropagation(event)"
+                      >
+                        <span class="guide-tag">Europcar</span>
+                      </a>
+                      <a
+                        href="https://www.avis.fr/"
+                        target="_blank"
+                        class="guide-tag-link"
+                        onclick="stopEventPropagation(event)"
+                      >
+                        <span class="guide-tag">Avis</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Loueurs de voiture</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
 
-        <div class="info-grid">
-          <div class="info-card">
-            <h4><i class="fas fa-home"></i> Adresse de Calypso Bay</h4>
-            <p><strong>717 rue de POIRIER, BOUILLANTE</strong></p>
+                <!-- Taxi -->
+                <article onclick="showPopup('taxi')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/46.jpg"
+                      alt="Taxi"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Environ 80€</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Taxi</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
 
-            <h4>
-              <i class="fas fa-route"></i> Depuis l'aéroport Pôle Caraïbes
-            </h4>
-            <p>
-              <strong
-                >Deux possibilités pour arriver sur la côte Ouest :</strong
-              >
-            </p>
-            <ul>
-              <li>
-                <strong>Route côtière nord :</strong> Par Le Lamentin,
-                Sainte-Rose (plus longue et encombrée, mais conseillée par très
-                mauvais temps, plus plate et moins sinueuse)
-              </li>
-              <li>
-                <strong>Route de la traversée :</strong> Plus directe et moins
-                chargée (recommandée par beau temps, plus sinueuse et pentue)
-              </li>
-            </ul>
-            <p>
-              <em
-                >La route de la traversée est magnifique, les Alpes au milieu de
-                la jungle.</em
-              >
-            </p>
-            <p>
-              <strong>Pour emprunter la route côtière nord :</strong> Ajoutez
-              une étape par Sainte-Rose à votre itinéraire, sinon pour la route
-              de la traversée, indiquez simplement l'adresse de la villa.
-            </p>
-
-            <!-- Bouton de navigation pour Calypso Bay -->
-            <div style="margin-top: 20px; text-align: center">
-              <a
-                href="geo:16.1581,-61.7761?q=717+Rue+de+Poirier+Bouillante+Guadeloupe"
-                style="
-                  display: inline-flex;
-                  align-items: center;
-                  gap: 8px;
-                  padding: 15px 25px;
-                  background: #4caf50;
-                  color: white;
-                  text-decoration: none;
-                  border-radius: 25px;
-                  font-size: 16px;
-                  font-weight: 500;
-                  transition: all 0.3s ease;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              >
-                <i class="fas fa-location-arrow"></i>
-                Ouvrir la navigation vers Calypso Bay
-              </a>
+                <!-- Navette -->
+                <article onclick="showPopup('navette')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/47.jpg"
+                      alt="Navette"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Économique</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Navette</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+              </div>
             </div>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-map-signs"></i> Itinéraires</h4>
-
-            <h5><i class="fas fa-route"></i> Route côtière nord</h5>
-            <p>Itinéraire plus long mais plus sûr par mauvais temps.</p>
-            <p><strong>Distance : 68 km</strong></p>
-
-            <!-- Image pour la route côtière nord -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/20.jpg"
-                alt="Route côtière nord"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-            </div>
-
-            <h5 style="margin-top: 30px">
-              <i class="fas fa-route"></i> Route de la traversée
-            </h5>
-            <p>Itinéraire direct et panoramique recommandé par beau temps.</p>
-            <p><strong>Distance : 46 km</strong></p>
-
-            <!-- Image pour la route de la traversée -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/21.jpg"
-                alt="Route de la traversée"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-            </div>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-mountain"></i> Accès à la villa</h4>
-
-            <!-- Image de la rue de Poirier -->
-            <div style="margin-bottom: 20px; text-align: center">
-              <img
-                src="images/guide/22.jpg"
-                alt="Rue de Poirier - Accès à Calypso Bay"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-            </div>
-
-            <p>
-              <strong>La rue de Poirier :</strong> Elle monte de façon assez
-              prononcée. Lors de votre progression :
-            </p>
-            <ul>
-              <li>
-                Dépasser les résidences du <strong>"JARDIN TROPICAL"</strong> à
-                gauche
-              </li>
-              <li>
-                L'entrée de la maison se situe immédiatement après le
-                <strong>"JARDIN ZEN"</strong> (trois petits bungalows blancs et
-                bleus à gauche)
-              </li>
-            </ul>
-            <p><strong>Vous êtes arrivés, BIENVENUE !</strong></p>
-
-            <h4><i class="fas fa-info-circle"></i> Conseils pratiques</h4>
-            <ul>
-              <li>Préférer la route de la traversée (plus rapide)</li>
-              <li>Attention aux lacets et à la montée</li>
-              <li>Éviter par grosse pluie (route glissante)</li>
-              <li>Repérer les panneaux "Parc de la Source" et "Poirier"</li>
-            </ul>
+            <button
+              id="carousel-transport-right"
+              class="guide-carousel-button right hidden"
+            >
+              <i class="fas fa-chevron-right"></i>
+            </button>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Section Transport -->
-      <div class="content-section" id="transport">
-        <h2 class="section-title">🚗 Transport et Accès</h2>
-        <p class="section-description">
-          Informations sur les transports, location de voiture et déplacements.
-        </p>
+      <!-- SERVICES ET COMMERCES (carousel) -->
+      <section class="guide-section" id="commerces">
+        <div class="guide-content">
+          <h2 class="guide-section-title">Services et Commerces</h2>
+          <div class="guide-carousel">
+            <button
+              id="carousel-commerces-left"
+              class="guide-carousel-button left hidden"
+            >
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <div
+              id="carousel-commerces-container"
+              class="guide-carousel-container"
+            >
+              <div class="guide-carousel-content">
+                <!-- Carrefour Market -->
+                <article onclick="showPopup('carrefour')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/02.jpg"
+                      alt="Carrefour Market"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Supermarché</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">Carrefour Market</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
 
-        <div class="info-grid">
-          <div class="info-card">
-            <h4><i class="fas fa-car"></i> Loueurs recommandés</h4>
-            <ul>
-              <li><strong>Hertz :</strong> Aéroport Pôle Caraïbes</li>
-              <li><strong>Avis :</strong> Aéroport et Pointe-à-Pitre</li>
-              <li><strong>Europcar :</strong> Plusieurs agences sur l'île</li>
-            </ul>
-            <p>
-              <strong>Conseil :</strong> Réservez à l'avance, surtout en haute
-              saison.
-            </p>
-          </div>
+                <!-- Leader Price -->
+                <article onclick="showPopup('leaderprice')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/03.jpg"
+                      alt="Leader Price"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Supermarché</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">Leader Price</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
 
-          <div class="info-card">
-            <h4><i class="fas fa-plane"></i> Aéroport Pôle Caraïbes</h4>
-            <p>Distance : 45 minutes en voiture</p>
-            <ul>
-              <li><strong>Taxi :</strong> Environ 80€ l'aller</li>
-              <li><strong>Navette :</strong> Services privés disponibles</li>
-              <li><strong>Location :</strong> Agences sur place</li>
-            </ul>
+                <!-- Cap Créole -->
+                <article onclick="showPopup('capcreole')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/05.jpg"
+                      alt="Cap Créole"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Poissonnerie</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">Cap Créole</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Four des Iles -->
+                <article onclick="showPopup('fourdesiles')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/04.jpg"
+                      alt="Four des Iles"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Boulangerie</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">Four des Iles</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Ti Taurus -->
+                <article onclick="showPopup('titaurus')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/06.jpg"
+                      alt="Ti Taurus"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Boucherie</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">Ti Taurus</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Chez Adèle -->
+                <article onclick="showPopup('chezadele')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/01.jpg"
+                      alt="Chez Adèle"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Fruits & Légumes</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">Chez Adèle</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+              </div>
+            </div>
+            <button
+              id="carousel-commerces-right"
+              class="guide-carousel-button right hidden"
+            >
+              <i class="fas fa-chevron-right"></i>
+            </button>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Section Informations Pratiques -->
-      <div class="content-section" id="pratique">
-        <h2 class="section-title">ℹ️ Informations Pratiques</h2>
-        <p class="section-description">
-          Conseils et informations importantes pour votre séjour.
-        </p>
+      <!-- RESTAURANTS ET GASTRONOMIE (carousel) -->
+      <section class="guide-section" id="restaurants">
+        <div class="guide-content">
+          <h2 class="guide-section-title">Restaurants et Gastronomie</h2>
+          <div class="guide-carousel">
+            <button
+              id="carousel-restaurants-left"
+              class="guide-carousel-button left hidden"
+            >
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <div
+              id="carousel-restaurants-container"
+              class="guide-carousel-container"
+            >
+              <div class="guide-carousel-content">
+                <!-- La Touna -->
+                <article onclick="showPopup('latouna')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/07.jpg"
+                      alt="La Touna"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Bistronomique</span>
+                      <span class="guide-tag">Sur place</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">La Touna</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
 
-        <div class="info-grid">
-          <div class="info-card">
-            <h4>
-              <i class="fas fa-calendar-alt"></i> Taxe de séjour obligatoire
-            </h4>
-            <p>Une taxe de séjour est perçue par la commune de Bouillante :</p>
-            <ul>
-              <li>
-                <strong>Montant :</strong> 2,30€ par personne et par nuit
-                (résidence de tourisme 4 étoiles)
-              </li>
-              <li><strong>Exonération :</strong> Enfants de moins de 18 ans</li>
-              <li>
-                <strong>Paiement :</strong> Inclus dans le prix de votre séjour
-              </li>
-              <li><strong>Durée :</strong> Séjours de plus de 3 nuits</li>
-            </ul>
+                <!-- Chez Didier -->
+                <article onclick="showPopup('chezdidier')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/08.jpg"
+                      alt="Chez Didier"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Saveurs franco-créole</span>
+                      <span class="guide-tag">Sur place</span>
+                      <span class="guide-tag">A emporter</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">Chez Didier</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
 
-            <h4><i class="fas fa-info-circle"></i> Informations légales</h4>
-            <p>
-              Cette taxe contribue au développement touristique de la commune et
-              à l'entretien des équipements publics (plages, sentiers, etc.).
-            </p>
-          </div>
+                <!-- Sunset B -->
+                <article onclick="showPopup('sunsetb')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/09.jpg"
+                      alt="Sunset B"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Saveurs créoles</span>
+                      <span class="guide-tag">Sur place</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">Sunset B</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
 
-          <div class="info-card">
-            <h4><i class="fas fa-suitcase"></i> Préparatifs</h4>
-            <ul>
-              <li>
-                <strong>Vêtements :</strong> Légers et confortables, maillot de
-                bain, chapeau
-              </li>
-              <li>
-                <strong>Chaussures :</strong> Sandales pour la plage, chaussures
-                fermées pour randonnées
-              </li>
-            </ul>
+                <!-- Aux Deux Coquilles -->
+                <article
+                  onclick="showPopup('auxdeuxcoquilles')"
+                  class="guide-card"
+                >
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/10.jpg"
+                      alt="Aux Deux Coquilles"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Saveurs créoles</span>
+                      <span class="guide-tag">Sur place</span>
+                      <span class="guide-tag">A emporter</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">Aux Deux Coquilles</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
 
-            <h4><i class="fas fa-clock"></i> Informations importantes</h4>
-            <ul>
-              <li>Arrivée : à partir de 15h00</li>
-              <li>Départ : avant 10h00</li>
-              <li>Clé : Retrait dans un coffre sécurisé</li>
-              <li>Contact : Disponible 24h/24 en cas d'urgence</li>
-            </ul>
-          </div>
+                <!-- Franko Grill -->
+                <article onclick="showPopup('frankogrill')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/11.jpg"
+                      alt="Franko Grill"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Grillades</span>
+                      <span class="guide-tag">Sur place</span>
+                      <span class="guide-tag">A emporter</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">Franko Grill</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
 
-                    <div class="info-card">
-            <h4><i class="fas fa-utensils"></i> Équipements disponibles dans la maison</h4>
-            <ul>
-              <li><strong>Masques faciaux :</strong> Plusieurs masques disponibles dans le sous-sol (taille M et S)</li>
-              <li><strong>Serviettes :</strong> Fournies pour la toilette et la piscine (pas de serviettes de plage)</li>
-              <li><strong>Séchoirs pliants :</strong> Prévus pour le séchage des serviettes de plage à l'extérieur</li>
-            </ul>
+                <!-- Oganik -->
+                <article onclick="showPopup('oganik')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/12.jpg"
+                      alt="Oganik"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Pizzeria</span>
+                      <span class="guide-tag">Sur place</span>
+                      <span class="guide-tag">A emporter</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">Oganik</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
 
-            <!-- Image des équipements disponibles -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/36.jpg"
-                alt="Équipements disponibles - Maison"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
+                <!-- Allo Pizza -->
+                <article onclick="showPopup('allopizza')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/13.jpg"
+                      alt="Allo Pizza"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Pizzeria</span>
+                      <span class="guide-tag">Drive</span>
+                      <span class="guide-tag">A emporter</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">Allo Pizza</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Le Cœur de Pigeon -->
+                <article
+                  onclick="showPopup('lecoeurdepigeon')"
+                  class="guide-card"
+                >
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/14.jpg"
+                      alt="Le Cœur de Pigeon"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Pizzeria</span>
+                      <span class="guide-tag">Sur place</span>
+                      <span class="guide-tag">A emporter</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">Le Cœur de Pigeon</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+              </div>
             </div>
-
-            <h4><i class="fas fa-shopping-bag"></i> Équipements à prévoir</h4>
-            <ul>
-              <li><strong>Sac étanche :</strong> Recommandé pour randonnées et plages (protection contre les ondées)</li>
-              <li><strong>Chaussures de randonnée aquatique :</strong> Idéales pour les passages à gué et randonnées</li>
-            </ul>
-
-            <!-- Image des chaussures de randonnée aquatique -->
-            <div style="margin-top: 20px; text-align: center">
-              <img
-                src="images/guide/35.jpg"
-                alt="Chaussures de randonnée aquatique"
-                style="
-                  width: 100%;
-                  max-width: 400px;
-                  object-fit: cover;
-                  border-radius: 8px;
-                  margin-bottom: 15px;
-                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                "
-              />
-            </div>
-              <li><strong>Paréos :</strong> Recommandés comme serviettes de plage (sèchent vite, moins volumineux)</li>
-              <li><strong>Répulsif anti-moustiques :</strong> OFF ou INSECTECRAN (à transporter en soute)</li>
-            </ul>
-
-            <h4><i class="fas fa-plug"></i> Équipements électriques</h4>
-            <p>
-              La maison est équipée de prises USB et d'adaptateurs pour les prises Américaines.
-            </p>
-          </div>
-
-          <div class="info-card">
-            <h4><i class="fas fa-suitcase"></i> QUELQUES PETITS CONSEILS AVANT DE PARTIR</h4>
-
-            <h5><i class="fas fa-bag"></i> Un sac étanche</h5>
-            <p>
-              C'est souvent utile (et pas cher) quand on randonne avec quelquefois des traversées de rivières, mais aussi de façon plus quotidienne quand on va à la plage.
-            </p>
-            <p>
-              En Guadeloupe (voir la végétation), le climat est tropical et une ondée peut vous surprendre alors que vous vous baignez, avec pour désagrément vêtements et serviettes trempées.
-            </p>
-            <p>
-              Même si la pluie est chaude, le faible coût de cet investissement mérite de s'y intéresser.
-            </p>
-
-            <h5><i class="fas fa-umbrella-beach"></i> Pour la plage</h5>
-            <p>
-              Nous utilisons des paréos comme serviette pour deux raisons : on sèche très vite avec la chaleur, et c'est beaucoup moins lourd et volumineux dans les sacs ou les valises.
-            </p>
-            <p>
-              Nous fournissons les serviettes pour la toilette et également pour la piscine, mais pas de serviettes de plage.
-            </p>
-            <p>
-              En ce qui concerne ces dernières nous conseillons d'ailleurs de les laisser sécher à l'extérieur sur les séchoirs pliants prévus à cet effet afin d'éviter d'introduire les puces de sable (yens yens) présentes à certaines périodes de l'année sur les plages et responsables de démangeaisons très désagréables au niveau des jambes.
-            </p>
-
-            <h5><i class="fas fa-hiking"></i> La randonnée</h5>
-            <p>
-              En Guadeloupe, les meilleures chaussures sont celles de randonnée aquatique, elles évitent de glisser lors des passages à gué, sèchent rapidement et ne craignent pas l'eau.
-            </p>
-            <p>
-              En forêt il y a peu de moustiques, en revanche se prémunir si on visite la mangrove.
-            </p>
-
-            <h5><i class="fas fa-swimming-pool"></i> La mer</h5>
-            <p>
-              Quand on aime l'exploration sous-marine, un simple masque facial est suffisant.
-            </p>
-            <p><strong>Quelques idées proches de la maison :</strong></p>
-            <ul>
-              <li>La plage de Malendure pour les tortues</li>
-              <li>La plage Leroux à Ferry (le long des rochers à gauche de l'anse) : petits poissons coffres, calamars, coraux</li>
-              <li>La plage de Petite Anse à Bouillante en direction de Vieux Habitants</li>
-            </ul>
-            <p>
-              S'ils n'ont pas disparu, il y a plusieurs masques faciaux à disposition dans le sous-sol de la maison (taille M et S).
-            </p>
+            <button
+              id="carousel-restaurants-right"
+              class="guide-carousel-button right hidden"
+            >
+              <i class="fas fa-chevron-right"></i>
+            </button>
           </div>
         </div>
+      </section>
+
+      <!-- ACTIVITÉS (carousel) -->
+      <section class="guide-section" id="activites">
+        <div class="guide-content">
+          <h2 class="guide-section-title">Activités</h2>
+          <div class="guide-carousel">
+            <button
+              id="carousel-activites-left"
+              class="guide-carousel-button left hidden"
+            >
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <div
+              id="carousel-activites-container"
+              class="guide-carousel-container"
+            >
+              <div class="guide-carousel-content">
+                <!-- Kayak -->
+                <article onclick="showPopup('kayak')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/48.jpg"
+                      alt="Kayak"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">CARAÏBE KAYAK</span>
+                      <span class="guide-tag">GWADA PAGAIE</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">Kayak</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Plongée -->
+                <article onclick="showPopup('plongee')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/49.jpg"
+                      alt="Plongée"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Les Heures Saines</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">Plongée</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Distilleries -->
+                <article onclick="showPopup('distilleries')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/50.jpg"
+                      alt="Distilleries"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Bologne</span>
+                      <span class="guide-tag">Longueteau</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">Distilleries</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Maison du Cacao -->
+                <article onclick="showPopup('maisoncacao')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/51.jpg"
+                      alt="Maison du Cacao"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Pointe-Noire</span>
+                      <span class="guide-tag">Dégustation</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">Maison du Cacao</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Musée du Rhum -->
+                <article onclick="showPopup('museerhum')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/52.jpg"
+                      alt="Musée du Rhum"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Sainte-Rose</span>
+                      <span class="guide-tag">Culture</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">Musée du Rhum</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Habitation Côte-sous-le-Vent -->
+                <article onclick="showPopup('habitation')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/53.jpg"
+                      alt="Habitation Côte-sous-le-Vent"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Pointe-Noire</span>
+                      <span class="guide-tag">Patrimoine</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">
+                        Habitation Côte sous le Vent
+                      </h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Mémorial ACTe -->
+                <article onclick="showPopup('memorialacte')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/54.jpg"
+                      alt="Mémorial ACTe"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Pointe-à-Pitre</span>
+                      <span class="guide-tag">Histoire</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">Mémorial ACTe</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Microbrasserie -->
+                <article
+                  onclick="showPopup('microbrasserie')"
+                  class="guide-card"
+                >
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/55.jpg"
+                      alt="Microbrasserie"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Bière locale</span>
+                      <span class="guide-tag">Dégustation</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">Microbrasserie</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Aquarium -->
+                <article onclick="showPopup('aquarium')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/56.jpg"
+                      alt="Aquarium"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Gosier</span>
+                      <span class="guide-tag">Faune marine</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">Aquarium</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Site de tournage -->
+                <article onclick="showPopup('sitetournage')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/57.jpg"
+                      alt="Site de tournage"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Deshaies</span>
+                      <span class="guide-tag">Meurtres au paradis</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">Site de tournage</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+              </div>
+            </div>
+            <button
+              id="carousel-activites-right"
+              class="guide-carousel-button right hidden"
+            >
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- EXCURSIONS (carousel) -->
+      <section class="guide-section" id="excursions">
+        <div class="guide-content">
+          <h2 class="guide-section-title">Excursions</h2>
+          <div class="guide-carousel">
+            <button
+              id="carousel-excursions-left"
+              class="guide-carousel-button left hidden"
+            >
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <div
+              id="carousel-excursions-container"
+              class="guide-carousel-container"
+            >
+              <div class="guide-carousel-content">
+                <!-- Plages et snorkeling -->
+                <article onclick="showPopup('plages')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/58.jpg"
+                      alt="Plages et snorkeling"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Plages</span>
+                      <span class="guide-tag">Snorkeling</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Plages et snorkeling</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Cascades et randonnées -->
+                <article onclick="showPopup('cascades')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/59.jpg"
+                      alt="Cascades et randonnées"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Cascades</span>
+                      <span class="guide-tag">Randonnées</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Cascades et randonnées</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Découvertes en mer -->
+                <article onclick="showPopup('mer')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/60.jpg"
+                      alt="Découvertes en mer"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Plongée</span>
+                      <span class="guide-tag">Excursions</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Découvertes en mer</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Balades et découvertes -->
+                <article onclick="showPopup('balades')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/61.jpg"
+                      alt="Balades et découvertes"
+                      class="guide-card-image"
+                    />
+                    <div class="guide-tags">
+                      <span class="guide-tag">Culture</span>
+                      <span class="guide-tag">Patrimoine</span>
+                    </div>
+                  </div>
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Balades et découvertes</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+              </div>
+            </div>
+            <button
+              id="carousel-excursions-right"
+              class="guide-carousel-button right hidden"
+            >
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SOINS, SANTÉ & PRÉVENTION (carousel) -->
+      <section class="guide-section" id="sante">
+        <div class="guide-content">
+          <h2 class="guide-section-title">Soins, Santé & Prévention</h2>
+          <div class="guide-carousel">
+            <button
+              id="carousel-sante-left"
+              class="guide-carousel-button left hidden"
+            >
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <div id="carousel-sante-container" class="guide-carousel-container">
+              <div class="guide-carousel-content">
+                <!-- Pharmacie -->
+                <article onclick="showPopup('pharmacie')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/15.jpg"
+                      alt="Pharmacie"
+                      class="guide-card-image"
+                    />
+                  </div>
+                  <div class="guide-card-content">
+                    <div class="guide-card-header">
+                      <h3 class="guide-card-title">Pharmacie</h3>
+                      <button
+                        onclick="openNavigation(event)"
+                        class="guide-navigation-button"
+                        title="Ouvrir la navigation GPS"
+                      >
+                        <i class="fas fa-location-arrow"></i>
+                      </button>
+                    </div>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Protection anti-moustiques -->
+                <article onclick="showPopup('moustiques')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/62.jpg"
+                      alt="Protection anti-moustiques"
+                      class="guide-card-image"
+                    />
+                  </div>
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Protection anti-moustiques</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Faune locale -->
+                <article onclick="showPopup('faune')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/63.jpg"
+                      alt="Faune locale"
+                      class="guide-card-image"
+                    />
+                  </div>
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Faune locale</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Protection solaire -->
+                <article onclick="showPopup('soleil')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/64.jpg"
+                      alt="Protection solaire"
+                      class="guide-card-image"
+                    />
+                  </div>
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Protection solaire</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Bains chauds -->
+                <article onclick="showPopup('bains')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/65.jpg"
+                      alt="Bains chauds"
+                      class="guide-card-image"
+                    />
+                  </div>
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Bains chauds</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Bons réflexes -->
+                <article onclick="showPopup('reflexes')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/66.jpg"
+                      alt="Bons réflexes"
+                      class="guide-card-image"
+                    />
+                  </div>
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Bons réflexes</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+              </div>
+            </div>
+            <button
+              id="carousel-sante-right"
+              class="guide-carousel-button right hidden"
+            >
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- EAU & ÉLECTRICITÉ (carousel) -->
+      <section class="guide-section" id="eau-electricite">
+        <div class="guide-content">
+          <h2 class="guide-section-title">Eau & Électricité</h2>
+          <div class="guide-carousel">
+            <button
+              id="carousel-eau-electricite-left"
+              class="guide-carousel-button left hidden"
+            >
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <div
+              id="carousel-eau-electricite-container"
+              class="guide-carousel-container"
+            >
+              <div class="guide-carousel-content">
+                <!-- Eau -->
+                <article onclick="showPopup('eau')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/67.jpg"
+                      alt="Eau"
+                      class="guide-card-image"
+                    />
+                  </div>
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Eau</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Électricité -->
+                <article onclick="showPopup('electricite')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/68.jpg"
+                      alt="Électricité"
+                      class="guide-card-image"
+                    />
+                  </div>
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Électricité</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+              </div>
+            </div>
+            <button
+              id="carousel-eau-electricite-right"
+              class="guide-carousel-button right hidden"
+            >
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CYCLONES (carousel) -->
+      <section class="guide-section" id="cyclones">
+        <div class="guide-content">
+          <h2 class="guide-section-title">
+            Cyclones et Alertes Météorologiques
+          </h2>
+          <div class="guide-carousel">
+            <button
+              id="carousel-cyclones-left"
+              class="guide-carousel-button left hidden"
+            >
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <div
+              id="carousel-cyclones-container"
+              class="guide-carousel-container"
+            >
+              <div class="guide-carousel-content">
+                <!-- Saison cyclonique -->
+                <article
+                  onclick="showPopup('saison-cyclonique')"
+                  class="guide-card"
+                >
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/69.jpg"
+                      alt="Saison cyclonique"
+                      class="guide-card-image"
+                    />
+                  </div>
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Saison cyclonique</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- La maison en cas de cyclone -->
+                <article
+                  onclick="showPopup('maison-cyclone')"
+                  class="guide-card"
+                >
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/70.jpg"
+                      alt="La maison en cas de cyclone"
+                      class="guide-card-image"
+                    />
+                  </div>
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">
+                      La maison en cas de cyclone
+                    </h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Gestion de l'eau -->
+                <article
+                  onclick="showPopup('gestion-eau-cyclone')"
+                  class="guide-card"
+                >
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/71.jpg"
+                      alt="Gestion de l'eau"
+                      class="guide-card-image"
+                    />
+                  </div>
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Gestion de l'eau</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Contacts d'urgence -->
+                <article
+                  onclick="showPopup('contacts-urgence')"
+                  class="guide-card"
+                >
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/72.jpg"
+                      alt="Contacts d'urgence"
+                      class="guide-card-image"
+                    />
+                  </div>
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Contacts d'urgence</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+              </div>
+            </div>
+            <button
+              id="carousel-cyclones-right"
+              class="guide-carousel-button right hidden"
+            >
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- INFORMATIONS PRATIQUES (carousel) -->
+      <section class="guide-section" id="infos-pratiques">
+        <div class="guide-content">
+          <h2 class="guide-section-title">Informations Pratiques</h2>
+          <div class="guide-carousel">
+            <button
+              id="carousel-infos-pratiques-left"
+              class="guide-carousel-button left hidden"
+            >
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <div
+              id="carousel-infos-pratiques-container"
+              class="guide-carousel-container"
+            >
+              <div class="guide-carousel-content">
+                <!-- Taxe de séjour -->
+                <article onclick="showPopup('taxe-sejour')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/73.jpg"
+                      alt="Taxe de séjour"
+                      class="guide-card-image"
+                    />
+                  </div>
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Taxe de séjour</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Préparatifs avant le départ -->
+                <article onclick="showPopup('preparatifs')" class="guide-card">
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/74.jpg"
+                      alt="Préparatifs avant le départ"
+                      class="guide-card-image"
+                    />
+                  </div>
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">
+                      Préparatifs avant le départ
+                    </h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Équipements fournis -->
+                <article
+                  onclick="showPopup('equipements-fournis')"
+                  class="guide-card"
+                >
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/75.jpg"
+                      alt="Équipements fournis"
+                      class="guide-card-image"
+                    />
+                  </div>
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Équipements fournis</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Équipements à emporter -->
+                <article
+                  onclick="showPopup('equipements-emporter')"
+                  class="guide-card"
+                >
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/76.jpg"
+                      alt="Équipements à emporter"
+                      class="guide-card-image"
+                    />
+                  </div>
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">Équipements à emporter</h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Conseils pratiques sur place -->
+                <article
+                  onclick="showPopup('conseils-pratiques')"
+                  class="guide-card"
+                >
+                  <div style="position: relative">
+                    <img
+                      src="images/guide/77.jpg"
+                      alt="Conseils pratiques sur place"
+                      class="guide-card-image"
+                    />
+                  </div>
+                  <div class="guide-card-content">
+                    <h3 class="guide-card-title">
+                      Conseils pratiques sur place
+                    </h3>
+                    <p class="guide-card-description">
+                      Cliquez pour en savoir plus…
+                    </p>
+                  </div>
+                </article>
+              </div>
+            </div>
+            <button
+              id="carousel-infos-pratiques-right"
+              class="guide-carousel-button right hidden"
+            >
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <footer class="guide-footer">
+        <div class="guide-content">
+          <div class="guide-footer-content">
+            <div>
+              <div class="guide-footer-brand">Calypso Bay</div>
+              <p class="guide-footer-text">
+                Pour toute question, contactez-nous :
+              </p>
+              <p class="guide-footer-text">contact@calypso-bay.com</p>
+              <p class="guide-footer-text">+590 • • • • • • •</p>
+            </div>
+            <div>
+              <div class="guide-footer-title">Infos pratiques</div>
+              <ul class="guide-footer-list">
+                <li>Adresse : 717 rue de Poirier, Bouillante</li>
+                <li>Check-in : 15h00</li>
+                <li>Check-out : 10h00</li>
+              </ul>
+            </div>
+          </div>
+          <div class="guide-copyright">
+            © 2025 Calypso Bay. Guide locataire.
+          </div>
+        </div>
+      </footer>
+
+      <!-- POPUPS -->
+      <div
+        id="popup-overlay"
+        class="guide-popup-overlay hidden"
+        onclick="hidePopup()"
+      >
+        <div class="guide-popup" onclick="stopEventPropagation(event)">
+          <button onclick="hidePopup()" class="guide-popup-close">✕</button>
+          <div id="popup-content"></div>
+        </div>
       </div>
-
-
     </div>
-
-    <!-- Back to top button -->
-    <a href="#" class="back-to-top" id="backToTop">
-      <i class="fas fa-arrow-up"></i>
-    </a>
-
-    <script>
-      // Système de recherche
-      document
-        .getElementById('searchInput')
-        .addEventListener('input', function () {
-          const searchTerm = this.value.toLowerCase()
-          const cards = document.querySelectorAll('.info-card')
-
-          cards.forEach((card) => {
-            const text = card.textContent.toLowerCase()
-            if (text.includes(searchTerm)) {
-              card.style.display = 'block'
-              // Highlight matching text
-              if (searchTerm.length > 2) {
-                highlightText(card, searchTerm)
-              } else {
-                // Remove highlights if search term is too short
-                removeHighlights(card)
-              }
-            } else {
-              card.style.display = 'none'
-            }
-          })
-        })
-
-      function highlightText(element, searchTerm) {
-        // First remove any existing highlights
-        removeHighlights(element)
-
-        const walker = document.createTreeWalker(
-          element,
-          NodeFilter.SHOW_TEXT,
-          null,
-          false
-        )
-
-        const textNodes = []
-        let node
-        while ((node = walker.nextNode())) {
-          textNodes.push(node)
-        }
-
-        textNodes.forEach((textNode) => {
-          const text = textNode.textContent
-          const regex = new RegExp(`(${searchTerm})`, 'gi')
-          if (regex.test(text)) {
-            const highlightedText = text.replace(
-              regex,
-              '<span class="highlight">$1</span>'
-            )
-            const span = document.createElement('span')
-            span.innerHTML = highlightedText
-            textNode.parentNode.replaceChild(span, textNode)
-          }
-        })
-      }
-
-      function removeHighlights(element) {
-        const highlights = element.querySelectorAll('.highlight')
-        highlights.forEach((highlight) => {
-          const parent = highlight.parentNode
-          parent.replaceChild(document.createTextNode(highlight.textContent), highlight)
-          parent.normalize() // Merge adjacent text nodes
-        })
-      }
-
-      // Back to top functionality - Simple and reliable
-      const backToTop = document.getElementById('backToTop')
-
-      // Show/hide button based on scroll position
-      window.addEventListener('scroll', function () {
-        if (window.pageYOffset > 300) {
-          backToTop.style.opacity = '1'
-          backToTop.style.visibility = 'visible'
-        } else {
-          backToTop.style.opacity = '0.3'
-          backToTop.style.visibility = 'visible'
-        }
-      })
-
-      // Simple click handler with console log for debugging
-      backToTop.addEventListener('click', function (e) {
-        console.log('Back to top button clicked!')
-        e.preventDefault()
-        e.stopPropagation()
-
-        // Try multiple methods for better compatibility
-        try {
-          // Method 1: Modern scrollTo with smooth behavior
-          window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: 'smooth'
-          })
-        } catch (error) {
-          console.log('Smooth scroll failed, trying instant scroll')
-          // Method 2: Instant scroll as fallback
-          window.scrollTo(0, 0)
-        }
-
-        // Method 3: Alternative using document.documentElement
-        if (document.documentElement.scrollTop > 0) {
-          document.documentElement.scrollTop = 0
-        } else if (document.body.scrollTop > 0) {
-          document.body.scrollTop = 0
-        }
-      })
-
-      // Mobile navigation functionality
-      const mobileNavToggle = document.getElementById('mobileNavToggle')
-      const mobileNavContent = document.getElementById('mobileNavContent')
-      const mobileSearchInput = document.getElementById('mobileSearchInput')
-
-      // Toggle mobile menu
-      mobileNavToggle.addEventListener('click', function () {
-        mobileNavContent.classList.toggle('active')
-        const icon = this.querySelector('i')
-        if (mobileNavContent.classList.contains('active')) {
-          icon.className = 'fas fa-times'
-        } else {
-          icon.className = 'fas fa-bars'
-        }
-      })
-
-      // Mobile search functionality
-      mobileSearchInput.addEventListener('input', function () {
-        const searchTerm = this.value.toLowerCase()
-        const cards = document.querySelectorAll('.info-card')
-
-        cards.forEach((card) => {
-          const text = card.textContent.toLowerCase()
-          if (text.includes(searchTerm)) {
-            card.style.display = 'block'
-            // Highlight matching text
-            if (searchTerm.length > 2) {
-              highlightText(card, searchTerm)
-            } else {
-              // Remove highlights if search term is too short
-              removeHighlights(card)
-            }
-          } else {
-            card.style.display = 'none'
-          }
-        })
-      })
-
-      // Close mobile menu when clicking on a link
-      document.querySelectorAll('.mobile-nav-links a').forEach((link) => {
-        link.addEventListener('click', function () {
-          mobileNavContent.classList.remove('active')
-          const icon = mobileNavToggle.querySelector('i')
-          icon.className = 'fas fa-bars'
-        })
-      })
-
-      // Smooth scrolling for navigation links (excluding back to top button)
-      document
-        .querySelectorAll('a[href^="#"]:not(#backToTop)')
-        .forEach((anchor) => {
-          anchor.addEventListener('click', function (e) {
-            e.preventDefault()
-            const target = document.querySelector(this.getAttribute('href'))
-            if (target) {
-              target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-              })
-            }
-          })
-        })
-    </script>
   </body>
 </html>
