@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function showLightbox() {
     const path = `images/gallery/fulls/${currentRoom}/${formatIndex(
       currentIndex
-    )}.jpg`
+    )}.webp`
     lightboxImg.src = path
     updateCounter()
     lightbox.style.display = 'flex'
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     currentIndex++
     const nextPath = `images/gallery/fulls/${currentRoom}/${formatIndex(
       currentIndex
-    )}.jpg`
+    )}.webp`
     lightboxImg.src = nextPath
     updateCounter()
   }
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     currentIndex--
     const prevPath = `images/gallery/fulls/${currentRoom}/${formatIndex(
       currentIndex
-    )}.jpg`
+    )}.webp`
     lightboxImg.src = prevPath
     updateCounter()
   }
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
       function testNext() {
         const path = `images/gallery/fulls/${room}/${i
           .toString()
-          .padStart(2, '0')}.jpg`
+          .padStart(2, '0')}.webp`
         fetch(path, { method: 'HEAD' })
           .then((res) => {
             if (res.ok) {
