@@ -101,13 +101,13 @@ class PopupManager {
           <div class="guide-popup-content">
             <p><i class="fas fa-power-off guide-icon power"></i> <strong>Interrupteur général :</strong> L'interrupteur général du salon est celui situé à côté de la porte d'accès à la chambre du fond. Il permet l'alimentation en électricité du ventilateur et de la lampe.</p>
             <p><i class="fas fa-lightbulb guide-icon light"></i> <strong>Télécommande LEXMAN (éclairage) :</strong> L'éclairage est dépendant de la petite télécommande LEXMAN. Pour allumer et éteindre, il suffit d'appuyer sur le bouton représentant un cercle interrompu d'une barre.</p>
-            <img src="https://www.calypso-bay.com/images/guide/24.jpg" alt="Télécommande LEXMAN"/>
+            <img src="images/guide/24.webp" alt="Télécommande LEXMAN"/>
             <p><i class="fas fa-fan guide-icon fan"></i> <strong>Télécommande FANELITE (ventilateur) :</strong> Le ventilateur dépend de la télécommande FANELITE :</p>
             <ul>
               <li>Mise en route : Appuyer sur le symbole I en haut de la commande</li>
               <li>Arrêt : Appuyer sur le cercle à droite</li>
             </ul>
-            <img src="https://www.calypso-bay.com/images/guide/23.jpg" alt="Télécommande FANELITE"/>
+            <img src="images/guide/23.webp" alt="Télécommande FANELITE"/>
             <p><i class="fas fa-lightbulb guide-icon light"></i> <strong>Éclairage du ventilateur :</strong> Il existe également un éclairage à la base du ventilateur dont l'utilisation est commandée par le symbole représentant une ampoule.</p>
           </div>
         `
@@ -119,7 +119,7 @@ class PopupManager {
           <div class="guide-popup-content">
             <p>Ceci concerne l'eau des lavabos et surtout des douches. Comme dans beaucoup de pays où le soleil est souvent présent, la maison est équipée d'un chauffe-eau solaire (panneau solaire et réservoir) dont la position sur la toiture se situe près de l'entrée de la maison.</p>
             <p>La taille du réservoir est celle préconisée par l'architecte pour une maison de six personnes. Les caractéristiques de l'appareil et sa situation par rapport à la disposition des chambres amènent à deux précisions :</p>
-            <img src="https://www.calypso-bay.com/images/guide/28.jpg" alt="Chauffe-eau solaire - Distribution eau chaude"/>
+            <img src="images/guide/28.webp" alt="Chauffe-eau solaire - Distribution eau chaude"/>
             <ul>
               <li><strong>Fonctionnement solaire :</strong> Par définition, le dispositif solaire fonctionne la journée et non la nuit. Il en résulte que si la totalité du réservoir a été utilisée dans la soirée, l'eau des douches sera tiède le lendemain matin mais se réchauffera automatiquement au cours de la journée.</li>
               <li><strong>Disposition :</strong> Le chauffe-eau est plus proche de l'entrée et des deux premières chambres que de la troisième qui en est plus éloignée. La conséquence en est que les deux premières douches vont bénéficier de l'eau chaude plus rapidement que la troisième en raison de son éloignement, sans pour autant qu'il s'agisse d'un dysfonctionnement.</li>
@@ -151,7 +151,7 @@ class PopupManager {
            <h3 class="guide-popup-title"><i class="fas fa-toilet guide-icon toilet"></i>Les WC et les eaux usées</h3>
            <div class="guide-popup-content">
              <p>Toutes les nouvelles habitations sur les hauteurs de Basse-Terre doivent maintenant être équipées d'une mini station d'épuration individuelle lors de la construction.</p>
-             <img src="https://www.calypso-bay.com/images/guide/26.jpg" alt="Mini station d'épuration - WC et eaux usées"/>
+             <img src="images/guide/26.webp" alt="Mini station d'épuration - WC et eaux usées"/>
              <p><strong>Pour préserver leur bon fonctionnement :</strong></p>
              <ul>
                <li>Ne mettre dans la cuvette des WC que du papier toilette sec (en rouleaux)</li>
@@ -170,7 +170,7 @@ class PopupManager {
             <h3 class="guide-popup-title"><i class="fas fa-shield-alt guide-icon shield"></i>Filet de sécurité et terrasse</h3>
             <div class="guide-popup-content">
               <p>La maison est équipée d'un filet de sécurité placé entre la piscine et la terrasse. Malgré sa résistance, ce n'est pas un hamac sur lequel on peut s'allonger (comme sur les catamarans), il se veut un élément de sécurité en cas de chute accidentelle, et donc merci de lui réserver cette vocation afin qu'il garde son efficacité.</p>
-              <img src="https://www.calypso-bay.com/images/guide/25.jpg" alt="Filet de sécurité - Terrasse et piscine"/>
+              <img src="images/guide/25.webp" alt="Filet de sécurité - Terrasse et piscine"/>
               <p><strong>IMPORTANT :</strong></p>
               <ul>
                 <li>La terrasse n'a pas de balustrade, et la piscine pas de barrière de sécurité</li>
@@ -191,7 +191,7 @@ class PopupManager {
                <li>Le ramassage se fait pendant la nuit du dimanche au lundi</li>
                <li>En ce qui concerne les bouteilles en verre ou en plastique, il existe des bornes de dépôt le long des routes, la plus proche étant située en face de Carrefour Market</li>
              </ul>
-             <img src="https://www.calypso-bay.com/images/guide/29.jpg" alt="Bornes de recyclage - Gestion des déchets"/>
+             <img src="images/guide/29.webp" alt="Bornes de recyclage - Gestion des déchets"/>
            </div>
          `
       },
@@ -203,7 +203,7 @@ class PopupManager {
              <h4><i class="fas fa-exclamation-triangle guide-icon warning"></i>LES VOLETS ÉLECTRIQUES</h4>
              <p><strong>ATTENTION :</strong></p>
              <p>Merci de vérifier que rien ne perturbe la fermeture des volets électriques (fauteuils de terrasse en particulier) au risque de les bloquer et de ne pouvoir fermer efficacement la maison en votre absence (c'est déjà arrivé).</p>
-             <img src="https://www.calypso-bay.com/images/guide/27.jpg" alt="Volets électriques - Précautions"/>
+             <img src="images/guide/27.webp" alt="Volets électriques - Précautions"/>
              <h4><i class="fas fa-window-restore guide-icon window"></i>LES FENÊTRES DES CHAMBRES</h4>
              <p>Les volets des fenêtres s'ouvrent et se ferment en utilisant la manivelle fixée sur le côté du cadre.</p>
              <p>Malheureusement, les cardans de ces manivelles sont très fragiles (c'est un défaut de conception que nous avons signalé au fabricant).</p>
@@ -258,11 +258,11 @@ class PopupManager {
              <h4><i class="fas fa-route guide-icon route"></i>Route côtière nord</h4>
              <p>Itinéraire plus long mais plus sûr par mauvais temps.</p>
              <p><strong>Distance : 68 km</strong></p>
-             <img src="https://www.calypso-bay.com/images/guide/20.jpg" alt="Route côtière nord"/>
+             <img src="images/guide/20.webp" alt="Route côtière nord"/>
              <h4 style="margin-top: 30px"><i class="fas fa-route guide-icon route"></i>Route de la traversée</h4>
              <p>Itinéraire direct et panoramique recommandé par beau temps.</p>
              <p><strong>Distance : 46 km</strong></p>
-             <img src="https://www.calypso-bay.com/images/guide/21.jpg" alt="Route de la traversée"/>
+             <img src="images/guide/21.webp" alt="Route de la traversée"/>
            </div>
          `
       },
@@ -271,7 +271,7 @@ class PopupManager {
         content: `
             <h3 class="guide-popup-title"><i class="fas fa-mountain guide-icon mountain"></i>Accès à la villa</h3>
             <div class="guide-popup-content">
-              <img src="https://www.calypso-bay.com/images/guide/22.jpg" alt="Rue de Poirier - Accès à Calypso Bay"/>
+              <img src="images/guide/22.webp" alt="Rue de Poirier - Accès à Calypso Bay"/>
               <p><strong>La rue de Poirier :</strong> Elle monte de façon assez prononcée. Lors de votre progression :</p>
               <ul>
                 <li>Dépasser les résidences du <strong>"JARDIN TROPICAL"</strong> à gauche</li>
@@ -352,7 +352,7 @@ class PopupManager {
            <h3 class="guide-popup-title"><i class="fas fa-shopping-cart guide-icon shopping"></i>Carrefour Market</h3>
            <div class="guide-popup-content">
              <p>Moyenne surface sur la N2 vers Pointe-Noire, permet de faire le gros des courses nécessaires au séjour.</p>
-             <img src="images/guide/02.jpg" alt="Carrefour Market"/>
+             <img src="images/guide/02.webp" alt="Carrefour Market"/>
              <div style="margin-top: 20px; text-align: center">
                <a href="geo:16.1581,-61.7761?q=Carrefour+Market+Bouillante" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                  <i class="fas fa-location-arrow"></i>
@@ -368,7 +368,7 @@ class PopupManager {
            <h3 class="guide-popup-title"><i class="fas fa-shopping-cart guide-icon shopping"></i>Leader Price</h3>
            <div class="guide-popup-content">
              <p>En vis-à-vis de Carrefour Market, plus rustique mais très intéressant au niveau des prix avec des produits de bonne qualité.</p>
-             <img src="images/guide/03.jpg" alt="Leader Price"/>
+             <img src="images/guide/03.webp" alt="Leader Price"/>
              <div style="margin-top: 20px; text-align: center">
                <a href="geo:16.1581,-61.7761?q=Leader+Price+Pigeon+Bouillante" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                  <i class="fas fa-location-arrow"></i>
@@ -391,7 +391,7 @@ class PopupManager {
                <li>Mi-cuit de thon, carpaccio</li>
              </ul>
              <p><em>Un peu cher mais qualité extraordinaire !</em></p>
-             <img src="images/guide/05.jpg" alt="Cap Créole - Poisson frais"/>
+             <img src="images/guide/05.webp" alt="Cap Créole - Poisson frais"/>
              <div style="margin-top: 20px; text-align: center">
                <a href="geo:16.1598,-61.7751?q=Cap+Créole+Pigeon+Bouillante" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                  <i class="fas fa-location-arrow"></i>
@@ -408,7 +408,7 @@ class PopupManager {
            <div class="guide-popup-content">
              <p>Juste à côté de Carrefour Market, pain excellent et traiteur (pizzas maison, rôti de porc, poulet grillé, pâtisseries).</p>
              <p><strong>Horaires :</strong> Ouvert le dimanche matin, fermé le lundi.</p>
-             <img src="images/guide/04.jpg" alt="Four des Iles - Boulangerie"/>
+             <img src="images/guide/04.webp" alt="Four des Iles - Boulangerie"/>
              <div style="margin-top: 20px; text-align: center">
                <a href="geo:16.1610,-61.7745?q=Four+des+Iles+Boulangerie+Pigeon" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                  <i class="fas fa-location-arrow"></i>
@@ -424,7 +424,7 @@ class PopupManager {
            <h3 class="guide-popup-title"><i class="fas fa-drumstick-bite guide-icon meat"></i>Ti Taurus</h3>
            <div class="guide-popup-content">
              <p>À proximité de Carrefour Market, prendre à pied la petite rue entre le supermarché et la boulangerie. Viandes diverses, brochettes, etc.</p>
-             <img src="images/guide/06.jpg" alt="Boucherie traiteur Ti Taurus"/>
+             <img src="images/guide/06.webp" alt="Boucherie traiteur Ti Taurus"/>
              <div style="margin-top: 20px; text-align: center">
                <a href="geo:16.1613,-61.7753?q=Boucherie+traiteur+Ti+Taurus+Bouillante" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                  <i class="fas fa-location-arrow"></i>
@@ -442,9 +442,9 @@ class PopupManager {
              <p>Sur la N2, à gauche dans la direction nord. Fruits et légumes excellents.</p>
              <p><strong>Conseil :</strong> Bien préciser si c'est pour consommation immédiate ou le lendemain (pour les avocats par exemple). Adèle est incollable sur la qualité de ses produits.</p>
              <p><em>Dites que vous venez de la part de Fanny, elle se souviendra peut-être et vous gâtera !</em></p>
-             <img src="images/guide/01.jpg" alt="Chez Adèle - Fruits et Légumes"/>
+             <img src="images/guide/01.webp" alt="Chez Adèle - Fruits et Légumes"/>
              <div style="margin-top: 20px; text-align: center">
-               <a href="geo:16.1581,-61.7761?q=Chez+Adèle+Fruits+Légumes" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+               <a href="geo:16.1581,-61.7761?q=Chez+Adèle+Bouillante" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                  <i class="fas fa-location-arrow"></i>
                  Ouvrir la navigation
                </a>
@@ -458,7 +458,7 @@ class PopupManager {
            <h3 class="guide-popup-title"><i class="fas fa-utensils guide-icon restaurant"></i>La Touna</h3>
            <div class="guide-popup-content">
              <p>Bon niveau de cuisine, environnement sympa.</p>
-             <img src="images/guide/07.jpg" alt="La Touna - Restaurant"/>
+             <img src="images/guide/07.webp" alt="La Touna - Restaurant"/>
              <div style="margin-top: 20px; text-align: center">
                <a href="geo:16.1581,-61.7761?q=La+Touna+Restaurant+Bouillante" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                  <i class="fas fa-location-arrow"></i>
@@ -474,7 +474,7 @@ class PopupManager {
            <h3 class="guide-popup-title"><i class="fas fa-utensils guide-icon restaurant"></i>Chez Didier</h3>
            <div class="guide-popup-content">
              <p>Cuisine excellente, patron très sympathique.</p>
-             <img src="images/guide/08.jpg" alt="Chez Didier - Restaurant"/>
+             <img src="images/guide/08.webp" alt="Chez Didier - Restaurant"/>
              <div style="margin-top: 20px; text-align: center">
                <a href="geo:16.1581,-61.7761?q=Chez+Didier+Restaurant+Bouillante" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                  <i class="fas fa-location-arrow"></i>
@@ -490,7 +490,7 @@ class PopupManager {
            <h3 class="guide-popup-title"><i class="fas fa-utensils guide-icon restaurant"></i>Sunset B</h3>
            <div class="guide-popup-content">
              <p>TOP ! Cadre cosy, produits frais.</p>
-             <img src="images/guide/09.jpg" alt="Sunset B - Restaurant"/>
+             <img src="images/guide/09.webp" alt="Sunset B - Restaurant"/>
              <div style="margin-top: 20px; text-align: center">
                <a href="geo:16.1581,-61.7761?q=Le+Sunset+B+Restaurant+Bouillante" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                  <i class="fas fa-location-arrow"></i>
@@ -506,7 +506,7 @@ class PopupManager {
            <h3 class="guide-popup-title"><i class="fas fa-utensils guide-icon restaurant"></i>Aux Deux Coquilles</h3>
            <div class="guide-popup-content">
              <p>Bon et pas cher, plus "local".</p>
-             <img src="images/guide/10.jpg" alt="Aux Deux Coquilles - Restaurant"/>
+             <img src="images/guide/10.webp" alt="Aux Deux Coquilles - Restaurant"/>
              <div style="margin-top: 20px; text-align: center">
                <a href="geo:16.1581,-61.7761?q=Les+Deux+Coquilles+Restaurant+Bouillante" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                  <i class="fas fa-location-arrow"></i>
@@ -522,7 +522,7 @@ class PopupManager {
            <h3 class="guide-popup-title"><i class="fas fa-fire guide-icon grill"></i>Franko Grill</h3>
            <div class="guide-popup-content">
              <p>Bon et pas cher, plus "local".</p>
-             <img src="images/guide/11.jpg" alt="Franko Grill - Restaurant"/>
+             <img src="images/guide/11.webp" alt="Franko Grill - Restaurant"/>
              <div style="margin-top: 20px; text-align: center">
                <a href="geo:16.1581,-61.7761?q=Franko+Grill+Restaurant+Bouillante" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                  <i class="fas fa-location-arrow"></i>
@@ -538,7 +538,7 @@ class PopupManager {
            <h3 class="guide-popup-title"><i class="fas fa-pizza-slice guide-icon pizza"></i>Oganik</h3>
            <div class="guide-popup-content">
              <p>En face du restaurant La Touna.</p>
-             <img src="images/guide/12.jpg" alt="Oganik - Pizzeria"/>
+             <img src="images/guide/12.webp" alt="Oganik - Pizzeria"/>
              <div style="margin-top: 20px; text-align: center">
                <a href="geo:16.1581,-61.7761?q=Oganik+Pizzeria+Bouillante" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                  <i class="fas fa-location-arrow"></i>
@@ -554,7 +554,7 @@ class PopupManager {
            <h3 class="guide-popup-title"><i class="fas fa-pizza-slice guide-icon pizza"></i>Allo Pizza</h3>
            <div class="guide-popup-content">
              <p>Derrière Carrefour Market.</p>
-             <img src="images/guide/13.jpg" alt="Allo Pizza - Pizzeria"/>
+             <img src="images/guide/13.webp" alt="Allo Pizza - Pizzeria"/>
              <div style="margin-top: 20px; text-align: center">
                <a href="geo:16.1581,-61.7761?q=Allo+Pizza+Pizzeria+Bouillante" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                  <i class="fas fa-location-arrow"></i>
@@ -570,7 +570,7 @@ class PopupManager {
            <h3 class="guide-popup-title"><i class="fas fa-pizza-slice guide-icon pizza"></i>Le Cœur de Pigeon</h3>
            <div class="guide-popup-content">
              <p>Excellentes pizzas pâte fine.</p>
-             <img src="images/guide/14.jpg" alt="Le Cœur de Pigeon - Pizzeria"/>
+             <img src="images/guide/14.webp" alt="Le Cœur de Pigeon - Pizzeria"/>
              <div style="margin-top: 20px; text-align: center">
                <a href="geo:16.1581,-61.7761?q=Le+Cœur+de+Pigeon+Pizzeria+Bouillante" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                  <i class="fas fa-location-arrow"></i>
@@ -587,11 +587,12 @@ class PopupManager {
            <div class="guide-popup-content">
              <p>Sur la plage de Malendure pour explorer la Réserve Cousteau et les îlets Pigeon.</p>
              <h4><i class="fas fa-building guide-icon building"></i>Loueurs recommandés</h4>
+             <p><em>Cliquez sur les noms des loueurs pour ouvrir la navigation GPS :</em></p>
              <ul>
-               <li><strong>CARAÏBE KAYAK :</strong> Location de kayaks pour explorer la Réserve Cousteau</li>
-               <li><strong>GWADA PAGAIE :</strong> Location et excursions guidées</li>
+               <li><strong><a href="geo:16.1581,-61.7761?q=CARAÏBE+KAYAK+bouillante" style="color: var(--color-primary); text-decoration: none;">CARAÏBE KAYAK</a> :</strong> Location de kayaks pour explorer la Réserve Cousteau</li>
+               <li><strong><a href="geo:16.1581,-61.7761?q=GWADA+PAGAIE+bouillante" style="color: var(--color-primary); text-decoration: none;">GWADA PAGAIE</a> :</strong> Location et excursions guidées</li>
              </ul>
-             <img src="images/guide/48.jpg" alt="Kayak - Plage de Malendure"/>
+             <img src="images/guide/48.webp" alt="Kayak - Plage de Malendure"/>
              <div style="margin-top: 20px; text-align: center">
                <a href="geo:16.1581,-61.7761?q=Plage+Malendure+Bouillante" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                  <i class="fas fa-location-arrow"></i>
@@ -608,7 +609,7 @@ class PopupManager {
            <div class="guide-popup-content">
              <h4><i class="fas fa-water guide-icon water"></i>Clubs de plongée</h4>
              <p><strong>Les Heures Saines (Bouillante) :</strong> Club de plongée réputé pour explorer la Réserve Cousteau.</p>
-             <img src="images/guide/49.jpg" alt="Plongée - Réserve Cousteau"/>
+             <img src="images/guide/49.webp" alt="Plongée - Réserve Cousteau"/>
              <div style="margin-top: 20px; text-align: center">
                <a href="geo:16.1581,-61.7761?q=Les+Heures+Saines+Plongée+Bouillante" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                  <i class="fas fa-location-arrow"></i>
@@ -633,7 +634,7 @@ class PopupManager {
                <li><strong>Rhum Karukera :</strong> Rhum local</li>
                <li><strong>Rhum Raymonenq :</strong> Rhum traditionnel</li>
              </ul>
-             <img src="images/guide/50.jpg" alt="Distilleries de Guadeloupe"/>
+             <img src="images/guide/50.webp" alt="Distilleries de Guadeloupe"/>
              <div style="margin-top: 20px; text-align: center">
                <a href="geo:16.1581,-61.7761?q=Distillerie+Bologne+Basse-Terre" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                  <i class="fas fa-location-arrow"></i>
@@ -650,7 +651,7 @@ class PopupManager {
            <div class="guide-popup-content">
              <p><strong>Pointe-Noire :</strong> Immersion gourmande dans la culture du cacao.</p>
              <p>Découvrez l'histoire du cacao en Guadeloupe et dégustez les produits locaux.</p>
-             <img src="images/guide/51.jpg" alt="Maison du Cacao - Pointe-Noire"/>
+             <img src="images/guide/51.webp" alt="Maison du Cacao - Pointe-Noire"/>
              <div style="margin-top: 20px; text-align: center">
                <a href="geo:16.1581,-61.7761?q=Maison+du+Cacao+Pointe-Noire" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                  <i class="fas fa-location-arrow"></i>
@@ -667,7 +668,7 @@ class PopupManager {
            <div class="guide-popup-content">
              <p><strong>Sainte-Rose :</strong> Culture locale et dégustations.</p>
              <p>Découvrez l'histoire du rhum en Guadeloupe et dégustez les meilleurs rhums locaux.</p>
-             <img src="images/guide/52.jpg" alt="Musée du Rhum - Sainte-Rose"/>
+             <img src="images/guide/52.webp" alt="Musée du Rhum - Sainte-Rose"/>
              <div style="margin-top: 20px; text-align: center">
                <a href="geo:16.1581,-61.7761?q=Musée+du+Rhum+Sainte-Rose" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                  <i class="fas fa-location-arrow"></i>
@@ -684,7 +685,7 @@ class PopupManager {
            <div class="guide-popup-content">
              <p><strong>Pointe-Noire :</strong> Patrimoine et histoire.</p>
              <p>Découvrez l'histoire de cette habitation et son importance dans le patrimoine guadeloupéen.</p>
-             <img src="images/guide/53.jpg" alt="Habitation Côte-sous-le-Vent - Pointe-Noire"/>
+             <img src="images/guide/53.webp" alt="Habitation Côte-sous-le-Vent - Pointe-Noire"/>
              <div style="margin-top: 20px; text-align: center">
                <a href="geo:16.1581,-61.7761?q=Habitation+Côte-sous-le-Vent+Pointe-Noire" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                  <i class="fas fa-location-arrow"></i>
@@ -701,7 +702,7 @@ class PopupManager {
            <div class="guide-popup-content">
              <p><strong>Pointe-à-Pitre :</strong> Centre caribéen d'expressions et de mémoire de la traite.</p>
              <p>Un lieu de mémoire important pour comprendre l'histoire de la Guadeloupe et de la Caraïbe.</p>
-             <img src="images/guide/54.jpg" alt="Mémorial ACTe - Pointe-à-Pitre"/>
+             <img src="images/guide/54.webp" alt="Mémorial ACTe - Pointe-à-Pitre"/>
              <div style="margin-top: 20px; text-align: center">
                <a href="geo:16.1581,-61.7761?q=Mémorial+ACTe+Pointe-à-Pitre" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                  <i class="fas fa-location-arrow"></i>
@@ -718,7 +719,7 @@ class PopupManager {
            <div class="guide-popup-content">
              <h4><i class="fas fa-beer guide-icon beer"></i>Microbrasserie de la Lézarde (Petit-Bourg, Vernou)</h4>
              <p>Située à 500 m de l'entrée du sentier de la cascade. Ouverte à partir de 11h30, fermée dimanche et lundi.</p>
-             <img src="images/guide/55.jpg" alt="Microbrasserie de la Lézarde"/>
+             <img src="images/guide/55.webp" alt="Microbrasserie de la Lézarde"/>
              <div style="margin-top: 20px; text-align: center">
                <a href="geo:16.1581,-61.7761?q=Microbrasserie+de+la+Lézarde+Petit-Bourg" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                  <i class="fas fa-location-arrow"></i>
@@ -735,7 +736,7 @@ class PopupManager {
            <div class="guide-popup-content">
              <p><strong>Aquarium de Guadeloupe (Gosier) :</strong> Découverte de la faune marine.</p>
              <p>Explorez la richesse de la faune marine des Caraïbes dans cet aquarium exceptionnel.</p>
-             <img src="images/guide/56.jpg" alt="Aquarium de Guadeloupe - Gosier"/>
+             <img src="images/guide/56.webp" alt="Aquarium de Guadeloupe - Gosier"/>
              <div style="margin-top: 20px; text-align: center">
                <a href="geo:16.1581,-61.7761?q=Aquarium+de+Guadeloupe+Gosier" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                  <i class="fas fa-location-arrow"></i>
@@ -752,7 +753,7 @@ class PopupManager {
            <div class="guide-popup-content">
              <p><strong>Site de tournage de la série "Meurtres au paradis" (Deshaies) :</strong></p>
              <p>Promenade dans le village, souvent animé par les équipes de tournage. Découvrez les lieux de tournage de cette série populaire.</p>
-             <img src="images/guide/57.jpg" alt="Site de tournage - Deshaies"/>
+             <img src="images/guide/57.webp" alt="Site de tournage - Deshaies"/>
              <div style="margin-top: 20px; text-align: center">
                <a href="geo:16.1581,-61.7761?q=Deshaies+Site+Tournage+Meurtres+Paradis" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                  <i class="fas fa-location-arrow"></i>
@@ -782,7 +783,7 @@ class PopupManager {
              <h4><i class="fas fa-water guide-icon water"></i>Plage de Petite Anse (Deshaies)</h4>
              <p>Spot agréable pour une baignade plus calme.</p>
 
-             <img src="images/guide/58.jpg" alt="Plages et snorkeling"/>
+             <img src="images/guide/58.webp" alt="Plages et snorkeling"/>
            </div>
          `
       },
@@ -810,7 +811,7 @@ class PopupManager {
              <h4><i class="fas fa-hiking guide-icon hiking"></i>Randonnée derrière la villa (Bouillante)</h4>
              <p>Depuis la rue de Poirier jusqu'au Parc de la Source. Beau chemin de crête avec vue sur la mer.</p>
 
-             <img src="images/guide/59.jpg" alt="Cascades et randonnées"/>
+             <img src="images/guide/59.webp" alt="Cascades et randonnées"/>
            </div>
          `
       },
@@ -825,7 +826,7 @@ class PopupManager {
              <h4><i class="fas fa-ship guide-icon ship"></i>Excursion aux Saintes</h4>
              <p>Départ en ferry de Trois-Rivières, idéale pour une journée.</p>
 
-             <img src="images/guide/60.jpg" alt="Découvertes en mer"/>
+             <img src="images/guide/60.webp" alt="Découvertes en mer"/>
            </div>
          `
       },
@@ -849,14 +850,14 @@ class PopupManager {
              <h4><i class="fas fa-mountain guide-icon mountain"></i>Pointe des Châteaux (Saint-François)</h4>
              <p>Paysages impressionnants rappelant la Bretagne.</p>
 
-             <img src="images/guide/61.jpg" alt="Balades et découvertes"/>
+             <img src="images/guide/61.webp" alt="Balades et découvertes"/>
            </div>
          `
       },
       pharmacie: {
-        title: 'Pharmacie',
+        title: 'Services de soins',
         content: `
-           <h3 class="guide-popup-title"><i class="fas fa-pills guide-icon pills"></i>Pharmacie</h3>
+           <h3 class="guide-popup-title"><i class="fas fa-pills guide-icon pills"></i>Services de soins</h3>
            <div class="guide-popup-content">
              <h4><i class="fas fa-store guide-icon store"></i>La pharmacie de Losteau</h4>
              <p><strong>Adresse :</strong> Zac de Losteau - Pigeon, Bouillante 97125, Guadeloupe</p>
@@ -866,7 +867,7 @@ class PopupManager {
              <p><strong>Services :</strong> Retrait en magasin, réservation en ligne possible</p>
              <p><strong>Conseil :</strong> La carte vitale fonctionne comme en métropole. Pensez à emporter vos médicaments habituels et une trousse de premiers soins.</p>
 
-             <img src="images/guide/15.jpg" alt="La pharmacie de Losteau"/>
+             <img src="images/guide/15.webp" alt="La pharmacie de Losteau"/>
 
              <h4 style="margin-top: 30px"><i class="fas fa-phone guide-icon phone"></i>Numéros d'urgence</h4>
              <ul>
@@ -883,13 +884,19 @@ class PopupManager {
              <p><strong>Site web :</strong> <a href="https://ch-mauriceselbonne.fr" target="_blank" style="color: var(--color-primary); text-decoration: none;">ch-mauriceselbonne.fr</a></p>
              <p><strong>Services :</strong> Hôpital spécialisé avec services d'urgence</p>
 
-             <img src="images/guide/16.jpg" alt="Hôpital Maurice Selbonne"/>
+             <img src="images/guide/16.webp" alt="Hôpital Maurice Selbonne"/>
 
              <div style="margin-top: 20px; text-align: center">
-               <a href="geo:16.1581,-61.7761?q=La+pharmacie+de+Losteau+Bouillante" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                 <i class="fas fa-location-arrow"></i>
-                 Ouvrir la navigation
-               </a>
+               <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                 <a href="geo:16.1581,-61.7761?q=La+pharmacie+de+Losteau+Bouillante" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                   <i class="fas fa-pills"></i>
+                   Pharmacie de Losteau
+                 </a>
+                 <a href="geo:16.1581,-61.7761?q=Hôpital+Maurice+Selbonne+Bouillante" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                   <i class="fas fa-hospital"></i>
+                   Hôpital Maurice Selbonne
+                 </a>
+               </div>
              </div>
            </div>
          `
@@ -911,7 +918,7 @@ class PopupManager {
              <h4><i class="fas fa-plane guide-icon plane"></i>Avant de partir</h4>
              <p>N'oubliez pas d'acheter une bombe d'anti-moustique (OFF ou INSECTECRAN à transporter en soute) afin de pouvoir vous traiter sur les parties découvertes dès l'arrivée.</p>
 
-             <img src="images/guide/34.jpg" alt="Produits anti-moustiques - Protection"/>
+             <img src="images/guide/34.webp" alt="Produits anti-moustiques - Protection"/>
 
              <p>En arrivant à l'aéroport, la première envie est de se dévêtir et les moustiques souvent présents le matin et le soir n'attendent que ça.</p>
              <p>La Dengue est présente dans toutes les Antilles, elle peut se révéler dangereuse et quoiqu'il en soit peut gâcher votre séjour (comme une très grosse grippe).</p>
@@ -991,7 +998,7 @@ class PopupManager {
              <p><strong>La vanne principale de raccordement au réseau de la Guadeloupe</strong> se situe au niveau du portail d'entrée de la maison à côté du compteur, elle sert à couper l'alimentation en cas de rupture d'une tuyauterie par exemple.</p>
              <p>L'eau est ensuite dirigée vers la pièce du sous-sol.</p>
              <p><strong>Au niveau du sous-sol, il existe une vanne de raccordement à deux positions (réseau, cuve de secours) :</strong></p>
-             <img src="images/guide/32.jpg" alt="Vanne de raccordement - Sous-sol"/>
+             <img src="images/guide/32.webp" alt="Vanne de raccordement - Sous-sol"/>
              <ul>
                <li><strong>Position horizontale</strong> = raccordement direct au réseau de distribution</li>
                <li><strong>Position verticale</strong> = raccordement à la cuve de secours</li>
@@ -1000,7 +1007,7 @@ class PopupManager {
              <p><strong>EN CAS DE COUPURE D'EAU :</strong></p>
              <p>C'est l'eau de la cuve de secours qui est utilisée.</p>
              <p>Il existe une deuxième alimentation en eau, exclusivement pour les WC qui bénéficient d'une double arrivée d'eau : le robinet de gauche alimente en eau de pluie, celui de droite en eau du réseau.</p>
-             <img src="images/guide/31.jpg" alt="Double alimentation WC - Eau de pluie et réseau"/>
+             <img src="images/guide/31.webp" alt="Double alimentation WC - Eau de pluie et réseau"/>
              <p>En permanence le robinet de gauche est ouvert, celui de droite fermé et la pompe électrique immergée dans la cuve de récupération d'eau de pluie alimente les toilettes automatiquement.</p>
              <p>En cas de panne sur le réseau d'alimentation, celle des WC, indépendante, se poursuit donc sans interruption alors que les robinets et les douches ne sont plus alimentés si la manette rouge est en position basse.</p>
            </div>
@@ -1019,7 +1026,7 @@ class PopupManager {
              <p>Le portail d'entrée est équipé d'un moteur électrique avec une petite batterie de secours qui permet de ne pas se retrouver, à l'extérieur de la maison, devant un portail fermé.</p>
              <p>Malheureusement, cette batterie est de faible capacité et nous conseillons en cas de panne de passer en mode manuel.</p>
              <p>Pour ce faire une petite clé triangulaire est disponible dans le tiroir des couverts de la cuisine (à droite du tiroir). Elle permet de débrayer le moteur électrique et de manipuler le portail de façon manuelle avant le retour du courant.</p>
-             <img src="images/guide/33.jpg" alt="Clé triangulaire - Portail d'entrée"/>
+             <img src="images/guide/33.webp" alt="Clé triangulaire - Portail d'entrée"/>
 
              <h4><i class="fas fa-window-maximize guide-icon window"></i>Les volets roulants</h4>
              <p>Ils sont au nombre de trois, métalliques et électrifiés, deux plus petits de chaque côté encadrant le volet central plus large (et plus lourd aussi).</p>
@@ -1494,7 +1501,7 @@ const locations = {
   },
   'Chez Adèle': {
     coordinates: '16.1581,-61.7761',
-    address: 'Chez+Adèle+Fruits+Légumes'
+    address: 'Chez+Adèle+Bouillante'
   },
   'La Touna': {
     coordinates: '16.1581,-61.7761',
@@ -1532,6 +1539,14 @@ const locations = {
   Kayak: {
     coordinates: '16.1581,-61.7761',
     address: 'Plage+Malendure+Bouillante+Guadeloupe'
+  },
+  'CARAÏBE KAYAK': {
+    coordinates: '16.1581,-61.7761',
+    address: 'CARAÏBE+KAYAK+bouillante'
+  },
+  'GWADA PAGAIE': {
+    coordinates: '16.1581,-61.7761',
+    address: 'GWADA+PAGAIE+bouillante'
   },
   Plongée: {
     coordinates: '16.1581,-61.7761',
@@ -1572,6 +1587,10 @@ const locations = {
   Pharmacie: {
     coordinates: '16.1581,-61.7761',
     address: 'La+pharmacie+de+Losteau+Bouillante+Guadeloupe'
+  },
+  'Hôpital Maurice Selbonne': {
+    coordinates: '16.1581,-61.7761',
+    address: 'Hôpital+Maurice+Selbonne+Bouillante'
   }
 }
 
