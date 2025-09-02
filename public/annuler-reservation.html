@@ -402,22 +402,21 @@
         if (languageSelector) {
           languageSelector.addEventListener('change', function () {
             const newLang = this.value
-            translatePage(newLang)
 
             // Sauvegarder la préférence
             localStorage.setItem('calypso-bay-lang', newLang)
 
-            // Mettre à jour l'URL sans recharger
+            // Rediriger vers la nouvelle URL avec le bon paramètre de langue
             const url = new URL(window.location)
             url.searchParams.set('lang', newLang)
-            window.history.replaceState({}, '', url)
+            window.location.href = url.toString()
           })
 
           // Charger la préférence sauvegardée
           const savedLang = localStorage.getItem('calypso-bay-lang')
           if (savedLang && ['fr', 'en', 'de'].includes(savedLang)) {
             languageSelector.value = savedLang
-            translatePage(savedLang)
+            // Ne pas appeler translatePage ici, la page se chargera avec la bonne langue
           }
         }
       })
