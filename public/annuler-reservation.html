@@ -30,6 +30,33 @@
     <link rel="shortcut icon" href="images/logos/favicons/favicon.ico" />
 
     <link rel="stylesheet" href="assets/css/main.css" />
+    <style>
+      .language-selector {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 8px;
+        padding: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(10px);
+      }
+      .language-selector select {
+        border: none;
+        background: transparent;
+        font-size: 14px;
+        font-weight: 600;
+        color: #374151;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 4px;
+      }
+      .language-selector select:focus {
+        outline: none;
+        background: rgba(59, 130, 246, 0.1);
+      }
+    </style>
     <link rel="stylesheet" href="assets/css/custom.css" />
     <noscript
       ><link rel="stylesheet" href="assets/css/noscript.css"
@@ -102,12 +129,27 @@
     </style>
   </head>
   <body class="is-preload">
+    <!-- Sélecteur de langue -->
+    <div class="language-selector">
+      <select id="language-selector">
+        <option value="fr">🇫🇷 Français</option>
+        <option value="en">🇬🇧 English</option>
+        <option value="de">🇩🇪 Deutsch</option>
+      </select>
+    </div>
+
     <div id="page-wrapper">
       <div id="wrapper">
         <section class="panel banner right">
           <div class="content color0 span-3-75">
             <h2 class="major">
-              Annuler ma<br /><span class="themysion">Reservation</span>
+              <span data-translate="annuler-reservation.banner.title"
+                >Annuler ma</span
+              ><br /><span
+                class="themysion"
+                data-translate="annuler-reservation.banner.subtitle"
+                >Reservation</span
+              >
             </h2>
             <p>
               Vous pouvez demander l’annulation de votre réservation. Nous
@@ -195,7 +237,180 @@
     <script src="assets/js/browser.min.js"></script>
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/translations.js"></script>
     <script>
+      // ============================================================================
+      // SYSTÈME DE TRADUCTION POUR ANNULER-RESERVATION.HTML
+      // ============================================================================
+
+      let currentLang = 'fr'
+
+      // Fonction pour traduire la page
+      function translatePage(lang) {
+        currentLang = lang
+        const t = window.translations[lang]['annuler-reservation']
+        const common = window.translations[lang].common
+
+        // Mettre à jour le titre de la page
+        document.title = t.title
+
+        // Traduire la bannière
+        document.querySelector(
+          '.content.color0 h2.major'
+        ).innerHTML = `${t.banner.title}<br /><span class="themysion">${t.banner.subtitle}</span>`
+        document.querySelector('.content.color0 p').textContent =
+          t.banner.description
+        document.querySelector('.content.color0 .button').textContent =
+          t.banner.button
+
+        // Traduire la section récapitulatif
+        document.querySelector('#recap h3.major').textContent = t.recap.title
+
+        // Traduire la section formulaire
+        document.querySelector('#form h2.major').textContent = t.form.title
+        document.querySelector('label[for="reason"]').textContent =
+          t.form.reason_label
+        document.querySelector('#reason').placeholder =
+          t.form.reason_placeholder
+        document.querySelector('#cancel-btn').textContent = t.form.submit_button
+
+        // Traduire la modal de confirmation (sera créée dynamiquement)
+        setTimeout(() => {
+          const confirmBox = document.querySelector('.confirm-box')
+          if (confirmBox) {
+            confirmBox.querySelector('h4').textContent = t.confirmation.title
+            confirmBox.querySelector('p').textContent = t.confirmation.message
+            document.querySelector('#co-cancel').textContent =
+              t.confirmation.cancel
+            document.querySelector('#co-confirm').textContent =
+              t.confirmation.confirm
+          }
+        }, 100)
+
+        // Mettre à jour le sélecteur de langue
+        if (document.querySelector('#language-selector')) {
+          document.querySelector('#language-selector').value = lang
+        }
+
+        // Mettre à jour le récapitulatif si les données sont déjà chargées
+        updateTranslationsAfterLoad()
+      }
+
+      // Fonction pour traduire les éléments dynamiques du récapitulatif
+      function translateRecapContent(data, lang) {
+        const common = window.translations[lang].common
+        const fmtMoney = (v) =>
+          Number(v || 0).toLocaleString(lang === 'de' ? 'de-DE' : 'fr-FR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          })
+        const s = new Date(data.startDate)
+        const e = new Date(data.endDate)
+        const fmtDate = (dt) =>
+          dt.toLocaleDateString(
+            lang === 'de' ? 'de-DE' : lang === 'en' ? 'en-GB' : 'fr-FR',
+            {
+              day: '2-digit',
+              month: 'long',
+              year: 'numeric'
+            }
+          )
+
+        const lines = []
+        lines.push(
+          `<div class="detail-item"><strong>${
+            common.dates
+          }</strong><span>${fmtDate(s)} au ${fmtDate(e)} (${data.nbNights} ${
+            common.nights
+          })</span></div>`
+        )
+
+        const adultText =
+          data.nbAdults > 1 ? common.adults_plural : common.adults
+        const childText =
+          data.nbChilds > 1 ? common.children_plural : common.children
+        lines.push(
+          `<div class="detail-item"><strong>${common.travelers}</strong><span>${
+            data.nbAdults
+          } ${adultText}${
+            data.nbChilds > 0 ? `, ${data.nbChilds} ${childText}` : ''
+          }</span></div>`
+        )
+
+        lines.push(
+          `<div class="detail-item" style="border-bottom:none; display:block; padding-bottom:0;">
+            <div><strong>${common.price_details}</strong></div>
+            <div style="padding-top:8px">• ${common.nights_total.replace(
+              '{count}',
+              data.nbNights
+            )} ${fmtMoney(data.priceNights)} ${common.currency}</div>
+            <div>• ${common.cleaning_fees} ${fmtMoney(data.priceClean)} ${
+            common.currency
+          }</div>
+            <div>• ${common.taxes
+              .replace('{count}', data.nbAdults)
+              .replace('{adult_text}', adultText)} ${fmtMoney(data.priceTax)} ${
+            common.currency
+          }</div>
+            <div>• <strong>${common.total} ${fmtMoney(data.priceTotal)} ${
+            common.currency
+          }</strong></div>
+          </div>`
+        )
+
+        return (
+          lines.join('') +
+          `<div class="pills">
+             <span class="pill ${data.depositAmount > 0 ? 'green' : 'red'}">${
+            data.depositAmount > 0 ? '✅' : '❌'
+          } ${common.deposit} ${fmtMoney(data.depositAmount)} ${
+            common.currency
+          }</span>
+             <span class="pill ${
+               data.status === 'balancePay' ? 'green' : 'red'
+             }">${data.status === 'balancePay' ? '✅' : '❌'} ${
+            common.balance
+          } ${fmtMoney(data.balanceAmount || 0)} ${common.currency}</span>
+           </div>`
+        )
+      }
+
+      // Initialiser les traductions
+      window.addEventListener('translations:ready', function (event) {
+        const detectedLang = event.detail.language
+        translatePage(detectedLang)
+      })
+
+      // Gérer le changement de langue
+      document.addEventListener('DOMContentLoaded', function () {
+        const languageSelector = document.querySelector('#language-selector')
+        if (languageSelector) {
+          languageSelector.addEventListener('change', function () {
+            const newLang = this.value
+            translatePage(newLang)
+
+            // Sauvegarder la préférence
+            localStorage.setItem('calypso-bay-lang', newLang)
+
+            // Mettre à jour l'URL sans recharger
+            const url = new URL(window.location)
+            url.searchParams.set('lang', newLang)
+            window.history.replaceState({}, '', url)
+          })
+
+          // Charger la préférence sauvegardée
+          const savedLang = localStorage.getItem('calypso-bay-lang')
+          if (savedLang && ['fr', 'en', 'de'].includes(savedLang)) {
+            languageSelector.value = savedLang
+            translatePage(savedLang)
+          }
+        }
+      })
+
+      // ============================================================================
+      // LOGIQUE EXISTANTE DE LA PAGE
+      // ============================================================================
+
       const params = new URLSearchParams(window.location.search)
       const token = params.get('token')
       const policyBox = document.getElementById('policy')
@@ -241,7 +456,8 @@
 
       async function load() {
         if (!token) {
-          policyBox.textContent = 'Token manquant'
+          const t = window.translations[currentLang]['annuler-reservation']
+          policyBox.textContent = t.errors.missing_token
           btn.disabled = true
           return
         }
@@ -251,70 +467,27 @@
           )
           const json = await res.json()
           if (json.status !== 'success') {
-            policyBox.textContent = json.message || 'Réservation introuvable'
+            const t = window.translations[currentLang]['annuler-reservation']
+            policyBox.textContent =
+              json.message || t.errors.reservation_not_found
             btn.disabled = true
             return
           }
           const d = json.data
-          // Récapitulatif complet
+          // Sauvegarder les données pour les traductions
+          window.reservationData = d
+
+          // Récapitulatif complet avec traductions
           const recapEl = document.getElementById('reservation-recap')
-          const total = Number(d.priceTotal || 0)
-          const deposit = Number(d.depositAmount || 0)
-          const balancePaid = d.status === 'balancePay'
           const balanceAmount = Number(
-            d.balanceAmount || Math.max(0, total - deposit)
+            d.balanceAmount ||
+              Math.max(
+                0,
+                Number(d.priceTotal || 0) - Number(d.depositAmount || 0)
+              )
           )
-          const fmtMoney = (v) =>
-            Number(v || 0).toLocaleString('fr-FR', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-            })
-          const s = new Date(d.startDate)
-          const e = new Date(d.endDate)
-          const fmtDate = (dt) =>
-            dt.toLocaleDateString('fr-FR', {
-              day: '2-digit',
-              month: 'long',
-              year: 'numeric'
-            })
-          const lines = []
-          lines.push(
-            `<div class="detail-item"><strong>Dates :</strong><span>${fmtDate(
-              s
-            )} au ${fmtDate(e)} (${d.nbNights} nuits)</span></div>`
-          )
-          lines.push(
-            `<div class="detail-item"><strong>Voyageurs :</strong><span>${
-              d.nbAdults
-            } adulte${d.nbAdults > 1 ? 's' : ''}${
-              d.nbChilds > 0
-                ? `, ${d.nbChilds} enfant${d.nbChilds > 1 ? 's' : ''}`
-                : ''
-            }</span></div>`
-          )
-          lines.push(
-            '<div class="detail-item" style="border-bottom:none; display:block; padding-bottom:0;">\
-            <div><strong>Détail du prix :</strong></div>\
-            <div style="padding-top:8px">• Total des nuits (' +
-              d.nbNights +
-              `) : ${fmtMoney(d.priceNights)} €</div>\
-            <div>• Frais de ménage : ${fmtMoney(d.priceClean)} €</div>\
-            <div>• Taxes (${d.nbAdults} adulte${
-                d.nbAdults > 1 ? 's' : ''
-              }) : ${fmtMoney(d.priceTax)} €</div>\
-            <div>• <strong>Total : ${fmtMoney(d.priceTotal)} €</strong></div>\
-          </div>`
-          )
-          recapEl.innerHTML =
-            lines.join('') +
-            `<div class="pills">
-             <span class="pill ${deposit > 0 ? 'green' : 'red'}">${
-              deposit > 0 ? '✅' : '❌'
-            } Acompte : ${fmtMoney(deposit)} €</span>
-             <span class="pill ${balancePaid ? 'green' : 'red'}">${
-              balancePaid ? '✅' : '❌'
-            } Solde : ${fmtMoney(balanceAmount)} €</span>
-           </div>`
+          const dataForRecap = { ...d, balanceAmount }
+          recapEl.innerHTML = translateRecapContent(dataForRecap, currentLang)
 
           const start = new Date(d.startDate)
           const now = new Date()
@@ -341,9 +514,30 @@
           policyBox.style.color = '#fff'
           policyBox.style.opacity = '0.95'
         } catch (e) {
-          policyBox.textContent = 'Erreur de chargement'
+          const t = window.translations[currentLang]['annuler-reservation']
+          policyBox.textContent = t.errors.loading_error
         }
       }
+
+      // Fonction pour mettre à jour les traductions après chargement des données
+      function updateTranslationsAfterLoad() {
+        if (window.reservationData) {
+          const recapEl = document.getElementById('reservation-recap')
+          if (recapEl && !recapEl.textContent.includes('Chargement')) {
+            const balanceAmount = Number(
+              window.reservationData.balanceAmount ||
+                Math.max(
+                  0,
+                  Number(window.reservationData.priceTotal || 0) -
+                    Number(window.reservationData.depositAmount || 0)
+                )
+            )
+            const dataForRecap = { ...window.reservationData, balanceAmount }
+            recapEl.innerHTML = translateRecapContent(dataForRecap, currentLang)
+          }
+        }
+      }
+
       load()
 
       btn.addEventListener('click', async () => {

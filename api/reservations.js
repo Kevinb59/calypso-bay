@@ -1,6 +1,5 @@
 /**
  * Route Vercel unifiée pour la gestion des réservations
- * Fusionne les anciennes routes getReservation.js, manageReservation.js, finalizeReservation.js et cancellation.js
  */
 
 // URL du Google Apps Script depuis les variables d'environnement
