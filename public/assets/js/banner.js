@@ -1,16 +1,150 @@
-// 📤 Affiche la bannière
+// 📤 Affiche la bannière + i18n FR/EN/DE
+// Ce fichier rend la bannière compatible multi‑langues tout en
+// conservant le format FR pour les clés du planning (CSV/JSON).
+
+// Détection de la langue depuis l'URL
+const _path = window.location.pathname
+let _lang = 'fr'
+if (_path.includes('index-en')) _lang = 'en'
+else if (_path.includes('index-de')) _lang = 'de'
+
+// Locales d'affichage (⚠️ on garde 'fr-FR' pour les clés planning)
+const DISPLAY_LOCALE = {
+  fr: 'fr-FR',
+  en: 'en-GB',
+  de: 'de-DE'
+}[_lang]
+
+// Dictionnaire de traductions
+const T = {
+  fr: {
+    staySummary: (a, b, n) =>
+      `Séjour du <strong>${a}</strong> au <strong>${b}</strong> – <strong>${n} nuit${
+        n > 1 ? 's' : ''
+      }</strong>`,
+    reqTitle: 'Demande de réservation',
+    totalNights: (n) => `Total des nuits (${n})`,
+    cleaning: 'Frais de ménage',
+    taxes: (a) => `Taxes (${a} adulte${a > 1 ? 's' : ''})`,
+    total: 'Total',
+    childrenWarn: 'Les enfants de moins de 8 ans ne sont pas admis',
+    step2Send:
+      '<i class="fas fa-paper-plane"></i> Envoyer la demande de réservation',
+    step2Sent: '<i class="fas fa-check"></i> Demande envoyée',
+    sending: '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...',
+    prev: 'Précédent',
+    next: 'Suivant',
+    cancel: 'Annuler',
+    required: '<i class="fas fa-exclamation-triangle"></i> Champs requis',
+    configErr:
+      '<i class="fas fa-exclamation-triangle"></i> Erreur de configuration',
+    serverErr: '<i class="fas fa-exclamation-triangle"></i> Erreur serveur',
+    networkErr: (txt) => `<i class="fas fa-exclamation-triangle"></i> ${txt}`,
+    networkTxt: 'Erreur réseau',
+    connectTxt: 'Erreur de connexion',
+    corsTxt: 'Erreur CORS',
+    notFoundTxt: 'Script non trouvé',
+    http500Txt: 'Erreur serveur',
+    adultsLabel: (n) => `${n} adulte${n > 1 ? 's' : ''}`,
+    childrenLabel: (n) => `${n} enfant${n > 1 ? 's' : ''}`,
+    formName: 'Nom *',
+    formEmail: 'Email *',
+    formPhone: 'Téléphone',
+    formMsg: 'Message (optionnel)',
+    step2BtnText: 'Envoyer la demande de réservation'
+  },
+  en: {
+    staySummary: (a, b, n) =>
+      `Stay from <strong>${a}</strong> to <strong>${b}</strong> – <strong>${n} night${
+        n > 1 ? 's' : ''
+      }</strong>`,
+    reqTitle: 'Reservation request',
+    totalNights: (n) => `Total nights (${n})`,
+    cleaning: 'Cleaning fee',
+    taxes: (a) => `Taxes (${a} adult${a > 1 ? 's' : ''})`,
+    total: 'Total',
+    childrenWarn: 'Children under 8 are not allowed',
+    step2Send: '<i class="fas fa-paper-plane"></i> Send reservation request',
+    step2Sent: '<i class="fas fa-check"></i> Request sent',
+    sending: '<i class="fas fa-spinner fa-spin"></i> Sending...',
+    prev: 'Previous',
+    next: 'Next',
+    cancel: 'Cancel',
+    required: '<i class="fas fa-exclamation-triangle"></i> Required fields',
+    configErr:
+      '<i class="fas fa-exclamation-triangle"></i> Configuration error',
+    serverErr: '<i class="fas fa-exclamation-triangle"></i> Server error',
+    networkErr: (txt) => `<i class="fas fa-exclamation-triangle"></i> ${txt}`,
+    networkTxt: 'Network error',
+    connectTxt: 'Connection error',
+    corsTxt: 'CORS error',
+    notFoundTxt: 'Script not found',
+    http500Txt: 'Server error',
+    adultsLabel: (n) => `${n} adult${n > 1 ? 's' : ''}`,
+    childrenLabel: (n) => `${n} child${n > 1 ? 'ren' : ''}`,
+    formName: 'Name *',
+    formEmail: 'Email *',
+    formPhone: 'Phone',
+    formMsg: 'Message (optional)',
+    step2BtnText: 'Send reservation request'
+  },
+  de: {
+    staySummary: (a, b, n) =>
+      `Aufenthalt vom <strong>${a}</strong> bis <strong>${b}</strong> – <strong>${n} Nacht${
+        n > 1 ? 'e' : ''
+      }</strong>`,
+    reqTitle: 'Buchungsanfrage',
+    totalNights: (n) => `Nächte gesamt (${n})`,
+    cleaning: 'Reinigungsgebühr',
+    taxes: (a) => `Steuern (${a} Erwachsene${a > 1 ? 'n' : ''})`,
+    total: 'Summe',
+    childrenWarn: 'Kinder unter 8 Jahren sind nicht zugelassen',
+    step2Send: '<i class="fas fa-paper-plane"></i> Buchungsanfrage senden',
+    step2Sent: '<i class="fas fa-check"></i> Anfrage gesendet',
+    sending: '<i class="fas fa-spinner fa-spin"></i> Wird gesendet...',
+    prev: 'Zurück',
+    next: 'Weiter',
+    cancel: 'Abbrechen',
+    required: '<i class="fas fa-exclamation-triangle"></i> Pflichtfelder',
+    configErr:
+      '<i class="fas fa-exclamation-triangle"></i> Konfigurationsfehler',
+    serverErr: '<i class="fas fa-exclamation-triangle"></i> Serverfehler',
+    networkErr: (txt) => `<i class="fas fa-exclamation-triangle"></i> ${txt}`,
+    networkTxt: 'Netzwerkfehler',
+    connectTxt: 'Verbindungsfehler',
+    corsTxt: 'CORS‑Fehler',
+    notFoundTxt: 'Script nicht gefunden',
+    http500Txt: 'Serverfehler',
+    adultsLabel: (n) => `${n} Erwachsene${n > 1 ? 'n' : ''}`,
+    childrenLabel: (n) => `${n} Kind${n > 1 ? 'er' : ''}`,
+    formName: 'Name *',
+    formEmail: 'E‑Mail *',
+    formPhone: 'Telefon',
+    formMsg: 'Nachricht (optional)',
+    step2BtnText: 'Buchungsanfrage senden'
+  }
+}
+
+// Utilitaires adultes/enfants pour les selects
+const labelFns = {
+  adulte: (n) => T[_lang].adultsLabel(n),
+  enfant: (n) => T[_lang].childrenLabel(n)
+}
+
+// Référence d'état utilisée dans le reste du script original
+let step = 1
+let isBannerOpen = false
+
+// 👉 Fonctions existantes adaptées à l'i18n
 function showBannerPanel() {
   const nights = Math.round(
     (selectedEnd - selectedStart) / (1000 * 60 * 60 * 24)
   )
 
-  const formatDate = (date) => {
-    return date
-      .toLocaleDateString('fr-FR', { day: '2-digit', month: 'long' })
-      .replace(/^\d{2} (\w)/, (match, p1) =>
-        match.replace(p1, p1.toUpperCase())
-      )
-  }
+  const formatDate = (date) =>
+    date
+      .toLocaleDateString(DISPLAY_LOCALE, { day: '2-digit', month: 'long' })
+      .replace(/^(\d{2}) (\w)/, (m, d, p1) => m.replace(p1, p1.toUpperCase()))
 
   const startStr = formatDate(selectedStart)
   const endStr = formatDate(selectedEnd)
@@ -21,19 +155,19 @@ function showBannerPanel() {
 
   document.getElementById('mobile-banner').style.display = 'block'
 
-  // ✅ Texte formaté avec uniquement dates et nuits en gras
-  document.getElementById(
-    'banner-summary'
-  ).innerHTML = `Séjour du <strong>${startStr}</strong> au <strong>${endStr}</strong> – <strong>${nights} nuits</strong>`
+  // Résumé en haut de la bannière
+  document.getElementById('banner-summary').innerHTML = T[_lang].staySummary(
+    startStr,
+    endStr,
+    nights
+  )
 
-  // ✅ Cache les ronds uniquement en mode compact
   const stepIndicator = document.getElementById('step-indicator')
   if (stepIndicator) stepIndicator.style.display = 'none'
 
   updateTotalPrice()
 }
 
-// 💸 Met à jour le prix total réel (en fonction du planning CSV)
 function updateTotalPrice() {
   if (!selectedStart || !selectedEnd) return
 
@@ -46,6 +180,7 @@ function updateTotalPrice() {
   let baseTotal = 0
   let currentDate = new Date(selectedStart)
 
+  // ⚠️ Clés du planning en FR pour rester compatibles avec les données existantes
   while (currentDate < selectedEnd) {
     const key = currentDate
       .toLocaleDateString('fr-FR', {
@@ -73,14 +208,13 @@ function updateTotalPrice() {
 
   const container = document.getElementById('total-price')
 
-  // Message d'avertissement pour les enfants
   const childrenWarning =
     children > 0
       ? `
     <div style="margin-top: 0.75rem; padding: 0.5rem; background-color: rgba(255, 193, 7, 0.2); border-left: 3px solid #ffc107; border-radius: 3px;">
       <span style="color: #ffc107; font-size: 0.9em;">
         <i class="fas fa-exclamation-triangle" style="margin-right: 0.5rem;"></i>
-        Les enfants de moins de 8 ans ne sont pas admis
+        ${T[_lang].childrenWarn}
       </span>
     </div>
   `
@@ -89,22 +223,22 @@ function updateTotalPrice() {
   container.innerHTML = `
     <div style="text-align: left;">
       <div style="display: flex; justify-content: space-between;">
-        <span style="font-weight: normal;">Total des nuits (${nights})</span>
+        <span style="font-weight: normal;">${T[_lang].totalNights(
+          nights
+        )}</span>
         <strong>${baseTotal} €</strong>
       </div>
       <div style="display: flex; justify-content: space-between;">
-        <span style="font-weight: normal;">Frais de ménage</span>
+        <span style="font-weight: normal;">${T[_lang].cleaning}</span>
         <strong>${cleaningFee} €</strong>
       </div>
       <div style="display: flex; justify-content: space-between;">
-        <span style="font-weight: normal;">Taxes (${adults} adulte${
-    adults > 1 ? 's' : ''
-  })</span>
+        <span style="font-weight: normal;">${T[_lang].taxes(adults)}</span>
         <strong>${taxTotal.toFixed(2)} €</strong>
       </div>
       <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.3); margin: 0.5rem 0;" />
       <div style="display: flex; justify-content: space-between; font-weight: bold;">
-        <span>Total</span>
+        <span>${T[_lang].total}</span>
         <span>${total.toFixed(2)} €</span>
       </div>
       ${childrenWarning}
@@ -112,13 +246,12 @@ function updateTotalPrice() {
   `
 }
 
-// 🧾 Mise à jour du titre et des pastilles d'étape
 function updateBannerSummary() {
   const summary = document.getElementById('banner-summary')
   const stepIndicator = document.getElementById('step-indicator')
 
   if (isBannerOpen || step >= 1) {
-    summary.textContent = 'Demande de réservation'
+    summary.textContent = T[_lang].reqTitle
     if (stepIndicator) stepIndicator.style.display = 'flex'
 
     const dot1 = document.getElementById('step-dot-1')
@@ -136,9 +269,6 @@ function updateBannerSummary() {
   }
 }
 
-let step = 1
-let isBannerOpen = false
-
 function goToStep2() {
   step = 2
   const details = document.getElementById('mobile-banner-details')
@@ -146,16 +276,15 @@ function goToStep2() {
   details.classList.add('full')
 
   document.getElementById('toggle-banner').style.display = 'none'
-  document.getElementById('step-toggle').textContent =
-    'Envoyer la demande de réservation'
-  document
-    .getElementById('step-toggle')
-    .classList.remove('fa-arrow-circle-right')
-  document.getElementById('step-toggle').classList.add('fa-paper-plane')
+  const stepToggle = document.getElementById('step-toggle')
+  stepToggle.innerHTML = T[_lang].step2Send
+  stepToggle.classList.remove('fa-arrow-circle-right')
+  stepToggle.classList.add('fa-paper-plane')
 
-  document.getElementById('cancel-selection').textContent = 'Précédent'
-  document.getElementById('cancel-selection').classList.remove('fa-times')
-  document.getElementById('cancel-selection').classList.add('fa-arrow-left')
+  const cancel = document.getElementById('cancel-selection')
+  cancel.textContent = T[_lang].prev
+  cancel.classList.remove('fa-times')
+  cancel.classList.add('fa-arrow-left')
 
   updateBannerSummary()
 
@@ -180,13 +309,15 @@ function goToStep1() {
   toggleBtn.style.display = 'inline-block'
   toggleBtn.innerHTML = '<i class="fa-regular fa-circle-down"></i>'
 
-  document.getElementById('step-toggle').textContent = 'Suivant'
-  document.getElementById('step-toggle').classList.remove('fa-paper-plane')
-  document.getElementById('step-toggle').classList.add('fa-arrow-circle-right')
+  const stepToggle = document.getElementById('step-toggle')
+  stepToggle.textContent = T[_lang].next
+  stepToggle.classList.remove('fa-paper-plane')
+  stepToggle.classList.add('fa-arrow-circle-right')
 
-  document.getElementById('cancel-selection').textContent = 'Annuler'
-  document.getElementById('cancel-selection').classList.remove('fa-arrow-left')
-  document.getElementById('cancel-selection').classList.add('fa-times')
+  const cancel = document.getElementById('cancel-selection')
+  cancel.textContent = T[_lang].cancel
+  cancel.classList.remove('fa-arrow-left')
+  cancel.classList.add('fa-times')
 
   updateBannerSummary()
 
@@ -208,11 +339,11 @@ function addStep2Fields() {
   div.id = 'step2-fields'
   div.innerHTML = `
     <div class="fields" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;">
-      <div class="field" style="flex: 1; min-width: 100px;"><label for="r-name">Nom *</label><input type="text" id="r-name" required></div>
-      <div class="field" style="flex: 1; min-width: 100px;"><label for="r-email">Email *</label><input type="email" id="r-email" required></div>
-      <div class="field" style="flex: 1; min-width: 100px;"><label for="r-phone">Téléphone</label><input type="tel" id="r-phone"></div>
+      <div class="field" style="flex: 1; min-width: 100px;"><label for="r-name">${T[_lang].formName}</label><input type="text" id="r-name" required></div>
+      <div class="field" style="flex: 1; min-width: 100px;"><label for="r-email">${T[_lang].formEmail}</label><input type="email" id="r-email" required></div>
+      <div class="field" style="flex: 1; min-width: 100px;"><label for="r-phone">${T[_lang].formPhone}</label><input type="tel" id="r-phone"></div>
     </div>
-    <div class="field"><label for="r-message">Message (optionnel)</label><textarea id="r-message" rows="3"></textarea></div>
+    <div class="field"><label for="r-message">${T[_lang].formMsg}</label><textarea id="r-message" rows="3"></textarea></div>
   `
 
   const actions = container.querySelector('.actions')
@@ -224,29 +355,24 @@ function removeStep2Fields() {
   if (el) el.remove()
 }
 
-// 🚀 Envoi de la demande de réservation
 function sendReservationRequest() {
   const name = document.getElementById('r-name')?.value.trim()
   const email = document.getElementById('r-email')?.value.trim()
   const phone = document.getElementById('r-phone')?.value.trim()
   const message = document.getElementById('r-message')?.value.trim()
 
-  // Validation des champs obligatoires
-  if (!name || !email) {
-    const stepToggle = document.getElementById('step-toggle')
-    stepToggle.innerHTML =
-      '<i class="fas fa-exclamation-triangle"></i> Champs requis'
-    stepToggle.style.backgroundColor = '#ff4444'
+  const stepToggle = document.getElementById('step-toggle')
 
+  if (!name || !email) {
+    stepToggle.innerHTML = T[_lang].required
+    stepToggle.style.backgroundColor = '#ff4444'
     setTimeout(() => {
-      stepToggle.innerHTML =
-        '<i class="fas fa-paper-plane"></i> Envoyer la demande de réservation'
+      stepToggle.innerHTML = T[_lang].step2Send
       stepToggle.style.backgroundColor = ''
     }, 2000)
     return
   }
 
-  // Récupération des données de réservation
   const adults = parseInt(document.getElementById('adults').value) || 0
   const children = parseInt(document.getElementById('children').value) || 0
   const startDate = selectedStart
@@ -255,7 +381,6 @@ function sendReservationRequest() {
     (selectedEnd - selectedStart) / (1000 * 60 * 60 * 24)
   )
 
-  // Calcul du prix total
   const touristTaxPerAdultPerNight = 2.3
   const cleaningFee = 100
   let baseTotal = 0
@@ -273,11 +398,7 @@ function sendReservationRequest() {
 
     const value = planningData[key]
     const price = parseFloat(value)
-
-    if (!isNaN(price)) {
-      baseTotal += price
-    }
-
+    if (!isNaN(price)) baseTotal += price
     currentDate.setDate(currentDate.getDate() + 1)
   }
 
@@ -285,43 +406,50 @@ function sendReservationRequest() {
     Math.round(adults * nights * touristTaxPerAdultPerNight * 100) / 100
   const total = Math.round((baseTotal + cleaningFee + taxTotal) * 100) / 100
 
-  // Formatage des dates
-  const formatDate = (date) => {
-    return date.toLocaleDateString('fr-FR', {
+  const formatDate = (date) =>
+    date.toLocaleDateString(DISPLAY_LOCALE, {
       day: '2-digit',
       month: 'long',
       year: 'numeric'
     })
-  }
 
-  // Préparation des données de réservation structurées
-  const reservationDetails = `Dates : ${formatDate(startDate)} au ${formatDate(
-    endDate
-  )} (${nights} nuits)
-Voyageurs : ${adults} adulte${adults > 1 ? 's' : ''}${
-    children > 0 ? `, ${children} enfant${children > 1 ? 's' : ''}` : ''
-  }
+  // Texte récapitulatif (utilisé dans l'email côté GAS)
+  const recap = {
+    fr: `Dates : ${formatDate(startDate)} au ${formatDate(
+      endDate
+    )} (${nights} nui${nights > 1 ? 'ts' : 't'})\nVoyageurs : ${adults} adulte${
+      adults > 1 ? 's' : ''
+    }${
+      children > 0 ? `, ${children} enfant${children > 1 ? 's' : ''}` : ''
+    }\n\nDétail du prix :\n• Total des nuits (${nights}) : ${baseTotal} €\n• Frais de ménage : ${cleaningFee} €\n• Taxes (${adults} adulte${
+      adults > 1 ? 's' : ''
+    }) : ${taxTotal.toFixed(2)} €\n• Total : ${total.toFixed(2)} €`,
+    en: `Dates: ${formatDate(startDate)} to ${formatDate(
+      endDate
+    )} (${nights} night${nights > 1 ? 's' : ''})\nGuests: ${adults} adult${
+      adults > 1 ? 's' : ''
+    }${
+      children > 0 ? `, ${children} child${children > 1 ? 'ren' : ''}` : ''
+    }\n\nPrice details:\n• Total nights (${nights}): ${baseTotal} €\n• Cleaning fee: ${cleaningFee} €\n• Taxes (${adults} adult${
+      adults > 1 ? 's' : ''
+    }): ${taxTotal.toFixed(2)} €\n• Total: ${total.toFixed(2)} €`,
+    de: `Daten: ${formatDate(startDate)} bis ${formatDate(
+      endDate
+    )} (${nights} Nacht${nights > 1 ? 'e' : ''})\nGäste: ${adults} Erwachsene${
+      adults > 1 ? 'n' : ''
+    }${
+      children > 0 ? `, ${children} Kind${children > 1 ? 'er' : ''}` : ''
+    }\n\nPreisdetails:\n• Nächte gesamt (${nights}): ${baseTotal} €\n• Reinigungsgebühr: ${cleaningFee} €\n• Steuern (${adults} Erwachsene${
+      adults > 1 ? 'n' : ''
+    }): ${taxTotal.toFixed(2)} €\n• Summe: ${total.toFixed(2)} €`
+  }[_lang]
 
-Détail du prix :
-• Total des nuits (${nights}) : ${baseTotal} €
-• Frais de ménage : ${cleaningFee} €
-• Taxes (${adults} adulte${adults > 1 ? 's' : ''}) : ${taxTotal.toFixed(2)} €
-• Total : ${total.toFixed(2)} €`
-
-  // Envoi via le script Google Apps Script pour les réservations
-  // URL récupérée depuis les variables d'environnement
   const GAS_URL = window.GAS_URL
-
-  // Récupérer l'élément stepToggle avant de l'utiliser
-  const stepToggle = document.getElementById('step-toggle')
-
-  // Vérification que l'URL est configurée
   if (!GAS_URL) {
     console.error(
       "❌ GAS_URL non configurée dans les variables d'environnement"
     )
-    stepToggle.innerHTML =
-      '<i class="fas fa-exclamation-triangle"></i> Erreur de configuration'
+    stepToggle.innerHTML = T[_lang].configErr
     stepToggle.style.backgroundColor = '#ff4444'
     return
   }
@@ -339,21 +467,18 @@ Détail du prix :
     priceTax: taxTotal,
     priceTotal: total,
     startDate: selectedStart.toISOString().split('T')[0],
-    endDate: selectedEnd.toISOString().split('T')[0]
+    endDate: selectedEnd.toISOString().split('T')[0],
+    lang: _lang,
+    recap
   })
 
-  // Mise à jour du bouton pendant l'envoi
   const originalText = stepToggle.textContent
   const originalIcon = stepToggle.querySelector('i')?.className || ''
 
-  stepToggle.innerHTML =
-    '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...'
+  stepToggle.innerHTML = T[_lang].sending
   stepToggle.disabled = true
 
-  // Log pour débogage
   console.log('🚀 Envoi de la demande de réservation...')
-  // Logs anonymisés (pas d'URL ni de données sensibles en console)
-  console.log('📡 Envoi de la demande de réservation...')
 
   fetch(`${GAS_URL}?${params.toString()}`, {
     method: 'GET',
@@ -363,32 +488,21 @@ Détail du prix :
     }
   })
     .then((res) => {
-      console.log('📥 Réponse reçue:', res.status, res.statusText)
-
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}: ${res.statusText}`)
-      }
-
+      if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`)
       return res.json()
     })
     .then((result) => {
-      console.log('✅ Réponse JSON:', result)
-
       if (result.status === 'success') {
-        stepToggle.innerHTML = '<i class="fas fa-check"></i> Demande envoyée'
+        stepToggle.innerHTML = T[_lang].step2Sent
         stepToggle.style.backgroundColor = '#00ff88'
         stepToggle.style.color = '#000'
-
-        // Réinitialiser après 3 secondes
         setTimeout(() => {
           resetSelection()
         }, 3000)
       } else {
         console.error('❌ Erreur côté serveur:', result.message)
-        stepToggle.innerHTML =
-          '<i class="fas fa-exclamation-triangle"></i> Erreur serveur'
+        stepToggle.innerHTML = T[_lang].serverErr
         stepToggle.style.backgroundColor = '#ff4444'
-
         setTimeout(() => {
           stepToggle.innerHTML = originalIcon
             ? `<i class="${originalIcon}"></i> ${originalText}`
@@ -401,24 +515,15 @@ Détail du prix :
     })
     .catch((err) => {
       console.error("❌ Erreur lors de l'envoi:", err)
-      console.error("🔍 Type d'erreur:", err.name)
-      console.error("📝 Message d'erreur:", err.message)
+      let msg = T[_lang].networkTxt
+      if (err.name === 'TypeError' && err.message.includes('fetch'))
+        msg = T[_lang].connectTxt
+      else if (err.message.includes('CORS')) msg = T[_lang].corsTxt
+      else if (err.message.includes('404')) msg = T[_lang].notFoundTxt
+      else if (err.message.includes('500')) msg = T[_lang].http500Txt
 
-      let errorMessage = 'Erreur réseau'
-
-      if (err.name === 'TypeError' && err.message.includes('fetch')) {
-        errorMessage = 'Erreur de connexion'
-      } else if (err.message.includes('CORS')) {
-        errorMessage = 'Erreur CORS'
-      } else if (err.message.includes('404')) {
-        errorMessage = 'Script non trouvé'
-      } else if (err.message.includes('500')) {
-        errorMessage = 'Erreur serveur'
-      }
-
-      stepToggle.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${errorMessage}`
+      stepToggle.innerHTML = T[_lang].networkErr(msg)
       stepToggle.style.backgroundColor = '#ff4444'
-
       setTimeout(() => {
         stepToggle.innerHTML = originalIcon
           ? `<i class="${originalIcon}"></i> ${originalText}`
@@ -430,26 +535,19 @@ Détail du prix :
     })
 }
 
-// 🔄 Réinitialisation de la sélection
 function resetSelection() {
   selectedStart = null
   selectedEnd = null
   step = 1
   isBannerOpen = false
 
-  // Réinitialiser les champs
   document.getElementById('adults').value = '1'
   document.getElementById('children').value = '0'
-
-  // Cacher la bannière
   document.getElementById('mobile-banner').style.display = 'none'
 
-  // Réinitialiser le calendrier via l'API globale du planning
-  if (typeof window.planningResetSelection === 'function') {
+  if (typeof window.planningResetSelection === 'function')
     window.planningResetSelection()
-  }
 
-  // Réinitialiser les champs du formulaire
   const rName = document.getElementById('r-name')
   const rEmail = document.getElementById('r-email')
   const rPhone = document.getElementById('r-phone')
@@ -462,167 +560,113 @@ function resetSelection() {
 }
 
 // 🧠 Logique de la bannière : toggle, validation, choix
+// (section DOMContentLoaded identique au fichier d'origine, avec libellés dynamiques)
 document.addEventListener('DOMContentLoaded', () => {
   const toggleBtn = document.getElementById('toggle-banner')
   const bannerHeader = document.getElementById('mobile-banner-header')
   const details = document.getElementById('mobile-banner-details')
 
-  // Fonction pour basculer l'état de la bannière
   const toggleBanner = () => {
     const open = details.classList.toggle('open')
     isBannerOpen = open
-
     toggleBtn.innerHTML = open
       ? '<i class="fa-regular fa-circle-down"></i>'
       : '<i class="fa-regular fa-circle-up"></i>'
-
-    if (open) {
-      updateBannerSummary()
-    } else {
-      showBannerPanel() // ✅ restaurer correctement le résumé
-    }
+    if (open) updateBannerSummary()
+    else showBannerPanel()
   }
 
-  // Variables pour le swipe
-  let startY = 0
-  let currentY = 0
-  let isDragging = false
-  let startTime = 0
+  let startY = 0,
+    currentY = 0,
+    isDragging = false,
+    startTime = 0
 
-  // Ajouter l'événement sur le header de la bannière
   if (bannerHeader && details) {
     bannerHeader.addEventListener('click', (e) => {
-      // Éviter de déclencher si on clique sur le bouton toggle
-      if (e.target === toggleBtn || e.target.closest('#toggle-banner')) {
-        return
-      }
+      if (e.target === toggleBtn || e.target.closest('#toggle-banner')) return
       toggleBanner()
     })
   }
 
-  // Gestion des gestes tactiles pour la bannière
   const banner = document.getElementById('mobile-banner')
   const swipeIndicator = document.getElementById('swipe-indicator')
 
   if (banner && swipeIndicator) {
-    // Événements tactiles
     banner.addEventListener('touchstart', handleTouchStart, { passive: true })
     banner.addEventListener('touchmove', handleTouchMove, { passive: false })
     banner.addEventListener('touchend', handleTouchEnd, { passive: true })
-
-    // Événements souris pour les écrans tactiles avec souris
     banner.addEventListener('mousedown', handleMouseDown)
     banner.addEventListener('mousemove', handleMouseMove)
     banner.addEventListener('mouseup', handleMouseUp)
     banner.addEventListener('mouseleave', handleMouseUp)
 
-    // Empêcher le scroll de la page quand on est dans un champ de saisie
     banner.addEventListener(
       'wheel',
       (e) => {
-        if (e.target.matches('input, textarea')) {
-          e.stopPropagation()
-        }
+        if (e.target.matches('input, textarea')) e.stopPropagation()
       },
       { passive: false }
     )
 
     function handleTouchStart(e) {
-      // Vérifier si on touche un élément interactif
       const isInteractive =
         e.target.matches('input, textarea, select, button, a') ||
         e.target.closest('input, textarea, select, button, a, .actions, .field')
-
-      if (isInteractive) {
-        return
-      }
-
+      if (isInteractive) return
       startY = e.touches[0].clientY
       startTime = Date.now()
       isDragging = true
-      // Ne pas empêcher le comportement par défaut pour permettre les clics
     }
-
     function handleTouchMove(e) {
       if (!isDragging) return
-
-      // Vérifier si on touche un élément interactif
       const isInteractive =
         e.target.matches('input, textarea, select, button, a') ||
         e.target.closest('input, textarea, select, button, a, .actions, .field')
-
       if (isInteractive) {
         isDragging = false
         return
       }
-
       currentY = e.touches[0].clientY
-      // Empêcher le scroll seulement pendant le swipe
       e.preventDefault()
     }
-
-    function handleTouchEnd(e) {
+    function handleTouchEnd() {
       if (!isDragging) return
       const deltaY = currentY - startY
       const deltaTime = Date.now() - startTime
       const velocity = Math.abs(deltaY) / deltaTime
-
-      // Seuil de vitesse et distance pour déclencher le swipe
       if (Math.abs(deltaY) > 30 || velocity > 0.3) {
         if (deltaY > 0) {
-          // Swipe vers le bas = fermer
-          if (details.classList.contains('open')) {
-            toggleBanner()
-          }
+          if (details.classList.contains('open')) toggleBanner()
         } else {
-          // Swipe vers le haut = ouvrir
-          if (!details.classList.contains('open')) {
-            toggleBanner()
-          }
+          if (!details.classList.contains('open')) toggleBanner()
         }
       }
       isDragging = false
     }
-
     function handleMouseDown(e) {
-      // Vérifier si on clique sur un élément interactif
       const isInteractive =
         e.target.matches('input, textarea, select, button, a') ||
         e.target.closest('input, textarea, select, button, a, .actions, .field')
-
-      if (isInteractive) {
-        return
-      }
-
+      if (isInteractive) return
       startY = e.clientY
       startTime = Date.now()
       isDragging = true
       banner.style.cursor = 'grabbing'
     }
-
     function handleMouseMove(e) {
       if (!isDragging) return
       currentY = e.clientY
     }
-
-    function handleMouseUp(e) {
+    function handleMouseUp() {
       if (!isDragging) return
       const deltaY = currentY - startY
       const deltaTime = Date.now() - startTime
       const velocity = Math.abs(deltaY) / deltaTime
-
-      // Seuil de vitesse et distance pour déclencher le swipe
       if (Math.abs(deltaY) > 30 || velocity > 0.3) {
         if (deltaY > 0) {
-          // Swipe vers le bas = fermer
-          if (details.classList.contains('open')) {
-            toggleBanner()
-          }
+          if (details.classList.contains('open')) toggleBanner()
         } else {
-          // Swipe vers le haut = ouvrir
-          if (!details.classList.contains('open')) {
-            toggleBanner()
-          }
+          if (!details.classList.contains('open')) toggleBanner()
         }
       }
       isDragging = false
@@ -630,36 +674,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Garder l'événement sur le bouton toggle aussi
   if (toggleBtn && details) {
     toggleBtn.addEventListener('click', (e) => {
-      e.stopPropagation() // Empêcher la propagation vers le header
+      e.stopPropagation()
       toggleBanner()
     })
   }
 
   const selectAdultes = document.getElementById('adults')
   const selectEnfants = document.getElementById('children')
-
-  const path = window.location.pathname
-  let lang = 'fr'
-  if (path.includes('index-en')) lang = 'en'
-  else if (path.includes('index-de')) lang = 'de'
-
-  const labels = {
-    fr: {
-      adulte: (n) => `${n} adulte${n > 1 ? 's' : ''}`,
-      enfant: (n) => `${n} enfant${n > 1 ? 's' : ''}`
-    },
-    en: {
-      adulte: (n) => `${n} adult${n > 1 ? 's' : ''}`,
-      enfant: (n) => `${n} child${n > 1 ? 'ren' : ''}`
-    },
-    de: {
-      adulte: (n) => `${n} Erwachsene${n > 1 ? 'n' : ''}`,
-      enfant: (n) => `${n} Kind${n > 1 ? 'er' : ''}`
-    }
-  }
 
   function updateChildrenOptions() {
     const nbAdultes = parseInt(selectAdultes.value) || 0
@@ -670,7 +693,7 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 0; i <= maxEnfants; i++) {
       const opt = document.createElement('option')
       opt.value = i
-      opt.textContent = labels[lang].enfant(i)
+      opt.textContent = labelFns.enfant(i)
       if (i === current) opt.selected = true
       selectEnfants.appendChild(opt)
     }
@@ -686,15 +709,12 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 1; i <= maxAdultes; i++) {
       const opt = document.createElement('option')
       opt.value = i
-      opt.textContent = labels[lang].adulte(i)
+      opt.textContent = labelFns.adulte(i)
       if (i === current) opt.selected = true
       selectAdultes.appendChild(opt)
     }
     updateTotalPrice()
   }
-
-  selectAdultes.addEventListener('change', updateChildrenOptions)
-  selectEnfants.addEventListener('change', updateAdultsOptions)
 
   document.getElementById('step-toggle')?.addEventListener('click', (e) => {
     e.preventDefault()
@@ -709,6 +729,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (step === 2) goToStep1()
       else resetSelection()
     })
+
+  selectAdultes.addEventListener('change', updateChildrenOptions)
+  selectEnfants.addEventListener('change', updateAdultsOptions)
 
   updateAdultsOptions()
   updateChildrenOptions()

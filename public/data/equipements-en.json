@@ -3,17 +3,15 @@
     "icon": "🍽️",
     "label": "Kitchen",
     "items": [
-      "Dining table",
-      "Coffee machine",
-      "Household products",
+      "Central island",
+      "Coffee machines (Nespresso and filter)",
       "Toaster",
-      "Cooktop",
+      "Stovetop",
       "Oven",
-      "Dryer",
+      "Plancha grill",
       "Cooking utensils",
       "Dishes and cutlery",
       "Electric kettle",
-      "Washing machine",
       "Dishwasher",
       "Microwave",
       "Refrigerator",
@@ -24,12 +22,11 @@
     "icon": "🛁",
     "label": "Bathrooms",
     "items": [
-      "Hair dryer",
-      "Cleaning products",
+      "Hairdryer",
       "Hot water",
       "Towels",
-      "Large showers",
-      "Hangers",
+      "Spacious showers",
+      "Clothes hangers",
       "Double sinks"
     ]
   },
@@ -37,49 +34,57 @@
     "icon": "🛋️",
     "label": "Living room",
     "items": [
-      "2 two-seater sofas",
-      "Flat screen TV",
+      "2 two‑seater sofas",
+      "Flat‑screen TV",
       "Ceiling fan",
       "Coffee table"
     ]
   },
+  "salon_ext": {
+    "icon": "🌞",
+    "label": "Outdoor lounge",
+    "items": ["3 armchairs", "Coffee table", "With sea view"]
+  },
   "repas": {
     "icon": "🍴",
     "label": "Dining area",
-    "items": [
-      "Outdoor",
-      "Table for 6",
-      "With view"
-    ]
+    "items": ["Outdoor", "Table for 6 to 10 people", "With sea view"]
   },
   "chambres": {
     "icon": "🛏️",
     "label": "Bedrooms",
     "items": [
       "<15m²",
-      "2 queen size beds",
+      "2 queen‑size beds",
       "2 single beds",
-      "With view",
+      "Sea view",
       "Air conditioning",
-      "Wardrobes/Closet",
-      "En-suite bathrooms",
+      "Wardrobes / Walk‑in closet",
+      "En‑suite bathrooms",
       "Sheets",
       "Hangers",
       "Extra pillows and blankets",
       "Mosquito nets",
-      "Direct access to terrace"
+      "Direct access to the terrace"
     ]
+  },
+  "cellier": {
+    "icon": "🧺",
+    "label": "Utility room",
+    "items": ["Washing machine", "Clothes dryer", "Drying rack"]
   },
   "piscine": {
     "icon": "🏊",
-    "label": "Swimming pool",
+    "label": "Pool",
     "items": [
-      "Open all year round",
+      "Open all year",
       "Infinity pool",
-      "Pool/beach towels",
-      "Pool with view",
-      "Sun loungers",
-      "Saltwater pool"
+      "Pool towels",
+      "Pool with sea view",
+      "Deckchairs",
+      "Saltwater pool",
+      "5m x 3m",
+      "1.5m depth"
     ]
   },
   "terrasse": {
@@ -87,55 +92,49 @@
     "label": "Terrace",
     "items": [
       "50m²",
-      "Table for 6",
-      "3 sun loungers",
-      "Barbecue",
+      "Table for 6 people",
+      "3 deckchairs",
       "Private pool",
-      "Lounge area",
+      "Aperitif area",
       "Exotic daybed with mosquito net",
-      "With view",
-      "Barbecue and utensils"
+      "With sea view"
     ]
   },
   "exterieur": {
     "icon": "🌴",
-    "label": "Outdoor / Garden",
+    "label": "Tropical garden",
     "items": [
       "1350m²",
       "Lawn",
       "Flowered",
-      "Green",
-      "With view",
-      "Not overlooked"
+      "Greenery",
+      "Sea view",
+      "No overlooking",
+      "Barbecue and utensils"
     ]
   },
   "services": {
     "icon": "🧾",
     "label": "Services / Security",
     "items": [
-      "Free Wi-Fi (21Mb/s | HD streaming & video calls)",
-      "Grocery delivery (extra charge)",
+      "Free Wi‑Fi (21Mb/s | HD streaming & video calls)",
+      "Grocery delivery (extra fee)",
       "Safe",
-      "Secured shutters",
+      "Secure shutters",
       "Fenced garden",
-      "Network water tank",
-      "Rainwater tank (WC)"
+      "Smoke detector",
+      "Mains water reserve",
+      "Rainwater reserve (toilets)"
     ]
   },
   "parking": {
     "icon": "🅿️",
     "label": "Parking",
-    "items": [
-      "Private",
-      "Free",
-      "Up to 3 cars"
-    ]
+    "items": ["Private", "On the property", "Up to 5 cars"]
   },
   "accessibilite": {
     "icon": "♿",
     "label": "Accessibility",
-    "items": [
-      "Single-storey accommodation"
-    ]
+    "items": ["Single‑storey accommodation"]
   }
 }
