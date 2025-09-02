@@ -1,5 +1,5 @@
 // ============================================================================
-// LOGIQUE COMMUNE POUR LE SYSTÈME DE RÉSERVATION
+// LOGIQUE PRINCIPALE POUR ANNULER-RESERVATION.HTML
 // ============================================================================
 
 let currentLang = 'fr'
