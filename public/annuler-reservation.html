@@ -299,6 +299,11 @@
           document.querySelector('#language-selector').value = lang
         }
 
+        // Mettre à jour l'URL avec la nouvelle langue
+        const url = new URL(window.location)
+        url.searchParams.set('lang', lang)
+        window.history.replaceState({}, '', url)
+
         // Mettre à jour le récapitulatif si les données sont déjà chargées
         updateTranslationsAfterLoad()
       }
