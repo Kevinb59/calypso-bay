@@ -196,6 +196,15 @@
 }
 
 /* ========================================================
+   🏠 SECTION ÉQUIPEMENTS - BOUTONS D'ÉQUIPEMENTS
+======================================================== */
+#equipment-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* ========================================================
    ⭐️ STYLES AVIS / PLATEFORMES (Airbnb / Booking)
 ======================================================== */
 .review-item {
@@ -234,6 +243,9 @@
   text-decoration: none;
   color: inherit;
   transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
 }
 
 .review-link:hover {
@@ -315,6 +327,18 @@ textarea {
 
 .planning-section > .intro,
 .planning-section > .inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* ========================================================
+   📅 PLANNING - STYLES SPÉCIFIQUES
+======================================================== */
+.planning-section .actions {
+  margin-top: 1.5rem;
+}
+
+.planning-section .inner {
   position: relative;
   z-index: 1;
 }
@@ -420,7 +444,7 @@ textarea {
   padding: 0;
   margin: 0;
   color: white;
-  font-size: 5rem;
+  font-size: 1.2em;
   cursor: pointer;
 }
 
@@ -475,6 +499,54 @@ textarea {
   min-width: 140px;
 }
 
+/* ========================================================
+   📱 BANNIÈRE MOBILE - ÉLÉMENTS SPÉCIFIQUES
+======================================================== */
+#swipe-indicator {
+  width: 25%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  position: relative;
+  cursor: grab;
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+#mobile-banner-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#mobile-banner-header > div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+#step-indicator {
+  display: flex;
+  gap: 0.5rem;
+}
+
+#step-dot-1,
+#step-dot-2 {
+  color: white;
+  opacity: 0.4;
+}
+
+#mobile-banner .fields {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+#total-price {
+  font-weight: bold;
+  margin-top: 0.75rem;
+}
+
 /* ===============================
    🖼️ GESTION DES IMAGES ET LÉGENDES
    =============================== */
@@ -507,7 +579,7 @@ textarea {
   width: 100vw;
   height: 100vh;
   background: rgba(255, 255, 255, 0.5);
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -691,8 +763,8 @@ body.no-scroll .lightbox * {
 /* Cadre principal */
 #calendar-grid {
   display: grid;
-  grid-template-columns: repeat(7, min-content);
-  gap: 0.1rem;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
   padding: 0.5rem;
   background: rgba(0, 0, 0, 0.05);
   border-radius: 8px;

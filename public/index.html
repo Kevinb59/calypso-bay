@@ -130,9 +130,12 @@
 		<link rel="dns-prefetch" href="//maps.googleapis.com">
 		<link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
 
+		<!-- Styles CSS principaux -->
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<link rel="stylesheet" href="assets/css/custom.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+		<!-- Icônes FontAwesome pour l'interface -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 	</head>
 	<body class="is-preload">
@@ -152,6 +155,7 @@
 							Jolie villa bois de standing, de 2022, sans vis-à-vis, avec piscine à débordement et vue imprenable sur la mer, les îlets Pigeon et la réserve Cousteau.<br />
 							Pensée pour une vie dedans-dehors, elle offre des prestations de qualité dans un quartier résidentiel calme et très agréable.
 						</p>
+						<!-- Liens vers les versions multilingues (EN/DE) -->
 						<p class="flag-links">
 							<a href="index-en.html" title="English version">
 								<img src="https://flagcdn.com/gb.svg" width="32" height="24" alt="English flag" />
@@ -200,6 +204,7 @@
 						</p>
 					</div>
 					<div class="inner">
+						<!-- Grille d'icônes avec caractéristiques de la villa -->
 						<ul class="grid-icons three connected">
 							<li>
 								<span class="icon solid fa-home"><span class="label">180 m²</span></span>
@@ -246,14 +251,15 @@
 					<div class="content span-8">
 						<h2 class="major">🏠 Équipements de la villa</h2>
 						<p>Explorez les différentes catégories d'équipements en cliquant sur un bouton :</p>
-						<div id="equipment-buttons" class="actions" style="display: flex; flex-wrap: wrap; gap: 1rem;"></div>
+						<div id="equipment-buttons" class="actions"></div>
 					</div>
+					<!-- Image de fond avec effet filtré et teinté -->
 					<div class="image filtered tinted" data-position="center">
 						<img src="images/pic04.webp" alt="Vue extérieure de la villa pendant un coucher de soleil" loading="lazy" />
 					</div>
 				</section>
 
-				<!-- Conteneur des popups -->
+				<!-- Conteneur des popups d'équipements (généré dynamiquement par JavaScript) -->
 				<div id="popup-container"></div>
 
 				<!-- G A L E R I E   P H O T O S //////////////////////////////////////////////////////////////////////////////// -->
@@ -265,7 +271,9 @@
 							Cliquez simplement sur une photo pour lancer un diaporama et explorer chaque pièce ou espace sous tous ses angles.
 						</p>
 					</div>
+					<!-- Grille de photos organisée par groupes et tailles -->
 					<div class="gallery">
+						<!-- Premier groupe : Salon, Cuisine, Espace repas -->
 						<div class="group span-3">
 							<a href="#" class="image filtered span-3" data-room="Salon" data-position="center">
 								<img src="images/gallery/thumbs/01.webp" alt="Vue du salon principal de la villa" loading="lazy" />
@@ -280,10 +288,12 @@
 								<div class="caption">Espace repas</div>
 							</a>
 						</div>
+						<!-- Chambre 1 -->
 						<a href="#" class="image filtered span-1-5" data-room="Chambre1" data-position="center">
 							<img src="images/gallery/thumbs/04.webp" alt="Première chambre avec salle de bains privative et vue sur la mer" loading="lazy" />
 							<div class="caption">Chambre 1</div>
 						</a>
+						<!-- Deuxième groupe : Chambres 2-3 et Salles de bains 1-2 -->
 						<div class="group span-4-5">
 							<a href="#" class="image filtered span-3" data-room="Chambre2" data-position="center">
 								<img src="images/gallery/thumbs/05.webp" alt="Deuxième chambre spacieuse avec vue sur la mer" loading="lazy" />
@@ -302,10 +312,12 @@
 								<div class="caption">Salle de bain 2</div>
 							</a>
 						</div>
+						<!-- Salle de bain 3 -->
 						<a href="#" class="image filtered span-1-5" data-room="SDB3" data-position="center">
 							<img src="images/gallery/thumbs/09.webp" alt="Troisième salle de bains avec douche italienne" loading="lazy" />
 							<div class="caption">Salle de bain 3</div>
 						</a>
+						<!-- Troisième groupe : Extérieur, Terrasse, Piscine et autres -->
 						<div class="group span-4-5">
 							<a href="#" class="image filtered span-3" data-room="Jardin" data-position="center">
 								<img src="images/gallery/thumbs/10.webp" alt="Jardin tropical avec végétation luxuriante" loading="lazy" />
@@ -331,17 +343,17 @@
 					</div>
 				</section>
 
-				<!-- Lightbox -->
-				<div id="lightbox" class="lightbox" style="display:none;">
-					<span class="close" onclick="closeLightbox()">&times;</span>
+				<!-- Lightbox : Affichage plein écran des photos de la galerie -->
+				<div id="lightbox" class="lightbox">
+					<span class="close">&times;</span>
 					<div id="lightbox-counter">Photo 1 / 5</div>
 
-					<!-- 🆕 Nouveau conteneur -->
+					<!-- Conteneur de l'image avec navigation latérale -->
 					<div class="lightbox-image-wrapper">
 						<img id="lightbox-img" src="" alt="Image de la galerie Calypso Bay" />
 						<div class="nav">
-							<i class="fas fa-chevron-circle-left" onclick="prevImage()"></i>
-							<i class="fas fa-chevron-circle-right" onclick="nextImage()"></i>
+							<i class="fas fa-chevron-circle-left"></i>
+							<i class="fas fa-chevron-circle-right"></i>
 						</div>
 					</div>
 				</div>
@@ -358,11 +370,11 @@
 				</section>
 
 				<!-- P L A N N I N G //////////////////////////////////////////////////////////////////////////////// -->
-				<section class="panel medium color4-alt planning-section construction-mode" style="position: relative;">
+				<section class="panel medium color4-alt planning-section construction-mode">
+					<!-- Image de fond pour la section planning (gérée par CSS) -->
 					<div class="planning-bg"></div>
 
-										<!-- 🚧 CONFIGURATION : Changez "true" en "false" pour désactiver le message de construction -->
-					<!-- CONSTRUCTION_MODE = true -->
+					<!-- 🚧 CONFIGURATION : Changez "true" en "false" pour désactiver le message de construction -->
 
 					<!-- 🚧 OVERLAY BLUR SUR TOUTE LA SECTION PLANNING -->
 					<div class="planning-overlay"></div>
@@ -391,14 +403,14 @@
 					<div class="intro planning-blur-style">
 						<h2 class="major">📅 Tarifs & Réservation</h2>
 						<p>Choisissez vos dates directement dans le calendrier pour connaître les tarifs et finaliser votre réservation en quelques clics.</p>
-						<ul class="actions" style="margin-top: 1.5rem;">
+						<ul class="actions">
 							<li>
 								<a href="#" id="open-reglement" class="button primary icon solid fa-info-circle">Règlement intérieur</a>
 							</li>
 						</ul>
 					</div>
 
-					<div class="inner" style="position: relative; z-index: 1;">
+					<div class="inner">
 						<div id="calendar-header">
 							<div class="calendar-header-inner">
 								<h3 id="calendar-title"></h3>
@@ -408,11 +420,11 @@
 								</div>
 							</div>
 						</div>
-						<div id="calendar-grid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem;"></div>
+						<div id="calendar-grid"></div>
 					</div>
 				</section>
 
-				<!-- Conteneur du popup -->
+				<!-- Popup du règlement intérieur (affiché au clic sur le bouton) -->
 				<div id="popup-reglement" class="equipment-popup">
 					<div class="popup-content">
 						<span class="close-popup">&times;</span>
@@ -449,8 +461,9 @@
 					</div>
 
 					<div class="inner columns divided">
+						<!-- Colonne principale -->
 						<div class="span-4-5">
-						  <!-- Form wrapper contenant les formulaires de contact et réservation -->
+						  <!-- Wrapper du formulaire de contact -->
 						  <div class="form-wrapper">
 
 						    <!-- Formulaire Contact -->
@@ -480,16 +493,14 @@
 						      </form>
 						    </div>
 
-
-
 						  </div>
 						</div>
-						<!-- Avis -->
+						<!-- Avis et plateformes de réservation -->
 						<div class="span-1-5">
 							<p>Consultez les avis laissés par nos précédents voyageurs sur les plateformes :</p>
 							<ul class="contact-icons color1">
 								<li class="review-item">
-									<a href="https://www.airbnb.fr/rooms/718692761956767082" target="_blank" rel="noopener" class="review-link" style="display: flex; align-items: center; gap: 0.75em;">
+									<a href="https://www.airbnb.fr/rooms/718692761956767082" target="_blank" rel="noopener" class="review-link">
 										<img src="images/logos/AIRBNB.webp" alt="Logo de la plateforme Airbnb" class="logo-circle" loading="lazy" />
 										<div class="review-text">
 											<span>Airbnb</span>
@@ -508,7 +519,7 @@
 								</li>
 
 								<li class="review-item">
-									<a href="https://www.booking.com/hotel/gp/calypso-bay.fr.html#tab-reviews" target="_blank" rel="noopener" class="review-link" style="display: flex; align-items: center; gap: 0.75em;">
+									<a href="https://www.booking.com/hotel/gp/calypso-bay.fr.html#tab-reviews" target="_blank" rel="noopener" class="review-link">
 										<img src="images/logos/BOOKING.webp" alt="Logo de la plateforme Booking.com" class="logo-circle" loading="lazy" />
 										<div class="review-text">
 											<span>Booking</span>
@@ -533,25 +544,25 @@
 				<!-- C O P Y R I G H T //////////////////////////////////////////////////////////////////////////////// -->
 				<div class="copyright">
 					<span>&copy; Calypso Bay | By</span>
-					<a href="https://moriarty-design.fr" target="_blank" rel="noopener" style="font-family: 'Engagement', 'Brush Script MT', cursive; font-size: 2.2em; line-height: 1; margin-left: 0.25em; text-decoration: none; color: inherit;">Moriarty</a>.
+					<a href="https://moriarty-design.fr" target="_blank" rel="noopener" class="moriarty-link">Moriarty</a>.
 				</div>
 			</div>
 		</div>
 
 		<!-- BANNIÈRE ////////////////////////////////////////////////////////////////////////// -->
-		<div id="mobile-banner" style="display: none;">
+		<div id="mobile-banner">
 		  <!-- Barre de glissement tactile -->
-		  <div id="swipe-indicator" style="width: 25%; height: 4px; background: rgba(255,255,255,0.3); position: relative; cursor: grab; margin: 0 auto; border-radius: 2px;">
+		  <div id="swipe-indicator">
 		  </div>
-		  <div id="mobile-banner-header" style="display: flex; justify-content: space-between; align-items: center;">
-		    <div style="display: flex; align-items: center; gap: 0.75rem;">
+		  <div id="mobile-banner-header">
+		    <div>
 		      <span id="banner-summary"></span>
-		      <div id="step-indicator" style="display: flex; gap: 0.5rem;">
-		        <i class="fas fa-circle" id="step-dot-1" style="color: white; opacity: 0.4;"></i>
-		        <i class="fas fa-circle" id="step-dot-2" style="color: white; opacity: 0.4;"></i>
+		      <div id="step-indicator">
+		        <i class="fas fa-circle" id="step-dot-1"></i>
+		        <i class="fas fa-circle" id="step-dot-2"></i>
 		      </div>
 		    </div>
-		    <button id="toggle-banner" style="background: none; border: none; color: white; font-size: 1.2em;" aria-label="Réduire ou agrandir la bannière de réservation">
+		    <button id="toggle-banner" aria-label="Réduire ou agrandir la bannière de réservation">
 				<i class="fa-regular fa-circle-up"></i>
 			</button>
 		  </div>
@@ -561,7 +572,7 @@
 			  au <strong><u><span id="mobile-end"></span></u></strong><br />
 			  <strong><u><span id="mobile-nights"></span> nuits</span></u></strong> sélectionnées
 			</p>
-		    <div class="fields" style="margin-top: 1rem; display: flex; gap: 1rem; justify-content: center;">
+		    <div class="fields">
 		      <div class="field half">
 		        <label for="adults">Adultes</label>
 		        <div class="select-wrapper">
@@ -575,26 +586,28 @@
 		        </div>
 		      </div>
 		    </div>
-		    <p id="total-price" style="font-weight: bold; margin-top: 0.75rem;">Total : —</p>
-			<ul class="actions" style="justify-content: center; gap: 0.5rem;">
+		    <p id="total-price">Total : —</p>
+			<ul class="actions">
 			  <li><a href="#" id="cancel-selection" class="button small icon solid fa-times">Annuler</a></li>
 			  <li><a href="#" id="step-toggle" class="button primary small icon solid fa-arrow-circle-right">Suivant</a></li>
 			</ul>
 		  </div>
 		</div>
 
-		<!-- Scripts -->
+		<!-- Scripts JavaScript principaux -->
 		<script src="assets/js/jquery.min.js"></script>
 		<script src="assets/js/browser.min.js"></script>
 		<script src="assets/js/breakpoints.min.js"></script>
 		<script src="assets/js/main.js"></script>
+		<!-- Scripts de fonctionnalités spécifiques -->
 		<script src="assets/js/gallery.js"></script>
 		<script src="assets/js/equipements.js"></script>
 		<script src="assets/js/planning.js"></script>
-		<!-- Configuration des variables d'environnement -->
+		<!-- Scripts de configuration et services -->
 		<script src="assets/js/config-loader.js"></script>
 		<script src="assets/js/banner.js"></script>
 		<script src="assets/js/map.js"></script>
+		<!-- Script inline : Chargement de l'API Google Maps -->
 		<script>
 			// Charger Google Maps API une fois la configuration prête
 			window.addEventListener('app:config-ready', function() {
@@ -609,8 +622,9 @@
 				}
 			});
 		</script>
+		<!-- Scripts utilitaires et finaux -->
 		<script src="assets/js/popup-reglement.js"></script>
 		<script src="assets/js/form-contact.js"></script>
-		<script src="config.js"></script>
+		<script src="assets/js/config.js"></script>
 	</body>
 </html>

@@ -110,6 +110,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   lightbox.addEventListener('click', closeLightbox)
 
+  // Event listener pour le bouton de fermeture
+  document.querySelector('#lightbox .close').addEventListener('click', (e) => {
+    e.stopPropagation()
+    closeLightbox()
+  })
+
   // Navigation clavier
   document.addEventListener('keydown', (e) => {
     if (lightbox.style.display === 'flex') {
@@ -123,5 +129,10 @@ document.addEventListener('DOMContentLoaded', () => {
 document.querySelectorAll('#lightbox .nav i').forEach((el) => {
   el.addEventListener('click', (e) => {
     e.stopPropagation()
+    if (el.classList.contains('fa-chevron-circle-left')) {
+      prevImage()
+    } else if (el.classList.contains('fa-chevron-circle-right')) {
+      nextImage()
+    }
   })
 })
