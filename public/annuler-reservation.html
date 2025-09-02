@@ -307,10 +307,13 @@
       function translateRecapContent(data, lang) {
         const common = window.translations[lang].common
         const fmtMoney = (v) =>
-          Number(v || 0).toLocaleString(lang === 'de' ? 'de-DE' : 'fr-FR', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          })
+          Number(v || 0).toLocaleString(
+            lang === 'de' ? 'de-DE' : lang === 'en' ? 'en-GB' : 'fr-FR',
+            {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            }
+          )
         const s = new Date(data.startDate)
         const e = new Date(data.endDate)
         const fmtDate = (dt) =>
@@ -327,9 +330,9 @@
         lines.push(
           `<div class="detail-item"><strong>${
             common.dates
-          }</strong><span>${fmtDate(s)} au ${fmtDate(e)} (${data.nbNights} ${
-            common.nights
-          })</span></div>`
+          }</strong><span>${fmtDate(s)} ${
+            lang === 'de' ? 'bis' : lang === 'en' ? 'to' : 'au'
+          } ${fmtDate(e)} (${data.nbNights} ${common.nights})</span></div>`
         )
 
         const adultText =
