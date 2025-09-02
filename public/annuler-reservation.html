@@ -143,16 +143,14 @@
         <section class="panel banner right">
           <div class="content color0 span-3-75">
             <h2 class="major">
-              <span data-translate="annuler-reservation.banner.title"
-                >Annuler ma</span
-              ><br /><span
+              <span id="banner-title">Annuler ma</span><br /><span
                 class="themysion"
-                data-translate="annuler-reservation.banner.subtitle"
+                id="banner-subtitle"
                 >Reservation</span
               >
             </h2>
-            <p>
-              Vous pouvez demander l’annulation de votre réservation. Nous
+            <p id="banner-description">
+              Vous pouvez demander l'annulation de votre réservation. Nous
               appliquerons la politique indiquée dans nos conditions.
             </p>
             <ul class="actions">
@@ -160,6 +158,7 @@
                 <a
                   href="#form"
                   class="button primary color1 circle icon solid fa-angle-right"
+                  id="banner-button"
                   >Continuer</a
                 >
               </li>
@@ -173,10 +172,10 @@
         <!-- Récapitulatif de la réservation -->
         <section class="panel spotlight medium right color1" id="recap">
           <div class="content span-9-5">
-            <h3 class="major">📅 Détails de la réservation</h3>
+            <h3 class="major" id="recap-title">📅 Détails de la réservation</h3>
             <div class="form-section">
               <div id="reservation-recap" class="recap-card">
-                Chargement du récapitulatif…
+                <span id="recap-loading">Chargement du récapitulatif…</span>
               </div>
             </div>
           </div>
@@ -187,18 +186,24 @@
 
         <section class="panel color4-alt" id="form">
           <div class="intro color4">
-            <h2 class="major">🧾 Demande d’annulation</h2>
-            <p id="policy">Chargement des informations…</p>
+            <h2 class="major" id="form-title">🧾 Demande d'annulation</h2>
+            <p id="policy">
+              <span id="policy-loading">Chargement des informations…</span>
+            </p>
           </div>
           <div class="inner">
             <div class="form-section">
               <div>
-                <label for="reason" style="color: white; font-weight: 600"
+                <label
+                  for="reason"
+                  style="color: white; font-weight: 600"
+                  id="reason-label"
                   >Motif (optionnel)</label
                 >
                 <textarea
                   id="reason"
                   rows="4"
+                  id="reason-placeholder"
                   placeholder="Expliquez brièvement la raison de votre demande (facultatif)"
                 ></textarea>
               </div>
@@ -207,7 +212,7 @@
                 class="btn-submit"
                 style="margin-top: 16px"
               >
-                Demander l’annulation
+                <span id="submit-button-text">Demander l'annulation</span>
               </button>
             </div>
           </div>
@@ -255,24 +260,26 @@
         document.title = t.title
 
         // Traduire la bannière
-        document.querySelector(
-          '.content.color0 h2.major'
-        ).innerHTML = `${t.banner.title}<br /><span class="themysion">${t.banner.subtitle}</span>`
-        document.querySelector('.content.color0 p').textContent =
+        document.getElementById('banner-title').textContent = t.banner.title
+        document.getElementById('banner-subtitle').textContent =
+          t.banner.subtitle
+        document.getElementById('banner-description').textContent =
           t.banner.description
-        document.querySelector('.content.color0 .button').textContent =
-          t.banner.button
+        document.getElementById('banner-button').textContent = t.banner.button
 
         // Traduire la section récapitulatif
-        document.querySelector('#recap h3.major').textContent = t.recap.title
+        document.getElementById('recap-title').textContent = t.recap.title
+        document.getElementById('recap-loading').textContent = t.recap.loading
 
         // Traduire la section formulaire
-        document.querySelector('#form h2.major').textContent = t.form.title
-        document.querySelector('label[for="reason"]').textContent =
+        document.getElementById('form-title').textContent = t.form.title
+        document.getElementById('policy-loading').textContent = t.form.loading
+        document.getElementById('reason-label').textContent =
           t.form.reason_label
-        document.querySelector('#reason').placeholder =
+        document.getElementById('reason').placeholder =
           t.form.reason_placeholder
-        document.querySelector('#cancel-btn').textContent = t.form.submit_button
+        document.getElementById('submit-button-text').textContent =
+          t.form.submit_button
 
         // Traduire la modal de confirmation (sera créée dynamiquement)
         setTimeout(() => {
@@ -445,11 +452,11 @@
       overlay.id = 'confirm-overlay'
       overlay.innerHTML = `
         <div class="confirm-box">
-          <h4>Confirmer l’annulation ?</h4>
-          <p style="margin:0;color:#374151">Êtes-vous sûr de vouloir envoyer une demande d’annulation pour cette réservation ?</p>
+          <h4 id="confirm-title">Confirmer l'annulation ?</h4>
+          <p style="margin:0;color:#374151" id="confirm-message">Êtes-vous sûr de vouloir envoyer une demande d'annulation pour cette réservation ?</p>
           <div class="confirm-actions">
             <button class="btn cancel" id="co-cancel">Annuler</button>
-            <button class="btn danger" id="co-confirm">Confirmer l’annulation</button>
+            <button class="btn danger" id="co-confirm">Confirmer l'annulation</button>
           </div>
         </div>`
       document.body.appendChild(overlay)
@@ -457,7 +464,7 @@
       async function load() {
         if (!token) {
           const t = window.translations[currentLang]['annuler-reservation']
-          policyBox.textContent = t.errors.missing_token
+          policyBox.innerHTML = `<span>${t.errors.missing_token}</span>`
           btn.disabled = true
           return
         }
@@ -468,8 +475,9 @@
           const json = await res.json()
           if (json.status !== 'success') {
             const t = window.translations[currentLang]['annuler-reservation']
-            policyBox.textContent =
+            policyBox.innerHTML = `<span>${
               json.message || t.errors.reservation_not_found
+            }</span>`
             btn.disabled = true
             return
           }
@@ -479,43 +487,64 @@
 
           // Récapitulatif complet avec traductions
           const recapEl = document.getElementById('reservation-recap')
-          const balanceAmount = Number(
+          const recapBalanceAmount = Number(
             d.balanceAmount ||
               Math.max(
                 0,
                 Number(d.priceTotal || 0) - Number(d.depositAmount || 0)
               )
           )
-          const dataForRecap = { ...d, balanceAmount }
+          const dataForRecap = { ...d, balanceAmount: recapBalanceAmount }
           recapEl.innerHTML = translateRecapContent(dataForRecap, currentLang)
 
           const start = new Date(d.startDate)
           const now = new Date()
           const diffDays = Math.ceil((start - now) / (1000 * 60 * 60 * 24))
-          let msg = 'Vous pouvez annuler.'
-          const depositPaid =
-            deposit > 0 ||
-            d.status === 'depositPay' ||
-            d.status === 'balancePay'
-          if (!depositPaid) {
-            msg =
-              "Cette réservation n'est pas éligible à l'annulation (acompte non payé)."
-            policyBox.classList.add('error')
+          const t = window.translations[currentLang]['annuler-reservation']
+
+          // Déterminer le message de politique selon les conditions
+          let msg
+          const depositAmount = Number(d.depositAmount || 0)
+          const balanceAmount = Number(d.balanceAmount || 0)
+          const hasDeposit = depositAmount > 0
+          const hasBalance = balanceAmount > 0
+          const isMoreThan3Months = diffDays >= 90
+
+          if (!hasDeposit) {
+            // Acompte non payé
+            msg = t.policy.no_deposit
+          } else if (hasDeposit && !hasBalance) {
+            // Acompte payé mais pas le solde
+            if (isMoreThan3Months) {
+              msg = t.policy.free_cancellation_deposit_only
+            } else {
+              msg = t.policy.deposit_retained
+            }
+          } else if (hasDeposit && hasBalance) {
+            // Acompte et solde payés
+            if (isMoreThan3Months) {
+              msg = t.policy.free_cancellation_full_payment
+            } else {
+              msg = t.policy.deposit_retained_balance_refunded
+            }
+          }
+
+          // Désactiver le bouton si pas d'acompte
+          if (!hasDeposit) {
             btn.disabled = true
-          }
-          if (diffDays >= 90) {
-            msg = "Annulation gratuite jusqu'à 3 mois avant le début du séjour."
+            policyBox.classList.add('error')
           } else {
-            msg =
-              'Au-delà de 3 mois avant le début du séjour, l’acompte peut être retenu selon nos conditions.'
+            btn.disabled = false
+            policyBox.classList.remove('error')
           }
-          policyBox.textContent = msg
+
+          policyBox.innerHTML = `<span>${msg}</span>`
           // Style léger sur le paragraphe politique
           policyBox.style.color = '#fff'
           policyBox.style.opacity = '0.95'
         } catch (e) {
           const t = window.translations[currentLang]['annuler-reservation']
-          policyBox.textContent = t.errors.loading_error
+          policyBox.innerHTML = `<span>${t.errors.loading_error}</span>`
         }
       }
 
@@ -551,7 +580,9 @@
         document.getElementById('co-confirm').onclick = async () => {
           closeOverlay()
           btn.disabled = true
-          btn.textContent = 'Envoi…'
+          const t = window.translations[currentLang]['annuler-reservation']
+          document.getElementById('submit-button-text').textContent =
+            t.status.sending
           try {
             const reason = document.getElementById('reason').value
             const resp = await fetch('/api/reservations?action=cancel', {
@@ -562,11 +593,13 @@
             const json = await resp.json()
             if (!resp.ok || json.status !== 'success')
               throw new Error(json.error || json.message || 'Erreur')
-            btn.textContent = 'Demande envoyée ✔'
+            document.getElementById('submit-button-text').textContent =
+              t.status.sent
           } catch (e) {
             alert(e.message)
             btn.disabled = false
-            btn.textContent = 'Demander l’annulation'
+            document.getElementById('submit-button-text').textContent =
+              t.form.submit_button
           }
         }
       })

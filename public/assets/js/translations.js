@@ -53,13 +53,15 @@ window.translations = {
 
       // Politique d'annulation
       policy: {
-        can_cancel: 'Vous pouvez annuler.',
-        not_eligible:
-          "Cette réservation n'est pas éligible à l'annulation (acompte non payé).",
-        free_cancellation:
-          "Annulation gratuite jusqu'à 3 mois avant le début du séjour.",
+        no_deposit: 'Annulation gratuite.',
+        free_cancellation_deposit_only:
+          "Annulation gratuite jusqu'à 3 mois avant le début du séjour. Votre acompte vous sera remboursé.",
         deposit_retained:
-          "Au-delà de 3 mois avant le début du séjour, l'acompte peut être retenu selon nos conditions."
+          "A moins de 3 mois avant le début du séjour, l'acompte peut être retenu selon nos conditions.",
+        free_cancellation_full_payment:
+          "Annulation gratuite jusqu'à 3 mois avant le début du séjour. Votre acompte ainsi que votre solde vous seront remboursés.",
+        deposit_retained_balance_refunded:
+          "A moins de 3 mois avant le début du séjour, l'acompte peut être retenu selon nos conditions. Le solde vous sera remboursé."
       },
 
       // Modal de confirmation
@@ -358,13 +360,15 @@ window.translations = {
       },
 
       policy: {
-        can_cancel: 'You can cancel.',
-        not_eligible:
-          'This reservation is not eligible for cancellation (deposit not paid).',
-        free_cancellation:
-          'Free cancellation up to 3 months before the start of your stay.',
+        no_deposit: 'Free cancellation.',
+        free_cancellation_deposit_only:
+          'Free cancellation up to 3 months before the start of your stay. Your deposit will be refunded.',
         deposit_retained:
-          'Beyond 3 months before the start of your stay, the deposit may be retained according to our terms and conditions.'
+          'Less than 3 months before the start of your stay, the deposit may be retained according to our terms and conditions.',
+        free_cancellation_full_payment:
+          'Free cancellation up to 3 months before the start of your stay. Your deposit and balance will be refunded.',
+        deposit_retained_balance_refunded:
+          'Less than 3 months before the start of your stay, the deposit may be retained according to our terms and conditions. The balance will be refunded.'
       },
 
       confirmation: {
@@ -640,13 +644,15 @@ window.translations = {
       },
 
       policy: {
-        can_cancel: 'Sie können stornieren.',
-        not_eligible:
-          'Diese Reservierung ist nicht stornierbar (Anzahlung nicht bezahlt).',
-        free_cancellation:
-          'Kostenlose Stornierung bis zu 3 Monate vor Beginn Ihres Aufenthalts.',
+        no_deposit: 'Kostenlose Stornierung.',
+        free_cancellation_deposit_only:
+          'Kostenlose Stornierung bis zu 3 Monate vor Beginn Ihres Aufenthalts. Ihre Anzahlung wird erstattet.',
         deposit_retained:
-          'Weniger als 3 Monate vor Beginn Ihres Aufenthalts kann die Anzahlung gemäß unseren Bedingungen einbehalten werden.'
+          'Weniger als 3 Monate vor Beginn Ihres Aufenthalts kann die Anzahlung gemäß unseren Bedingungen einbehalten werden.',
+        free_cancellation_full_payment:
+          'Kostenlose Stornierung bis zu 3 Monate vor Beginn Ihres Aufenthalts. Ihre Anzahlung sowie Ihr Restbetrag werden erstattet.',
+        deposit_retained_balance_refunded:
+          'Weniger als 3 Monate vor Beginn Ihres Aufenthalts kann die Anzahlung gemäß unseren Bedingungen einbehalten werden. Der Restbetrag wird erstattet.'
       },
 
       confirmation: {
