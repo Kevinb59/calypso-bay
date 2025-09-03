@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Réservation confirmée – Calypso Bay</title>
+    <title id="page-title">Réservation confirmée – Calypso Bay</title>
 
     <!-- Favicons -->
     <link
@@ -25,6 +25,7 @@
     />
     <link rel="manifest" href="manifest.json" />
     <link rel="shortcut icon" href="images/logos/favicons/favicon.ico" />
+    <script src="assets/js/translations.js"></script>
 
     <!-- Polices -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -437,9 +438,45 @@
           min-height: 240px;
         }
       }
+
+      /* Styles pour le sélecteur de langue */
+      .language-selector {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 8px;
+        padding: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(10px);
+      }
+      .language-selector select {
+        border: none;
+        background: transparent;
+        font-size: 14px;
+        font-weight: 600;
+        color: #374151;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 4px;
+      }
+      .language-selector select:focus {
+        outline: none;
+        background: rgba(59, 130, 246, 0.1);
+      }
     </style>
   </head>
   <body>
+    <!-- Sélecteur de langue -->
+    <div class="language-selector">
+      <select id="language-selector">
+        <option value="fr">🇫🇷 Français</option>
+        <option value="en">🇬🇧 English</option>
+        <option value="de">🇩🇪 Deutsch</option>
+      </select>
+    </div>
+
     <main class="wrap">
       <div class="stage">
         <section class="panel">
@@ -448,9 +485,9 @@
             <div class="left">
               <div class="glass" role="status" aria-live="polite">
                 <div class="badge" aria-hidden="true"><span>✓</span></div>
-                <h1>Réservation confirmée&nbsp;!</h1>
+                <h1 id="main-title">Réservation confirmée&nbsp;!</h1>
                 <div class="divider"></div>
-                <p class="lead">
+                <p class="lead" id="main-description">
                   Félicitations&nbsp;! Votre réservation est désormais
                   <strong>définitive</strong>. Votre acompte de 10&nbsp;% a été
                   reçu avec succès.
@@ -459,8 +496,10 @@
                 <div class="status" aria-label="Statut du paiement">
                   <div class="icon" aria-hidden="true">✓</div>
                   <div>
-                    <strong>Paiement de votre acompte validé</strong>
-                    <small
+                    <strong id="status-title"
+                      >Paiement de votre acompte validé</strong
+                    >
+                    <small id="status-description"
                       >Un e‑mail de confirmation vous a été envoyé. Vous y
                       trouverez un lien pour payer le solde restant ainsi qu'un
                       autre pour annuler votre réservation.</small
@@ -468,7 +507,7 @@
                   </div>
                 </div>
 
-                <p class="muted">
+                <p class="muted" id="help-text">
                   Besoin d’aide, d'un renseignement ou d’une demande
                   particulière (arrivées tardives, options, ...) ?
                   Contactez‑nous — nous nous efforcerons de vous satisfaire.
@@ -477,11 +516,11 @@
                 <div class="actions">
                   <a class="btn primary" href="index.html"
                     ><i class="fa-solid fa-house" aria-hidden="true"></i
-                    ><span>Retour à l’accueil</span></a
+                    ><span id="home-button">Retour à l’accueil</span></a
                   >
                   <a class="btn ghost" href="mailto:contact@calypso-bay.com"
                     ><i class="fa-solid fa-envelope" aria-hidden="true"></i
-                    ><span>Nous contacter</span></a
+                    ><span id="contact-button">Nous contacter</span></a
                   >
                 </div>
               </div>
@@ -491,9 +530,11 @@
             <aside class="right" aria-hidden="true">
               <div class="hero"></div>
               <div class="hero-caption">
-                <div class="hero-brand">Calypso Bay</div>
-                <h2>Votre séjour vous attend</h2>
-                <p>Vue mer, piscine à débordement & atmosphère tropicale.</p>
+                <div class="hero-brand" id="hero-brand">Calypso Bay</div>
+                <h2 id="hero-title">Votre séjour vous attend</h2>
+                <p id="hero-description">
+                  Vue mer, piscine à débordement & atmosphère tropicale.
+                </p>
               </div>
             </aside>
           </div>
@@ -510,5 +551,83 @@
         </div>
       </div>
     </main>
+
+    <script>
+      // ============================================================================
+      // SYSTÈME DE TRADUCTION
+      // ============================================================================
+
+      let currentLang = 'fr'
+
+      // Initialiser les traductions
+      window.addEventListener('translations:ready', function (event) {
+        const detectedLang = event.detail.language
+        translatePage(detectedLang)
+      })
+
+      // Fonction pour traduire la page
+      function translatePage(lang) {
+        currentLang = lang
+        const t = window.translations[lang]['reservation-confirmee']
+
+        // Mettre à jour le titre de la page
+        document.title = t.title
+
+        // Traduire le contenu principal
+        document.getElementById('main-title').textContent = t.main.title
+        document.getElementById('main-description').innerHTML =
+          t.main.description
+        document.getElementById('status-title').textContent =
+          t.main.status_title
+        document.getElementById('status-description').textContent =
+          t.main.status_description
+        document.getElementById('help-text').textContent = t.main.help_text
+
+        // Traduire les boutons d'action
+        document.getElementById('home-button').textContent = t.actions.home
+        document.getElementById('contact-button').textContent =
+          t.actions.contact
+
+        // Traduire la section héro
+        document.getElementById('hero-brand').textContent = t.hero.brand
+        document.getElementById('hero-title').textContent = t.hero.title
+        document.getElementById('hero-description').textContent =
+          t.hero.description
+
+        // Mettre à jour le sélecteur de langue
+        if (document.querySelector('#language-selector')) {
+          document.querySelector('#language-selector').value = lang
+        }
+
+        // Mettre à jour l'URL avec la nouvelle langue
+        const url = new URL(window.location)
+        url.searchParams.set('lang', lang)
+        window.history.replaceState({}, '', url)
+      }
+
+      // Gérer le changement de langue
+      document.addEventListener('DOMContentLoaded', function () {
+        const languageSelector = document.querySelector('#language-selector')
+        if (languageSelector) {
+          languageSelector.addEventListener('change', function () {
+            const newLang = this.value
+
+            // Sauvegarder la préférence
+            localStorage.setItem('calypso-bay-lang', newLang)
+
+            // Rediriger vers la nouvelle URL avec le bon paramètre de langue
+            const url = new URL(window.location)
+            url.searchParams.set('lang', newLang)
+            window.location.href = url.toString()
+          })
+
+          // Charger la préférence sauvegardée
+          const savedLang = localStorage.getItem('calypso-bay-lang')
+          if (savedLang && ['fr', 'en', 'de'].includes(savedLang)) {
+            languageSelector.value = savedLang
+          }
+        }
+      })
+    </script>
   </body>
 </html>
