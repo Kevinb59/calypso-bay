@@ -552,26 +552,15 @@ function getReservationData_(token) {
       })
     }
 
-    // Vérifier le statut uniquement
+    // Récupérer le statut pour l'information (pas pour bloquer)
     const currentStatus = String(data[rowIndex][statusColIndex] || '')
     const depositAmountIndex = headers.indexOf('depositAmount')
     const hasDeposit =
       depositAmountIndex !== -1 &&
       Number(data[rowIndex][depositAmountIndex] || 0) > 0
-    // Autoriser la consultation si la réservation est acceptée,
-    // si l'acompte est payé, ou si le solde est déjà payé
-    if (
-      !(
-        currentStatus === 'accepted' ||
-        (currentStatus === 'depositPay' && hasDeposit) ||
-        currentStatus === 'balancePay'
-      )
-    ) {
-      return jsonOut({
-        status: 'error',
-        message: '❌ Réservation non acceptée'
-      })
-    }
+
+    // ✅ NOUVELLE LOGIQUE : On ne bloque plus rien côté API
+    // Le verrouillage se fait côté frontend selon le statut
 
     // Récupérer les données de la réservation avec conversion des types
     const nameIndex = headers.indexOf('name')
