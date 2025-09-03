@@ -722,9 +722,14 @@
         console.log('📊 Données reçues:', data)
         console.log('🌍 Langue demandée:', lang)
 
+        if (!data) {
+          console.warn('❌ Aucune donnée de réservation disponible')
+          return ''
+        }
+
         if (!window.translations || !window.translations[lang]) {
           console.error('❌ Traductions non disponibles pour la langue:', lang)
-          return '<div class="detail-item">Erreur: traductions non disponibles</div>'
+          return ''
         }
 
         const common = window.translations[lang].common
@@ -744,71 +749,87 @@
               maximumFractionDigits: 2
             }
           )
-        const s = new Date(data.startDate)
-        const e = new Date(data.endDate)
-        const fmtDate = (dt) =>
-          dt.toLocaleDateString(
-            lang === 'de' ? 'de-DE' : lang === 'en' ? 'en-GB' : 'fr-FR',
-            {
-              day: '2-digit',
-              month: 'long',
-              year: 'numeric'
-            }
-          )
-
-        const ages =
-          Array.isArray(data.childrenAges) && data.childrenAges.length
-            ? data.childrenAges.join(', ')
-            : ''
 
         const lines = []
-        lines.push(
-          `<div class="detail-item"><strong>${
-            common.dates
-          }</strong> <span>${fmtDate(s)} ${
-            lang === 'de' ? 'bis' : lang === 'en' ? 'to' : 'au'
-          } ${fmtDate(e)} (${data.nbNights} ${common.nights})</span></div>`
-        )
 
-        const adultText =
-          data.nbAdults > 1 ? common.adults_plural : common.adults
-        const childText =
-          data.nbChilds > 1 ? common.children_plural : common.children
-        lines.push(
-          `<div class="detail-item"><strong>${
-            common.travelers
-          }</strong> <span>${data.nbAdults} ${adultText}${
-            data.nbChilds > 0 ? `, ${data.nbChilds} ${childText}` : ''
-          }</span></div>`
-        )
+        // Vérifier si on a les dates avant de les afficher
+        if (data.startDate && data.endDate) {
+          const s = new Date(data.startDate)
+          const e = new Date(data.endDate)
+          const fmtDate = (dt) =>
+            dt.toLocaleDateString(
+              lang === 'de' ? 'de-DE' : lang === 'en' ? 'en-GB' : 'fr-FR',
+              {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric'
+              }
+            )
 
-        if (data.nbChilds > 0 && ages) {
           lines.push(
-            `<div class="detail-item"><strong>${common.children_ages}</strong> <span>${ages}</span></div>`
+            `<div class="detail-item"><strong>${
+              common.dates
+            }</strong> <span>${fmtDate(s)} ${
+              lang === 'de' ? 'bis' : lang === 'en' ? 'to' : 'au'
+            } ${fmtDate(e)} (${data.nbNights || 0} ${
+              common.nights
+            })</span></div>`
           )
         }
 
-        lines.push(
-          `<div class="detail-item" style="border-bottom:none; display:block; padding-bottom:0;">
-            <div><strong>${common.price_details}</strong></div>
-            <div style="padding-top:8px">• ${common.nights_total.replace(
-              '{count}',
-              data.nbNights
-            )} ${fmtMoney(data.priceNights)} ${common.currency}</div>
-            <div>• ${common.cleaning_fees} ${fmtMoney(data.priceClean)} ${
-            common.currency
-          }</div>
-            <div>• ${common.taxes
-              .replace('{count}', data.nbAdults)
-              .replace('{adult_text}', adultText)} ${fmtMoney(data.priceTax)} ${
-            common.currency
-          }</div>
-            <div>• <strong>${common.total} ${fmtMoney(data.priceTotal)} ${
-            common.currency
-          }</strong></div>
-          </div>`
-        )
+        // Vérifier si on a les informations de voyageurs
+        if (data.nbAdults) {
+          const adultText =
+            data.nbAdults > 1 ? common.adults_plural : common.adults
+          const childText =
+            data.nbChilds > 1 ? common.children_plural : common.children
+          lines.push(
+            `<div class="detail-item"><strong>${
+              common.travelers
+            }</strong> <span>${data.nbAdults} ${adultText}${
+              data.nbChilds > 0 ? `, ${data.nbChilds} ${childText}` : ''
+            }</span></div>`
+          )
 
+          // Vérifier si on a les âges des enfants
+          if (
+            data.nbChilds > 0 &&
+            Array.isArray(data.childrenAges) &&
+            data.childrenAges.length
+          ) {
+            const ages = data.childrenAges.join(', ')
+            lines.push(
+              `<div class="detail-item"><strong>${common.children_ages}</strong> <span>${ages}</span></div>`
+            )
+          }
+        }
+
+        // Vérifier si on a les informations de prix
+        if (data.priceTotal && data.priceTotal > 0) {
+          lines.push(
+            `<div class="detail-item" style="border-bottom:none; display:block; padding-bottom:0;">
+              <div><strong>${common.price_details}</strong></div>
+              <div style="padding-top:8px">• ${common.nights_total.replace(
+                '{count}',
+                data.nbNights || 0
+              )} ${fmtMoney(data.priceNights || 0)} ${common.currency}</div>
+              <div>• ${common.cleaning_fees} ${fmtMoney(
+              data.priceClean || 0
+            )} ${common.currency}</div>
+              <div>• ${common.taxes
+                .replace('{count}', data.nbAdults || 0)
+                .replace(
+                  '{adult_text}',
+                  data.nbAdults > 1 ? common.adults_plural : common.adults
+                )} ${fmtMoney(data.priceTax || 0)} ${common.currency}</div>
+              <div>• <strong>${common.total} ${fmtMoney(data.priceTotal)} ${
+              common.currency
+            }</strong></div>
+            </div>`
+          )
+        }
+
+        // Vérifier si on a l'adresse de facturation
         if (data.address || data.city || data.postal || data.country) {
           lines.push(
             `<div class="detail-item" style="border-bottom:none; display:block; padding-bottom:0;">
@@ -840,68 +861,11 @@
             )
           }
 
-          // Mettre à jour les messages de verrouillage si ils sont affichés
-          const lock = document.getElementById('balance-lock')
-          const lockText = document.getElementById('balance-lock-text')
-          if (lock && lockText && lock.style.display === 'flex') {
-            const t = window.translations[currentLang]['payer-solde']
-            const st = String(window.reservationData.status || '')
+          // Mettre à jour l'interface de paiement avec la nouvelle langue
+          updatePaymentInterface(window.reservationData)
 
-            if (st === 'balancePay') {
-              lockText.textContent = t.locks.balance_paid
-            } else if (st === 'canceled') {
-              lockText.textContent = t.locks.reservation_canceled
-            }
-          }
-
-          // Mettre à jour les montants de paiement avec la nouvelle langue
-          if (window.reservationData) {
-            const total = Number(window.reservationData.priceTotal || 0)
-            const deposit = Number(window.reservationData.depositAmount || 0)
-            const balance = Math.max(0, total - deposit)
-
-            const locale =
-              currentLang === 'de'
-                ? 'de-DE'
-                : currentLang === 'en'
-                ? 'en-GB'
-                : 'fr-FR'
-
-            document.getElementById(
-              'total-amount'
-            ).textContent = `${total.toLocaleString(locale, {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-            })} €`
-
-            document.getElementById(
-              'deposit-amount'
-            ).textContent = `${deposit.toLocaleString(locale, {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-            })} €`
-
-            document.getElementById(
-              'remaining-amount'
-            ).textContent = `${balance.toLocaleString(locale, {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-            })} €`
-
-            // Mettre à jour le texte du bouton avec le montant
-            const t = window.translations[currentLang]['payer-solde']
-            const buttonTextTemplate = t.payment.submit_button_with_amount
-            const btnText = document.getElementById('submit-button-text')
-            if (btnText) {
-              btnText.textContent = buttonTextTemplate.replace(
-                '{amount}',
-                balance.toLocaleString(locale, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2
-                })
-              )
-            }
-          }
+          // Mettre à jour les verrouillages avec la nouvelle langue
+          applyPaymentLocks(window.reservationData)
         }
       }
 
@@ -916,18 +880,12 @@
         console.log('📋 Traductions disponibles:', !!window.translations)
 
         if (!token) {
-          console.log('❌ Pas de token, tentative de traduction')
-          if (window.translations && window.translations[currentLang]) {
-            const t = window.translations[currentLang]['payer-solde']
-            detailsBox.textContent = t.errors.missing_token
-            console.log("✅ Message d'erreur traduit appliqué")
-          } else {
-            detailsBox.textContent = 'Token manquant'
-            console.log('❌ Traductions non disponibles, message par défaut')
-          }
-          btn.disabled = true
+          console.log('❌ Pas de token, on continue avec des données vides')
+          // Au lieu de bloquer, on continue avec des données vides
+          window.reservationData = null
           return
         }
+
         try {
           console.log(
             '🔍 Tentative de récupération des données de réservation...'
@@ -945,7 +903,9 @@
 
           if (!res.ok) {
             console.error('❌ Erreur HTTP:', res.status, res.statusText)
-            throw new Error(`Erreur HTTP: ${res.status}`)
+            // Au lieu de bloquer, on continue avec des données vides
+            window.reservationData = null
+            return
           }
 
           const json = await res.json()
@@ -957,25 +917,14 @@
               json.status,
               json.message
             )
-            const t = window.translations[currentLang]['payer-solde']
-            detailsBox.textContent =
-              json.message || t.errors.reservation_not_found
-            btn.disabled = true
+            // Au lieu de bloquer, on continue avec des données vides
+            window.reservationData = null
             return
           }
 
           console.log('✅ Données de réservation récupérées avec succès')
           const d = json.data
           console.log('📊 Données brutes de la réservation:', d)
-
-          const total = Number(d.priceTotal || 0)
-          const deposit = Number(d.depositAmount || 0)
-          const balance = Math.max(0, total - deposit)
-
-          console.log('💰 Calculs financiers:')
-          console.log('  - Total:', total)
-          console.log('  - Acompte:', deposit)
-          console.log('  - Solde:', balance)
 
           // Sauvegarder les données pour les traductions dynamiques
           window.reservationData = d
@@ -991,43 +940,68 @@
             translatePage(currentLang)
           }
 
-          // ============================================================================
-          // MISE À JOUR DE L'INTERFACE DE PAIEMENT
-          // ============================================================================
+          // Mettre à jour l'interface de paiement
+          updatePaymentInterface(d)
 
-          // Récap paiement avec formatage selon la langue
-          const t = window.translations[currentLang]['payer-solde']
-          const locale =
-            currentLang === 'de'
-              ? 'de-DE'
-              : currentLang === 'en'
-              ? 'en-GB'
-              : 'fr-FR'
+          // Appliquer les verrouillages de paiement
+          applyPaymentLocks(d)
+        } catch (e) {
+          console.error('💥 Erreur lors du chargement des données:', e)
+          console.error('📋 Stack trace:', e.stack)
+          // Au lieu de bloquer, on continue avec des données vides
+          window.reservationData = null
+        }
+      }
 
-          document.getElementById(
-            'total-amount'
-          ).textContent = `${total.toLocaleString(locale, {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          })} €`
-          document.getElementById(
-            'deposit-amount'
-          ).textContent = `${deposit.toLocaleString(locale, {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          })} €`
-          document.getElementById(
-            'remaining-amount'
-          ).textContent = `${balance.toLocaleString(locale, {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          })} €`
-          document.getElementById('deposit-percent').textContent =
-            total > 0 ? `${Math.round((deposit / total) * 100)}%` : '0%'
-          document.getElementById('progress-fill').style.width =
-            total > 0 ? `${Math.min(100, (deposit / total) * 100)}%` : '0%'
+      // Nouvelle fonction pour mettre à jour l'interface de paiement
+      function updatePaymentInterface(data) {
+        if (!data) return
 
-          // Traduire le texte du bouton avec le montant
+        const total = Number(data.priceTotal || 0)
+        const deposit = Number(data.depositAmount || 0)
+        const balance = Math.max(0, total - deposit)
+
+        console.log('💰 Calculs financiers:')
+        console.log('  - Total:', total)
+        console.log('  - Acompte:', deposit)
+        console.log('  - Solde:', balance)
+
+        const t = window.translations[currentLang]['payer-solde']
+        const locale =
+          currentLang === 'de'
+            ? 'de-DE'
+            : currentLang === 'en'
+            ? 'en-GB'
+            : 'fr-FR'
+
+        document.getElementById('total-amount').textContent =
+          total > 0
+            ? `${total.toLocaleString(locale, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              })} €`
+            : '—'
+        document.getElementById('deposit-amount').textContent =
+          deposit > 0
+            ? `${deposit.toLocaleString(locale, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              })} €`
+            : '—'
+        document.getElementById('remaining-amount').textContent =
+          balance > 0
+            ? `${balance.toLocaleString(locale, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              })} €`
+            : '—'
+        document.getElementById('deposit-percent').textContent =
+          total > 0 ? `${Math.round((deposit / total) * 100)}%` : '0%'
+        document.getElementById('progress-fill').style.width =
+          total > 0 ? `${Math.min(100, (deposit / total) * 100)}%` : '0%'
+
+        // Traduire le texte du bouton avec le montant
+        if (balance > 0) {
           const buttonTextTemplate = t.payment.submit_button_with_amount
           btnText.textContent = buttonTextTemplate.replace(
             '{amount}',
@@ -1036,36 +1010,54 @@
               maximumFractionDigits: 2
             })
           )
+        } else {
+          btnText.textContent = t.payment.submit_button
+        }
+      }
 
-          // ============================================================================
-          // GESTION DES VERROUILLAGES DE PAIEMENT
-          // ============================================================================
+      // Nouvelle fonction pour appliquer les verrouillages de paiement
+      function applyPaymentLocks(data) {
+        if (!data) return
 
-          // Vérifier le statut et appliquer les verrouillages appropriés
-          const st = String(d.status || '')
-          const lock = document.getElementById('balance-lock')
-          const lockText = document.getElementById('balance-lock-text')
-          if (lock && lockText) {
-            if (st === 'balancePay') {
-              // Solde déjà payé : verrouiller le paiement
-              lockText.textContent = t.locks.balance_paid
-              lock.style.display = 'flex'
-              btn.disabled = true
-            } else if (st === 'canceled') {
-              // Réservation annulée : verrouiller le paiement
-              lockText.textContent = t.locks.reservation_canceled
+        const st = String(data.status || '')
+        const lock = document.getElementById('balance-lock')
+        const lockText = document.getElementById('balance-lock-text')
+
+        if (lock && lockText) {
+          const t = window.translations[currentLang]['payer-solde']
+
+          // Vérifier le statut de la réservation
+          if (st === 'balancePay') {
+            lockText.textContent = t.locks.balance_paid
+            lock.style.display = 'flex'
+            btn.disabled = true
+          } else if (st === 'canceled') {
+            lockText.textContent = t.locks.reservation_canceled
+            lock.style.display = 'flex'
+            btn.disabled = true
+          }
+
+          // NOUVEAUX CAS : Vérifier le statut d'annulation
+          const cancelStatus = String(data.cancelStatus || '')
+          if (cancelStatus === 'pending' || cancelStatus === 'validated') {
+            lockText.textContent =
+              "Votre réservation fait l'objet d'une demande d'annulation"
+            lock.style.display = 'flex'
+            btn.disabled = true
+          }
+
+          // NOUVEAUX CAS : Vérifier si la réservation a expiré
+          if (data.endDate) {
+            const endDate = new Date(data.endDate)
+            const today = new Date()
+            today.setHours(0, 0, 0, 0) // Remettre à minuit pour la comparaison
+
+            if (endDate < today) {
+              lockText.textContent = 'Votre réservation a expiré'
               lock.style.display = 'flex'
               btn.disabled = true
             }
           }
-        } catch (e) {
-          console.error('💥 Erreur lors du chargement des données:', e)
-          console.error('📋 Stack trace:', e.stack)
-
-          // Gestion des erreurs de chargement avec traduction
-          const t = window.translations[currentLang]['payer-solde']
-          detailsBox.textContent = t.errors.loading_error
-          console.log("⚠️ Message d'erreur affiché à l'utilisateur")
         }
       }
 

@@ -1342,61 +1342,107 @@
             window.reservationData = result.data
             populateForm(result.data)
             calculatePaymentAmount(result.data)
-            const st = String(result.data.status || '')
-            const lock = document.getElementById('payment-lock')
-            const lockText = document.getElementById('payment-lock-text')
-            if (lock && lockText) {
-              const t =
-                window.translations[currentLang]?.['finaliser-reservation']
-              if (st === 'depositPay') {
-                lockText.textContent =
-                  t?.locks?.deposit_paid || 'Acompte déjà réglé'
-                lock.style.display = 'flex'
-              } else if (st === 'balancePay') {
-                lockText.textContent =
-                  t?.locks?.balance_paid || 'Acompte et solde déjà réglés'
-                lock.style.display = 'flex'
-              } else if (st === 'canceled') {
-                lockText.textContent =
-                  t?.locks?.reservation_canceled || 'Réservation annulée'
-                lock.style.display = 'flex'
-              }
-            }
+            applyPaymentLocks(result.data)
           } else {
-            // Le message d'erreur sera traduit par showError()
-            showError(result.message || 'Erreur lors du chargement des données')
+            // Au lieu de bloquer avec showError, on continue avec des données vides
+            console.warn('Statut API non réussi:', result.message)
+            window.reservationData = null
+            // On laisse les sections vides mais on continue
           }
         } catch (error) {
-          // Le message d'erreur sera traduit par showError()
-          showError('Erreur de connexion')
-          console.error('Erreur:', error)
+          // Au lieu de bloquer avec showError, on continue avec des données vides
+          console.error('Erreur de connexion:', error)
+          window.reservationData = null
+          // On laisse les sections vides mais on continue
+        }
+      }
+
+      // Nouvelle fonction pour appliquer les verrouillages de paiement
+      function applyPaymentLocks(data) {
+        if (!data) return
+
+        const st = String(data.status || '')
+        const lock = document.getElementById('payment-lock')
+        const lockText = document.getElementById('payment-lock-text')
+
+        if (lock && lockText) {
+          const t = window.translations[currentLang]?.['finaliser-reservation']
+
+          // Vérifier le statut de la réservation
+          if (st === 'depositPay') {
+            lockText.textContent =
+              t?.locks?.deposit_paid || 'Acompte déjà réglé'
+            lock.style.display = 'flex'
+          } else if (st === 'balancePay') {
+            lockText.textContent =
+              t?.locks?.balance_paid || 'Acompte et solde déjà réglés'
+            lock.style.display = 'flex'
+          } else if (st === 'canceled') {
+            lockText.textContent =
+              t?.locks?.reservation_canceled || 'Réservation annulée'
+            lock.style.display = 'flex'
+          }
+
+          // NOUVEAUX CAS : Vérifier le statut d'annulation
+          const cancelStatus = String(data.cancelStatus || '')
+          if (cancelStatus === 'pending' || cancelStatus === 'validated') {
+            lockText.textContent =
+              "Votre réservation fait l'objet d'une demande d'annulation"
+            lock.style.display = 'flex'
+          }
+
+          // NOUVEAUX CAS : Vérifier si la réservation a expiré
+          if (data.endDate) {
+            const endDate = new Date(data.endDate)
+            const today = new Date()
+            today.setHours(0, 0, 0, 0) // Remettre à minuit pour la comparaison
+
+            if (endDate < today) {
+              lockText.textContent = 'Votre réservation a expiré'
+              lock.style.display = 'flex'
+            }
+          }
         }
       }
 
       function populateForm(data) {
+        if (!data) {
+          // Si pas de données, on laisse les champs vides et on continue
+          console.warn('Aucune donnée de réservation disponible')
+          return
+        }
+
+        // Remplir les champs du formulaire avec les données disponibles
         document.getElementById('name').value = data.name || ''
         document.getElementById('email').value = data.email || ''
         document.getElementById('tel').value = data.tel || ''
 
         generateChildrenAgeFields(data.nbChilds || 0)
 
+        // Afficher les détails de la réservation si disponibles
         const detailsContainer = document.getElementById('reservation-details')
-        const reservationDetails = formatReservationDetails(data)
-
-        const sections = reservationDetails.split('<hr')
-        const detailsHtml = sections
-          .map((section) => {
-            if (section.trim()) {
-              const cleanSection = section.replace(/^[^>]*>/, '').trim()
-              if (cleanSection) {
-                return `<div class="detail-item"><span>${cleanSection}</span></div>`
-              }
-            }
-            return ''
-          })
-          .join('')
-
-        detailsContainer.innerHTML = detailsHtml
+        if (detailsContainer) {
+          if (data.startDate && data.endDate) {
+            // Si on a les dates, on peut afficher les détails
+            const reservationDetails = formatReservationDetails(data)
+            const sections = reservationDetails.split('<hr')
+            const detailsHtml = sections
+              .map((section) => {
+                if (section.trim()) {
+                  const cleanSection = section.replace(/^[^>]*>/, '').trim()
+                  if (cleanSection) {
+                    return `<div class="detail-item"><span>${cleanSection}</span></div>`
+                  }
+                }
+                return ''
+              })
+              .join('')
+            detailsContainer.innerHTML = detailsHtml
+          } else {
+            // Si pas de dates, on laisse la section vide
+            detailsContainer.innerHTML = ''
+          }
+        }
       }
 
       // Fonction pour générer dynamiquement les champs d'âges des enfants
@@ -1547,15 +1593,18 @@
 
           window.totalAmount = totalAmount
         } else {
-          const t = window.translations[currentLang]?.['finaliser-reservation']
-          const calculatingText =
-            t?.payment?.calculating || 'Calcul en cours...'
+          // Si pas de données ou pas de prix, on laisse les champs vides
+          const totalEl = document.getElementById('total-amount')
+          const depositEl = document.getElementById('deposit-amount')
+          const remainingEl = document.getElementById('remaining-amount')
 
-          document.getElementById('total-amount').textContent = calculatingText
-          document.getElementById('deposit-amount').textContent =
-            calculatingText
-          document.getElementById('remaining-amount').textContent =
-            calculatingText
+          if (totalEl) totalEl.textContent = '—'
+          if (depositEl) depositEl.textContent = '—'
+          if (remainingEl) remainingEl.textContent = '—'
+
+          // Désactiver le bouton de paiement
+          const submitButton = document.getElementById('submit-button')
+          if (submitButton) submitButton.disabled = true
         }
       }
 
