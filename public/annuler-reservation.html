@@ -536,10 +536,41 @@
             }
           }
 
-          // Désactiver le bouton si pas d'acompte
-          if (!hasDeposit) {
+          // ✅ NOUVELLE LOGIQUE : Vérifications de verrouillage selon l'ordre chronologique
+          let shouldLock = false
+          let lockMessage = ''
+
+          // 1. Vérifier si la réservation a expiré (priorité absolue)
+          if (d.endDate) {
+            const endDate = new Date(d.endDate)
+            const today = new Date()
+            today.setHours(0, 0, 0, 0)
+            if (endDate < today) {
+              shouldLock = true
+              lockMessage = 'Votre réservation a expiré'
+            }
+          }
+
+          // 2. Vérifier si la réservation est annulée
+          if (!shouldLock && d.cancelStatus === 'validated') {
+            shouldLock = true
+            lockMessage = 'Réservation annulée'
+          }
+
+          // 3. Vérifier si l'annulation est en cours
+          if (!shouldLock && d.cancelStatus === 'pending') {
+            shouldLock = true
+            lockMessage =
+              "Votre réservation fait l'objet d'une demande d'annulation"
+          }
+
+          // Désactiver le bouton si verrouillage ou pas d'acompte
+          if (shouldLock || !hasDeposit) {
             btn.disabled = true
             policyBox.classList.add('error')
+            if (shouldLock) {
+              policyBox.innerHTML = `<span style="color: #ef4444; font-weight: 600;">${lockMessage}</span>`
+            }
           } else {
             btn.disabled = false
             policyBox.classList.remove('error')

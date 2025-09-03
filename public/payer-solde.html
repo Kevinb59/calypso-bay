@@ -1019,34 +1019,16 @@
       function applyPaymentLocks(data) {
         if (!data) return
 
-        const st = String(data.status || '')
         const lock = document.getElementById('balance-lock')
         const lockText = document.getElementById('balance-lock-text')
 
         if (lock && lockText) {
           const t = window.translations[currentLang]['payer-solde']
 
-          // Vérifier le statut de la réservation
-          if (st === 'balancePay') {
-            lockText.textContent = t.locks.balance_paid
-            lock.style.display = 'flex'
-            btn.disabled = true
-          } else if (st === 'canceled') {
-            lockText.textContent = t.locks.reservation_canceled
-            lock.style.display = 'flex'
-            btn.disabled = true
-          }
+          // ✅ NOUVELLE LOGIQUE : Ordre chronologique des vérifications
+          // On s'arrête à la première condition vraie
 
-          // NOUVEAUX CAS : Vérifier le statut d'annulation
-          const cancelStatus = String(data.cancelStatus || '')
-          if (cancelStatus === 'pending' || cancelStatus === 'validated') {
-            lockText.textContent =
-              "Votre réservation fait l'objet d'une demande d'annulation"
-            lock.style.display = 'flex'
-            btn.disabled = true
-          }
-
-          // NOUVEAUX CAS : Vérifier si la réservation a expiré
+          // 1. Vérifier si la réservation a expiré (priorité absolue)
           if (data.endDate) {
             const endDate = new Date(data.endDate)
             const today = new Date()
@@ -1056,8 +1038,40 @@
               lockText.textContent = 'Votre réservation a expiré'
               lock.style.display = 'flex'
               btn.disabled = true
+              return // On s'arrête ici
             }
           }
+
+          // 2. Vérifier si la réservation est annulée
+          const cancelStatus = String(data.cancelStatus || '')
+          if (cancelStatus === 'validated') {
+            lockText.textContent = 'Réservation annulée'
+            lock.style.display = 'flex'
+            btn.disabled = true
+            return // On s'arrête ici
+          }
+
+          // 3. Vérifier si l'annulation est en cours
+          if (cancelStatus === 'pending') {
+            lockText.textContent =
+              "Votre réservation fait l'objet d'une demande d'annulation"
+            lock.style.display = 'flex'
+            btn.disabled = true
+            return // On s'arrête ici
+          }
+
+          // 4. Vérifier si le solde est déjà réglé
+          const st = String(data.status || '')
+          if (st === 'balancePay') {
+            lockText.textContent = t.locks.balance_paid
+            lock.style.display = 'flex'
+            btn.disabled = true
+            return // On s'arrête ici
+          }
+
+          // Si aucune condition n'est vraie, pas de verrouillage
+          lock.style.display = 'none'
+          btn.disabled = false
         }
       }
 
