@@ -146,17 +146,57 @@
         font-size: 0.85rem;
         margin-top: 10px;
       }
+
+      /* Styles pour le sélecteur de langue */
+      .language-selector {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 8px;
+        padding: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(10px);
+      }
+      .language-selector select {
+        border: none;
+        background: transparent;
+        font-size: 14px;
+        font-weight: 600;
+        color: #374151;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 4px;
+      }
+      .language-selector select:focus {
+        outline: none;
+        background: rgba(59, 130, 246, 0.1);
+      }
     </style>
   </head>
   <body class="is-preload">
+    <!-- Sélecteur de langue -->
+    <div class="language-selector">
+      <select id="language-selector">
+        <option value="fr">🇫🇷 Français</option>
+        <option value="en">🇬🇧 English</option>
+        <option value="de">🇩🇪 Deutsch</option>
+      </select>
+    </div>
+
     <div id="page-wrapper">
       <div id="wrapper">
         <section class="panel banner right">
           <div class="content color0 span-3-75">
             <h2 class="major">
-              Payer le<br /><span class="themysion">Solde</span>
+              <span id="banner-title">Payer le</span><br /><span
+                class="themysion"
+                id="banner-subtitle"
+                >Solde</span
+              >
             </h2>
-            <p>
+            <p id="banner-description">
               Pour finaliser votre réservation, veuillez régler le solde
               restant.
             </p>
@@ -165,6 +205,7 @@
                 <a
                   href="#form"
                   class="button primary color1 circle icon solid fa-angle-right"
+                  id="banner-button"
                   >Continuer</a
                 >
               </li>
@@ -178,8 +219,10 @@
         <!-- Détails de la réservation (section séparée) -->
         <section class="panel spotlight medium right color1" id="details">
           <div class="intro joined span-3-5">
-            <h2 class="major">📅 Détails de la réservation</h2>
-            <p>
+            <h2 class="major" id="details-title">
+              📅 Détails de la réservation
+            </h2>
+            <p id="details-description">
               Vérifiez les informations de votre séjour avant de procéder au
               paiement du solde.
             </p>
@@ -187,7 +230,7 @@
           <div class="inner">
             <div class="form-section">
               <div class="reservation-details" id="reservation-details">
-                Chargement en cours…
+                <span id="details-loading">Chargement en cours…</span>
               </div>
             </div>
           </div>
@@ -199,8 +242,8 @@
         <!-- Paiement du solde (section dédiée) -->
         <section class="panel color4-alt" id="form">
           <div class="intro color4">
-            <h2 class="major">💳 Paiement du solde</h2>
-            <p>
+            <h2 class="major" id="payment-title">💳 Paiement du solde</h2>
+            <p id="payment-description">
               Renseignez votre carte pour régler le solde restant de votre
               réservation.
             </p>
@@ -210,14 +253,17 @@
               <div class="payment-lock" id="balance-lock">
                 <div class="lock-box" id="balance-lock-text"></div>
               </div>
-              <h4 style="margin: 0 0 10px 0">Récapitulatif du paiement</h4>
+              <h4 style="margin: 0 0 10px 0" id="payment-summary-title">
+                Récapitulatif du paiement
+              </h4>
               <div class="payment-row">
-                <span>Total</span><span id="total-amount">—</span>
+                <span id="payment-total-label">Total</span
+                ><span id="total-amount">—</span>
               </div>
               <div class="payment-row deposit">
                 <span
-                  >Acompte déjà versé (<span id="deposit-percent">0%</span
-                  >)</span
+                  ><span id="payment-deposit-label">Acompte déjà versé</span>
+                  (<span id="deposit-percent">0%</span>)</span
                 ><span id="deposit-amount">—</span>
               </div>
               <div class="progress-bar">
@@ -231,11 +277,15 @@
                   margin-top: 4px;
                 "
               >
-                <span>Solde restant</span><span id="remaining-amount">—</span>
+                <span id="payment-remaining-label">Solde restant</span
+                ><span id="remaining-amount">—</span>
               </div>
 
               <div style="margin-top: 16px">
-                <label for="card-element" style="color: white; font-weight: 600"
+                <label
+                  for="card-element"
+                  style="color: white; font-weight: 600"
+                  id="card-label"
                   >Carte de paiement</label
                 >
                 <div
@@ -249,9 +299,9 @@
                 <div id="card-errors" role="alert"></div>
               </div>
               <button id="pay-btn" class="btn-submit" style="margin-top: 16px">
-                <span id="btn-text">Payer le solde</span>
+                <span id="submit-button-text">Payer le solde</span>
               </button>
-              <p class="payment-disclaimer">
+              <p class="payment-disclaimer" id="payment-disclaimer">
                 Paiement sécurisé via Stripe. Aucune donnée bancaire n'est
                 stockée par Calypso Bay.
               </p>
@@ -283,7 +333,50 @@
     <script src="assets/js/browser.min.js"></script>
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/translations.js"></script>
     <script>
+      // ============================================================================
+      // SYSTÈME DE TRADUCTION
+      // ============================================================================
+
+      let currentLang = 'fr'
+
+      // Initialiser les traductions au chargement
+      window.addEventListener('translations:ready', function (event) {
+        const detectedLang = event.detail.language
+        currentLang = detectedLang
+        translatePage(detectedLang)
+      })
+
+      // Gérer le changement de langue via le sélecteur
+      document.addEventListener('DOMContentLoaded', function () {
+        const languageSelector = document.querySelector('#language-selector')
+        if (languageSelector) {
+          languageSelector.addEventListener('change', function () {
+            const newLang = this.value
+
+            // Sauvegarder la préférence de langue
+            localStorage.setItem('calypso-bay-lang', newLang)
+
+            // Rediriger vers la nouvelle URL avec le bon paramètre de langue
+            const url = new URL(window.location)
+            url.searchParams.set('lang', newLang)
+            window.location.href = url.toString()
+          })
+
+          // Charger la préférence de langue sauvegardée
+          const savedLang = localStorage.getItem('calypso-bay-lang')
+          if (savedLang && ['fr', 'en', 'de'].includes(savedLang)) {
+            languageSelector.value = savedLang
+          }
+        }
+      })
+
+      // ============================================================================
+      // LOGIQUE PRINCIPALE DE LA PAGE
+      // ============================================================================
+
+      // Configuration Stripe et création des éléments de paiement
       const stripe = Stripe(
         '%STRIPE_PUBLIC_KEY%'.replace(
           '%STRIPE_PUBLIC_KEY%',
@@ -295,20 +388,269 @@
         style: { base: { fontSize: '16px' } }
       })
       card.mount('#card-element')
+
+      // Gestion des erreurs de la carte de paiement
       card.addEventListener('change', function (event) {
         const displayError = document.getElementById('card-errors')
         displayError.textContent = event.error ? event.error.message : ''
       })
 
+      // Variables principales de la page
       const params = new URLSearchParams(window.location.search)
       const token = params.get('token')
       const detailsBox = document.getElementById('reservation-details')
       const btn = document.getElementById('pay-btn')
-      const btnText = document.getElementById('btn-text')
+      const btnText = document.getElementById('submit-button-text')
 
+      // ============================================================================
+      // FONCTIONS DE TRADUCTION
+      // ============================================================================
+
+      /**
+       * Traduit l'ensemble de la page dans la langue spécifiée
+       * @param {string} lang - Code de langue (fr, en, de)
+       */
+      function translatePage(lang) {
+        currentLang = lang
+        const t = window.translations[lang]['payer-solde']
+        const common = window.translations[lang].common
+
+        // Mettre à jour le titre de la page
+        document.title = t.title
+
+        // Traduire la bannière principale
+        document.getElementById('banner-title').textContent = t.banner.title
+        document.getElementById('banner-subtitle').textContent =
+          t.banner.subtitle
+        document.getElementById('banner-description').textContent =
+          t.banner.description
+        document.getElementById('banner-button').textContent = t.banner.button
+
+        // Traduire la section détails de la réservation
+        document.getElementById('details-title').textContent = t.details.title
+        document.getElementById('details-description').textContent =
+          t.details.description
+        document.getElementById('details-loading').textContent =
+          t.details.loading
+
+        // Traduire la section paiement
+        document.getElementById('payment-title').textContent = t.payment.title
+        document.getElementById('payment-description').textContent =
+          t.payment.description
+        document.getElementById('payment-summary-title').textContent =
+          t.payment.summary_title
+        document.getElementById('payment-total-label').textContent =
+          t.payment.total
+        document.getElementById('payment-deposit-label').textContent =
+          t.payment.deposit_paid.replace('{percent}', '')
+        document.getElementById('payment-remaining-label').textContent =
+          t.payment.remaining
+        document.getElementById('card-label').textContent = t.payment.card_label
+        document.getElementById('submit-button-text').textContent =
+          t.payment.submit_button
+        document.getElementById('payment-disclaimer').textContent =
+          t.payment.disclaimer
+
+        // Mettre à jour le sélecteur de langue
+        if (document.querySelector('#language-selector')) {
+          document.querySelector('#language-selector').value = lang
+        }
+
+        // Mettre à jour l'URL avec la nouvelle langue
+        const url = new URL(window.location)
+        url.searchParams.set('lang', lang)
+        window.history.replaceState({}, '', url)
+
+        // Mettre à jour les traductions après chargement des données
+        updateTranslationsAfterLoad()
+      }
+
+      // Fonction pour traduire les éléments dynamiques du récapitulatif
+      function translateRecapContent(data, lang) {
+        const common = window.translations[lang].common
+        const fmtMoney = (v) =>
+          Number(v || 0).toLocaleString(
+            lang === 'de' ? 'de-DE' : lang === 'en' ? 'en-GB' : 'fr-FR',
+            {
+              minimumFractionDigits: 1,
+              maximumFractionDigits: 1
+            }
+          )
+        const fmtMoney2 = (v) =>
+          Number(v || 0).toLocaleString(
+            lang === 'de' ? 'de-DE' : lang === 'en' ? 'en-GB' : 'fr-FR',
+            {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            }
+          )
+        const s = new Date(data.startDate)
+        const e = new Date(data.endDate)
+        const fmtDate = (dt) =>
+          dt.toLocaleDateString(
+            lang === 'de' ? 'de-DE' : lang === 'en' ? 'en-GB' : 'fr-FR',
+            {
+              day: '2-digit',
+              month: 'long',
+              year: 'numeric'
+            }
+          )
+
+        const ages =
+          Array.isArray(data.childrenAges) && data.childrenAges.length
+            ? data.childrenAges.join(', ')
+            : ''
+
+        const lines = []
+        lines.push(
+          `<div class="detail-item"><strong>${
+            common.dates
+          }</strong> <span>${fmtDate(s)} ${
+            lang === 'de' ? 'bis' : lang === 'en' ? 'to' : 'au'
+          } ${fmtDate(e)} (${data.nbNights} ${common.nights})</span></div>`
+        )
+
+        const adultText =
+          data.nbAdults > 1 ? common.adults_plural : common.adults
+        const childText =
+          data.nbChilds > 1 ? common.children_plural : common.children
+        lines.push(
+          `<div class="detail-item"><strong>${
+            common.travelers
+          }</strong> <span>${data.nbAdults} ${adultText}${
+            data.nbChilds > 0 ? `, ${data.nbChilds} ${childText}` : ''
+          }</span></div>`
+        )
+
+        if (data.nbChilds > 0 && ages) {
+          lines.push(
+            `<div class="detail-item"><strong>${common.children_ages}</strong> <span>${ages}</span></div>`
+          )
+        }
+
+        lines.push(
+          `<div class="detail-item" style="border-bottom:none; display:block; padding-bottom:0;">
+            <div><strong>${common.price_details}</strong></div>
+            <div style="padding-top:8px">• ${common.nights_total.replace(
+              '{count}',
+              data.nbNights
+            )} ${fmtMoney(data.priceNights)} ${common.currency}</div>
+            <div>• ${common.cleaning_fees} ${fmtMoney(data.priceClean)} ${
+            common.currency
+          }</div>
+            <div>• ${common.taxes
+              .replace('{count}', data.nbAdults)
+              .replace('{adult_text}', adultText)} ${fmtMoney(data.priceTax)} ${
+            common.currency
+          }</div>
+            <div>• <strong>${common.total} ${fmtMoney(data.priceTotal)} ${
+            common.currency
+          }</strong></div>
+          </div>`
+        )
+
+        if (data.address || data.city || data.postal || data.country) {
+          lines.push(
+            `<div class="detail-item" style="border-bottom:none; display:block; padding-bottom:0;">
+              <div><strong>${common.billing_address}</strong></div>
+              <div style="padding-top:8px">${data.address || ''}</div>
+              <div>${data.postal || ''} ${data.city || ''}</div>
+              <div>${data.country || ''}</div>
+            </div>`
+          )
+        }
+
+        return lines.join('')
+      }
+
+      /**
+       * Met à jour les traductions des éléments dynamiques après changement de langue
+       * Cette fonction est appelée quand les données de réservation sont déjà chargées
+       */
+      function updateTranslationsAfterLoad() {
+        if (window.reservationData) {
+          // Mettre à jour le récapitulatif si les données sont déjà chargées
+          const recapEl = document.getElementById('reservation-details')
+          if (recapEl && !recapEl.textContent.includes('Chargement')) {
+            recapEl.innerHTML = translateRecapContent(
+              window.reservationData,
+              currentLang
+            )
+          }
+
+          // Mettre à jour les messages de verrouillage si ils sont affichés
+          const lock = document.getElementById('balance-lock')
+          const lockText = document.getElementById('balance-lock-text')
+          if (lock && lockText && lock.style.display === 'flex') {
+            const t = window.translations[currentLang]['payer-solde']
+            const st = String(window.reservationData.status || '')
+
+            if (st === 'balancePay') {
+              lockText.textContent = t.locks.balance_paid
+            } else if (st === 'canceled') {
+              lockText.textContent = t.locks.reservation_canceled
+            }
+          }
+
+          // Mettre à jour les montants de paiement avec la nouvelle langue
+          if (window.reservationData) {
+            const total = Number(window.reservationData.priceTotal || 0)
+            const deposit = Number(window.reservationData.depositAmount || 0)
+            const balance = Math.max(0, total - deposit)
+
+            const locale =
+              currentLang === 'de'
+                ? 'de-DE'
+                : currentLang === 'en'
+                ? 'en-GB'
+                : 'fr-FR'
+
+            document.getElementById(
+              'total-amount'
+            ).textContent = `${total.toLocaleString(locale, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            })} €`
+
+            document.getElementById(
+              'deposit-amount'
+            ).textContent = `${deposit.toLocaleString(locale, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            })} €`
+
+            document.getElementById(
+              'remaining-amount'
+            ).textContent = `${balance.toLocaleString(locale, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            })} €`
+
+            // Mettre à jour le texte du bouton avec le montant
+            const t = window.translations[currentLang]['payer-solde']
+            const buttonTextTemplate = t.payment.submit_button_with_amount
+            const btnText = document.getElementById('submit-button-text')
+            if (btnText) {
+              btnText.textContent = buttonTextTemplate.replace(
+                '{amount}',
+                balance.toLocaleString(locale, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })
+              )
+            }
+          }
+        }
+      }
+
+      /**
+       * Charge et affiche les données de la réservation
+       * Gère les erreurs et met à jour l'interface utilisateur
+       */
       async function load() {
         if (!token) {
-          detailsBox.textContent = 'Token manquant'
+          const t = window.translations[currentLang]['payer-solde']
+          detailsBox.textContent = t.errors.missing_token
           btn.disabled = true
           return
         }
@@ -318,7 +660,9 @@
           )
           const json = await res.json()
           if (json.status !== 'success') {
-            detailsBox.textContent = json.message || 'Réservation introuvable'
+            const t = window.translations[currentLang]['payer-solde']
+            detailsBox.textContent =
+              json.message || t.errors.reservation_not_found
             btn.disabled = true
             return
           }
@@ -326,127 +670,111 @@
           const total = Number(d.priceTotal || 0)
           const deposit = Number(d.depositAmount || 0)
           const balance = Math.max(0, total - deposit)
-          // Détails formatés comme demandé
-          const formatMoney = (v) =>
-            Number(v || 0).toLocaleString('fr-FR', {
-              minimumFractionDigits: 1,
-              maximumFractionDigits: 1
-            })
-          const formatMoney2 = (v) =>
-            Number(v || 0).toLocaleString('fr-FR', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-            })
-          const ages =
-            Array.isArray(d.childrenAges) && d.childrenAges.length
-              ? d.childrenAges.join(', ')
-              : ''
-          const dates = new Date(d.startDate)
-          const datee = new Date(d.endDate)
-          const fmt = (dt) =>
-            dt.toLocaleDateString('fr-FR', {
-              day: '2-digit',
-              month: 'long',
-              year: 'numeric'
-            })
-          const lines = []
-          lines.push(
-            `<div class="detail-item"><strong>Dates :</strong> <span>${fmt(
-              dates
-            )} au ${fmt(datee)} (${d.nbNights} nuits)</span></div>`
-          )
-          lines.push(
-            `<div class="detail-item"><strong>Voyageurs :</strong> <span>${
-              d.nbAdults
-            } adulte${d.nbAdults > 1 ? 's' : ''}${
-              d.nbChilds > 0
-                ? ', ' + d.nbChilds + ' enfant' + (d.nbChilds > 1 ? 's' : '')
-                : ''
-            }</span></div>`
-          )
-          if (d.nbChilds > 0 && ages) {
-            lines.push(
-              `<div class="detail-item"><strong>Âges des enfants :</strong> <span>${ages}</span></div>`
-            )
-          }
-          lines.push(
-            '<div class="detail-item" style="border-bottom:none; display:block; padding-bottom:0;">\
-            <div><strong>Détail du prix :</strong></div>\
-            <div style="padding-top:8px">• Total des nuits (' +
-              d.nbNights +
-              `) : ${formatMoney(d.priceNights)} €</div>\
-            <div>• Frais de ménage : ${formatMoney(d.priceClean)} €</div>\
-            <div>• Taxes (${d.nbAdults} adulte${
-                d.nbAdults > 1 ? 's' : ''
-              }) : ${formatMoney(d.priceTax)} €</div>\
-            <div>• <strong>Total : ${formatMoney(
-              d.priceTotal
-            )} €</strong></div>\
-          </div>`
-          )
-          lines.push(
-            '<div class="detail-item" style="border-bottom:none; display:block; padding-bottom:0;">\
-            <div><strong>Adresse de facturation :</strong></div>\
-            <div style="padding-top:8px">' +
-              (d.address || '') +
-              '</div>\
-            <div>' +
-              (d.postal || '') +
-              ' ' +
-              (d.city || '') +
-              '</div>\
-            <div>' +
-              (d.country || '') +
-              '</div>\
-          </div>'
-          )
-          detailsBox.innerHTML = lines.join('')
 
-          // Récap paiement
-          document.getElementById('total-amount').textContent = `${formatMoney2(
-            total
-          )} €`
+          // Sauvegarder les données pour les traductions dynamiques
+          window.reservationData = d
+
+          // Utiliser la fonction de traduction pour le récapitulatif
+          detailsBox.innerHTML = translateRecapContent(d, currentLang)
+
+          // S'assurer que la page est traduite dans la langue actuelle
+          if (window.translations && window.translations[currentLang]) {
+            translatePage(currentLang)
+          }
+
+          // ============================================================================
+          // MISE À JOUR DE L'INTERFACE DE PAIEMENT
+          // ============================================================================
+
+          // Récap paiement avec formatage selon la langue
+          const t = window.translations[currentLang]['payer-solde']
+          const locale =
+            currentLang === 'de'
+              ? 'de-DE'
+              : currentLang === 'en'
+              ? 'en-GB'
+              : 'fr-FR'
+
+          document.getElementById(
+            'total-amount'
+          ).textContent = `${total.toLocaleString(locale, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          })} €`
           document.getElementById(
             'deposit-amount'
-          ).textContent = `${formatMoney2(deposit)} €`
+          ).textContent = `${deposit.toLocaleString(locale, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          })} €`
           document.getElementById(
             'remaining-amount'
-          ).textContent = `${formatMoney2(balance)} €`
+          ).textContent = `${balance.toLocaleString(locale, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          })} €`
           document.getElementById('deposit-percent').textContent =
             total > 0 ? `${Math.round((deposit / total) * 100)}%` : '0%'
           document.getElementById('progress-fill').style.width =
             total > 0 ? `${Math.min(100, (deposit / total) * 100)}%` : '0%'
-          btnText.textContent = `Payer le solde – ${balance.toLocaleString(
-            'fr-FR',
-            { minimumFractionDigits: 2, maximumFractionDigits: 2 }
-          )} €`
 
-          // Verrouillage selon statut
+          // Traduire le texte du bouton avec le montant
+          const buttonTextTemplate = t.payment.submit_button_with_amount
+          btnText.textContent = buttonTextTemplate.replace(
+            '{amount}',
+            balance.toLocaleString(locale, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            })
+          )
+
+          // ============================================================================
+          // GESTION DES VERROUILLAGES DE PAIEMENT
+          // ============================================================================
+
+          // Vérifier le statut et appliquer les verrouillages appropriés
           const st = String(d.status || '')
           const lock = document.getElementById('balance-lock')
           const lockText = document.getElementById('balance-lock-text')
           if (lock && lockText) {
             if (st === 'balancePay') {
-              lockText.textContent = 'Solde déjà réglé'
+              // Solde déjà payé : verrouiller le paiement
+              lockText.textContent = t.locks.balance_paid
               lock.style.display = 'flex'
               btn.disabled = true
             } else if (st === 'canceled') {
-              lockText.textContent = 'Réservation annulée'
+              // Réservation annulée : verrouiller le paiement
+              lockText.textContent = t.locks.reservation_canceled
               lock.style.display = 'flex'
               btn.disabled = true
             }
           }
         } catch (e) {
-          detailsBox.textContent = 'Erreur de chargement'
+          // Gestion des erreurs de chargement avec traduction
+          const t = window.translations[currentLang]['payer-solde']
+          detailsBox.textContent = t.errors.loading_error
         }
       }
 
+      // Charger les données au démarrage
       load()
 
+      // ============================================================================
+      // GESTIONNAIRE D'ÉVÉNEMENTS DE PAIEMENT
+      // ============================================================================
+
+      /**
+       * Gère le processus de paiement du solde
+       * Crée l'intention de paiement et confirme le paiement via Stripe
+       */
       btn.addEventListener('click', async () => {
         if (!token) return
+        // Désactiver le bouton pendant le traitement
         btn.disabled = true
-        btnText.textContent = 'Création du paiement…'
+        const t = window.translations[currentLang]['payer-solde']
+
+        // Étape 1 : Création de l'intention de paiement
+        btnText.textContent = t.payment.creating_payment
         try {
           const piRes = await fetch('/api/createPayment', {
             method: 'POST',
@@ -454,22 +782,31 @@
             body: JSON.stringify({ token, type: 'balance' })
           })
           const piJson = await piRes.json()
+
+          // Vérifier la réponse de l'API
           if (!piRes.ok || !piJson.clientSecret)
-            throw new Error(piJson.error || 'Erreur création paiement')
-          btnText.textContent = 'Confirmation…'
+            throw new Error(piJson.error || t.errors.payment_creation_error)
+
+          // Étape 2 : Confirmation du paiement via Stripe
+          btnText.textContent = t.payment.confirming
           const { error, paymentIntent } = await stripe.confirmCardPayment(
             piJson.clientSecret,
             { payment_method: { card } }
           )
+
+          // Vérifier les erreurs Stripe
           if (error) throw new Error(error.message)
-          btnText.textContent = 'Paiement confirmé ✔'
+
+          // Étape 3 : Paiement confirmé - redirection
+          btnText.textContent = t.payment.confirmed
           setTimeout(() => {
             window.location.href = '/reservation-solde-confirme.html'
           }, 1200)
         } catch (e) {
+          // Gestion des erreurs avec restauration de l'interface
           document.getElementById('card-errors').textContent = e.message
           btn.disabled = false
-          btnText.textContent = 'Payer le solde'
+          btnText.textContent = t.payment.submit_button
         }
       })
     </script>

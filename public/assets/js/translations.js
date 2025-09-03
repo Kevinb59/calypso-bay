@@ -251,7 +251,8 @@ window.translations = {
       errors: {
         missing_token: 'Token manquant',
         loading_error: 'Erreur de chargement',
-        reservation_not_found: 'Réservation introuvable'
+        reservation_not_found: 'Réservation introuvable',
+        payment_creation_error: 'Erreur lors de la création du paiement'
       }
     },
 
@@ -578,7 +579,8 @@ window.translations = {
       errors: {
         missing_token: 'Missing token',
         loading_error: 'Loading error',
-        reservation_not_found: 'Reservation not found'
+        reservation_not_found: 'Reservation not found',
+        payment_creation_error: 'Error creating payment'
       }
     },
 
@@ -906,7 +908,8 @@ window.translations = {
       errors: {
         missing_token: 'Token fehlt',
         loading_error: 'Ladefehler',
-        reservation_not_found: 'Reservierung nicht gefunden'
+        reservation_not_found: 'Reservierung nicht gefunden',
+        payment_creation_error: 'Fehler beim Erstellen der Zahlung'
       }
     },
 

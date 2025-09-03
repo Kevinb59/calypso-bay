@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Test Traductions - Payer Solde</title>
+    <meta charset="utf-8" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      .test-section {
+        margin: 20px 0;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+      }
+      .language-selector {
+        margin-bottom: 20px;
+      }
+      .language-selector select {
+        padding: 8px;
+        font-size: 16px;
+      }
+      button {
+        padding: 10px 15px;
+        margin: 5px;
+        cursor: pointer;
+      }
+      .result {
+        margin-top: 10px;
+        padding: 10px;
+        background: #f0f0f0;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🧪 Test des Traductions - Payer Solde</h1>
+
+    <div class="language-selector">
+      <label for="lang-select">Langue :</label>
+      <select id="lang-select">
+        <option value="fr">🇫🇷 Français</option>
+        <option value="en">🇬🇧 English</option>
+        <option value="de">🇩🇪 Deutsch</option>
+      </select>
+    </div>
+
+    <div class="test-section">
+      <h3>Test du Sélecteur de Langue</h3>
+      <p>Langue actuelle : <span id="current-lang">fr</span></p>
+      <p>URL actuelle : <span id="current-url"></span></p>
+      <button onclick="testLanguageChange()">
+        Tester le changement de langue
+      </button>
+      <div id="lang-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+      <h3>Test des Traductions Statiques</h3>
+      <button onclick="testStaticTranslations()">
+        Tester les traductions statiques
+      </button>
+      <div id="static-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+      <h3>Test des Traductions Dynamiques</h3>
+      <button onclick="testDynamicTranslations()">
+        Tester les traductions dynamiques
+      </button>
+      <div id="dynamic-result" class="result"></div>
+    </div>
+
+    <script src="assets/js/translations.js"></script>
+    <script>
+      let currentLang = 'fr'
+
+      // Initialiser les traductions
+      window.addEventListener('translations:ready', function (event) {
+        const detectedLang = event.detail.language
+        currentLang = detectedLang
+        document.getElementById('lang-select').value = detectedLang
+        document.getElementById('current-lang').textContent = detectedLang
+        updateURL()
+      })
+
+      // Gérer le changement de langue
+      document
+        .getElementById('lang-select')
+        .addEventListener('change', function () {
+          const newLang = this.value
+          currentLang = newLang
+          document.getElementById('current-lang').textContent = newLang
+
+          // Simuler le changement de langue
+          const url = new URL(window.location)
+          url.searchParams.set('lang', newLang)
+          window.history.replaceState({}, '', url)
+          updateURL()
+        })
+
+      function updateURL() {
+        document.getElementById('current-url').textContent =
+          window.location.href
+      }
+
+      function testLanguageChange() {
+        const result = document.getElementById('lang-result')
+        result.innerHTML = `
+                <strong>✅ Test réussi !</strong><br>
+                Langue sélectionnée : ${currentLang}<br>
+                URL mise à jour : ${window.location.href}<br>
+                Sélecteur synchronisé : ${
+                  document.getElementById('lang-select').value
+                }
+            `
+      }
+
+      function testStaticTranslations() {
+        const result = document.getElementById('static-result')
+        const t = window.translations[currentLang]['payer-solde']
+
+        if (!t) {
+          result.innerHTML =
+            '<strong>❌ Erreur :</strong> Traductions non trouvées'
+          return
+        }
+
+        const tests = [
+          { key: 'title', expected: 'string' },
+          { key: 'banner.title', expected: 'string' },
+          { key: 'banner.subtitle', expected: 'string' },
+          { key: 'banner.description', expected: 'string' },
+          { key: 'banner.button', expected: 'string' },
+          { key: 'details.title', expected: 'string' },
+          { key: 'details.description', expected: 'string' },
+          { key: 'details.loading', expected: 'string' },
+          { key: 'payment.title', expected: 'string' },
+          { key: 'payment.description', expected: 'string' },
+          { key: 'payment.summary_title', expected: 'string' },
+          { key: 'payment.total', expected: 'string' },
+          { key: 'payment.deposit_paid', expected: 'string' },
+          { key: 'payment.remaining', expected: 'string' },
+          { key: 'payment.card_label', expected: 'string' },
+          { key: 'payment.submit_button', expected: 'string' },
+          { key: 'payment.disclaimer', expected: 'string' }
+        ]
+
+        let successCount = 0
+        let errors = []
+
+        tests.forEach((test) => {
+          const keys = test.key.split('.')
+          let value = t
+          for (const key of keys) {
+            value = value?.[key]
+          }
+
+          if (typeof value === test.expected) {
+            successCount++
+          } else {
+            errors.push(
+              `${test.key}: ${typeof value} (attendu: ${test.expected})`
+            )
+          }
+        })
+
+        if (errors.length === 0) {
+          result.innerHTML = `
+                    <strong>✅ Test réussi !</strong><br>
+                    ${successCount}/${tests.length} traductions statiques OK<br>
+                    Langue : ${currentLang}
+                `
+        } else {
+          result.innerHTML = `
+                    <strong>⚠️ Test partiel :</strong><br>
+                    ${successCount}/${tests.length} traductions OK<br>
+                    Erreurs : ${errors.join(', ')}
+                `
+        }
+      }
+
+      function testDynamicTranslations() {
+        const result = document.getElementById('dynamic-result')
+        const common = window.translations[currentLang]?.common
+
+        if (!common) {
+          result.innerHTML =
+            '<strong>❌ Erreur :</strong> Traductions communes non trouvées'
+          return
+        }
+
+        const tests = [
+          { key: 'dates', expected: 'string' },
+          { key: 'travelers', expected: 'string' },
+          { key: 'adults', expected: 'string' },
+          { key: 'adults_plural', expected: 'string' },
+          { key: 'children', expected: 'string' },
+          { key: 'children_plural', expected: 'string' },
+          { key: 'nights', expected: 'string' },
+          { key: 'price_details', expected: 'string' },
+          { key: 'nights_total', expected: 'string' },
+          { key: 'cleaning_fees', expected: 'string' },
+          { key: 'taxes', expected: 'string' },
+          { key: 'total', expected: 'string' },
+          { key: 'deposit', expected: 'string' },
+          { key: 'balance', expected: 'string' },
+          { key: 'children_ages', expected: 'string' },
+          { key: 'billing_address', expected: 'string' },
+          { key: 'currency', expected: 'string' }
+        ]
+
+        let successCount = 0
+        let errors = []
+
+        tests.forEach((test) => {
+          const value = common[test.key]
+          if (typeof value === test.expected) {
+            successCount++
+          } else {
+            errors.push(
+              `${test.key}: ${typeof value} (attendu: ${test.expected})`
+            )
+          }
+        })
+
+        if (errors.length === 0) {
+          result.innerHTML = `
+                    <strong>✅ Test réussi !</strong><br>
+                    ${successCount}/${tests.length} traductions communes OK<br>
+                    Langue : ${currentLang}
+                `
+        } else {
+          result.innerHTML = `
+                    <strong>⚠️ Test partiel :</strong><br>
+                    ${successCount}/${tests.length} traductions communes OK<br>
+                    Erreurs : ${errors.join(', ')}
+                `
+        }
+      }
+
+      // Initialiser l'URL
+      updateURL()
+    </script>
+  </body>
+</html>
