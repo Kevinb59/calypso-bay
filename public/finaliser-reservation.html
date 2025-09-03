@@ -1371,8 +1371,15 @@
       function generateChildrenAgeFields(nbChildren) {
         const container = document.getElementById('children-ages-container')
         const sectionDescription = document.getElementById(
-          'section-description'
+          'precisions-description'
         )
+
+        if (!container || !sectionDescription) {
+          console.warn(
+            "Éléments manquants pour la génération des champs d'âges des enfants"
+          )
+          return
+        }
 
         if (nbChildren === 0) {
           container.innerHTML = ''
