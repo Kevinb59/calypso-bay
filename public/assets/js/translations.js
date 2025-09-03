@@ -154,7 +154,7 @@ window.translations = {
       payment: {
         title: "💳 Paiement de l'acompte",
         description:
-          "Pour confirmer votre réservation, veuillez effectuer le paiement de l'acompte de {percent}% du montant total (un montant minimum peut être appliqué pour les tests). Le solde sera à régler au plus tard 7 jours avant votre arrivée.",
+          "Pour confirmer votre réservation, veuillez effectuer le paiement de l'acompte de 10% du montant total. Le solde sera à régler au plus tard 7 jours avant votre arrivée.",
         summary_title: 'Récapitulatif du paiement',
         total: 'Total',
         deposit: 'Acompte ({percent}%)',
@@ -468,7 +468,7 @@ window.translations = {
       payment: {
         title: '💳 Deposit payment',
         description:
-          'To confirm your reservation, please make the {percent}% deposit payment of the total amount (a minimum amount may apply for testing). The balance will be due no later than 7 days before your arrival.',
+          'To confirm your reservation, please make the 10% deposit payment of the total amount. The balance will be due no later than 7 days before your arrival.',
         summary_title: 'Payment summary',
         total: 'Total',
         deposit: 'Deposit ({percent}%)',
@@ -770,7 +770,7 @@ window.translations = {
       payment: {
         title: '💳 Anzahlungszahlung',
         description:
-          'Um Ihre Reservierung zu bestätigen, leisten Sie bitte die Anzahlung von {percent}% des Gesamtbetrags (ein Mindestbetrag kann für Tests gelten). Der Restbetrag ist spätestens 7 Tage vor Ihrer Ankunft fällig.',
+          'Um Ihre Reservierung zu bestätigen, leisten Sie bitte die Anzahlung von 10% des Gesamtbetrags. Der Restbetrag ist spätestens 7 Tage vor Ihrer Ankunft fällig.',
         summary_title: 'Zahlungsübersicht',
         total: 'Gesamt',
         deposit: 'Anzahlung ({percent}%)',

@@ -865,12 +865,14 @@
               <h3 id="payment-summary-title">Récapitulatif du paiement</h3>
               <div class="payment-breakdown">
                 <div class="payment-row">
-                  <span>Total</span>
+                  <span id="payment-total-label">Total</span>
                   <span id="total-amount">Calcul en cours...</span>
                 </div>
                 <div class="payment-row deposit-row">
                   <span
-                    >Acompte (<span id="deposit-percent-inline">10%</span
+                    ><span id="payment-deposit-label">Acompte</span> (<span
+                      id="deposit-percent-inline"
+                      >10%</span
                     >)</span
                   >
                   <span id="deposit-amount">Calcul en cours...</span>
@@ -879,7 +881,9 @@
                   <div class="progress-fill" id="progress-fill"></div>
                 </div>
                 <div class="payment-row remaining-row">
-                  <span>Solde restant après acompte</span>
+                  <span id="payment-remaining-label"
+                    >Solde restant après acompte</span
+                  >
                   <span id="remaining-amount">Calcul en cours...</span>
                 </div>
               </div>
@@ -1029,6 +1033,33 @@
           t.payment.description
         document.getElementById('payment-summary-title').textContent =
           t.payment.summary_title
+        document.getElementById('payment-total-label').textContent =
+          t.payment.total
+        document.getElementById('payment-deposit-label').textContent =
+          t.payment.deposit.replace('{percent}', '')
+        document.getElementById('payment-remaining-label').textContent =
+          t.payment.remaining
+
+        // Traduire les textes "Calcul en cours..." s'ils sont affichés
+        const totalAmount = document.getElementById('total-amount')
+        const depositAmount = document.getElementById('deposit-amount')
+        const remainingAmount = document.getElementById('remaining-amount')
+
+        if (totalAmount && totalAmount.textContent === 'Calcul en cours...') {
+          totalAmount.textContent = t.payment.calculating
+        }
+        if (
+          depositAmount &&
+          depositAmount.textContent === 'Calcul en cours...'
+        ) {
+          depositAmount.textContent = t.payment.calculating
+        }
+        if (
+          remainingAmount &&
+          remainingAmount.textContent === 'Calcul en cours...'
+        ) {
+          remainingAmount.textContent = t.payment.calculating
+        }
         document.getElementById('card-label').textContent = t.payment.card_label
         document.getElementById('submit-button-text').textContent =
           t.payment.submit_button
@@ -1178,6 +1209,11 @@
                 t.errors?.loading_error || 'Erreur lors du chargement'
               }</div>`
             }
+          }
+
+          // Mettre à jour les textes de paiement avec la nouvelle langue
+          if (window.reservationData) {
+            calculatePaymentAmount(window.reservationData)
           }
         }
       }
