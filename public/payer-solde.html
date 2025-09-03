@@ -787,7 +787,7 @@
           console.log('📊 Données brutes de la réservation:', d)
 
           const total = Number(d.priceTotal || 0)
-          const deposit = Number(d.priceDeposit || 0)
+          const deposit = Number(d.depositAmount || 0)
           const balance = Math.max(0, total - deposit)
 
           console.log('💰 Calculs financiers:')
