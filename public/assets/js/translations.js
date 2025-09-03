@@ -229,7 +229,7 @@ window.translations = {
           'Renseignez votre carte pour régler le solde restant de votre réservation.',
         summary_title: 'Récapitulatif du paiement',
         total: 'Total',
-        deposit_paid: 'Acompte déjà versé ({percent}%)',
+        deposit_paid: 'Acompte déjà versé',
         remaining: 'Solde restant',
         card_label: 'Carte de paiement',
         submit_button: 'Payer le solde',
@@ -550,14 +550,14 @@ window.translations = {
         loading: 'Loading...'
       },
 
-      // Section paiement
+      // Section paiement du solde
       payment: {
         title: '💳 Balance payment',
         description:
           'Enter your card details to pay the remaining balance of your reservation.',
         summary_title: 'Payment summary',
         total: 'Total',
-        deposit_paid: 'Deposit already paid ({percent}%)',
+        deposit_paid: 'Deposit already paid',
         remaining: 'Remaining balance',
         card_label: 'Payment card',
         submit_button: 'Pay balance',
@@ -879,14 +879,14 @@ window.translations = {
         loading: 'Wird geladen…'
       },
 
-      // Section paiement
+      // Section paiement du solde
       payment: {
         title: '💳 Restbetragzahlung',
         description:
           'Geben Sie Ihre Kartendaten ein, um den verbleibenden Restbetrag Ihrer Reservierung zu zahlen.',
         summary_title: 'Zahlungsübersicht',
         total: 'Gesamt',
-        deposit_paid: 'Anzahlung bereits bezahlt ({percent}%)',
+        deposit_paid: 'Anzahlung bereits bezahlt',
         remaining: 'Verbleibender Restbetrag',
         card_label: 'Zahlungskarte',
         submit_button: 'Restbetrag zahlen',
