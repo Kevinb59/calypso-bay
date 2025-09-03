@@ -440,37 +440,85 @@
         document.title = t.title
 
         // Traduire la bannière principale
-        document.getElementById('banner-title').textContent = t.banner.title
-        document.getElementById('banner-subtitle').textContent =
-          t.banner.subtitle
-        document.getElementById('banner-description').textContent =
-          t.banner.description
-        document.getElementById('banner-button').textContent = t.banner.button
+        const bannerTitle = document.getElementById('banner-title')
+        const bannerSubtitle = document.getElementById('banner-subtitle')
+        const bannerDescription = document.getElementById('banner-description')
+        const bannerButton = document.getElementById('banner-button')
+
+        console.log('🔍 Éléments bannière trouvés:', {
+          bannerTitle: !!bannerTitle,
+          bannerSubtitle: !!bannerSubtitle,
+          bannerDescription: !!bannerDescription,
+          bannerButton: !!bannerButton
+        })
+
+        if (bannerTitle) bannerTitle.textContent = t.banner.title
+        if (bannerSubtitle) bannerSubtitle.textContent = t.banner.subtitle
+        if (bannerDescription)
+          bannerDescription.textContent = t.banner.description
+        if (bannerButton) bannerButton.textContent = t.banner.button
 
         // Traduire la section détails de la réservation
-        document.getElementById('details-title').textContent = t.details.title
-        document.getElementById('details-description').textContent =
-          t.details.description
-        document.getElementById('details-loading').textContent =
-          t.details.loading
+        const detailsTitle = document.getElementById('details-title')
+        const detailsDescription = document.getElementById(
+          'details-description'
+        )
+        const detailsLoading = document.getElementById('details-loading')
+
+        if (detailsTitle) detailsTitle.textContent = t.details.title
+        if (detailsDescription)
+          detailsDescription.textContent = t.details.description
+        if (detailsLoading) detailsLoading.textContent = t.details.loading
 
         // Traduire la section paiement
-        document.getElementById('payment-title').textContent = t.payment.title
-        document.getElementById('payment-description').textContent =
-          t.payment.description
-        document.getElementById('payment-summary-title').textContent =
-          t.payment.summary_title
-        document.getElementById('payment-total-label').textContent =
-          t.payment.total
-        document.getElementById('payment-deposit-label').textContent =
-          t.payment.deposit_paid.replace('{percent}', '')
-        document.getElementById('payment-remaining-label').textContent =
-          t.payment.remaining
-        document.getElementById('card-label').textContent = t.payment.card_label
-        document.getElementById('submit-button-text').textContent =
-          t.payment.submit_button
-        document.getElementById('payment-disclaimer').textContent =
-          t.payment.disclaimer
+        const paymentTitle = document.getElementById('payment-title')
+        const paymentDescription = document.getElementById(
+          'payment-description'
+        )
+        const paymentSummaryTitle = document.getElementById(
+          'payment-summary-title'
+        )
+        const paymentTotalLabel = document.getElementById('payment-total-label')
+        const paymentDepositLabel = document.getElementById(
+          'payment-deposit-label'
+        )
+        const paymentRemainingLabel = document.getElementById(
+          'payment-remaining-label'
+        )
+        const cardLabel = document.getElementById('card-label')
+        const submitButtonText = document.getElementById('submit-button-text')
+        const paymentDisclaimer = document.getElementById('payment-disclaimer')
+
+        console.log('🔍 Éléments paiement trouvés:', {
+          paymentTitle: !!paymentTitle,
+          paymentDescription: !!paymentDescription,
+          paymentSummaryTitle: !!paymentSummaryTitle,
+          paymentTotalLabel: !!paymentTotalLabel,
+          paymentDepositLabel: !!paymentDepositLabel,
+          paymentRemainingLabel: !!paymentRemainingLabel,
+          cardLabel: !!cardLabel,
+          submitButtonText: !!submitButtonText,
+          paymentDisclaimer: !!paymentDisclaimer
+        })
+
+        if (paymentTitle) paymentTitle.textContent = t.payment.title
+        if (paymentDescription)
+          paymentDescription.textContent = t.payment.description
+        if (paymentSummaryTitle)
+          paymentSummaryTitle.textContent = t.payment.summary_title
+        if (paymentTotalLabel) paymentTotalLabel.textContent = t.payment.total
+        if (paymentDepositLabel)
+          paymentDepositLabel.textContent = t.payment.deposit_paid.replace(
+            '{percent}',
+            ''
+          )
+        if (paymentRemainingLabel)
+          paymentRemainingLabel.textContent = t.payment.remaining
+        if (cardLabel) cardLabel.textContent = t.payment.card_label
+        if (submitButtonText)
+          submitButtonText.textContent = t.payment.submit_button
+        if (paymentDisclaimer)
+          paymentDisclaimer.textContent = t.payment.disclaimer
 
         // Mettre à jour le sélecteur de langue
         if (document.querySelector('#language-selector')) {
