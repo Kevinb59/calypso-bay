@@ -292,7 +292,7 @@
       .payment-card {
         background: rgba(255, 255, 255, 0.1);
         border-radius: 16px;
-        padding: 20px 30px;
+        padding: 15px 20px;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         max-width: 600px;
         margin: 0 auto;
@@ -304,19 +304,19 @@
         color: white;
         font-size: 1.5rem;
         font-weight: bold;
-        margin-bottom: 20px;
+        margin-bottom: 12px;
         text-align: center;
       }
 
       .payment-breakdown {
-        margin-bottom: 20px;
+        margin-bottom: 12px;
       }
 
       .payment-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 8px 0;
+        padding: 5px 0;
         color: white;
         font-size: 1rem;
         line-height: 1.3;
@@ -340,7 +340,7 @@
         height: 8px;
         background: rgba(255, 255, 255, 0.2);
         border-radius: 4px;
-        margin: 12px 0;
+        margin: 8px 0;
         overflow: hidden;
       }
 
@@ -353,7 +353,7 @@
 
       .payment-form {
         border-top: 1px solid rgba(255, 255, 255, 0.3);
-        padding-top: 20px;
+        padding-top: 12px;
       }
 
       .payment-form .form-group {
@@ -372,7 +372,7 @@
         text-align: center;
         color: rgba(255, 255, 255, 0.8);
         font-size: 0.8rem;
-        margin-top: 12px;
+        margin-top: 8px;
         line-height: 1.4;
       }
 
@@ -486,7 +486,7 @@
 
         /* Responsive pour l'encart de paiement */
         .payment-card {
-          padding: 15px 20px;
+          padding: 12px 15px;
           margin: 0 10px;
           max-width: 100%;
           width: calc(100% - 20px);
@@ -494,12 +494,12 @@
 
         .payment-card h3 {
           font-size: 1.3rem;
-          margin-bottom: 15px;
+          margin-bottom: 10px;
         }
 
         .payment-row {
           font-size: 0.9rem;
-          padding: 6px 0;
+          padding: 4px 0;
         }
 
         .payment-row.deposit-row {
@@ -507,25 +507,25 @@
         }
 
         .progress-bar {
-          margin: 10px 0;
+          margin: 8px 0;
         }
 
         .payment-form {
-          padding-top: 15px;
+          padding-top: 10px;
         }
 
         .payment-form .form-group {
-          margin-bottom: 12px;
+          margin-bottom: 10px;
         }
 
         .payment-form label {
           font-size: 0.85rem;
-          margin-bottom: 6px;
+          margin-bottom: 5px;
         }
 
         .payment-disclaimer {
           font-size: 0.75rem;
-          margin-top: 12px;
+          margin-top: 8px;
         }
       }
 
@@ -585,19 +585,19 @@
 
         /* Responsive pour l'encart de paiement sur très petits écrans */
         .payment-card {
-          padding: 15px;
+          padding: 10px;
           margin: 0 5px;
           width: calc(100% - 10px);
         }
 
         .payment-card h3 {
           font-size: 1.2rem;
-          margin-bottom: 15px;
+          margin-bottom: 10px;
         }
 
         .payment-row {
           font-size: 0.85rem;
-          padding: 8px 0;
+          padding: 4px 0;
         }
 
         .payment-row.deposit-row {
@@ -605,26 +605,26 @@
         }
 
         .progress-bar {
-          margin: 10px 0;
+          margin: 6px 0;
           height: 6px;
         }
 
         .payment-form {
-          padding-top: 15px;
+          padding-top: 8px;
         }
 
         .payment-form .form-group {
-          margin-bottom: 12px;
+          margin-bottom: 8px;
         }
 
         .payment-form label {
           font-size: 0.8rem;
-          margin-bottom: 5px;
+          margin-bottom: 4px;
         }
 
         .payment-disclaimer {
           font-size: 0.7rem;
-          margin-top: 10px;
+          margin-top: 6px;
         }
       }
     </style>
@@ -1801,7 +1801,7 @@
             common?.nights_total?.replace('{count}', data.nbNights) ||
             `Total des nuits (${data.nbNights})`
           priceDetails.push(
-            `&nbsp;&nbsp;&nbsp;&nbsp;• ${nightsText} : ${data.priceNights.toLocaleString(
+            `&nbsp;&nbsp;&nbsp;&nbsp;• ${nightsText} ${data.priceNights.toLocaleString(
               currentLang === 'de'
                 ? 'de-DE'
                 : currentLang === 'en'
@@ -1814,7 +1814,7 @@
         if (data.priceClean > 0) {
           const cleaningText = common?.cleaning_fees || 'Frais de ménage'
           priceDetails.push(
-            `&nbsp;&nbsp;&nbsp;&nbsp;• ${cleaningText} : ${data.priceClean.toLocaleString(
+            `&nbsp;&nbsp;&nbsp;&nbsp;• ${cleaningText} ${data.priceClean.toLocaleString(
               currentLang === 'de'
                 ? 'de-DE'
                 : currentLang === 'en'
@@ -1835,7 +1835,7 @@
               .replace('{adult_text}', adultText) ||
             `Taxes (${data.nbAdults} ${adultText})`
           priceDetails.push(
-            `&nbsp;&nbsp;&nbsp;&nbsp;• ${taxesText} : ${data.priceTax.toLocaleString(
+            `&nbsp;&nbsp;&nbsp;&nbsp;• ${taxesText} ${data.priceTax.toLocaleString(
               currentLang === 'de'
                 ? 'de-DE'
                 : currentLang === 'en'
@@ -1848,7 +1848,7 @@
         if (data.priceTotal > 0) {
           const totalText = common?.total || 'Total'
           priceDetails.push(
-            `&nbsp;&nbsp;&nbsp;&nbsp;• <strong>${totalText} : ${data.priceTotal.toLocaleString(
+            `&nbsp;&nbsp;&nbsp;&nbsp;• <strong>${totalText} ${data.priceTotal.toLocaleString(
               currentLang === 'de'
                 ? 'de-DE'
                 : currentLang === 'en'
