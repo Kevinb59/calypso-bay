@@ -146,7 +146,8 @@ window.translations = {
         title: '📅 Détails de la réservation',
         description:
           'Voici un récapitulatif de votre demande de réservation. Vérifiez que toutes les informations sont correctes avant de procéder au paiement.',
-        loading: 'Chargement des détails...'
+        loading: 'Chargement des détails...',
+        no_details: 'Aucun détail'
       },
 
       // Section paiement
@@ -162,6 +163,7 @@ window.translations = {
         submit_button: "Payer l'acompte et confirmer ma réservation",
         submit_button_with_amount: "Payer l'acompte – {amount} €",
         processing: 'Traitement en cours...',
+        calculating: 'Calcul en cours...',
         disclaimer:
           "Paiement sécurisé via Stripe. Aucune donnée bancaire n'est stockée par Calypso Bay."
       },
@@ -173,6 +175,21 @@ window.translations = {
         phone_invalid: 'Numéro de téléphone invalide',
         child_age_invalid: 'Âge invalide',
         form_errors: 'Veuillez corriger les erreurs dans le formulaire'
+      },
+
+      // Messages de verrouillage
+      locks: {
+        deposit_paid: 'Acompte déjà réglé',
+        balance_paid: 'Acompte et solde déjà réglés',
+        reservation_canceled: 'Réservation annulée'
+      },
+
+      // Messages d'erreur
+      errors: {
+        missing_token: 'Token manquant',
+        loading_error: 'Erreur lors du chargement',
+        connection_error: 'Erreur de connexion',
+        reservation_not_found: 'Réservation introuvable'
       },
 
       // Message de succès
@@ -444,7 +461,8 @@ window.translations = {
         title: '📅 Reservation details',
         description:
           'Here is a summary of your reservation request. Please verify that all information is correct before proceeding with payment.',
-        loading: 'Loading details...'
+        loading: 'Loading details...',
+        no_details: 'No details'
       },
 
       payment: {
@@ -459,6 +477,7 @@ window.translations = {
         submit_button: 'Pay deposit and confirm my reservation',
         submit_button_with_amount: 'Pay deposit – {amount} €',
         processing: 'Processing...',
+        calculating: 'Calculating...',
         disclaimer:
           'Secure payment via Stripe. No banking data is stored by Calypso Bay.'
       },
@@ -469,6 +488,21 @@ window.translations = {
         phone_invalid: 'Invalid phone number',
         child_age_invalid: 'Invalid age',
         form_errors: 'Please correct the errors in the form'
+      },
+
+      // Messages de verrouillage
+      locks: {
+        deposit_paid: 'Deposit already paid',
+        balance_paid: 'Deposit and balance already paid',
+        reservation_canceled: 'Reservation canceled'
+      },
+
+      // Messages d'erreur
+      errors: {
+        missing_token: 'Missing token',
+        loading_error: 'Loading error',
+        connection_error: 'Connection error',
+        reservation_not_found: 'Reservation not found'
       },
 
       success: {
@@ -729,7 +763,8 @@ window.translations = {
         title: '📅 Reservierungsdetails',
         description:
           'Hier ist eine Zusammenfassung Ihres Reservierungsantrags. Bitte überprüfen Sie, ob alle Informationen korrekt sind, bevor Sie mit der Zahlung fortfahren.',
-        loading: 'Details werden geladen…'
+        loading: 'Details werden geladen…',
+        no_details: 'Keine Details'
       },
 
       payment: {
@@ -744,6 +779,7 @@ window.translations = {
         submit_button: 'Anzahlung zahlen und meine Reservierung bestätigen',
         submit_button_with_amount: 'Anzahlung zahlen – {amount} €',
         processing: 'Wird verarbeitet...',
+        calculating: 'Wird berechnet...',
         disclaimer:
           'Sichere Zahlung über Stripe. Keine Bankdaten werden von Calypso Bay gespeichert.'
       },
@@ -754,6 +790,21 @@ window.translations = {
         phone_invalid: 'Ungültige Telefonnummer',
         child_age_invalid: 'Ungültiges Alter',
         form_errors: 'Bitte korrigieren Sie die Fehler im Formular'
+      },
+
+      // Messages de verrouillage
+      locks: {
+        deposit_paid: 'Anzahlung bereits bezahlt',
+        balance_paid: 'Anzahlung und Restbetrag bereits bezahlt',
+        reservation_canceled: 'Reservierung storniert'
+      },
+
+      // Messages d'erreur
+      errors: {
+        missing_token: 'Token fehlt',
+        loading_error: 'Ladefehler',
+        connection_error: 'Verbindungsfehler',
+        reservation_not_found: 'Reservierung nicht gefunden'
       },
 
       success: {

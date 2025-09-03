@@ -380,6 +380,33 @@
         line-height: 1.4;
       }
 
+      /* Styles pour le sélecteur de langue */
+      .language-selector {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 8px;
+        padding: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(10px);
+      }
+      .language-selector select {
+        border: none;
+        background: transparent;
+        font-size: 14px;
+        font-weight: 600;
+        color: #374151;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 4px;
+      }
+      .language-selector select:focus {
+        outline: none;
+        background: rgba(59, 130, 246, 0.1);
+      }
+
       /* Responsive design pour mobile */
       @media (min-width: 981px) {
         #children-ages .inner {
@@ -607,6 +634,15 @@
     </style>
   </head>
   <body class="is-preload">
+    <!-- Sélecteur de langue -->
+    <div class="language-selector">
+      <select id="language-selector">
+        <option value="fr">🇫🇷 Français</option>
+        <option value="en">🇬🇧 English</option>
+        <option value="de">🇩🇪 Deutsch</option>
+      </select>
+    </div>
+
     <!-- Page Wrapper -->
     <div id="page-wrapper">
       <!-- Wrapper -->
@@ -615,10 +651,10 @@
         <section class="panel banner right">
           <div class="content color0 span-3-75">
             <h2 class="major">
-              Finaliser ma<br />
-              <span class="themysion">Reservation</span>
+              <span id="banner-title">Finaliser ma</span><br />
+              <span class="themysion" id="banner-subtitle">Reservation</span>
             </h2>
-            <p>
+            <p id="banner-description">
               Votre demande de réservation a été acceptée ! Complétez le
               formulaire suivant et effectuez le paiement de l'acompte de 10%
               pour confirmer votre réservation à Calypso Bay.
@@ -628,6 +664,7 @@
                 <a
                   href="#form"
                   class="button primary color1 circle icon solid fa-angle-right"
+                  id="banner-button"
                   >Commencer</a
                 >
               </li>
@@ -644,8 +681,8 @@
         <!-- F O R M U L A I R E //////////////////////////////////////////////////////////////////////////////// -->
         <section class="panel spotlight medium right" id="form">
           <div class="content span-9-5">
-            <h3 class="major">📋 Informations personnelles</h3>
-            <p>
+            <h3 class="major" id="form-title">📋 Informations personnelles</h3>
+            <p id="form-description">
               Ces données nous permettront de vous contacter et de préparer
               votre accueil.
             </p>
@@ -657,7 +694,7 @@
               <div class="form-section">
                 <div class="form-row">
                   <div class="form-group">
-                    <label for="name">Nom complet</label>
+                    <label for="name" id="name-label">Nom complet</label>
                     <input
                       type="text"
                       id="name"
@@ -668,7 +705,7 @@
                     <div class="validation-message" id="name-error"></div>
                   </div>
                   <div class="form-group">
-                    <label for="email">Email</label>
+                    <label for="email" id="email-label">Email</label>
                     <input
                       type="email"
                       id="email"
@@ -681,7 +718,7 @@
                 </div>
                 <div class="form-row">
                   <div class="form-group">
-                    <label for="tel">Téléphone</label>
+                    <label for="tel" id="tel-label">Téléphone</label>
                     <input
                       type="tel"
                       id="tel"
@@ -692,7 +729,7 @@
                     <div class="validation-message" id="tel-error"></div>
                   </div>
                   <div class="form-group">
-                    <label for="address">Adresse</label>
+                    <label for="address" id="address-label">Adresse</label>
                     <input
                       type="text"
                       id="address"
@@ -705,7 +742,7 @@
                 </div>
                 <div class="form-row">
                   <div class="form-group">
-                    <label for="city">Ville</label>
+                    <label for="city" id="city-label">Ville</label>
                     <input
                       type="text"
                       id="city"
@@ -716,7 +753,7 @@
                     <div class="validation-message" id="city-error"></div>
                   </div>
                   <div class="form-group">
-                    <label for="postal">Code postal</label>
+                    <label for="postal" id="postal-label">Code postal</label>
                     <input
                       type="text"
                       id="postal"
@@ -728,7 +765,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="country">Pays</label>
+                  <label for="country" id="country-label">Pays</label>
                   <input
                     type="text"
                     id="country"
@@ -752,8 +789,8 @@
         <!-- Â G E S   E T   M E S S A G E //////////////////////////////////////////////////////////////////////////////// -->
         <section class="panel large color2-alt" id="children-ages">
           <div class="intro color2 span-3-5">
-            <h2 class="major">📝 Précisions</h2>
-            <p id="section-description">
+            <h2 class="major" id="precisions-title">📝 Précisions</h2>
+            <p id="precisions-description">
               Vous pouvez nous laisser un message ou nous poser des questions si
               vous le souhaitez.
             </p>
@@ -764,7 +801,9 @@
                 <!-- Les champs d'âges seront générés dynamiquement ici -->
               </div>
               <div class="form-group">
-                <label for="message">Message (optionnel)</label>
+                <label for="message" id="message-label"
+                  >Message (optionnel)</label
+                >
                 <textarea
                   id="message"
                   name="message"
@@ -780,8 +819,10 @@
         <!-- D É T A I L S //////////////////////////////////////////////////////////////////////////////// -->
         <section class="panel spotlight medium right color1">
           <div class="intro joined span-3-5">
-            <h2 class="major">📅 Détails de la réservation</h2>
-            <p>
+            <h2 class="major" id="details-title">
+              📅 Détails de la réservation
+            </h2>
+            <p id="details-description">
               Voici un récapitulatif de votre demande de réservation. Vérifiez
               que toutes les informations sont correctes avant de procéder au
               paiement.
@@ -792,7 +833,7 @@
               <div class="reservation-details" id="reservation-details">
                 <div class="loading">
                   <div class="spinner"></div>
-                  <p>Chargement des détails...</p>
+                  <p id="details-loading">Chargement des détails...</p>
                 </div>
               </div>
             </div>
@@ -808,8 +849,8 @@
         <!-- P A I E M E N T //////////////////////////////////////////////////////////////////////////////// -->
         <section class="panel color4-alt">
           <div class="intro color4">
-            <h2 class="major">💳 Paiement de l'acompte</h2>
-            <p>
+            <h2 class="major" id="payment-title">💳 Paiement de l'acompte</h2>
+            <p id="payment-description">
               Pour confirmer votre réservation, veuillez effectuer le paiement
               de l'acompte de <span id="deposit-percent">10%</span> du montant
               total (un montant minimum peut être appliqué pour les tests). Le
@@ -821,7 +862,7 @@
               <div class="payment-lock" id="payment-lock">
                 <div class="lock-box" id="payment-lock-text"></div>
               </div>
-              <h3>Récapitulatif du paiement</h3>
+              <h3 id="payment-summary-title">Récapitulatif du paiement</h3>
               <div class="payment-breakdown">
                 <div class="payment-row">
                   <span>Total</span>
@@ -844,7 +885,9 @@
               </div>
               <div class="payment-form">
                 <div class="form-group">
-                  <label for="card-element">Carte de paiement</label>
+                  <label for="card-element" id="card-label"
+                    >Carte de paiement</label
+                  >
                   <div id="card-element"></div>
                   <div id="card-errors" role="alert"></div>
                 </div>
@@ -854,11 +897,11 @@
                   id="submit-button"
                   form="finalization-form"
                 >
-                  <span id="button-text"
+                  <span id="submit-button-text"
                     >Payer l'acompte et confirmer ma réservation</span
                   >
                 </button>
-                <p class="payment-disclaimer">
+                <p class="payment-disclaimer" id="payment-disclaimer">
                   Paiement sécurisé via Stripe. Aucune donnée bancaire n'est
                   stockée par Calypso Bay.
                 </p>
@@ -893,8 +936,252 @@
     <script src="assets/js/browser.min.js"></script>
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/translations.js"></script>
 
     <script>
+      // SYSTÈME DE TRADUCTION
+
+      let currentLang = 'fr'
+
+      // Initialiser les traductions
+      window.addEventListener('translations:ready', function (event) {
+        const detectedLang = event.detail.language
+        translatePage(detectedLang)
+      })
+
+      // Gérer le changement de langue
+      document.addEventListener('DOMContentLoaded', function () {
+        const languageSelector = document.querySelector('#language-selector')
+        if (languageSelector) {
+          languageSelector.addEventListener('change', function () {
+            const newLang = this.value
+
+            localStorage.setItem('calypso-bay-lang', newLang)
+
+            const url = new URL(window.location)
+            url.searchParams.set('lang', newLang)
+            window.location.href = url.toString()
+          })
+
+          const savedLang = localStorage.getItem('calypso-bay-lang')
+          if (savedLang && ['fr', 'en', 'de'].includes(savedLang)) {
+            languageSelector.value = savedLang
+          }
+        }
+      })
+
+      // LOGIQUE PRINCIPALE DE LA PAGE
+
+      // Fonction pour traduire la page
+      function translatePage(lang) {
+        currentLang = lang
+        const t = window.translations[lang]['finaliser-reservation']
+        const common = window.translations[lang].common
+
+        document.title = t.title
+
+        document.getElementById('banner-title').textContent = t.banner.title
+        document.getElementById('banner-subtitle').textContent =
+          t.banner.subtitle
+        document.getElementById('banner-description').textContent =
+          t.banner.description
+        document.getElementById('banner-button').textContent = t.banner.button
+
+        document.getElementById('form-title').textContent = t.form.title
+        document.getElementById('form-description').textContent =
+          t.form.description
+
+        document.getElementById('name-label').textContent = t.form.name
+        document.getElementById('email-label').textContent = t.form.email
+        document.getElementById('tel-label').textContent = t.form.tel
+        document.getElementById('address-label').textContent = t.form.address
+        document.getElementById('city-label').textContent = t.form.city
+        document.getElementById('postal-label').textContent = t.form.postal
+        document.getElementById('country-label').textContent = t.form.country
+
+        document.getElementById('name').placeholder = t.form.name_placeholder
+        document.getElementById('email').placeholder = t.form.email_placeholder
+        document.getElementById('tel').placeholder = t.form.tel_placeholder
+        document.getElementById('address').placeholder =
+          t.form.address_placeholder
+        document.getElementById('city').placeholder = t.form.city_placeholder
+        document.getElementById('postal').placeholder =
+          t.form.postal_placeholder
+        document.getElementById('country').placeholder =
+          t.form.country_placeholder
+
+        document.getElementById('precisions-title').textContent =
+          t.children.title
+        document.getElementById('precisions-description').textContent =
+          t.children.description
+
+        document.getElementById('message-label').textContent = t.message.label
+        document.getElementById('message').placeholder = t.message.placeholder
+
+        document.getElementById('details-title').textContent = t.details.title
+        document.getElementById('details-description').textContent =
+          t.details.description
+        document.getElementById('details-loading').textContent =
+          t.details.loading
+
+        document.getElementById('payment-title').textContent = t.payment.title
+        document.getElementById('payment-description').textContent =
+          t.payment.description
+        document.getElementById('payment-summary-title').textContent =
+          t.payment.summary_title
+        document.getElementById('card-label').textContent = t.payment.card_label
+        document.getElementById('submit-button-text').textContent =
+          t.payment.submit_button
+        document.getElementById('payment-disclaimer').textContent =
+          t.payment.disclaimer
+
+        if (document.querySelector('#language-selector')) {
+          document.querySelector('#language-selector').value = lang
+        }
+
+        const url = new URL(window.location)
+        url.searchParams.set('lang', lang)
+        window.history.replaceState({}, '', url)
+
+        updateTranslationsAfterLoad()
+      }
+
+      // Fonction pour traduire les éléments dynamiques du récapitulatif
+      function translateRecapContent(data, lang) {
+        const common = window.translations[lang].common
+        const fmtMoney = (v) =>
+          Number(v || 0).toLocaleString(
+            lang === 'de' ? 'de-DE' : lang === 'en' ? 'en-GB' : 'fr-FR',
+            {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            }
+          )
+        const s = new Date(data.startDate)
+        const e = new Date(data.endDate)
+        const fmtDate = (dt) =>
+          dt.toLocaleDateString(
+            lang === 'de' ? 'de-DE' : lang === 'en' ? 'en-GB' : 'fr-FR',
+            {
+              day: '2-digit',
+              month: 'long',
+              year: 'numeric'
+            }
+          )
+
+        const lines = []
+        lines.push(
+          `<div class="detail-item"><strong>${
+            common.dates
+          }</strong><span>${fmtDate(s)} ${
+            lang === 'de' ? 'bis' : lang === 'en' ? 'to' : 'au'
+          } ${fmtDate(e)} (${data.nbNights} ${common.nights})</span></div>`
+        )
+
+        const adultText =
+          data.nbAdults > 1 ? common.adults_plural : common.adults
+        const childText =
+          data.nbChilds > 1 ? common.children_plural : common.children
+        lines.push(
+          `<div class="detail-item"><strong>${common.travelers}</strong><span>${
+            data.nbAdults
+          } ${adultText}${
+            data.nbChilds > 0 ? `, ${data.nbChilds} ${childText}` : ''
+          }</span></div>`
+        )
+
+        if (
+          data.nbChilds > 0 &&
+          data.childrenAges &&
+          data.childrenAges.length > 0
+        ) {
+          const ages = data.childrenAges.join(', ')
+          lines.push(
+            `<div class="detail-item"><strong>${common.children_ages}</strong><span>${ages}</span></div>`
+          )
+        }
+
+        lines.push(
+          `<div class="detail-item" style="border-bottom:none; display:block; padding-bottom:0;">
+            <div><strong>${common.price_details}</strong></div>
+            <div style="padding-top:8px">• ${common.nights_total.replace(
+              '{count}',
+              data.nbNights
+            )} ${fmtMoney(data.priceNights)} ${common.currency}</div>
+            <div>• ${common.cleaning_fees} ${fmtMoney(data.priceClean)} ${
+            common.currency
+          }</div>
+            <div>• ${common.taxes
+              .replace('{count}', data.nbAdults)
+              .replace('{adult_text}', adultText)} ${fmtMoney(data.priceTax)} ${
+            common.currency
+          }</div>
+            <div>• <strong>${common.total} ${fmtMoney(data.priceTotal)} ${
+            common.currency
+          }</strong></div>
+          </div>`
+        )
+
+        if (data.address || data.city || data.postal || data.country) {
+          lines.push(
+            `<div class="detail-item" style="border-bottom:none; display:block; padding-bottom:0;">
+              <div><strong>${common.billing_address}</strong></div>
+              <div style="padding-top:8px">${data.address || ''}</div>
+              <div>${data.postal || ''} ${data.city || ''}</div>
+              <div>${data.country || ''}</div>
+            </div>`
+          )
+        }
+
+        return lines.join('')
+      }
+
+      // Mettre à jour les traductions après chargement des données
+      function updateTranslationsAfterLoad() {
+        if (window.reservationData) {
+          const recapEl = document.getElementById('reservation-details')
+          if (recapEl && !recapEl.textContent.includes('Chargement')) {
+            recapEl.innerHTML = translateRecapContent(
+              window.reservationData,
+              currentLang
+            )
+          }
+
+          const lock = document.getElementById('payment-lock')
+          const lockText = document.getElementById('payment-lock-text')
+          if (lock && lockText && lock.style.display === 'flex') {
+            const t = window.translations[currentLang]['finaliser-reservation']
+            const st = String(window.reservationData.status || '')
+
+            if (st === 'depositPay') {
+              lockText.textContent =
+                t.locks?.deposit_paid || 'Acompte déjà réglé'
+            } else if (st === 'balancePay') {
+              lockText.textContent =
+                t.locks?.balance_paid || 'Acompte et solde déjà réglés'
+            } else if (st === 'canceled') {
+              lockText.textContent =
+                t.locks?.reservation_canceled || 'Réservation annulée'
+            }
+          }
+
+          const errorContainer = document.getElementById('error-container')
+          if (errorContainer && errorContainer.textContent) {
+            const t = window.translations[currentLang]['finaliser-reservation']
+            const errorText = errorContainer.textContent
+            if (errorText.includes('Token manquant')) {
+              errorContainer.innerHTML = `<div class="error-message">❌ ${
+                t.errors?.missing_token || 'Token manquant'
+              }</div>`
+            } else if (errorText.includes('Erreur lors du chargement')) {
+              errorContainer.innerHTML = `<div class="error-message">❌ ${
+                t.errors?.loading_error || 'Erreur lors du chargement'
+              }</div>`
+            }
+          }
+        }
+      }
+
       // Initialiser Stripe
       const stripe = Stripe(
         'pk_live_51RuYagJuxMM0V1wvWkNbfWITDKf6J6Q8BaoCPCwWrd6juAMlGekc3RADsm9VfcFcfkk7dYmY8dgDr0DqHOBw3qtb006Bbqn4e4'
@@ -934,6 +1221,8 @@
         loadReservationData()
       }
 
+      // FONCTIONS DE VALIDATION ET MESSAGES TRADUITS
+
       // Validation des champs
       function validateField(fieldId, errorId, validationFn) {
         const field = document.getElementById(fieldId)
@@ -945,7 +1234,10 @@
 
         if (!validationFn(value)) {
           field.classList.add('validation-error')
-          errorElement.textContent = 'Ce champ est obligatoire'
+          // Utiliser la traduction pour le message d'erreur
+          const t = window.translations[currentLang]?.['finaliser-reservation']
+          errorElement.textContent =
+            t?.validation?.required || 'Ce champ est obligatoire'
           return false
         }
         return true
@@ -1005,76 +1297,64 @@
               window.appConfig = await cfgRes.json()
             }
           } catch (e) {
+            // Message de console en français (pas besoin de traduction)
             console.warn('Config non chargée, valeurs par défaut utilisées')
           }
 
-          console.log('Loading reservation data for token:', token)
           const response = await fetch(
             `/api/reservations?action=get&token=${encodeURIComponent(token)}`
           )
           const result = await response.json()
 
-          console.log('API Response:', JSON.stringify(result, null, 2))
-
           if (result.status === 'success') {
-            console.log(
-              'Reservation data received:',
-              JSON.stringify(result.data, null, 2)
-            )
-            // Stocker les données globalement pour la validation
             window.reservationData = result.data
             populateForm(result.data)
             calculatePaymentAmount(result.data)
-            // Verrouiller la section paiement si nécessaire
             const st = String(result.data.status || '')
             const lock = document.getElementById('payment-lock')
             const lockText = document.getElementById('payment-lock-text')
             if (lock && lockText) {
+              const t =
+                window.translations[currentLang]?.['finaliser-reservation']
               if (st === 'depositPay') {
-                lockText.textContent = 'Acompte déjà réglé'
+                lockText.textContent =
+                  t?.locks?.deposit_paid || 'Acompte déjà réglé'
                 lock.style.display = 'flex'
               } else if (st === 'balancePay') {
-                lockText.textContent = 'Acompte et solde déjà réglés'
+                lockText.textContent =
+                  t?.locks?.balance_paid || 'Acompte et solde déjà réglés'
                 lock.style.display = 'flex'
               } else if (st === 'canceled') {
-                lockText.textContent = 'Réservation annulée'
+                lockText.textContent =
+                  t?.locks?.reservation_canceled || 'Réservation annulée'
                 lock.style.display = 'flex'
               }
             }
           } else {
+            // Le message d'erreur sera traduit par showError()
             showError(result.message || 'Erreur lors du chargement des données')
           }
         } catch (error) {
+          // Le message d'erreur sera traduit par showError()
           showError('Erreur de connexion')
           console.error('Erreur:', error)
         }
       }
 
       function populateForm(data) {
-        console.log(
-          'populateForm called with data:',
-          JSON.stringify(data, null, 2)
-        )
-
         document.getElementById('name').value = data.name || ''
         document.getElementById('email').value = data.email || ''
         document.getElementById('tel').value = data.tel || ''
 
-        // Générer les champs d'âges des enfants
         generateChildrenAgeFields(data.nbChilds || 0)
 
-        // Afficher les détails de réservation
         const detailsContainer = document.getElementById('reservation-details')
-
-        // Créer les détails de réservation avec la structure appropriée
         const reservationDetails = formatReservationDetails(data)
 
-        // Regrouper les sections dans des spans séparés
         const sections = reservationDetails.split('<hr')
         const detailsHtml = sections
-          .map((section, index) => {
+          .map((section) => {
             if (section.trim()) {
-              // Nettoyer les balises hr et créer un span pour chaque section
               const cleanSection = section.replace(/^[^>]*>/, '').trim()
               if (cleanSection) {
                 return `<div class="detail-item"><span>${cleanSection}</span></div>`
@@ -1096,26 +1376,34 @@
 
         if (nbChildren === 0) {
           container.innerHTML = ''
+          const t = window.translations[currentLang]?.['finaliser-reservation']
           sectionDescription.innerHTML =
+            t?.children?.description ||
             'Vous pouvez nous laisser un message ou nous poser des questions si vous le souhaitez.'
           return
         }
 
-        // Mettre à jour la description pour inclure le message sur les enfants
+        const t = window.translations[currentLang]?.['finaliser-reservation']
         sectionDescription.innerHTML =
+          t?.children?.description_with_children ||
           'Vous pouvez nous laisser un message ou nous poser des questions si vous le souhaitez.<br><br><div style="background: rgba(255, 193, 7, 0.2); border: 1px solid rgba(255, 193, 7, 0.5); border-radius: 8px; padding: 12px; margin-top: 15px; display: flex; align-items: center; gap: 8px;"><span style="color: #856404; font-size: 16px;">⚠️</span><span style="color: #856404; font-weight: 500;">Rappel : les enfants de moins de 8 ans ne sont pas admis.</span></div>'
 
         let html = ''
 
         for (let i = 1; i <= nbChildren; i++) {
+          const t = window.translations[currentLang]?.['finaliser-reservation']
+          const ageLabel = t?.children?.age_label || "Âge de l'enfant"
+          const agePlaceholder =
+            t?.children?.age_placeholder || "Âge de l'enfant"
+
           html += `
             <div class="form-group">
-              <label for="child-age-${i}">Âge de l'enfant ${i}</label>
+              <label for="child-age-${i}">${ageLabel} ${i}</label>
               <input
                 type="number"
                 id="child-age-${i}"
                 name="child-age-${i}"
-                placeholder="Âge de l'enfant ${i}"
+                placeholder="${agePlaceholder} ${i}"
                 min="0"
                 max="17"
                 required
@@ -1148,12 +1436,7 @@
       }
 
       function calculatePaymentAmount(data) {
-        console.log('Calculating payment for data:', data)
-
-        // Utiliser directement le champ total structuré
         let totalAmount = data.priceTotal
-
-        console.log('Using structured total:', totalAmount)
 
         if (totalAmount && totalAmount > 0) {
           const percent = window.appConfig?.DEPOSIT_PERCENT ?? 10
@@ -1163,30 +1446,31 @@
           if (depositAmount < minEur) depositAmount = minEur
           const remainingAmount = totalAmount - depositAmount
 
-          console.log('Calculated deposit:', depositAmount)
-          console.log('Remaining amount:', remainingAmount)
-
-          // Mettre à jour les éléments du récapitulatif avec espacement des milliers
+          const locale =
+            currentLang === 'de'
+              ? 'de-DE'
+              : currentLang === 'en'
+              ? 'en-GB'
+              : 'fr-FR'
           document.getElementById(
             'total-amount'
-          ).textContent = `${totalAmount.toLocaleString('fr-FR', {
+          ).textContent = `${totalAmount.toLocaleString(locale, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
           })} €`
           document.getElementById(
             'deposit-amount'
-          ).textContent = `${depositAmount.toLocaleString('fr-FR', {
+          ).textContent = `${depositAmount.toLocaleString(locale, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
           })} €`
           document.getElementById(
             'remaining-amount'
-          ).textContent = `${remainingAmount.toLocaleString('fr-FR', {
+          ).textContent = `${remainingAmount.toLocaleString(locale, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
           })} €`
 
-          // Mettre à jour la barre de progression
           const progressFill = document.getElementById('progress-fill')
           const progressPercentage = Math.min(
             100,
@@ -1194,35 +1478,45 @@
           )
           progressFill.style.width = `${progressPercentage}%`
 
-          // Mettre à jour le texte du bouton avec le montant
-          const buttonText = document.getElementById('button-text')
+          const buttonText = document.getElementById('submit-button-text')
           if (buttonText) {
-            const newButtonText = `Payer l'acompte – ${depositAmount.toLocaleString(
-              'fr-FR',
-              { minimumFractionDigits: 2, maximumFractionDigits: 2 }
-            )} €`
+            const t =
+              window.translations[currentLang]?.['finaliser-reservation']
+            const buttonTextTemplate =
+              t?.payment?.submit_button_with_amount ||
+              "Payer l'acompte – {amount} €"
+            const newButtonText = buttonTextTemplate.replace(
+              '{amount}',
+              depositAmount.toLocaleString(
+                currentLang === 'de'
+                  ? 'de-DE'
+                  : currentLang === 'en'
+                  ? 'en-GB'
+                  : 'fr-FR',
+                { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+              )
+            )
             buttonText.textContent = newButtonText
-            console.log('Button text updated to:', newButtonText)
           } else {
             console.error('Button text element not found')
           }
 
-          // Mettre à jour les libellés du pourcentage si présents
           const dp = document.getElementById('deposit-percent')
           const dpi = document.getElementById('deposit-percent-inline')
           if (dp) dp.textContent = `${percent}%`
           if (dpi) dpi.textContent = `${percent}%`
 
-          // Stocker le montant total pour le paiement
           window.totalAmount = totalAmount
         } else {
-          document.getElementById('total-amount').textContent =
-            'Calcul en cours...'
+          const t = window.translations[currentLang]?.['finaliser-reservation']
+          const calculatingText =
+            t?.payment?.calculating || 'Calcul en cours...'
+
+          document.getElementById('total-amount').textContent = calculatingText
           document.getElementById('deposit-amount').textContent =
-            'Calcul en cours...'
+            calculatingText
           document.getElementById('remaining-amount').textContent =
-            'Calcul en cours...'
-          console.log('No valid amount found in structured data')
+            calculatingText
         }
       }
 
@@ -1232,7 +1526,6 @@
         .addEventListener('submit', async function (event) {
           event.preventDefault()
 
-          // Validation complète avant soumission
           const validations = [
             validateField('name', 'name-error', validateRequired),
             validateField('email', 'email-error', validateEmail),
@@ -1242,7 +1535,6 @@
             validateField('postal', 'postal-error', validateRequired)
           ]
 
-          // Ajouter la validation des âges des enfants si nécessaire
           const nbChildren = window.reservationData?.nbChilds || 0
           for (let i = 1; i <= nbChildren; i++) {
             validations.push(
@@ -1260,16 +1552,20 @@
           }
 
           const submitButton = document.getElementById('submit-button')
-          const btnTextSpan = document.getElementById('button-text')
+          const btnTextSpan = document.getElementById('submit-button-text')
           submitButton.disabled = true
+
+          const t = window.translations[currentLang]?.['finaliser-reservation']
+          const processingText =
+            t?.payment?.processing || 'Traitement en cours...'
+
           if (btnTextSpan) {
-            btnTextSpan.textContent = 'Traitement en cours...'
+            btnTextSpan.textContent = processingText
           } else {
-            submitButton.textContent = 'Traitement en cours...'
+            submitButton.textContent = processingText
           }
 
           try {
-            // Préparer les données du formulaire à envoyer en métadonnées Stripe
             const childrenAges = Array.from(
               document.querySelectorAll('[id^="child-age-"]')
             )
@@ -1288,7 +1584,6 @@
               childrenAges
             }
 
-            // Créer le PaymentIntent
             const paymentResponse = await fetch('/api/createPayment', {
               method: 'POST',
               headers: {
@@ -1310,8 +1605,7 @@
               )
             }
 
-            // Confirmer le paiement avec Stripe
-            const { error, paymentIntent } = await stripe.confirmCardPayment(
+            const { error } = await stripe.confirmCardPayment(
               paymentResult.clientSecret,
               {
                 payment_method: {
@@ -1328,7 +1622,6 @@
               throw new Error(error.message)
             }
 
-            // Succès Stripe: on s'appuie sur le webhook pour la finalisation.
             showSuccess(
               "Paiement confirmé ✔️. Un email de confirmation vient d'être envoyé."
             )
@@ -1338,26 +1631,33 @@
           } catch (error) {
             showError(error.message)
             submitButton.disabled = false
-            // Remettre le texte du bouton avec le montant de l'acompte
             if (window.totalAmount) {
               const depositAmount = window.totalAmount * 0.1
-              const buttonText = document.getElementById('button-text')
+              const t =
+                window.translations[currentLang]?.['finaliser-reservation']
+              const buttonTextTemplate =
+                t?.payment?.submit_button_with_amount ||
+                "Payer l'acompte – {amount} €"
+              const buttonTextFormatted = buttonTextTemplate.replace(
+                '{amount}',
+                depositAmount.toLocaleString(
+                  currentLang === 'de'
+                    ? 'de-DE'
+                    : currentLang === 'en'
+                    ? 'en-GB'
+                    : 'fr-FR',
+                  {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  }
+                )
+              )
+
+              const buttonText = document.getElementById('submit-button-text')
               if (buttonText) {
-                buttonText.textContent = `Payer l'acompte – ${depositAmount.toLocaleString(
-                  'fr-FR',
-                  {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                  }
-                )} €`
+                buttonText.textContent = buttonTextFormatted
               } else {
-                submitButton.textContent = `Payer l'acompte – ${depositAmount.toLocaleString(
-                  'fr-FR',
-                  {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                  }
-                )} €`
+                submitButton.textContent = buttonTextFormatted
               }
             }
           }
@@ -1365,106 +1665,164 @@
 
       function showError(message) {
         const container = document.getElementById('error-container')
-        container.innerHTML = `<div class="error-message">❌ ${message}</div>`
+        const t = window.translations[currentLang]?.['finaliser-reservation']
+        let translatedMessage = message
+
+        if (t?.errors) {
+          if (message.includes('Token de réservation manquant')) {
+            translatedMessage = t.errors.missing_token || message
+          } else if (message.includes('Erreur lors du chargement')) {
+            translatedMessage = t.errors.loading_error || message
+          } else if (message.includes('Erreur de connexion')) {
+            translatedMessage = t.errors.connection_error || message
+          } else if (message.includes('Veuillez corriger les erreurs')) {
+            translatedMessage = t.validation.form_errors || message
+          }
+        }
+
+        container.innerHTML = `<div class="error-message">❌ ${translatedMessage}</div>`
       }
 
       function showSuccess(message) {
         const container = document.getElementById('success-container')
-        container.innerHTML = `<div class="success-message">✅ ${message}</div>`
-      }
+        const t = window.translations[currentLang]?.['finaliser-reservation']
+        let translatedMessage = message
 
-      function escapeHtml(text) {
-        const div = document.createElement('div')
-        div.textContent = text
-        return div.innerHTML
+        if (t?.success && message.includes('Paiement confirmé')) {
+          translatedMessage = t.success.message || message
+        }
+
+        container.innerHTML = `<div class="success-message">✅ ${translatedMessage}</div>`
       }
 
       function formatReservationDetails(data) {
-        console.log(
-          'formatReservationDetails called with data:',
-          JSON.stringify(data, null, 2)
-        )
-
-        if (!data) return 'Aucun détail'
+        if (!data) {
+          const t = window.translations[currentLang]?.['finaliser-reservation']
+          return t?.details?.no_details || 'Aucun détail'
+        }
 
         const startDate = new Date(data.startDate)
         const endDate = new Date(data.endDate)
 
-        console.log('Parsed dates:', {
-          startDate: startDate.toString(),
-          endDate: endDate.toString(),
-          startDateValue: data.startDate,
-          endDateValue: data.endDate
-        })
-
         const formatDate = (date) => {
-          return date.toLocaleDateString('fr-FR', {
-            day: '2-digit',
-            month: 'long',
-            year: 'numeric'
-          })
+          return date.toLocaleDateString(
+            currentLang === 'de'
+              ? 'de-DE'
+              : currentLang === 'en'
+              ? 'en-GB'
+              : 'fr-FR',
+            {
+              day: '2-digit',
+              month: 'long',
+              year: 'numeric'
+            }
+          )
         }
 
-        // Section Dates
         const startDateStr = formatDate(startDate)
         const endDateStr = formatDate(endDate)
-        const datesSection = `<strong>Dates :</strong> ${startDateStr} au ${endDateStr} (${data.nbNights} nuits)`
+        const common = window.translations[currentLang]?.common
+        const datesSection = `<strong>${
+          common?.dates || 'Dates :'
+        }</strong> ${startDateStr} ${
+          currentLang === 'de' ? 'bis' : currentLang === 'en' ? 'to' : 'au'
+        } ${endDateStr} (${data.nbNights} ${common?.nights || 'nuits'})`
 
-        // Section Voyageurs
         let travelersSection
         if (data.nbChilds > 0) {
-          travelersSection = `<strong>Voyageurs :</strong> ${
-            data.nbAdults
-          } adulte${data.nbAdults > 1 ? 's' : ''}, ${data.nbChilds} enfant${
-            data.nbChilds > 1 ? 's' : ''
-          }`
+          const adultText =
+            data.nbAdults > 1
+              ? common?.adults_plural || 'adultes'
+              : common?.adults || 'adulte'
+          const childText =
+            data.nbChilds > 1
+              ? common?.children_plural || 'enfants'
+              : common?.children || 'enfant'
+          travelersSection = `<strong>${
+            common?.travelers || 'Voyageurs :'
+          }</strong> ${data.nbAdults} ${adultText}, ${
+            data.nbChilds
+          } ${childText}`
         } else {
-          travelersSection = `<strong>Voyageurs :</strong> ${
-            data.nbAdults
-          } adulte${data.nbAdults > 1 ? 's' : ''}`
+          const adultText =
+            data.nbAdults > 1
+              ? common?.adults_plural || 'adultes'
+              : common?.adults || 'adulte'
+          travelersSection = `<strong>${
+            common?.travelers || 'Voyageurs :'
+          }</strong> ${data.nbAdults} ${adultText}`
         }
 
-        // Section Détail du prix
-        let priceDetails = ['<strong>Détail du prix :</strong>']
+        let priceDetails = [
+          `<strong>${common?.price_details || 'Détail du prix :'}</strong>`
+        ]
 
         if (data.priceNights > 0) {
+          const nightsText =
+            common?.nights_total?.replace('{count}', data.nbNights) ||
+            `Total des nuits (${data.nbNights})`
           priceDetails.push(
-            `&nbsp;&nbsp;&nbsp;&nbsp;• Total des nuits (${
-              data.nbNights
-            }) : ${data.priceNights.toLocaleString('fr-FR')} €`
+            `&nbsp;&nbsp;&nbsp;&nbsp;• ${nightsText} : ${data.priceNights.toLocaleString(
+              currentLang === 'de'
+                ? 'de-DE'
+                : currentLang === 'en'
+                ? 'en-GB'
+                : 'fr-FR'
+            )} €`
           )
         }
 
         if (data.priceClean > 0) {
+          const cleaningText = common?.cleaning_fees || 'Frais de ménage'
           priceDetails.push(
-            `&nbsp;&nbsp;&nbsp;&nbsp;• Frais de ménage : ${data.priceClean.toLocaleString(
-              'fr-FR'
+            `&nbsp;&nbsp;&nbsp;&nbsp;• ${cleaningText} : ${data.priceClean.toLocaleString(
+              currentLang === 'de'
+                ? 'de-DE'
+                : currentLang === 'en'
+                ? 'en-GB'
+                : 'fr-FR'
             )} €`
           )
         }
 
         if (data.priceTax > 0) {
+          const adultText =
+            data.nbAdults > 1
+              ? common?.adults_plural || 'adultes'
+              : common?.adults || 'adulte'
+          const taxesText =
+            common?.taxes
+              ?.replace('{count}', data.nbAdults)
+              .replace('{adult_text}', adultText) ||
+            `Taxes (${data.nbAdults} ${adultText})`
           priceDetails.push(
-            `&nbsp;&nbsp;&nbsp;&nbsp;• Taxes (${data.nbAdults} adulte${
-              data.nbAdults > 1 ? 's' : ''
-            }) : ${data.priceTax.toLocaleString('fr-FR')} €`
+            `&nbsp;&nbsp;&nbsp;&nbsp;• ${taxesText} : ${data.priceTax.toLocaleString(
+              currentLang === 'de'
+                ? 'de-DE'
+                : currentLang === 'en'
+                ? 'en-GB'
+                : 'fr-FR'
+            )} €`
           )
         }
 
         if (data.priceTotal > 0) {
+          const totalText = common?.total || 'Total'
           priceDetails.push(
-            `&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Total : ${data.priceTotal.toLocaleString(
-              'fr-FR'
+            `&nbsp;&nbsp;&nbsp;&nbsp;• <strong>${totalText} : ${data.priceTotal.toLocaleString(
+              currentLang === 'de'
+                ? 'de-DE'
+                : currentLang === 'en'
+                ? 'en-GB'
+                : 'fr-FR'
             )} €</strong>`
           )
         }
 
         const priceSection = priceDetails.join('<br>')
 
-        // Assembler les sections avec un seul séparateur entre dates et voyageurs
         const result = `${datesSection}<hr style="border: none; border-top: 1px solid rgba(255,255,255,0.3); margin: 0.5rem 0;" />${travelersSection}<br><br>${priceSection}`
 
-        console.log('formatReservationDetails result:', result)
         return result
       }
     </script>
