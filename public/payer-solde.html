@@ -342,9 +342,12 @@
       let currentLang = 'fr'
 
       // Initialiser les traductions au chargement
+      console.log('🔧 Écouteur translations:ready ajouté')
       window.addEventListener('translations:ready', function (event) {
+        console.log('🎉 Événement translations:ready reçu:', event.detail)
         const detectedLang = event.detail.language
         currentLang = detectedLang
+        console.log('🌍 Langue détectée:', detectedLang)
         translatePage(detectedLang)
       })
 
@@ -411,9 +414,27 @@
        * @param {string} lang - Code de langue (fr, en, de)
        */
       function translatePage(lang) {
+        console.log('🔄 Début de translatePage pour la langue:', lang)
         currentLang = lang
+
+        if (!window.translations || !window.translations[lang]) {
+          console.error('❌ Traductions non disponibles pour la langue:', lang)
+          console.log(
+            '📋 window.translations disponible:',
+            !!window.translations
+          )
+          if (window.translations) {
+            console.log(
+              '🌐 Langues disponibles:',
+              Object.keys(window.translations)
+            )
+          }
+          return
+        }
+
         const t = window.translations[lang]['payer-solde']
         const common = window.translations[lang].common
+        console.log('✅ Traductions chargées pour payer-solde:', !!t)
 
         // Mettre à jour le titre de la page
         document.title = t.title
@@ -467,6 +488,15 @@
 
       // Fonction pour traduire les éléments dynamiques du récapitulatif
       function translateRecapContent(data, lang) {
+        console.log('🔄 Début de translateRecapContent')
+        console.log('📊 Données reçues:', data)
+        console.log('🌍 Langue demandée:', lang)
+
+        if (!window.translations || !window.translations[lang]) {
+          console.error('❌ Traductions non disponibles pour la langue:', lang)
+          return '<div class="detail-item">Erreur: traductions non disponibles</div>'
+        }
+
         const common = window.translations[lang].common
         const fmtMoney = (v) =>
           Number(v || 0).toLocaleString(
@@ -560,7 +590,9 @@
           )
         }
 
-        return lines.join('')
+        const result = lines.join('')
+        console.log('✅ Récapitulatif généré:', result)
+        return result
       }
 
       /**
@@ -648,34 +680,81 @@
        * Gère les erreurs et met à jour l'interface utilisateur
        */
       async function load() {
+        console.log('🚀 Début de la fonction load()')
+        console.log('🔑 Token disponible:', !!token)
+        console.log('🌍 Langue actuelle:', currentLang)
+        console.log('📋 Traductions disponibles:', !!window.translations)
+
         if (!token) {
-          const t = window.translations[currentLang]['payer-solde']
-          detailsBox.textContent = t.errors.missing_token
+          console.log('❌ Pas de token, tentative de traduction')
+          if (window.translations && window.translations[currentLang]) {
+            const t = window.translations[currentLang]['payer-solde']
+            detailsBox.textContent = t.errors.missing_token
+            console.log("✅ Message d'erreur traduit appliqué")
+          } else {
+            detailsBox.textContent = 'Token manquant'
+            console.log('❌ Traductions non disponibles, message par défaut')
+          }
           btn.disabled = true
           return
         }
         try {
+          console.log(
+            '🔍 Tentative de récupération des données de réservation...'
+          )
+          console.log('🔑 Token utilisé:', token)
+          console.log(
+            "🌐 URL de l'API:",
+            `/api/reservations?action=get&token=${encodeURIComponent(token)}`
+          )
+
           const res = await fetch(
             `/api/reservations?action=get&token=${encodeURIComponent(token)}`
           )
+          console.log("📡 Réponse de l'API reçue:", res.status, res.statusText)
+
+          if (!res.ok) {
+            console.error('❌ Erreur HTTP:', res.status, res.statusText)
+            throw new Error(`Erreur HTTP: ${res.status}`)
+          }
+
           const json = await res.json()
+          console.log('📋 Données reçues:', json)
+
           if (json.status !== 'success') {
+            console.error(
+              "❌ Statut de l'API non réussi:",
+              json.status,
+              json.message
+            )
             const t = window.translations[currentLang]['payer-solde']
             detailsBox.textContent =
               json.message || t.errors.reservation_not_found
             btn.disabled = true
             return
           }
+
+          console.log('✅ Données de réservation récupérées avec succès')
           const d = json.data
+          console.log('📊 Données brutes de la réservation:', d)
+
           const total = Number(d.priceTotal || 0)
-          const deposit = Number(d.depositAmount || 0)
+          const deposit = Number(d.priceDeposit || 0)
           const balance = Math.max(0, total - deposit)
+
+          console.log('💰 Calculs financiers:')
+          console.log('  - Total:', total)
+          console.log('  - Acompte:', deposit)
+          console.log('  - Solde:', balance)
 
           // Sauvegarder les données pour les traductions dynamiques
           window.reservationData = d
+          console.log('💾 Données sauvegardées dans window.reservationData')
 
           // Utiliser la fonction de traduction pour le récapitulatif
+          console.log('🔄 Mise à jour du récapitulatif...')
           detailsBox.innerHTML = translateRecapContent(d, currentLang)
+          console.log('✅ Récapitulatif mis à jour')
 
           // S'assurer que la page est traduite dans la langue actuelle
           if (window.translations && window.translations[currentLang]) {
@@ -750,11 +829,35 @@
             }
           }
         } catch (e) {
+          console.error('💥 Erreur lors du chargement des données:', e)
+          console.error('📋 Stack trace:', e.stack)
+
           // Gestion des erreurs de chargement avec traduction
           const t = window.translations[currentLang]['payer-solde']
           detailsBox.textContent = t.errors.loading_error
+          console.log("⚠️ Message d'erreur affiché à l'utilisateur")
         }
       }
+
+      // Fallback pour s'assurer que les traductions sont chargées
+      setTimeout(() => {
+        console.log('⏰ Fallback: vérification des traductions après 1 seconde')
+        if (window.translations) {
+          console.log('✅ Traductions disponibles dans le fallback')
+          const detectedLang = window.detectLanguage
+            ? window.detectLanguage()
+            : 'fr'
+          console.log('🌍 Langue détectée dans le fallback:', detectedLang)
+          if (currentLang !== detectedLang) {
+            currentLang = detectedLang
+            translatePage(detectedLang)
+          }
+        } else {
+          console.error(
+            '❌ Traductions toujours non disponibles après 1 seconde'
+          )
+        }
+      }, 1000)
 
       // Charger les données au démarrage
       load()
