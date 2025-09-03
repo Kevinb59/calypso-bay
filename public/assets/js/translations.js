@@ -157,7 +157,7 @@ window.translations = {
           "Pour confirmer votre réservation, veuillez effectuer le paiement de l'acompte de 10% du montant total. Le solde sera à régler au plus tard 7 jours avant votre arrivée.",
         summary_title: 'Récapitulatif du paiement',
         total: 'Total',
-        deposit: 'Acompte ({percent}%)',
+        deposit: 'Acompte',
         remaining: 'Solde restant après acompte',
         card_label: 'Carte de paiement',
         submit_button: "Payer l'acompte et confirmer ma réservation",
@@ -349,11 +349,12 @@ window.translations = {
   // ============================================================================
   en: {
     // ========================================================================
-    // PAGE : CANCEL RESERVATION
+    // PAGE : ANNULER RÉSERVATION
     // ========================================================================
     'annuler-reservation': {
       title: 'Cancel my reservation – Calypso Bay',
 
+      // Section bannière principale
       banner: {
         title: 'Cancel my',
         subtitle: 'Reservation',
@@ -362,11 +363,13 @@ window.translations = {
         button: 'Continue'
       },
 
+      // Section récapitulatif de la réservation
       recap: {
         title: '📅 Reservation details',
         loading: 'Loading summary...'
       },
 
+      // Section formulaire d'annulation
       form: {
         title: '🧾 Cancellation request',
         loading: 'Loading information...',
@@ -376,6 +379,7 @@ window.translations = {
         submit_button: 'Request cancellation'
       },
 
+      // Politique d'annulation
       policy: {
         no_deposit: 'Free cancellation.',
         free_cancellation_deposit_only:
@@ -388,6 +392,7 @@ window.translations = {
           'Less than 3 months before the start of your stay, the deposit may be retained according to our terms and conditions. The balance will be refunded.'
       },
 
+      // Modal de confirmation
       confirmation: {
         title: 'Confirm cancellation?',
         message:
@@ -396,11 +401,13 @@ window.translations = {
         confirm: 'Confirm cancellation'
       },
 
+      // États du bouton
       status: {
         sending: 'Sending...',
         sent: 'Request sent ✔'
       },
 
+      // Messages d'erreur
       errors: {
         missing_token: 'Missing token',
         loading_error: 'Loading error',
@@ -409,11 +416,12 @@ window.translations = {
     },
 
     // ========================================================================
-    // PAGE : FINALIZE RESERVATION
+    // PAGE : FINALISER RÉSERVATION
     // ========================================================================
     'finaliser-reservation': {
       title: 'Finalize my reservation - Calypso Bay',
 
+      // Section bannière principale
       banner: {
         title: 'Finalize my',
         subtitle: 'Reservation',
@@ -422,6 +430,7 @@ window.translations = {
         button: 'Start'
       },
 
+      // Section informations personnelles
       form: {
         title: '📋 Personal information',
         description:
@@ -442,6 +451,7 @@ window.translations = {
         country_placeholder: 'Country'
       },
 
+      // Section enfants et précisions
       children: {
         title: '📝 Additional details',
         description:
@@ -452,11 +462,13 @@ window.translations = {
         age_placeholder: 'Child age'
       },
 
+      // Section message optionnel
       message: {
         label: 'Message (optional)',
         placeholder: 'Your message, special requests, additional information...'
       },
 
+      // Section détails de la réservation
       details: {
         title: '📅 Reservation details',
         description:
@@ -465,13 +477,14 @@ window.translations = {
         no_details: 'No details'
       },
 
+      // Section paiement
       payment: {
         title: '💳 Deposit payment',
         description:
           'To confirm your reservation, please make the 10% deposit payment of the total amount. The balance will be due no later than 7 days before your arrival.',
         summary_title: 'Payment summary',
         total: 'Total',
-        deposit: 'Deposit ({percent}%)',
+        deposit: 'Deposit',
         remaining: 'Remaining balance after deposit',
         card_label: 'Payment card',
         submit_button: 'Pay deposit and confirm my reservation',
@@ -482,6 +495,7 @@ window.translations = {
           'Secure payment via Stripe. No banking data is stored by Calypso Bay.'
       },
 
+      // Messages de validation
       validation: {
         required: 'This field is required',
         email_invalid: 'Invalid email',
@@ -505,6 +519,7 @@ window.translations = {
         reservation_not_found: 'Reservation not found'
       },
 
+      // Messages de succès
       success: {
         message:
           'Payment confirmed ✔️. A confirmation email has just been sent.'
@@ -512,11 +527,12 @@ window.translations = {
     },
 
     // ========================================================================
-    // PAGE : PAY BALANCE
+    // PAGE : PAYER LE SOLDE
     // ========================================================================
     'payer-solde': {
       title: 'Pay the balance – Calypso Bay',
 
+      // Section bannière principale
       banner: {
         title: 'Pay the',
         subtitle: 'Balance',
@@ -525,6 +541,7 @@ window.translations = {
         button: 'Continue'
       },
 
+      // Section détails de la réservation
       details: {
         title: '📅 Reservation details',
         description:
@@ -532,6 +549,7 @@ window.translations = {
         loading: 'Loading...'
       },
 
+      // Section paiement
       payment: {
         title: '💳 Balance payment',
         description:
@@ -550,11 +568,13 @@ window.translations = {
           'Secure payment via Stripe. No banking data is stored by Calypso Bay.'
       },
 
+      // Messages de verrouillage
       locks: {
         balance_paid: 'Balance already paid',
         reservation_canceled: 'Reservation canceled'
       },
 
+      // Messages d'erreur
       errors: {
         missing_token: 'Missing token',
         loading_error: 'Loading error',
@@ -563,11 +583,12 @@ window.translations = {
     },
 
     // ========================================================================
-    // PAGE : RESERVATION CONFIRMED
+    // PAGE : RÉSERVATION CONFIRMÉE
     // ========================================================================
     'reservation-confirmee': {
       title: 'Reservation confirmed – Calypso Bay',
 
+      // Section principale
       main: {
         title: 'Reservation confirmed!',
         description:
@@ -579,11 +600,13 @@ window.translations = {
           'Need help, information or have a special request (late arrivals, options, ...)? Contact us — we will do our best to satisfy you.'
       },
 
+      // Section actions
       actions: {
         home: 'Back to home',
         contact: 'Contact us'
       },
 
+      // Section bannière principale
       hero: {
         brand: 'Calypso Bay',
         title: 'Your stay awaits you',
@@ -592,11 +615,12 @@ window.translations = {
     },
 
     // ========================================================================
-    // PAGE : BALANCE PAID
+    // PAGE : SOLDE PAYÉ
     // ========================================================================
     'reservation-solde-confirme': {
       title: 'Balance paid – Calypso Bay',
 
+      // Section principale
       main: {
         title: 'Balance paid!',
         description:
@@ -608,11 +632,13 @@ window.translations = {
           'Need help or additional information? Write to us, we respond quickly.'
       },
 
+      // Section actions
       actions: {
         home: 'Back to home',
         contact: 'Contact us'
       },
 
+      // Section bannière principale
       hero: {
         brand: 'Calypso Bay',
         title: "We can't wait to welcome you",
@@ -621,7 +647,7 @@ window.translations = {
     },
 
     // ========================================================================
-    // COMMON ELEMENTS
+    // ÉLÉMENTS COMMUNS
     // ========================================================================
     common: {
       dates: 'Dates:',
@@ -650,11 +676,12 @@ window.translations = {
   // ============================================================================
   de: {
     // ========================================================================
-    // SEITE : RESERVIERUNG STORNIEREN
+    // PAGE : ANNULER RÉSERVATION
     // ========================================================================
     'annuler-reservation': {
       title: 'Meine Reservierung stornieren – Calypso Bay',
 
+      // Section bannière principale
       banner: {
         title: 'Meine Reservierung',
         subtitle: 'stornieren',
@@ -663,11 +690,13 @@ window.translations = {
         button: 'Weiter'
       },
 
+      // Section récapitulatif de la réservation
       recap: {
         title: '📅 Reservierungsdetails',
         loading: 'Zusammenfassung wird geladen...'
       },
 
+      // Section formulaire d'annulation
       form: {
         title: '🧾 Stornierungsantrag',
         loading: 'Informationen werden geladen...',
@@ -677,6 +706,7 @@ window.translations = {
         submit_button: 'Stornierung beantragen'
       },
 
+      // Politique d'annulation
       policy: {
         no_deposit: 'Kostenlose Stornierung.',
         free_cancellation_deposit_only:
@@ -689,6 +719,7 @@ window.translations = {
           'Weniger als 3 Monate vor Beginn Ihres Aufenthalts kann die Anzahlung gemäß unseren Bedingungen einbehalten werden. Der Restbetrag wird erstattet.'
       },
 
+      // Modal de confirmation
       confirmation: {
         title: 'Stornierung bestätigen?',
         message:
@@ -697,11 +728,13 @@ window.translations = {
         confirm: 'Stornierung bestätigen'
       },
 
+      // États du bouton
       status: {
         sending: 'Wird gesendet…',
         sent: 'Anfrage gesendet ✔'
       },
 
+      // Messages d'erreur
       errors: {
         missing_token: 'Token fehlt',
         loading_error: 'Ladefehler',
@@ -710,11 +743,12 @@ window.translations = {
     },
 
     // ========================================================================
-    // SEITE : RESERVIERUNG ABSCHLIESSEN
+    // PAGE : FINALISER RÉSERVATION
     // ========================================================================
     'finaliser-reservation': {
       title: 'Meine Reservierung abschließen - Calypso Bay',
 
+      // Section bannière principale
       banner: {
         title: 'Meine Reservierung',
         subtitle: 'abschließen',
@@ -723,6 +757,7 @@ window.translations = {
         button: 'Starten'
       },
 
+      // Section informations personnelles
       form: {
         title: '📋 Persönliche Informationen',
         description:
@@ -743,6 +778,7 @@ window.translations = {
         country_placeholder: 'Land'
       },
 
+      // Section enfants et précisions
       children: {
         title: '📝 Zusätzliche Details',
         description:
@@ -753,12 +789,14 @@ window.translations = {
         age_placeholder: 'Alter des Kindes'
       },
 
+      // Section message optionnel
       message: {
         label: 'Nachricht (optional)',
         placeholder:
           'Ihre Nachricht, besondere Wünsche, zusätzliche Informationen...'
       },
 
+      // Section détails de la réservation
       details: {
         title: '📅 Reservierungsdetails',
         description:
@@ -767,13 +805,14 @@ window.translations = {
         no_details: 'Keine Details'
       },
 
+      // Section paiement
       payment: {
         title: '💳 Anzahlungszahlung',
         description:
           'Um Ihre Reservierung zu bestätigen, leisten Sie bitte die Anzahlung von 10% des Gesamtbetrags. Der Restbetrag ist spätestens 7 Tage vor Ihrer Ankunft fällig.',
         summary_title: 'Zahlungsübersicht',
         total: 'Gesamt',
-        deposit: 'Anzahlung ({percent}%)',
+        deposit: 'Anzahlung',
         remaining: 'Verbleibender Restbetrag nach Anzahlung',
         card_label: 'Zahlungskarte',
         submit_button: 'Anzahlung zahlen und meine Reservierung bestätigen',
@@ -784,6 +823,7 @@ window.translations = {
           'Sichere Zahlung über Stripe. Keine Bankdaten werden von Calypso Bay gespeichert.'
       },
 
+      // Messages de validation
       validation: {
         required: 'Dieses Feld ist erforderlich',
         email_invalid: 'Ungültige E-Mail',
@@ -807,6 +847,7 @@ window.translations = {
         reservation_not_found: 'Reservierung nicht gefunden'
       },
 
+      // Messages de succès
       success: {
         message:
           'Zahlung bestätigt ✔️. Eine Bestätigungs-E-Mail wurde gerade gesendet.'
@@ -814,11 +855,12 @@ window.translations = {
     },
 
     // ========================================================================
-    // SEITE : RESTBETRAG ZAHLEN
+    // PAGE : PAYER LE SOLDE
     // ========================================================================
     'payer-solde': {
       title: 'Restbetrag zahlen – Calypso Bay',
 
+      // Section bannière principale
       banner: {
         title: 'Den Restbetrag',
         subtitle: 'zahlen',
@@ -827,6 +869,7 @@ window.translations = {
         button: 'Weiter'
       },
 
+      // Section détails de la réservation
       details: {
         title: '📅 Reservierungsdetails',
         description:
@@ -834,6 +877,7 @@ window.translations = {
         loading: 'Wird geladen…'
       },
 
+      // Section paiement
       payment: {
         title: '💳 Restbetragzahlung',
         description:
@@ -852,11 +896,13 @@ window.translations = {
           'Sichere Zahlung über Stripe. Keine Bankdaten werden von Calypso Bay gespeichert.'
       },
 
+      // Messages de verrouillage
       locks: {
         balance_paid: 'Restbetrag bereits bezahlt',
         reservation_canceled: 'Reservierung storniert'
       },
 
+      // Messages d'erreur
       errors: {
         missing_token: 'Token fehlt',
         loading_error: 'Ladefehler',
@@ -865,11 +911,12 @@ window.translations = {
     },
 
     // ========================================================================
-    // SEITE : RESERVIERUNG BESTÄTIGT
+    // PAGE : RÉSERVATION CONFIRMÉE
     // ========================================================================
     'reservation-confirmee': {
       title: 'Reservierung bestätigt – Calypso Bay',
 
+      // Section principale
       main: {
         title: 'Reservierung bestätigt!',
         description:
@@ -881,11 +928,13 @@ window.translations = {
           'Benötigen Sie Hilfe, Informationen oder haben Sie eine besondere Anfrage (späte Ankünfte, Optionen, ...)? Kontaktieren Sie uns — wir werden unser Bestes tun, um Sie zufriedenzustellen.'
       },
 
+      // Section actions
       actions: {
         home: 'Zurück zur Startseite',
         contact: 'Kontaktieren Sie uns'
       },
 
+      // Section bannière principale
       hero: {
         brand: 'Calypso Bay',
         title: 'Ihr Aufenthalt wartet auf Sie',
@@ -894,11 +943,12 @@ window.translations = {
     },
 
     // ========================================================================
-    // SEITE : RESTBETRAG BEZAHLT
+    // PAGE : SOLDE PAYÉ
     // ========================================================================
     'reservation-solde-confirme': {
       title: 'Restbetrag bezahlt – Calypso Bay',
 
+      // Section principale
       main: {
         title: 'Restbetrag bezahlt!',
         description:
@@ -910,11 +960,13 @@ window.translations = {
           'Benötigen Sie Hilfe oder zusätzliche Informationen? Schreiben Sie uns, wir antworten schnell.'
       },
 
+      // Section actions
       actions: {
         home: 'Zurück zur Startseite',
         contact: 'Kontaktieren Sie uns'
       },
 
+      // Section bannière principale
       hero: {
         brand: 'Calypso Bay',
         title: 'Wir freuen uns darauf, Sie zu begrüßen',
@@ -923,7 +975,7 @@ window.translations = {
     },
 
     // ========================================================================
-    // GEMEINSAME ELEMENTE
+    // ÉLÉMENTS COMMUNS
     // ========================================================================
     common: {
       dates: 'Reisedaten:',
