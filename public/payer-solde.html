@@ -1025,7 +1025,7 @@
         if (lock && lockText) {
           const t = window.translations[currentLang]['payer-solde']
 
-          // ✅ NOUVELLE LOGIQUE : Ordre chronologique des vérifications
+          // ✅ LOGIQUE CORRIGÉE : Ordre chronologique des vérifications
           // On s'arrête à la première condition vraie
 
           // 1. Vérifier si la réservation a expiré (priorité absolue)
@@ -1035,7 +1035,7 @@
             today.setHours(0, 0, 0, 0) // Remettre à minuit pour la comparaison
 
             if (endDate < today) {
-              lockText.textContent = 'Votre réservation a expiré'
+              lockText.textContent = t.locks.reservation_expired
               lock.style.display = 'flex'
               btn.disabled = true
               return // On s'arrête ici
@@ -1045,7 +1045,7 @@
           // 2. Vérifier si la réservation est annulée
           const cancelStatus = String(data.cancelStatus || '')
           if (cancelStatus === 'validated') {
-            lockText.textContent = 'Réservation annulée'
+            lockText.textContent = t.locks.reservation_canceled
             lock.style.display = 'flex'
             btn.disabled = true
             return // On s'arrête ici
@@ -1053,8 +1053,7 @@
 
           // 3. Vérifier si l'annulation est en cours
           if (cancelStatus === 'pending') {
-            lockText.textContent =
-              "Votre réservation fait l'objet d'une demande d'annulation"
+            lockText.textContent = t.locks.cancellation_pending
             lock.style.display = 'flex'
             btn.disabled = true
             return // On s'arrête ici

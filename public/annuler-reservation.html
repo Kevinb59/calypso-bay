@@ -536,7 +536,7 @@
             }
           }
 
-          // ✅ NOUVELLE LOGIQUE : Vérifications de verrouillage selon l'ordre chronologique
+          // ✅ LOGIQUE CORRIGÉE : Vérifications de verrouillage selon l'ordre chronologique
           let shouldLock = false
           let lockMessage = ''
 
@@ -547,21 +547,20 @@
             today.setHours(0, 0, 0, 0)
             if (endDate < today) {
               shouldLock = true
-              lockMessage = 'Votre réservation a expiré'
+              lockMessage = t.locks.reservation_expired
             }
           }
 
           // 2. Vérifier si la réservation est annulée
           if (!shouldLock && d.cancelStatus === 'validated') {
             shouldLock = true
-            lockMessage = 'Réservation annulée'
+            lockMessage = t.locks.reservation_canceled
           }
 
           // 3. Vérifier si l'annulation est en cours
           if (!shouldLock && d.cancelStatus === 'pending') {
             shouldLock = true
-            lockMessage =
-              "Votre réservation fait l'objet d'une demande d'annulation"
+            lockMessage = t.locks.cancellation_pending
           }
 
           // Désactiver le bouton si verrouillage ou pas d'acompte
@@ -570,15 +569,20 @@
             policyBox.classList.add('error')
             if (shouldLock) {
               policyBox.innerHTML = `<span style="color: #ef4444; font-weight: 600;">${lockMessage}</span>`
+            } else {
+              // Si pas de verrouillage mais pas d'acompte, afficher le message de politique
+              policyBox.innerHTML = `<span>${msg}</span>`
+              policyBox.style.color = '#fff'
+              policyBox.style.opacity = '0.95'
             }
           } else {
             btn.disabled = false
             policyBox.classList.remove('error')
+            // Afficher le message de politique normal
+            policyBox.innerHTML = `<span>${msg}</span>`
+            policyBox.style.color = '#fff'
+            policyBox.style.opacity = '0.95'
           }
-
-          policyBox.innerHTML = `<span>${msg}</span>`
-          policyBox.style.color = '#fff'
-          policyBox.style.opacity = '0.95'
         } catch (e) {
           const t = window.translations[currentLang]['annuler-reservation']
           policyBox.innerHTML = `<span>${t.errors.loading_error}</span>`

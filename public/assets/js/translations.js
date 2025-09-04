@@ -79,6 +79,14 @@ window.translations = {
         sent: 'Demande envoyée ✔'
       },
 
+      // Messages de verrouillage
+      locks: {
+        reservation_expired: 'Votre réservation a expiré',
+        reservation_canceled: 'Réservation annulée',
+        cancellation_pending:
+          "Votre réservation fait l'objet d'une demande d'annulation"
+      },
+
       // Messages d'erreur
       errors: {
         missing_token: 'Token manquant',
@@ -181,7 +189,10 @@ window.translations = {
       locks: {
         deposit_paid: 'Acompte déjà réglé',
         balance_paid: 'Acompte et solde déjà réglés',
-        reservation_canceled: 'Réservation annulée'
+        reservation_canceled: 'Réservation annulée',
+        reservation_expired: 'Votre réservation a expiré',
+        cancellation_pending:
+          "Votre réservation fait l'objet d'une demande d'annulation"
       },
 
       // Messages d'erreur
@@ -244,7 +255,10 @@ window.translations = {
       // Messages de verrouillage
       locks: {
         balance_paid: 'Solde déjà réglé',
-        reservation_canceled: 'Réservation annulée'
+        reservation_canceled: 'Réservation annulée',
+        reservation_expired: 'Votre réservation a expiré',
+        cancellation_pending:
+          "Votre réservation fait l'objet d'une demande d'annulation"
       },
 
       // Messages d'erreur
@@ -408,6 +422,14 @@ window.translations = {
         sent: 'Request sent ✔'
       },
 
+      // Messages de verrouillage
+      locks: {
+        reservation_expired: 'Your reservation has expired',
+        reservation_canceled: 'Reservation canceled',
+        cancellation_pending:
+          'Your reservation is subject to a cancellation request'
+      },
+
       // Messages d'erreur
       errors: {
         missing_token: 'Missing token',
@@ -509,7 +531,10 @@ window.translations = {
       locks: {
         deposit_paid: 'Deposit already paid',
         balance_paid: 'Deposit and balance already paid',
-        reservation_canceled: 'Reservation canceled'
+        reservation_canceled: 'Reservation canceled',
+        reservation_expired: 'Your reservation has expired',
+        cancellation_pending:
+          'Your reservation is subject to a cancellation request'
       },
 
       // Messages d'erreur
@@ -572,7 +597,10 @@ window.translations = {
       // Messages de verrouillage
       locks: {
         balance_paid: 'Balance already paid',
-        reservation_canceled: 'Reservation canceled'
+        reservation_canceled: 'Reservation canceled',
+        reservation_expired: 'Your reservation has expired',
+        cancellation_pending:
+          'Your reservation is subject to a cancellation request'
       },
 
       // Messages d'erreur
@@ -736,6 +764,14 @@ window.translations = {
         sent: 'Anfrage gesendet ✔'
       },
 
+      // Messages de verrouillage
+      locks: {
+        reservation_expired: 'Ihre Reservierung ist abgelaufen',
+        reservation_canceled: 'Reservierung storniert',
+        cancellation_pending:
+          'Ihre Reservierung ist Gegenstand einer Stornierungsanfrage'
+      },
+
       // Messages d'erreur
       errors: {
         missing_token: 'Token fehlt',
@@ -838,7 +874,10 @@ window.translations = {
       locks: {
         deposit_paid: 'Anzahlung bereits bezahlt',
         balance_paid: 'Anzahlung und Restbetrag bereits bezahlt',
-        reservation_canceled: 'Reservierung storniert'
+        reservation_canceled: 'Reservierung storniert',
+        reservation_expired: 'Ihre Reservierung ist abgelaufen',
+        cancellation_pending:
+          'Ihre Reservierung ist Gegenstand einer Stornierungsanfrage'
       },
 
       // Messages d'erreur
@@ -901,7 +940,10 @@ window.translations = {
       // Messages de verrouillage
       locks: {
         balance_paid: 'Restbetrag bereits bezahlt',
-        reservation_canceled: 'Reservierung storniert'
+        reservation_canceled: 'Reservierung storniert',
+        reservation_expired: 'Ihre Reservierung ist abgelaufen',
+        cancellation_pending:
+          'Ihre Reservierung ist Gegenstand einer Stornierungsanfrage'
       },
 
       // Messages d'erreur
