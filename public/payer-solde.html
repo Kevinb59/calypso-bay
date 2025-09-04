@@ -596,27 +596,15 @@
        * @param {string} lang - Code de langue (fr, en, de)
        */
       function translatePage(lang) {
-        console.log('🔄 Début de translatePage pour la langue:', lang)
         currentLang = lang
 
         if (!window.translations || !window.translations[lang]) {
           console.error('❌ Traductions non disponibles pour la langue:', lang)
-          console.log(
-            '📋 window.translations disponible:',
-            !!window.translations
-          )
-          if (window.translations) {
-            console.log(
-              '🌐 Langues disponibles:',
-              Object.keys(window.translations)
-            )
-          }
           return
         }
 
         const t = window.translations[lang]['payer-solde']
         const common = window.translations[lang].common
-        console.log('✅ Traductions chargées pour payer-solde:', !!t)
 
         // Mettre à jour le titre de la page
         document.title = t.title
@@ -626,13 +614,6 @@
         const bannerSubtitle = document.getElementById('banner-subtitle')
         const bannerDescription = document.getElementById('banner-description')
         const bannerButton = document.getElementById('banner-button')
-
-        console.log('🔍 Éléments bannière trouvés:', {
-          bannerTitle: !!bannerTitle,
-          bannerSubtitle: !!bannerSubtitle,
-          bannerDescription: !!bannerDescription,
-          bannerButton: !!bannerButton
-        })
 
         if (bannerTitle) bannerTitle.textContent = t.banner.title
         if (bannerSubtitle) bannerSubtitle.textContent = t.banner.subtitle
@@ -671,18 +652,6 @@
         const submitButtonText = document.getElementById('submit-button-text')
         const paymentDisclaimer = document.getElementById('payment-disclaimer')
 
-        console.log('🔍 Éléments paiement trouvés:', {
-          paymentTitle: !!paymentTitle,
-          paymentDescription: !!paymentDescription,
-          paymentSummaryTitle: !!paymentSummaryTitle,
-          paymentTotalLabel: !!paymentTotalLabel,
-          paymentDepositLabel: !!paymentDepositLabel,
-          paymentRemainingLabel: !!paymentRemainingLabel,
-          cardLabel: !!cardLabel,
-          submitButtonText: !!submitButtonText,
-          paymentDisclaimer: !!paymentDisclaimer
-        })
-
         if (paymentTitle) paymentTitle.textContent = t.payment.title
         if (paymentDescription)
           paymentDescription.textContent = t.payment.description
@@ -718,10 +687,6 @@
 
       // Fonction pour traduire les éléments dynamiques du récapitulatif
       function translateRecapContent(data, lang) {
-        console.log('🔄 Début de translateRecapContent')
-        console.log('📊 Données reçues:', data)
-        console.log('🌍 Langue demandée:', lang)
-
         if (!data) {
           console.warn('❌ Aucune donnée de réservation disponible')
           return ''
@@ -842,7 +807,6 @@
         }
 
         const result = lines.join('')
-        console.log('✅ Récapitulatif généré:', result)
         return result
       }
 
@@ -874,32 +838,16 @@
        * Gère les erreurs et met à jour l'interface utilisateur
        */
       async function load() {
-        console.log('🚀 Début de la fonction load()')
-        console.log('🔑 Token disponible:', !!token)
-        console.log('🌍 Langue actuelle:', currentLang)
-        console.log('📋 Traductions disponibles:', !!window.translations)
-
         if (!token) {
-          console.log('❌ Pas de token, on continue avec des données vides')
           // Au lieu de bloquer, on continue avec des données vides
           window.reservationData = null
           return
         }
 
         try {
-          console.log(
-            '🔍 Tentative de récupération des données de réservation...'
-          )
-          console.log('🔑 Token utilisé:', token)
-          console.log(
-            "🌐 URL de l'API:",
-            `/api/reservations?action=get&token=${encodeURIComponent(token)}`
-          )
-
           const res = await fetch(
             `/api/reservations?action=get&token=${encodeURIComponent(token)}`
           )
-          console.log("📡 Réponse de l'API reçue:", res.status, res.statusText)
 
           if (!res.ok) {
             console.error('❌ Erreur HTTP:', res.status, res.statusText)
@@ -909,7 +857,6 @@
           }
 
           const json = await res.json()
-          console.log('📋 Données reçues:', json)
 
           if (json.status !== 'success') {
             console.error(
@@ -922,18 +869,13 @@
             return
           }
 
-          console.log('✅ Données de réservation récupérées avec succès')
           const d = json.data
-          console.log('📊 Données brutes de la réservation:', d)
 
           // Sauvegarder les données pour les traductions dynamiques
           window.reservationData = d
-          console.log('💾 Données sauvegardées dans window.reservationData')
 
           // Utiliser la fonction de traduction pour le récapitulatif
-          console.log('🔄 Mise à jour du récapitulatif...')
           detailsBox.innerHTML = translateRecapContent(d, currentLang)
-          console.log('✅ Récapitulatif mis à jour')
 
           // S'assurer que la page est traduite dans la langue actuelle
           if (window.translations && window.translations[currentLang]) {
@@ -947,7 +889,6 @@
           applyPaymentLocks(d)
         } catch (e) {
           console.error('💥 Erreur lors du chargement des données:', e)
-          console.error('📋 Stack trace:', e.stack)
           // Au lieu de bloquer, on continue avec des données vides
           window.reservationData = null
         }
@@ -960,11 +901,6 @@
         const total = Number(data.priceTotal || 0)
         const deposit = Number(data.depositAmount || 0)
         const balance = Math.max(0, total - deposit)
-
-        console.log('💰 Calculs financiers:')
-        console.log('  - Total:', total)
-        console.log('  - Acompte:', deposit)
-        console.log('  - Solde:', balance)
 
         const t = window.translations[currentLang]['payer-solde']
         const locale =
@@ -1019,6 +955,11 @@
       function applyPaymentLocks(data) {
         if (!data) return
 
+        console.log('🔒 DEBUG - Début des vérifications de verrouillage')
+        console.log('🔒 DEBUG - cancelStatus:', data.cancelStatus)
+        console.log('🔒 DEBUG - status:', data.status)
+        console.log('🔒 DEBUG - endDate:', data.endDate)
+
         const lock = document.getElementById('balance-lock')
         const lockText = document.getElementById('balance-lock-text')
 
@@ -1034,7 +975,12 @@
             const today = new Date()
             today.setHours(0, 0, 0, 0) // Remettre à minuit pour la comparaison
 
+            console.log(
+              '🔒 DEBUG - Vérification 1: endDate < today ?',
+              endDate < today
+            )
             if (endDate < today) {
+              console.log('🔒 DEBUG - Condition 1 vraie: Réservation expirée')
               lockText.textContent = t.locks.reservation_expired
               lock.style.display = 'flex'
               btn.disabled = true
@@ -1044,15 +990,23 @@
 
           // 2. Vérifier si la réservation est annulée
           const cancelStatus = String(data.cancelStatus || '')
+          console.log(
+            '🔒 DEBUG - Vérification 2: cancelStatus === validated ?',
+            cancelStatus === 'validated'
+          )
           if (cancelStatus === 'validated') {
+            console.log('🔒 DEBUG - Condition 2 vraie: Réservation annulée')
             lockText.textContent = t.locks.reservation_canceled
             lock.style.display = 'flex'
             btn.disabled = true
             return // On s'arrête ici
           }
 
-          // 3. Vérifier si l'annulation est en cours
+          // 3. Vérifier si l'annulation est en cours (PRIORITÉ ABSOLUE)
           if (cancelStatus === 'pending') {
+            console.log(
+              '🔒 DEBUG - Condition 3 vraie: cancelStatus === pending'
+            )
             lockText.textContent = t.locks.cancellation_pending
             lock.style.display = 'flex'
             btn.disabled = true
@@ -1061,7 +1015,12 @@
 
           // 4. Vérifier si le solde est déjà réglé
           const st = String(data.status || '')
+          console.log(
+            '🔒 DEBUG - Vérification 4: status === balancePay ?',
+            st === 'balancePay'
+          )
           if (st === 'balancePay') {
+            console.log('🔒 DEBUG - Condition 4 vraie: Solde déjà réglé')
             lockText.textContent = t.locks.balance_paid
             lock.style.display = 'flex'
             btn.disabled = true
@@ -1069,6 +1028,7 @@
           }
 
           // Si aucune condition n'est vraie, pas de verrouillage
+          console.log("🔒 DEBUG - Aucune condition de verrouillage n'est vraie")
           lock.style.display = 'none'
           btn.disabled = false
         }
@@ -1076,21 +1036,14 @@
 
       // Fallback pour s'assurer que les traductions sont chargées
       setTimeout(() => {
-        console.log('⏰ Fallback: vérification des traductions après 1 seconde')
         if (window.translations) {
-          console.log('✅ Traductions disponibles dans le fallback')
           const detectedLang = window.detectLanguage
             ? window.detectLanguage()
             : 'fr'
-          console.log('🌍 Langue détectée dans le fallback:', detectedLang)
           if (currentLang !== detectedLang) {
             currentLang = detectedLang
             translatePage(detectedLang)
           }
-        } else {
-          console.error(
-            '❌ Traductions toujours non disponibles après 1 seconde'
-          )
         }
       }, 1000)
 

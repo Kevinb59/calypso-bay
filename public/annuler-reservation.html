@@ -540,37 +540,69 @@
           let shouldLock = false
           let lockMessage = ''
 
+          console.log('🔒 DEBUG - Début des vérifications de verrouillage')
+          console.log('🔒 DEBUG - cancelStatus:', d.cancelStatus)
+          console.log('🔒 DEBUG - endDate:', d.endDate)
+
           // 1. Vérifier si la réservation a expiré (priorité absolue)
           if (d.endDate) {
             const endDate = new Date(d.endDate)
             const today = new Date()
             today.setHours(0, 0, 0, 0)
+            console.log(
+              '🔒 DEBUG - Vérification 1: endDate < today ?',
+              endDate < today
+            )
             if (endDate < today) {
+              console.log('🔒 DEBUG - Condition 1 vraie: Réservation expirée')
               shouldLock = true
               lockMessage = t.locks.reservation_expired
             }
           }
 
           // 2. Vérifier si la réservation est annulée
+          console.log(
+            '🔒 DEBUG - Vérification 2: cancelStatus === validated ?',
+            d.cancelStatus === 'validated'
+          )
           if (!shouldLock && d.cancelStatus === 'validated') {
+            console.log('🔒 DEBUG - Condition 2 vraie: Réservation annulée')
             shouldLock = true
             lockMessage = t.locks.reservation_canceled
           }
 
-          // 3. Vérifier si l'annulation est en cours
+          // 3. Vérifier si l'annulation est en cours (PRIORITÉ ABSOLUE)
+          console.log(
+            '🔒 DEBUG - Vérification 3: cancelStatus === pending ?',
+            d.cancelStatus === 'pending'
+          )
           if (!shouldLock && d.cancelStatus === 'pending') {
+            console.log('🔒 DEBUG - Condition 3 vraie: Annulation en cours')
             shouldLock = true
             lockMessage = t.locks.cancellation_pending
           }
 
           // Désactiver le bouton si verrouillage ou pas d'acompte
+          console.log(
+            '🔒 DEBUG - Résultat final: shouldLock =',
+            shouldLock,
+            'hasDeposit =',
+            hasDeposit
+          )
           if (shouldLock || !hasDeposit) {
             btn.disabled = true
             policyBox.classList.add('error')
             if (shouldLock) {
+              console.log(
+                '🔒 DEBUG - Affichage du message de verrouillage:',
+                lockMessage
+              )
               policyBox.innerHTML = `<span style="color: #ef4444; font-weight: 600;">${lockMessage}</span>`
             } else {
               // Si pas de verrouillage mais pas d'acompte, afficher le message de politique
+              console.log(
+                "🔒 DEBUG - Affichage du message de politique (pas d'acompte)"
+              )
               policyBox.innerHTML = `<span>${msg}</span>`
               policyBox.style.color = '#fff'
               policyBox.style.opacity = '0.95'
@@ -579,6 +611,7 @@
             btn.disabled = false
             policyBox.classList.remove('error')
             // Afficher le message de politique normal
+            console.log('🔒 DEBUG - Affichage du message de politique normal')
             policyBox.innerHTML = `<span>${msg}</span>`
             policyBox.style.color = '#fff'
             policyBox.style.opacity = '0.95'
