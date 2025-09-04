@@ -524,12 +524,9 @@
       let currentLang = 'fr'
 
       // Initialiser les traductions au chargement
-      console.log('🔧 Écouteur translations:ready ajouté')
       window.addEventListener('translations:ready', function (event) {
-        console.log('🎉 Événement translations:ready reçu:', event.detail)
         const detectedLang = event.detail.language
         currentLang = detectedLang
-        console.log('🌍 Langue détectée:', detectedLang)
         translatePage(detectedLang)
       })
 
@@ -955,11 +952,6 @@
       function applyPaymentLocks(data) {
         if (!data) return
 
-        console.log('🔒 DEBUG - Début des vérifications de verrouillage')
-        console.log('🔒 DEBUG - cancelStatus:', data.cancelStatus)
-        console.log('🔒 DEBUG - status:', data.status)
-        console.log('🔒 DEBUG - endDate:', data.endDate)
-
         const lock = document.getElementById('balance-lock')
         const lockText = document.getElementById('balance-lock-text')
 
@@ -975,12 +967,7 @@
             const today = new Date()
             today.setHours(0, 0, 0, 0) // Remettre à minuit pour la comparaison
 
-            console.log(
-              '🔒 DEBUG - Vérification 1: endDate < today ?',
-              endDate < today
-            )
             if (endDate < today) {
-              console.log('🔒 DEBUG - Condition 1 vraie: Réservation expirée')
               lockText.textContent = t.locks.reservation_expired
               lock.style.display = 'flex'
               btn.disabled = true
@@ -990,12 +977,7 @@
 
           // 2. Vérifier si la réservation est annulée
           const cancelStatus = String(data.cancelStatus || '')
-          console.log(
-            '🔒 DEBUG - Vérification 2: cancelStatus === validated ?',
-            cancelStatus === 'validated'
-          )
           if (cancelStatus === 'validated') {
-            console.log('🔒 DEBUG - Condition 2 vraie: Réservation annulée')
             lockText.textContent = t.locks.reservation_canceled
             lock.style.display = 'flex'
             btn.disabled = true
@@ -1004,9 +986,6 @@
 
           // 3. Vérifier si l'annulation est en cours (PRIORITÉ ABSOLUE)
           if (cancelStatus === 'pending') {
-            console.log(
-              '🔒 DEBUG - Condition 3 vraie: cancelStatus === pending'
-            )
             lockText.textContent = t.locks.cancellation_pending
             lock.style.display = 'flex'
             btn.disabled = true
@@ -1015,12 +994,7 @@
 
           // 4. Vérifier si le solde est déjà réglé
           const st = String(data.status || '')
-          console.log(
-            '🔒 DEBUG - Vérification 4: status === balancePay ?',
-            st === 'balancePay'
-          )
           if (st === 'balancePay') {
-            console.log('🔒 DEBUG - Condition 4 vraie: Solde déjà réglé')
             lockText.textContent = t.locks.balance_paid
             lock.style.display = 'flex'
             btn.disabled = true
@@ -1028,7 +1002,7 @@
           }
 
           // Si aucune condition n'est vraie, pas de verrouillage
-          console.log("🔒 DEBUG - Aucune condition de verrouillage n'est vraie")
+
           lock.style.display = 'none'
           btn.disabled = false
         }

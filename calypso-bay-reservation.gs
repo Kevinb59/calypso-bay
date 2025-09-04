@@ -578,6 +578,7 @@ function getReservationData_(token) {
     const endDateIndex = headers.indexOf('endDate')
     const timestampIndex = headers.indexOf('timestamp')
     const depositAtIndex = headers.indexOf('depositAt')
+    const cancelStatusIndex = headers.indexOf('cancelStatus')
     const addressIndex = headers.indexOf('address')
     const cityIndex = headers.indexOf('city')
     const postalIndex = headers.indexOf('postal')
@@ -604,6 +605,7 @@ function getReservationData_(token) {
       startDate: startDateIndex,
       endDate: endDateIndex,
       timestamp: timestampIndex,
+      cancelStatus: cancelStatusIndex,
       address: addressIndex,
       city: cityIndex,
       postal: postalIndex,
@@ -659,6 +661,10 @@ function getReservationData_(token) {
           ? Number(data[rowIndex][depositAmountIndex]) || 0
           : 0,
       depositAt: depositAtIndex !== -1 ? data[rowIndex][depositAtIndex] : '',
+      cancelStatus:
+        cancelStatusIndex !== -1
+          ? String(data[rowIndex][cancelStatusIndex] || '')
+          : '',
       address:
         addressIndex !== -1 ? String(data[rowIndex][addressIndex] || '') : '',
       city: cityIndex !== -1 ? String(data[rowIndex][cityIndex] || '') : '',
