@@ -11,17 +11,19 @@
 		{
 			"@context": "https://schema.org",
 			"@type": "VacationRental",
+			"@id": "https://www.calypso-bay.com/#rental",
 			"name": "Calypso Bay",
 			"description": "Luxuriöse Holzvilla mit 180 m², privatem Pool und spektakulärem Blick auf das Meer, die Pigeon‑Inseln und das Cousteau‑Reservat",
 			"image": [
-				"images/pic01.webp",
-				"images/pic02.webp",
-				"images/pic04.webp"
+				"https://www.calypso-bay.com/images/pic01.webp",
+				"https://www.calypso-bay.com/images/pic02.webp",
+				"https://www.calypso-bay.com/images/pic04.webp"
 			],
 			"address": {
 				"@type": "PostalAddress",
 				"streetAddress": "717 rue de Poirier",
 				"addressLocality": "Bouillante",
+				"addressRegion": "Guadeloupe",
 				"postalCode": "97125",
 				"addressCountry": "GP"
 			},
@@ -31,22 +33,18 @@
 				"longitude": -61.7683
 			},
 			"amenityFeature": [
-				{"@type": "LocationFeatureSpecification", "name": "Privater Pool", "value": true},
-				{"@type": "LocationFeatureSpecification", "name": "Meerblick", "value": true},
-				{"@type": "LocationFeatureSpecification", "name": "WLAN", "value": true},
-				{"@type": "LocationFeatureSpecification", "name": "Parkplatz", "value": true},
-				{"@type": "LocationFeatureSpecification", "name": "Klimaanlage", "value": true},
-				{"@type": "LocationFeatureSpecification", "name": "Ausgestattete Küche", "value": true},
-				{"@type": "LocationFeatureSpecification", "name": "En‑suite‑Badezimmer", "value": true}
+				{"@type": "LocationFeatureSpecification","name":"Privater Pool","value":true},
+				{"@type": "LocationFeatureSpecification","name":"Meerblick","value":true},
+				{"@type": "LocationFeatureSpecification","name":"WLAN","value":true},
+				{"@type": "LocationFeatureSpecification","name":"Parkplatz","value":true},
+				{"@type": "LocationFeatureSpecification","name":"Klimaanlage","value":true},
+				{"@type": "LocationFeatureSpecification","name":"Ausgestattete Küche","value":true},
+				{"@type": "LocationFeatureSpecification","name":"En-suite-Badezimmer","value":true}
 			],
 			"numberOfBedrooms": 3,
-			"floorSize": {
-				"@type": "QuantitativeValue",
-				"value": 180,
-				"unitCode": "MTK"
-			},
+			"floorSize": {"@type":"QuantitativeValue","value":180,"unitCode":"MTK"},
 			"priceRange": "€€€",
-			"telephone": "0687068315",
+			"telephone": "+590687068315",
 			"checkinTime": "15:00",
 			"checkoutTime": "10:00",
 			"maximumAttendeeCapacity": 6,
@@ -55,36 +53,29 @@
 			"review": [
 				{
 					"@type": "Review",
-					"reviewRating": {
-						"@type": "Rating",
-						"ratingValue": "4.92",
-						"bestRating": "5",
-						"worstRating": "1"
-					},
-					"author": {
-						"@type": "Organization",
-						"name": "Airbnb"
-					},
+					"reviewRating": {"@type":"Rating","ratingValue":"4.92","bestRating":"5","worstRating":"1"},
+					"author": {"@type":"Organization","name":"Airbnb"},
 					"reviewBody": "Außergewöhnliche Villa mit atemberaubendem Meerblick",
 					"url": "https://www.airbnb.fr/rooms/718692761956767082"
 				},
 				{
 					"@type": "Review",
-					"reviewRating": {
-						"@type": "Rating",
-						"ratingValue": "9.5",
-						"bestRating": "10",
-						"worstRating": "1"
-					},
-					"author": {
-						"@type": "Organization",
-						"name": "Booking.com"
-					},
+					"reviewRating": {"@type":"Rating","ratingValue":"9.5","bestRating":"10","worstRating":"1"},
+					"author": {"@type":"Organization","name":"Booking.com"},
 					"reviewBody": "Luxusvilla mit hochwertiger Ausstattung",
 					"url": "https://www.booking.com/hotel/gp/calypso-bay.fr.html"
 				}
 			],
-			"url": "https://www.calypso-bay.com"
+			"url": "https://www.calypso-bay.com",
+			"creator": {
+				"@type": "Organization",
+				"@id": "https://www.moriarty-design.fr/#org",
+				"name": "Moriarty Design",
+				"url": "https://www.moriarty-design.fr",
+				"logo": "https://www.moriarty-design.fr/images/logo.png",
+				"description": "Professionelle Webentwicklung und Design",
+				"sameAs": ["https://www.moriarty-design.fr"]
+			}
 		}
 		</script>
 
@@ -539,7 +530,7 @@
 				<!-- C O P Y R I G H T //////////////////////////////////////////////////////////////////////////////// -->
 				<div class="copyright">
 					<span>&copy; Calypso Bay | By</span>
-					<a href="https://moriarty-design.fr" target="_blank" rel="noopener" class="moriarty-link">Moriarty</a>.
+					<a href="#" onclick="openMoriartyVCard(); return false;" class="moriarty-link" rel="sponsored">Moriarty</a>.
 				</div>
 			</div>
 		</div>
@@ -621,5 +612,394 @@
 		<script src="assets/js/popup-reglement.js"></script>
 		<script src="assets/js/form-contact.js"></script>
 		<script src="assets/js/config.js"></script>
+
+		<!-- Moriarty vCard //////////////////////////////////////////////////////////////////////////////// -->
+		<div
+		  id="mry-modal"
+		  role="dialog"
+		  aria-modal="true"
+		  aria-labelledby="mry-title"
+		  hidden
+		>
+		  <div class="mry-backdrop" data-close></div>
+		  <div class="mry-dialog" role="document">
+		    <button
+		      class="mry-x"
+		      type="button"
+		      aria-label="Schließen"
+		      title="Schließen"
+		      data-close
+		    >
+		      ×
+		    </button>
+
+		    <div class="mry-scope">
+		      <link rel="preconnect" href="https://fonts.googleapis.com" />
+		      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		      <link
+		        href="https://fonts.googleapis.com/css2?family=Engagement&family=Open+Sans:wght@400;600;700&display=swap"
+		        rel="stylesheet"
+		      />
+		      <link
+		        rel="stylesheet"
+		        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+		      />
+
+		      <div class="e-card playing">
+		        <div class="wave"></div>
+		        <div class="wave"></div>
+		        <div class="wave"></div>
+		        <div class="overlay"></div>
+
+		        <div class="infotop">
+		          <div class="name">Moriarty</div>
+		          <div class="job">IHRE WEBSITE</div>
+		          <div class="typewriter-container">
+		            <span id="typewriter-text" aria-live="polite"></span>
+		          </div>
+		          <div class="logo">
+		            <img
+		              src="https://www.moriarty-design.fr/images/logo.png"
+		              alt="Moriarty Design – Professionelle Webentwicklung"
+		            />
+		          </div>
+		        </div>
+
+		        <div class="buttons">
+		          <a
+		            href="https://www.moriarty-design.fr/vcard.vcf"
+		            download="moriarty.vcf"
+		            class="contact-button"
+		          >
+		            <i class="fa-solid fa-address-card"></i> Zu Kontakten hinzufügen
+		          </a>
+		          <div class="contact-actions">
+		            <a href="tel:+33770344332" title="Anrufen"
+		              ><i class="fa-solid fa-phone"></i
+		            ></a>
+		            <a href="sms:+33770344332" title="SMS"
+		              ><i class="fa-solid fa-comment"></i
+		            ></a>
+		            <a href="mailto:contact@moriarty-design.fr" title="E-Mail"
+		              ><i class="fa-solid fa-envelope"></i
+		            ></a>
+		            <a
+		              href="https://www.moriarty-design.fr"
+		              title="Website"
+		              target="_blank"
+		              rel="sponsored"
+		              ><i class="fa-solid fa-globe"></i
+		            ></a>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<style>
+		  #mry-modal[hidden] {
+		    display: none;
+		  }
+		  #mry-modal {
+		    position: fixed;
+		    inset: 0;
+		    z-index: 999999;
+		  }
+		  .mry-backdrop {
+		    position: absolute;
+		    inset: 0;
+		    background: rgba(2, 6, 23, 0.6);
+		    backdrop-filter: saturate(120%) blur(4px);
+		  }
+		  .mry-dialog {
+		    position: relative;
+		    margin: 5vh auto;
+		    max-width: 520px;
+		    width: 92%;
+		    border-radius: 18px;
+		    overflow: hidden;
+		    background: transparent;
+		  }
+		  .mry-x {
+		    position: absolute;
+		    top: 10px;
+		    right: 10px;
+		    width: 42px !important;
+		    height: 42px !important;
+		    min-width: 42px !important;
+		    min-height: 42px !important;
+		    max-width: 42px !important;
+		    max-height: 42px !important;
+		    border: 0 !important;
+		    border-radius: 50% !important;
+		    background: #0b1220 !important;
+		    color: #cbd5e1 !important;
+		    font-size: 28px !important;
+		    cursor: pointer;
+		    z-index: 5;
+		    display: flex !important;
+		    align-items: center !important;
+		    justify-content: center !important;
+		    line-height: 1 !important;
+		    padding: 0 !important;
+		    margin: 0 !important;
+		    box-sizing: border-box !important;
+		  }
+
+		  .mry-scope {
+		    isolation: isolate;
+		    font-family: 'Open Sans', sans-serif;
+		  }
+		  .e-card {
+		    margin: auto;
+		    background: url('https://www.moriarty-design.fr/images/header-vcard.jpg');
+		    background-size: 100% 100%;
+		    background-position: center;
+		    background-repeat: no-repeat;
+		    box-shadow: 0 8px 28px -9px rgba(0, 0, 0, 0.45);
+		    position: relative;
+		    width: 100%;
+		    height: 90vh;
+		    max-height: 700px;
+		    border-radius: 16px;
+		    overflow: hidden;
+		  }
+		  .wave {
+		    position: absolute;
+		    width: 740px;
+		    height: 900px;
+		    opacity: 0.6;
+		    left: 0;
+		    top: 0;
+		    margin-left: -50%;
+		    margin-top: -60%;
+		    background: linear-gradient(744deg, #0f2b477a, #2a527c7a 60%, #8cc6e880);
+		    border-radius: 40%;
+		    animation: mry-wave 15s linear infinite;
+		  }
+		  .wave:nth-child(2),
+		  .wave:nth-child(3) {
+		    top: 210px;
+		  }
+		  .wave:nth-child(2) {
+		    animation-duration: 12s;
+		  }
+		  .wave:nth-child(3) {
+		    animation-duration: 18s;
+		  }
+		  @keyframes mry-wave {
+		    to {
+		      transform: rotate(360deg);
+		    }
+		  }
+		  .overlay {
+		    position: absolute;
+		    inset: 0;
+		    pointer-events: none;
+		    background-image: repeating-radial-gradient(
+		        circle at 0 0,
+		        transparent 0,
+		        #ffffff05 8px
+		      ),
+		      repeating-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
+		    z-index: 1;
+		  }
+		  .infotop {
+		    text-align: center;
+		    font-size: 1.2em;
+		    position: absolute;
+		    top: 0.5em;
+		    left: 0;
+		    right: 0;
+		    color: #fff;
+		    padding: 0 1em;
+		    z-index: 2;
+		  }
+		  .name {
+		    font-size: 6em;
+		    font-family: 'Engagement', cursive;
+		    margin-top: 0;
+		    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+		  }
+		  .job {
+		    font-size: 1em;
+		    text-transform: uppercase;
+		    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+		    font-weight: bold;
+		  }
+		  .typewriter-container {
+		    font-weight: bold;
+		    font-size: 1em;
+		    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+		    display: inline-block;
+		    white-space: nowrap;
+		    overflow: hidden;
+		    text-transform: uppercase;
+		  }
+		  .logo {
+		    margin: 30px auto 10px;
+		  }
+		  .logo img {
+		    width: 80%;
+		    height: 100%;
+		    object-fit: contain;
+		  }
+		  .buttons {
+		    position: absolute;
+		    bottom: 2em;
+		    width: 100%;
+		    display: flex;
+		    flex-direction: column;
+		    align-items: center;
+		    gap: 1em;
+		    z-index: 2;
+		  }
+		  .buttons .contact-actions {
+		    display: flex;
+		    gap: 1em;
+		    justify-content: center;
+		  }
+		  .buttons a,
+		  .buttons button {
+		    background: #fff;
+		    border: none;
+		    border-radius: 50px;
+		    padding: 0.6em 1em;
+		    font-size: 15px;
+		    cursor: pointer;
+		    text-decoration: none;
+		    color: #133c68;
+		    font-weight: 600;
+		    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+		    transition: background 0.3s;
+		    font-family: 'Open Sans', sans-serif;
+		  }
+		  .buttons a:hover,
+		  .buttons button:hover {
+		    background: #e5e5ff;
+		  }
+		  .contact-button {
+		    border-radius: 14px;
+		    padding: 0.75em 1.2em;
+		    font-weight: 700;
+		    display: inline-flex;
+		    align-items: center;
+		    gap: 0.5em;
+		  }
+		  .contact-actions a {
+		    width: 48px;
+		    height: 48px;
+		    border-radius: 999px;
+		    display: inline-flex;
+		    align-items: center;
+		    justify-content: center;
+		    background: #fff;
+		    color: #133c68;
+		    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+		  }
+		  .contact-actions a i {
+		    font-size: 1.15em;
+		    line-height: 1;
+		  }
+		  #typewriter-text {
+		    display: inline-block;
+		    border-right: 2px solid #cbccce;
+		    white-space: nowrap;
+		    overflow: hidden;
+		    animation: mry-blink 0.8s step-end infinite;
+		  }
+		  @keyframes mry-blink {
+		    50% {
+		      border-color: transparent;
+		    }
+		  }
+		  @media (max-width: 560px) {
+		    .mry-dialog {
+		      margin: 3vh 10px;
+		    }
+		    .name {
+		      font-size: 3.6em;
+		    }
+		    .e-card {
+		      height: 85vh;
+		    }
+		  }
+		</style>
+
+		<script>
+		  // Fonction globale pour ouvrir la vCard
+		  window.openMoriartyVCard = function() {
+		    const modal = document.getElementById('mry-modal')
+		    if (modal) {
+		      modal.hidden = false
+		      document.body.style.overflow = 'hidden'
+		    }
+		  }
+
+		  ;(function () {
+		    const modal = document.getElementById('mry-modal')
+		    if (!modal) return
+
+		    function close() {
+		      modal.hidden = true
+		      document.body.style.overflow = ''
+		    }
+
+		    modal.addEventListener('click', (e) => {
+		      if (e.target.hasAttribute('data-close')) close()
+		    })
+		    modal
+		      .querySelectorAll('[data-close], .mry-x')
+		      .forEach((b) => b.addEventListener('click', close))
+		    document.addEventListener('keydown', (e) => {
+		      if (!modal.hidden && e.key === 'Escape') close()
+		    })
+		  })()
+		  ;(function () {
+		    const words = [
+		      'pro zum günstigen Preis',
+		      'maßgeschneidert',
+		      'individuell',
+		      'persönlich',
+		      'responsiv',
+		      'schlüsselfertig',
+		      'konfigurierbar',
+		      'optimiert',
+		      'professionell',
+		      'zugänglich',
+		      'sicher',
+		      'anpassungsfähig',
+		      'leistungsstark',
+		      'erweiterbar',
+		      'intuitiv',
+		      'ergonomisch'
+		    ]
+		    const el = document.getElementById('typewriter-text')
+		    if (!el) return
+		    let wi = 0,
+		      li = 0,
+		      typing = true
+		    ;(function loop() {
+		      const w = words[wi]
+		      if (typing) {
+		        el.textContent = w.substring(0, li++) || '\u00A0'
+		        if (li > w.length) {
+		          typing = false
+		          setTimeout(loop, 1000)
+		          return
+		        }
+		      } else {
+		        el.textContent = w.substring(0, li--) || '\u00A0'
+		        if (li < 0) {
+		          typing = true
+		          wi = (wi + 1) % words.length
+		        }
+		      }
+		      setTimeout(loop, typing ? 80 : 40)
+		    })()
+		  })()
+		</script>
+		<!-- End Moriarty vCard //////////////////////////////////////////////////////////////////////////////// -->
 	</body>
 </html>
