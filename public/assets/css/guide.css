@@ -985,3 +985,135 @@ body {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
+
+/* ============================================================================
+   SÉLECTEUR DE LANGUE
+   ============================================================================ */
+
+.guide-language-selector {
+  position: relative;
+  display: inline-block;
+  margin-left: 1rem;
+}
+
+.guide-lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--color-bg-white);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--border-radius);
+  color: var(--color-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.guide-lang-btn:hover {
+  background: var(--color-primary);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.guide-lang-btn i {
+  font-size: 0.8rem;
+}
+
+.guide-lang-current {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.guide-lang-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  background: var(--color-bg-white);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+  min-width: 160px;
+  overflow: hidden;
+}
+
+.guide-lang-menu.hidden {
+  display: none;
+}
+
+.guide-lang-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  color: var(--color-text);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.guide-lang-option:hover {
+  background: var(--color-bg-light);
+  color: var(--color-primary);
+}
+
+.guide-lang-option.active {
+  background: var(--color-primary);
+  color: white;
+}
+
+.guide-lang-flag {
+  font-size: 1.2rem;
+  width: 20px;
+  text-align: center;
+}
+
+.guide-lang-name {
+  font-weight: 500;
+}
+
+/* Animation d'ouverture du menu */
+.guide-lang-menu:not(.hidden) {
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive pour le sélecteur de langue */
+@media (max-width: 768px) {
+  .guide-language-selector {
+    margin-left: 0.5rem;
+  }
+
+  .guide-lang-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .guide-lang-menu {
+    min-width: 140px;
+  }
+
+  .guide-lang-option {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.8rem;
+  }
+}

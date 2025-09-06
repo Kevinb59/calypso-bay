@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Debug Guide</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f5f5f5;
+      }
+      .debug-section {
+        background: white;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .status {
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+      }
+      .status.success {
+        background: #d1fae5;
+        color: #065f46;
+        border: 1px solid #a7f3d0;
+      }
+      .status.error {
+        background: #fee2e2;
+        color: #991b1b;
+        border: 1px solid #fca5a5;
+      }
+      .status.info {
+        background: #dbeafe;
+        color: #1e40af;
+        border: 1px solid #93c5fd;
+      }
+      pre {
+        background: #f3f4f6;
+        padding: 10px;
+        border-radius: 5px;
+        overflow-x: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🔧 Debug Guide Calypso Bay</h1>
+
+    <div class="debug-section">
+      <h2>📋 Informations de débogage</h2>
+      <div id="debug-info"></div>
+    </div>
+
+    <div class="debug-section">
+      <h2>🧪 Test de chargement</h2>
+      <button
+        onclick="testGuideLoading()"
+        style="
+          padding: 10px 20px;
+          background: #059669;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        "
+      >
+        Tester le chargement du guide
+      </button>
+      <div id="test-results"></div>
+    </div>
+
+    <div class="debug-section">
+      <h2>🌍 Test de détection de langue</h2>
+      <button
+        onclick="testLanguageDetection()"
+        style="
+          padding: 10px 20px;
+          background: #059669;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        "
+      >
+        Tester la détection de langue
+      </button>
+      <div id="language-results"></div>
+    </div>
+
+    <script>
+      // Afficher les informations de débogage
+      function showDebugInfo() {
+        const debugInfo = document.getElementById('debug-info')
+        const info = {
+          'User Agent': navigator.userAgent,
+          Language: navigator.language,
+          Languages: navigator.languages,
+          URL: window.location.href,
+          'localStorage guide-language': localStorage.getItem('guide-language'),
+          'HTML lang': document.documentElement.lang,
+          'Scripts chargés': Array.from(document.scripts)
+            .map((s) => s.src || 'inline')
+            .join(', ')
+        }
+
+        let html = '<h3>Informations système :</h3><pre>'
+        for (const [key, value] of Object.entries(info)) {
+          html += `${key}: ${value}\n`
+        }
+        html += '</pre>'
+        debugInfo.innerHTML = html
+      }
+
+      // Tester le chargement du guide
+      async function testGuideLoading() {
+        const results = document.getElementById('test-results')
+        results.innerHTML = '<div class="status info">🔄 Test en cours...</div>'
+
+        try {
+          // Tester la détection de langue
+          const lang = detectLanguage()
+          results.innerHTML += `<div class="status info">🌍 Langue détectée: ${lang}</div>`
+
+          // Tester le chargement du script
+          await loadLanguageScript(lang)
+          results.innerHTML += `<div class="status success">✅ Script ${lang} chargé avec succès</div>`
+
+          // Tester l'initialisation
+          if (window.initializeGuide) {
+            results.innerHTML += `<div class="status success">✅ Fonction initializeGuide disponible</div>`
+          } else {
+            results.innerHTML += `<div class="status error">❌ Fonction initializeGuide non disponible</div>`
+          }
+        } catch (error) {
+          results.innerHTML += `<div class="status error">❌ Erreur: ${error.message}</div>`
+        }
+      }
+
+      // Tester la détection de langue
+      function testLanguageDetection() {
+        const results = document.getElementById('language-results')
+
+        const tests = [
+          {
+            name: 'URL params',
+            value: new URLSearchParams(window.location.search).get('lang')
+          },
+          {
+            name: 'localStorage',
+            value: localStorage.getItem('guide-language')
+          },
+          { name: 'HTML lang', value: document.documentElement.lang },
+          { name: 'Navigator language', value: navigator.language },
+          { name: 'Navigator userLanguage', value: navigator.userLanguage },
+          { name: 'Résultat final', value: detectLanguage() }
+        ]
+
+        let html = '<h3>Tests de détection :</h3>'
+        tests.forEach((test) => {
+          const status = test.value ? 'success' : 'info'
+          html += `<div class="status ${status}">${test.name}: ${
+            test.value || 'non défini'
+          }</div>`
+        })
+
+        results.innerHTML = html
+      }
+
+      // Fonctions du loader (copiées pour le test)
+      function detectLanguage() {
+        const urlParams = new URLSearchParams(window.location.search)
+        const urlLang = urlParams.get('lang')
+        if (urlLang && ['fr', 'en', 'de'].includes(urlLang)) {
+          return urlLang
+        }
+
+        const storedLang = localStorage.getItem('guide-language')
+        if (storedLang && ['fr', 'en', 'de'].includes(storedLang)) {
+          return storedLang
+        }
+
+        const htmlLang = document.documentElement.lang
+        if (htmlLang) {
+          if (htmlLang.startsWith('en')) return 'en'
+          if (htmlLang.startsWith('de')) return 'de'
+          if (htmlLang.startsWith('fr')) return 'fr'
+        }
+
+        const browserLang = navigator.language || navigator.userLanguage
+        if (browserLang) {
+          if (browserLang.startsWith('en')) return 'en'
+          if (browserLang.startsWith('de')) return 'de'
+          if (browserLang.startsWith('fr')) return 'fr'
+        }
+
+        return 'fr'
+      }
+
+      function loadLanguageScript(lang) {
+        return new Promise((resolve, reject) => {
+          const existingScript = document.querySelector(
+            `script[data-lang="${lang}"]`
+          )
+          if (existingScript) {
+            resolve()
+            return
+          }
+
+          const script = document.createElement('script')
+          script.src =
+            lang === 'fr' ? 'assets/js/guide.js' : `assets/js/guide-${lang}.js`
+          script.setAttribute('data-lang', lang)
+          script.onload = () => resolve()
+          script.onerror = () =>
+            reject(
+              new Error(
+                `Failed to load ${
+                  lang === 'fr' ? 'guide.js' : `guide-${lang}.js`
+                }`
+              )
+            )
+          document.head.appendChild(script)
+        })
+      }
+
+      // Initialiser la page
+      showDebugInfo()
+    </script>
+  </body>
+</html>

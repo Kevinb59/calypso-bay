@@ -4,6 +4,374 @@
  */
 
 // ============================================================================
+// DONNÉES DE TRADUCTION - TEXTE STATIQUE
+// ============================================================================
+
+const guideTranslations = {
+  // Métadonnées de la page
+  meta: {
+    title: 'Guide',
+    description:
+      'Votre maison de vacances à Bouillante, Guadeloupe. Retrouvez ici toutes les informations utiles pour profiter pleinement de votre séjour.'
+  },
+
+  // Navigation
+  navigation: {
+    menu: 'Menu',
+    logement: 'Logement',
+    localisation: 'Localisation',
+    transport: 'Transport',
+    commerces: 'Commerces',
+    restaurants: 'Restaurants',
+    activites: 'Activités',
+    excursions: 'Excursions',
+    sante: 'Soins & Santé',
+    eauElectricite: 'Eau & Électricité',
+    cyclones: 'Cyclones',
+    infosPratiques: 'Infos Pratiques'
+  },
+
+  // Section Hero
+  hero: {
+    title: 'Bienvenue à',
+    brand: 'Calypso Bay',
+    description:
+      'Votre maison de vacances à Bouillante, Guadeloupe. Retrouvez ici toutes les informations utiles pour profiter pleinement de votre séjour.',
+    location: 'Bouillante • Guadeloupe'
+  },
+
+  // Sections principales
+  sections: {
+    logement: 'Logement et équipements',
+    localisation: 'Localisation et itinéraires',
+    transport: 'Transport et Accès',
+    commerces: 'Services et Commerces',
+    restaurants: 'Restaurants et Gastronomie',
+    activites: 'Activités',
+    excursions: 'Excursions',
+    sante: 'Soins, Santé & Prévention',
+    eauElectricite: 'Eau & Électricité',
+    cyclones: 'Cyclones et Alertes Météorologiques',
+    infosPratiques: 'Informations Pratiques'
+  },
+
+  // Cartes - descriptions communes
+  cards: {
+    clickToLearnMore: 'Cliquez pour en savoir plus…'
+  },
+
+  // Traductions des titres de cartes
+  cardTitles: {
+    Présentation: 'Présentation',
+    'Éclairage & ventilateur du salon': 'Éclairage & ventilateur du salon',
+    "La distribution de l'eau chaude": "La distribution de l'eau chaude",
+    Internet: 'Internet',
+    'Les WC et les eaux usées': 'Les WC et les eaux usées',
+    'Filet de sécurité et terrasse': 'Filet de sécurité et terrasse',
+    'La gestion des déchets': 'La gestion des déchets',
+    'Les volets et les fenêtres': 'Les volets et les fenêtres',
+    'La Climatisation': 'La Climatisation',
+    'Adresse de Calypso Bay': 'Adresse de Calypso Bay',
+    Itinéraires: 'Itinéraires',
+    'Accès à la villa': 'Accès à la villa',
+    'Loueurs de voiture': 'Loueurs de voiture',
+    Taxi: 'Taxi',
+    Navette: 'Navette',
+    'Carrefour Market': 'Carrefour Market',
+    'Leader Price': 'Leader Price',
+    'Cap Créole': 'Cap Créole',
+    'Four des Iles': 'Four des Iles',
+    'Ti Taurus': 'Ti Taurus',
+    'Chez Adèle': 'Chez Adèle',
+    'La Touna': 'La Touna',
+    'Chez Didier': 'Chez Didier',
+    'Sunset B': 'Sunset B',
+    'Aux Deux Coquilles': 'Aux Deux Coquilles',
+    'Franko Grill': 'Franko Grill',
+    Oganik: 'Oganik',
+    'Allo Pizza': 'Allo Pizza',
+    'Le Cœur de Pigeon': 'Le Cœur de Pigeon',
+    Kayak: 'Kayak',
+    Plongée: 'Plongée',
+    Distilleries: 'Distilleries',
+    'Maison du Cacao': 'Maison du Cacao',
+    'Musée du Rhum': 'Musée du Rhum',
+    'Habitation Côte sous le Vent': 'Habitation Côte sous le Vent',
+    'Mémorial ACTe': 'Mémorial ACTe',
+    Microbrasserie: 'Microbrasserie',
+    Aquarium: 'Aquarium',
+    'Site de tournage': 'Site de tournage',
+    'Plages et snorkeling': 'Plages et snorkeling',
+    'Cascades et randonnées': 'Cascades et randonnées',
+    'Découvertes en mer': 'Découvertes en mer',
+    'Balades et découvertes': 'Balades et découvertes',
+    'Services de soins': 'Services de soins',
+    'Protection anti-moustiques': 'Protection anti-moustiques',
+    'Faune locale': 'Faune locale',
+    'Protection solaire': 'Protection solaire',
+    'Bains chauds': 'Bains chauds',
+    'Bons réflexes': 'Bons réflexes',
+    Eau: 'Eau',
+    Électricité: 'Électricité',
+    'Saison cyclonique': 'Saison cyclonique',
+    'La maison en cas de cyclone': 'La maison en cas de cyclone',
+    "Gestion de l'eau": "Gestion de l'eau",
+    "Contacts d'urgence": "Contacts d'urgence",
+    'Taxe de séjour': 'Taxe de séjour',
+    'Préparatifs avant le départ': 'Préparatifs avant le départ',
+    'Équipements fournis': 'Équipements fournis',
+    'Équipements à emporter': 'Équipements à emporter',
+    'Conseils pratiques sur place': 'Conseils pratiques sur place'
+  },
+
+  // Traductions des tags
+  tags: {
+    Bistronomique: 'Bistronomique',
+    'Saveurs franco-créole': 'Saveurs franco-créole',
+    'Saveurs créoles': 'Saveurs créoles',
+    Grillades: 'Grillades',
+    Pizzeria: 'Pizzeria',
+    Drive: 'Drive',
+    'Sur place': 'Sur place',
+    'A emporter': 'A emporter',
+    Supermarché: 'Supermarché',
+    Poissonnerie: 'Poissonnerie',
+    Boulangerie: 'Boulangerie',
+    Boucherie: 'Boucherie',
+    'Fruits et Légumes': 'Fruits et Légumes',
+    'Côtière nord': 'Côtière nord',
+    'La traversée': 'La traversée',
+    'Environ 80€': 'Environ 80€',
+    Économique: 'Économique',
+    'CARAÏBE KAYAK': 'CARAÏBE KAYAK',
+    'GWADA PAGAIE': 'GWADA PAGAIE',
+    'Les Heures Saines': 'Les Heures Saines',
+    Bologne: 'Bologne',
+    Longueteau: 'Longueteau',
+    'Pointe-Noire': 'Pointe-Noire',
+    Dégustation: 'Dégustation',
+    'Sainte-Rose': 'Sainte-Rose',
+    Culture: 'Culture',
+    Patrimoine: 'Patrimoine',
+    'Pointe-à-Pitre': 'Pointe-à-Pitre',
+    Histoire: 'Histoire',
+    'Bière locale': 'Bière locale',
+    Gosier: 'Gosier',
+    'Faune marine': 'Faune marine',
+    Deshaies: 'Deshaies',
+    'Meurtres au paradis': 'Meurtres au paradis',
+    Plages: 'Plages',
+    Snorkeling: 'Snorkeling',
+    Cascades: 'Cascades',
+    Randonnées: 'Randonnées',
+    Plongée: 'Plongée',
+    Excursions: 'Excursions',
+    Culture: 'Culture',
+    Patrimoine: 'Patrimoine',
+    '717 rue de Poirier, BOUILLANTE': '717 rue de Poirier, BOUILLANTE'
+  },
+
+  // Autres textes à traduire
+  otherTexts: {
+    'Adresse : 717 rue de Poirier, Bouillante':
+      'Adresse : 717 rue de Poirier, Bouillante',
+    'Check-in : 15h00': 'Arrivée : 15h00',
+    'Check-out : 10h00': 'Départ : 10h00'
+  },
+
+  // Footer
+  footer: {
+    brand: 'Calypso Bay',
+    contactTitle: 'Pour toute question, contactez-nous :',
+    email: 'contact@calypso-bay.com',
+    phone: '+590 • • • • • • •',
+    infosTitle: 'Infos pratiques',
+    address: 'Adresse : 717 rue de Poirier, Bouillante',
+    checkin: 'Check-in : 15h00',
+    checkout: 'Check-out : 10h00',
+    copyright: '© 2025 Calypso Bay. Guide locataire.'
+  },
+
+  // Boutons et actions
+  buttons: {
+    close: '✕'
+  }
+}
+
+// ============================================================================
+// INITIALISATION DE L'INTERFACE
+// ============================================================================
+
+function initializeInterface() {
+  // Mettre à jour le titre de la page
+  document.title = guideTranslations.meta.title
+
+  // Mettre à jour la meta description
+  const metaDescription = document.querySelector('meta[name="description"]')
+  if (metaDescription) {
+    metaDescription.setAttribute('content', guideTranslations.meta.description)
+  }
+
+  // Mettre à jour les éléments de navigation
+  updateNavigationElements()
+
+  // Mettre à jour la section hero
+  updateHeroSection()
+
+  // Mettre à jour les sections
+  updateSections()
+
+  // Mettre à jour le footer
+  updateFooter()
+
+  // Mettre à jour les cartes
+  updateCards()
+}
+
+function updateNavigationElements() {
+  // Menu button
+  const menuText = document.querySelector('.guide-menu-text')
+  if (menuText) menuText.textContent = guideTranslations.navigation.menu
+
+  // Navigation links
+  const navLinks = document.querySelectorAll('.guide-menu-dropdown a')
+  const linkMap = {
+    '#logement': guideTranslations.navigation.logement,
+    '#localisation': guideTranslations.navigation.localisation,
+    '#transport': guideTranslations.navigation.transport,
+    '#commerces': guideTranslations.navigation.commerces,
+    '#restaurants': guideTranslations.navigation.restaurants,
+    '#activites': guideTranslations.navigation.activites,
+    '#excursions': guideTranslations.navigation.excursions,
+    '#sante': guideTranslations.navigation.sante,
+    '#eau-electricite': guideTranslations.navigation.eauElectricite,
+    '#cyclones': guideTranslations.navigation.cyclones,
+    '#infos-pratiques': guideTranslations.navigation.infosPratiques
+  }
+
+  navLinks.forEach((link) => {
+    const href = link.getAttribute('href')
+    if (linkMap[href]) {
+      link.textContent = linkMap[href]
+    }
+  })
+}
+
+function updateHeroSection() {
+  // Logo text
+  const logoText = document.querySelector('.guide-logo-text')
+  if (logoText) logoText.textContent = guideTranslations.meta.title
+
+  // Hero title
+  const heroTitle = document.querySelector('.guide-hero-title')
+  if (heroTitle) {
+    heroTitle.innerHTML = `${guideTranslations.hero.title}<br /><span class="guide-hero-brand">${guideTranslations.hero.brand}</span>`
+  }
+
+  // Hero description
+  const heroDescription = document.querySelector('.guide-hero-description')
+  if (heroDescription)
+    heroDescription.textContent = guideTranslations.hero.description
+
+  // Hero badge
+  const heroBadge = document.querySelector('.guide-hero-badge')
+  if (heroBadge) heroBadge.textContent = guideTranslations.hero.location
+}
+
+function updateSections() {
+  const sectionMap = {
+    logement: guideTranslations.sections.logement,
+    localisation: guideTranslations.sections.localisation,
+    transport: guideTranslations.sections.transport,
+    commerces: guideTranslations.sections.commerces,
+    restaurants: guideTranslations.sections.restaurants,
+    activites: guideTranslations.sections.activites,
+    excursions: guideTranslations.sections.excursions,
+    sante: guideTranslations.sections.sante,
+    'eau-electricite': guideTranslations.sections.eauElectricite,
+    cyclones: guideTranslations.sections.cyclones,
+    'infos-pratiques': guideTranslations.sections.infosPratiques
+  }
+
+  Object.keys(sectionMap).forEach((sectionId) => {
+    const sectionTitle = document.querySelector(
+      `#${sectionId} .guide-section-title`
+    )
+    if (sectionTitle) {
+      sectionTitle.textContent = sectionMap[sectionId]
+    }
+  })
+}
+
+function updateFooter() {
+  // Footer brand
+  const footerBrand = document.querySelector('.guide-footer-brand')
+  if (footerBrand) footerBrand.textContent = guideTranslations.footer.brand
+
+  // Footer contact
+  const footerTexts = document.querySelectorAll('.guide-footer-text')
+  if (footerTexts.length >= 3) {
+    footerTexts[0].textContent = guideTranslations.footer.contactTitle
+    footerTexts[1].textContent = guideTranslations.footer.email
+    footerTexts[2].textContent = guideTranslations.footer.phone
+  }
+
+  // Footer infos
+  const footerTitle = document.querySelector('.guide-footer-title')
+  if (footerTitle) footerTitle.textContent = guideTranslations.footer.infosTitle
+
+  const footerList = document.querySelector('.guide-footer-list')
+  if (footerList) {
+    footerList.innerHTML = `
+      <li>${guideTranslations.footer.address}</li>
+      <li>${guideTranslations.footer.checkin}</li>
+      <li>${guideTranslations.footer.checkout}</li>
+    `
+  }
+
+  // Copyright
+  const copyright = document.querySelector('.guide-copyright')
+  if (copyright) copyright.textContent = guideTranslations.footer.copyright
+}
+
+function updateCards() {
+  // Mettre à jour toutes les descriptions de cartes
+  const cardDescriptions = document.querySelectorAll('.guide-card-description')
+  cardDescriptions.forEach((desc) => {
+    if (desc.textContent.includes('Cliquez pour en savoir plus')) {
+      desc.textContent = guideTranslations.cards.clickToLearnMore
+    }
+  })
+
+  // Mettre à jour tous les titres de cartes
+  const cardTitles = document.querySelectorAll('.guide-card-title')
+  cardTitles.forEach((title) => {
+    const frenchTitle = title.textContent.trim()
+    if (guideTranslations.cardTitles[frenchTitle]) {
+      title.textContent = guideTranslations.cardTitles[frenchTitle]
+    }
+  })
+
+  // Mettre à jour tous les tags
+  const cardTags = document.querySelectorAll('.guide-tag')
+  cardTags.forEach((tag) => {
+    const frenchTag = tag.textContent.trim()
+    if (guideTranslations.tags[frenchTag]) {
+      tag.textContent = guideTranslations.tags[frenchTag]
+    }
+  })
+
+  // Mettre à jour les autres textes (adresses, etc.)
+  const allTextElements = document.querySelectorAll('li, span, p')
+  allTextElements.forEach((element) => {
+    const frenchText = element.textContent.trim()
+    if (guideTranslations.otherTexts[frenchText]) {
+      element.textContent = guideTranslations.otherTexts[frenchText]
+    }
+  })
+}
+
+// ============================================================================
 // GESTION DU CAROUSEL
 // ============================================================================
 
@@ -82,14 +450,14 @@ class PopupManager {
         content: `
           <h3 class="guide-popup-title"><i class="fas fa-home guide-icon home"></i>Présentation</h3>
           <div class="guide-popup-content">
-            <p>L'architecte qui a construit la maison s'appelle Monsieur Laurent DARVIOT. Il est très sensible à l'écologie ce qui explique l'équipement dès le début d'un double système d'alimentation en eau, avec en particulier une utilisation de l'eau de pluie pour les toilettes.</p>
+            <p>L'architecte qui a construit la maison s'appelle <strong>Monsieur Laurent DARVIOT</strong>. Il est très sensible à l'écologie ce qui explique l'équipement dès le début d'un double système d'alimentation en eau, avec en particulier une utilisation de l'eau de pluie pour les toilettes.</p>
             <ul>
-              <li>L'eau chaude des douches est produite par chauffe-eau solaire</li>
-              <li>Une partie de l'éclairage extérieur est solaire</li>
-              <li>Monsieur DARVIOT est le premier architecte à avoir construit un immeuble autonome en Guadeloupe (résidence MALDYVES à GOYAVE) pour lequel il a reçu le prix résidentiel des Trophées Bâtiments Résilients en 2022</li>
-              <li>Dans notre maison, il a prévu de nombreuses ouvertures pour favoriser la circulation d'air, complétée par des ventilateurs moins énergivores qu'une climatisation</li>
-              <li>Les chambres sont climatisées pour améliorer le confort pendant le sommeil</li>
-              <li>Tous les ans une société spécialisée passe afin de contrôler l'installation et nettoyer les filtres</li>
+              <li>L'eau chaude des douches est produite par <strong>chauffe-eau solaire</strong></li>
+              <li>Une partie de <strong>l'éclairage extérieur</strong> est solaire</li>
+              <li>Monsieur DARVIOT est le premier architecte à avoir construit un <strong>immeuble autonome en Guadeloupe</strong> (résidence MALDYVES à GOYAVE) pour lequel il a reçu le prix résidentiel des <em>Trophées Bâtiments Résilients</em> en 2022</li>
+              <li>Dans notre maison, il a prévu de nombreuses ouvertures pour favoriser la <strong>circulation d'air</strong>, complétée par des ventilateurs moins énergivores qu'une climatisation</li>
+              <li>Les chambres sont <strong>climatisées</strong> pour améliorer le confort pendant le sommeil</li>
+              <li>Tous les ans une société spécialisée passe afin de <strong>contrôler l'installation et nettoyer les filtres</strong></li>
             </ul>
           </div>
         `
@@ -141,7 +509,7 @@ class PopupManager {
               <li>Envoi de données : 6.41 mbits</li>
               <li>Réception de données : 28.8 mbits</li>
             </ul>
-            <p>La commune commence à s'équiper de la fibre mais, à capacité équivalente, le réseau est aérien, fragile, et exposé aux aléas du climat (en particulier aux vents), ce qui explique le choix du câble VDSL pour le moment.</p>
+            <p>La commune commence à s'équiper de la fibre mais, à capacité équivalente, le <strong>réseau est aérien, fragile, et exposé aux aléas du climat</strong> (en particulier aux vents), ce qui explique le choix du <strong>câble VDSL pour le moment</strong>.</p>
           </div>
         `
       },
@@ -150,14 +518,14 @@ class PopupManager {
         content: `
            <h3 class="guide-popup-title"><i class="fas fa-toilet guide-icon toilet"></i>Les WC et les eaux usées</h3>
            <div class="guide-popup-content">
-             <p>Toutes les nouvelles habitations sur les hauteurs de Basse-Terre doivent maintenant être équipées d'une mini station d'épuration individuelle lors de la construction.</p>
+             <p>Toutes les nouvelles habitations sur les hauteurs de Basse-Terre doivent maintenant être équipées d'une <strong>mini station d'épuration individuelle</strong> lors de la construction.</p>
              <img src="images/guide/26.webp" alt="Mini station d'épuration - WC et eaux usées"/>
              <p><strong>Pour préserver leur bon fonctionnement :</strong></p>
              <ul>
-               <li>Ne mettre dans la cuvette des WC que du papier toilette sec (en rouleaux)</li>
-               <li>Ne pas y déposer de lingettes ou autre dispositif (fessnet, lotus, etc.)</li>
-               <li>Le papier sec se délite au contact de l'humidité et ne bouche pas les canalisations</li>
-               <li>Le papier toilette humide relève d'une composition proche de celle des lingettes, obstrue les canalisations et donc perturbe le traitement des eaux usées</li>
+               <li>Ne mettre dans la cuvette des WC que du <strong>papier toilette sec</strong> (en rouleaux)</li>
+               <li><strong>Ne pas y déposer de lingettes</strong> ou autre dispositif (fessnet, lotus, etc.)</li>
+               <li>Le papier sec se délite au contact de l'humidité et <strong>ne bouche pas</strong> les canalisations</li>
+               <li>Le papier toilette humide relève d'une composition proche de celle des lingettes, <strong>obstrue les canalisations</strong> et donc perturbe le traitement des eaux usées</li>
              </ul>
              <p><strong>Merci en cas d'utilisation de papier humide de le jeter dans la poubelle et non dans la cuvette des WC.</strong></p>
              <p>Les produits que nous utilisons (nettoyage du sol, produits WC) sont compatibles avec le bon fonctionnement d'une fosse septique et il convient d'éviter d'utiliser des liquides javellisés.</p>
@@ -169,14 +537,14 @@ class PopupManager {
         content: `
             <h3 class="guide-popup-title"><i class="fas fa-shield-alt guide-icon shield"></i>Filet de sécurité et terrasse</h3>
             <div class="guide-popup-content">
-              <p>La maison est équipée d'un filet de sécurité placé entre la piscine et la terrasse. Malgré sa résistance, ce n'est pas un hamac sur lequel on peut s'allonger (comme sur les catamarans), il se veut un élément de sécurité en cas de chute accidentelle, et donc merci de lui réserver cette vocation afin qu'il garde son efficacité.</p>
+              <p>La maison est équipée d'un <strong>filet de sécurité</strong> placé entre la piscine et la terrasse. Malgré sa résistance, ce <strong>n'est pas un hamac</strong> sur lequel on peut s'allonger (comme sur les catamarans), il se veut un <strong>élément de sécurité en cas de chute accidentelle</strong>, et donc merci de lui réserver cette vocation afin qu'il garde son efficacité.</p>
               <img src="images/guide/25.webp" alt="Filet de sécurité - Terrasse et piscine"/>
               <p><strong>IMPORTANT :</strong></p>
               <ul>
-                <li>La terrasse n'a pas de balustrade, et la piscine pas de barrière de sécurité</li>
-                <li>Cette option est volontaire de notre part afin de préserver une belle vue dégagée sur la baie et les îlets</li>
+                <li>La terrasse <strong>n'a pas de balustrade</strong>, et la piscine <strong>pas de barrière de sécurité</strong></li>
+                <li>Cette option est volontaire de notre part afin de préserver une <strong>belle vue dégagée sur la baie et les îlets</strong></li>
                 <li>Ce point particulier ne pose pas de problème aux adultes qui apprécient en général l'initiative</li>
-                <li>Pour cette raison, nous déconseillons sur le site de réservation la maison aux familles avec de jeunes enfants (moins de 8 ans) car elle peut se révéler dangereuse dans la zone terrasse - piscine</li>
+                <li>Pour cette raison, nous <strong>déconseillons sur le site de réservation la maison aux familles avec de jeunes enfants (moins de 8 ans)</strong> car elle peut se révéler dangereuse dans la zone terrasse - piscine</li>
               </ul>
             </div>
           `
@@ -188,8 +556,8 @@ class PopupManager {
            <div class="guide-popup-content">
              <p>Gros problème en Guadeloupe (pour avoir une poubelle il nous a fallu l'acheter dans le commerce, nous attendons toujours celle de la mairie depuis deux ans).</p>
              <ul>
-               <li>Le ramassage se fait pendant la nuit du dimanche au lundi</li>
-               <li>En ce qui concerne les bouteilles en verre ou en plastique, il existe des bornes de dépôt le long des routes, la plus proche étant située en face de Carrefour Market</li>
+               <li>Le ramassage se fait pendant la <strong>nuit du dimanche au lundi</strong></li>
+               <li>En ce qui concerne les bouteilles en verre ou en plastique, il existe des bornes de dépôt le long des routes, la plus proche étant située <strong>en face de Carrefour Market</strong></li>
              </ul>
              <img src="images/guide/29.webp" alt="Bornes de recyclage - Gestion des déchets"/>
            </div>
@@ -205,7 +573,7 @@ class PopupManager {
              <p>Merci de vérifier que rien ne perturbe la fermeture des volets électriques (fauteuils de terrasse en particulier) au risque de les bloquer et de ne pouvoir fermer efficacement la maison en votre absence (c'est déjà arrivé).</p>
              <img src="images/guide/27.webp" alt="Volets électriques - Précautions"/>
              <h4><i class="fas fa-window-restore guide-icon window"></i>LES FENÊTRES DES CHAMBRES</h4>
-             <p>Les volets des fenêtres s'ouvrent et se ferment en utilisant la manivelle fixée sur le côté du cadre.</p>
+             <p>Les volets des fenêtres s'ouvrent et se ferment en utilisant la <strong>manivelle</strong> fixée sur le côté du cadre.</p>
              <p>Malheureusement, les cardans de ces manivelles sont très fragiles (c'est un défaut de conception que nous avons signalé au fabricant).</p>
              <p><strong>Merci de ne pas forcer lors des manœuvres d'ouverture et fermeture.</strong></p>
            </div>
@@ -216,14 +584,14 @@ class PopupManager {
         content: `
             <h3 class="guide-popup-title"><i class="fas fa-snowflake guide-icon snowflake"></i>La Climatisation</h3>
             <div class="guide-popup-content">
-              <p>L'électricité en Guadeloupe est malheureusement en grande partie d'origine fossile (donc, d'importation). La ville de Bouillante bénéficie d'une participation de la centrale géothermique, salvatrice en cas de coupure d'électricité sur le réseau, mais ne permettant pas de jouir pour autant d'un tarif moins élevé.</p>
-              <p>De façon regrettable, les énergies « propres » sont peu représentées.</p>
+              <p>L'électricité en Guadeloupe est malheureusement en grande partie d'origine fossile (donc, <strong>d'importation</strong>). La ville de Bouillante bénéficie d'une participation de la centrale géothermique, salvatrice en cas de coupure d'électricité sur le réseau, mais ne permettant pas de jouir pour autant d'un tarif moins élevé.</p>
+              <p>De façon regrettable, les énergies « <strong>propres</strong> » sont peu représentées.</p>
               <p><strong>Pour des raisons d'économie et d'écologie :</strong></p>
               <ul>
-                <li>Merci de couper les climatiseurs grâce à leur télécommande en dehors des périodes d'occupation des chambres</li>
-                <li>Veiller à ce que portes et fenêtres soient fermées pendant leur fonctionnement</li>
+                <li>Merci de couper les climatiseurs grâce à leur <strong>télécommande</strong> en dehors des périodes d'occupation des chambres</li>
+                <li>Veiller à ce que <strong>portes et fenêtres</strong> soient fermées pendant leur fonctionnement</li>
               </ul>
-              <p>Comme dit précédemment, tous les ans une société spécialisée passe afin de contrôler l'installation et nettoyer les filtres.</p>
+              <p>Comme dit précédemment, <strong>tous les ans</strong> une société spécialisée passe afin de contrôler l'installation et nettoyer les filtres.</p>
             </div>
           `
       },
@@ -585,12 +953,12 @@ class PopupManager {
         content: `
            <h3 class="guide-popup-title"><i class="fas fa-kayak guide-icon kayak"></i>Kayak</h3>
            <div class="guide-popup-content">
-             <p>Sur la plage de Malendure pour explorer la Réserve Cousteau et les îlets Pigeon.</p>
+             <p>Sur la plage de Malendure pour explorer la <strong>Réserve Cousteau</strong> et les îlets Pigeon.</p>
              <h4><i class="fas fa-building guide-icon building"></i>Loueurs recommandés</h4>
              <p><em>Cliquez sur les noms des loueurs pour ouvrir la navigation GPS :</em></p>
              <ul>
-               <li><strong><a href="geo:16.1581,-61.7761?q=CARAÏBE+KAYAK+bouillante" style="color: var(--color-primary); text-decoration: none;">CARAÏBE KAYAK</a> :</strong> Location de kayaks pour explorer la Réserve Cousteau</li>
-               <li><strong><a href="geo:16.1581,-61.7761?q=GWADA+PAGAIE+bouillante" style="color: var(--color-primary); text-decoration: none;">GWADA PAGAIE</a> :</strong> Location et excursions guidées</li>
+               <li><strong><a href="geo:16.1581,-61.7761?q=CARAÏBE+KAYAK+bouillante" style="color: var(--color-primary); text-decoration: none;">CARAÏBE KAYAK</a>:</strong> Location de kayaks pour explorer la Réserve Cousteau</li>
+               <li><strong><a href="geo:16.1581,-61.7761?q=GWADA+PAGAIE+bouillante" style="color: var(--color-primary); text-decoration: none;">GWADA PAGAIE</a>:</strong> Location et excursions guidées</li>
              </ul>
              <img src="images/guide/48.webp" alt="Kayak - Plage de Malendure"/>
              <div style="margin-top: 20px; text-align: center">
@@ -698,7 +1066,7 @@ class PopupManager {
       memorialacte: {
         title: 'Mémorial ACTe',
         content: `
-           <h3 class="guide-popup-title"><i class="fas fa-monument guide-icon monument"></i>Mémorial ACTe</h3>
+           <h3 class="guide-popup-title"><i class="fas fa-monument guide-icon monument"></i>Mémorial ACTe<h3>
            <div class="guide-popup-content">
              <p><strong>Pointe-à-Pitre :</strong> Centre caribéen d'expressions et de mémoire de la traite.</p>
              <p>Un lieu de mémoire important pour comprendre l'histoire de la Guadeloupe et de la Caraïbe.</p>
@@ -1296,7 +1664,16 @@ class PopupManager {
   }
 
   init() {
-    // Événement pour fermer avec Escape
+    if (!this.overlay || !this.content) return
+
+    // Événements pour fermer le popup
+    this.overlay.addEventListener('click', (e) => {
+      if (e.target === this.overlay) {
+        this.hide()
+      }
+    })
+
+    // Événement pour la touche Escape
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         this.hide()
@@ -1305,18 +1682,21 @@ class PopupManager {
   }
 
   show(type) {
-    if (!this.popupData[type] || !this.content || !this.overlay) return
+    if (!this.popupData[type]) {
+      console.warn(`Popup data not found for type: ${type}`)
+      return
+    }
 
-    this.content.innerHTML = this.popupData[type].content
+    const data = this.popupData[type]
+    this.content.innerHTML = data.content
     this.overlay.classList.remove('hidden')
     document.body.style.overflow = 'hidden'
   }
 
   hide() {
-    if (!this.overlay) return
-
     this.overlay.classList.add('hidden')
     document.body.style.overflow = ''
+    this.content.innerHTML = ''
   }
 }
 
@@ -1324,27 +1704,32 @@ class PopupManager {
 // FONCTIONS GLOBALES (pour compatibilité avec onclick)
 // ============================================================================
 
-let popupManager
-
 function showPopup(type) {
-  if (!popupManager) {
-    popupManager = new PopupManager()
+  if (window.popupManager) {
+    window.popupManager.show(type)
   }
-  popupManager.show(type)
 }
 
 function hidePopup() {
-  if (popupManager) {
-    popupManager.hide()
+  if (window.popupManager) {
+    window.popupManager.hide()
   }
 }
 
+function stopEventPropagation(event) {
+  event.stopPropagation()
+}
+
 // ============================================================================
-// INITIALISATION
+// FONCTION D'INITIALISATION EXPORTÉE
 // ============================================================================
 
-document.addEventListener('DOMContentLoaded', function () {
-  // Initialisation des carousels
+// Fonction d'initialisation qui sera appelée par le loader
+window.initializeGuide = function () {
+  // Initialiser l'interface avec les traductions
+  initializeInterface()
+
+  // Initialiser les carousels
   new CarouselManager('carousel-container', 'carousel-left', 'carousel-right')
   new CarouselManager(
     'carousel-localisation-container',
@@ -1397,8 +1782,8 @@ document.addEventListener('DOMContentLoaded', function () {
     'carousel-infos-pratiques-right'
   )
 
-  // Initialisation des popups
-  popupManager = new PopupManager()
+  // Initialiser le gestionnaire de popups
+  window.popupManager = new PopupManager()
 
   // Initialisation du menu - s'assurer qu'il est caché au départ
   setMenuProgress(0)
@@ -1463,22 +1848,20 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     })
   })
-})
 
-// ============================================================================
-// UTILITAIRES
-// ============================================================================
-
-/**
- * Empêche la propagation d'un événement
- * @param {Event} event - L'événement à arrêter
- */
-function stopEventPropagation(event) {
-  event.stopPropagation()
+  console.log('🌍 Guide Calypso Bay initialisé en français')
 }
+
+// ============================================================================
+// GESTION DE LA NAVIGATION GPS
+// ============================================================================
 
 // Coordonnées et adresses pour chaque commerce, restaurant et activité
 const locations = {
+  'Calypso Bay': {
+    coordinates: '16.1581,-61.7761',
+    address: '717+rue+de+Poirier+Bouillante+Guadeloupe'
+  },
   'Carrefour Market': {
     coordinates: '16.1581,-61.7761',
     address: 'Carrefour+Market+Bouillante'
@@ -1535,7 +1918,6 @@ const locations = {
     coordinates: '16.1581,-61.7761',
     address: 'Le+Cœur+de+Pigeon+Pizzeria+Bouillante'
   },
-  // Activités avec leurs vraies adresses
   Kayak: {
     coordinates: '16.1581,-61.7761',
     address: 'Plage+Malendure+Bouillante+Guadeloupe'
@@ -1635,18 +2017,20 @@ function openNavigation(event) {
   }
 }
 
-/* === Menu slide + overlay progressif === */
+// ============================================================================
+// GESTION DU MENU
+// ============================================================================
 
-/** Etat interne */
+// Etat interne
 let MENU_PROGRESS = 0 // 0 fermé, 1 ouvert
 let MENU_ANIMATING = false
 
-/** Easing doux */
+// Easing doux
 function easeInOutCubic(t) {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
 }
 
-/** Applique la progression visuelle */
+// Applique la progression visuelle
 function setMenuProgress(p) {
   MENU_PROGRESS = Math.min(1, Math.max(0, p))
   // On pilote la variable CSS globale
@@ -1658,7 +2042,7 @@ function setMenuProgress(p) {
   }
 }
 
-/** Animation générique */
+// Animation générique
 function animateMenu(toOpen) {
   if (MENU_ANIMATING) return
   const overlay = document.querySelector('.guide-menu-overlay')
@@ -1681,6 +2065,7 @@ function animateMenu(toOpen) {
 
   MENU_ANIMATING = true
 
+  // Animation de la progression visuelle
   function frame(now) {
     const t = Math.min(1, (now - start) / duration)
     const eased = easeInOutCubic(t)
@@ -1702,9 +2087,7 @@ function animateMenu(toOpen) {
   requestAnimationFrame(frame)
 }
 
-/**
- * Bascule l'affichage du menu déroulant
- */
+// Bascule l'affichage du menu déroulant
 function toggleMenu() {
   if (MENU_PROGRESS > 0) {
     animateMenu(false)
@@ -1713,16 +2096,15 @@ function toggleMenu() {
   }
 }
 
-/**
- * Ferme le menu déroulant
- */
+// Ferme le menu déroulant
 function closeMenu() {
   if (MENU_PROGRESS > 0) animateMenu(false)
 }
 
-/**
- * Copie la clé WiFi dans le presse-papiers
- */
+// ============================================================================
+// COPIE CODE WIFI
+// ============================================================================
+
 function copyWifiKey() {
   const wifiKey = document.getElementById('wifi-key')
   const copyButton = event.target.closest('.copy-button')
@@ -1766,6 +2148,10 @@ function copyWifiKey() {
   }
 }
 
+// ============================================================================
+// EXPORT
+// ============================================================================
+
 // Export pour utilisation dans d'autres modules si nécessaire
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
@@ -1776,6 +2162,6 @@ if (typeof module !== 'undefined' && module.exports) {
   }
 }
 
-/* Expose global si nécessaire (compat HTML inline onclick) */
+// Expose global si nécessaire (compat HTML inline onclick)
 window.toggleMenu = toggleMenu
 window.closeMenu = closeMenu
