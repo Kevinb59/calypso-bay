@@ -169,3 +169,7 @@ typings/
 .DS_Store
 Thumbs.db
 
+# Google Apps Scripts (à garder en local uniquement)
+*.gs
+calypso-bay-*.gs
+
