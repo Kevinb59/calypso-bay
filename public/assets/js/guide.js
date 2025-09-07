@@ -766,6 +766,10 @@ class PopupManager {
                  Ouvrir la navigation
                </a>
              </div>
+             <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+               <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Note :</strong> ≈ 4,8/5 sur Petit Futé selon 58 avis</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Recommandation :</strong> Réputation d'excellence dans les produits de la mer — marque leader spécialisée dans les poissons fumés des Caraïbes, forte présence locale depuis 1996</p>
+             </div>
            </div>
          `
       },
@@ -783,6 +787,10 @@ class PopupManager {
                  Ouvrir la navigation
                </a>
              </div>
+             <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+               <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Note :</strong> 4,1/5 (Google, 73 avis)</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Commentaire :</strong> Boulangerie-pâtisserie du centre commercial de Pigeon, appréciée pour ses produits variés et pratiques</p>
+             </div>
            </div>
          `
       },
@@ -798,6 +806,10 @@ class PopupManager {
                  <i class="fas fa-location-arrow"></i>
                  Ouvrir la navigation
                </a>
+             </div>
+             <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+               <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Note :</strong> 4,7/5 (Google, 15 avis)</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Commentaire :</strong> Boucherie-traiteur locale (viandes, plats à emporter, produits du terroir), accueil bien noté</p>
              </div>
            </div>
          `
@@ -817,6 +829,10 @@ class PopupManager {
                  Ouvrir la navigation
                </a>
              </div>
+             <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+               <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Note :</strong> 4,7/5 (Google, 23 avis)</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Commentaire :</strong> Épicerie fruits et légumes locaux de qualité, vendeuse réputée pour ses conseils (choix selon maturité)</p>
+             </div>
            </div>
          `
       },
@@ -832,6 +848,10 @@ class PopupManager {
                  <i class="fas fa-location-arrow"></i>
                  Ouvrir la navigation
                </a>
+             </div>
+             <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+               <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Note :</strong> 4,5/5 (moyenne sur 1 018 avis vérifiés)</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Commentaire :</strong> Cuisine raffinée, belle vue mer, plats bien dressés et service chaleureux</p>
              </div>
            </div>
          `
@@ -849,6 +869,10 @@ class PopupManager {
                  Ouvrir la navigation
                </a>
              </div>
+             <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+               <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Note :</strong> Environ 4,5/5 sur Google (201 avis, "Wonderful") et 4,0/5 sur TripAdvisor (136 avis)</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Recommandation :</strong> Très souvent recommandé pour son accueil et la qualité de service (serveur Alexandre apprécié)</p>
+             </div>
            </div>
          `
       },
@@ -864,6 +888,11 @@ class PopupManager {
                  <i class="fas fa-location-arrow"></i>
                  Ouvrir la navigation
                </a>
+             </div>
+             <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+               <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Note :</strong> 4,7/5 sur TripAdvisor (438 avis)</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Recommandation :</strong> "Super sympas, on mange frais et local" (avis Facebook)</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Commentaire :</strong> Menu créatif qui change chaque jour, produits frais locaux, ambiance conviviale en terrasse avec bar à punch</p>
              </div>
            </div>
          `
@@ -881,6 +910,11 @@ class PopupManager {
                  Ouvrir la navigation
                </a>
              </div>
+             <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+               <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Note :</strong> 4,6/5 (TripAdvisor, 28 avis)</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Recommandation :</strong> Plancher d'un guide des meilleures tables de Bouillante pour sa cuisine traditionnelle généreuse, accueil chaleureux avec vue mer</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Commentaire :</strong> Cuisine créole simple et copieuse face à la mer, vrai moment convivial</p>
+             </div>
            </div>
          `
       },
@@ -896,6 +930,11 @@ class PopupManager {
                  <i class="fas fa-location-arrow"></i>
                  Ouvrir la navigation
                </a>
+             </div>
+             <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+               <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Note :</strong> 4,8/5 sur Google (189 avis), 4,5/5 sur TripAdvisor (91 avis)</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Recommandation :</strong> Très apprécié pour les grillades authentiques, la tendreté des viandes et l'ambiance locale avec musique et punch</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Commentaire :</strong> Génial rapport qualité-prix, portions généreuses, atmosphère simple et conviviale</p>
              </div>
            </div>
          `
@@ -913,6 +952,11 @@ class PopupManager {
                  Ouvrir la navigation
                </a>
              </div>
+             <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+               <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Note :</strong> 4,6/5 (TripAdvisor, 70 avis) et environ 4,7/5 (Google, 251 avis)</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Recommandation :</strong> Qualifié de "pépite" pour ses pizzas au feu de bois authentiques, haute qualité des ingrédients et ambiance agréable</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Commentaire :</strong> Pizzeria-rotisserie moderne en bord de mer, cuisine italienne conviviale et savoureuse</p>
+             </div>
            </div>
          `
       },
@@ -929,6 +973,10 @@ class PopupManager {
                  Ouvrir la navigation
                </a>
              </div>
+             <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+               <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Note :</strong> ≈ 3,0/5 (Google, 58 avis)</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Commentaire :</strong> Pratique pour sa livraison</p>
+             </div>
            </div>
          `
       },
@@ -944,6 +992,10 @@ class PopupManager {
                  <i class="fas fa-location-arrow"></i>
                  Ouvrir la navigation
                </a>
+             </div>
+             <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+               <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Recommandation :</strong> Avis Facebook : « Super pizza pour une superbe vue. L'équipe très agréable. Je recommande ! »</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Commentaire :</strong> Concept bar/pizzeria sur place ou à emporter, avec terrasse en bord de mer ; l'équipe est décrite comme très agréable</p>
              </div>
            </div>
          `
@@ -983,6 +1035,11 @@ class PopupManager {
                  <i class="fas fa-location-arrow"></i>
                  Ouvrir la navigation
                </a>
+             </div>
+             <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+               <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Note :</strong> 4,8/5 (Google, 649 avis)</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Recommandation :</strong> Très apprécié pour la sécurité, l'accueil et la qualité du matériel</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Commentaire :</strong> Club installé à Malendure depuis 1987, référence pour explorer la réserve Cousteau</p>
              </div>
            </div>
          `
@@ -1026,6 +1083,11 @@ class PopupManager {
                  Ouvrir la navigation
                </a>
              </div>
+             <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+               <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Note :</strong> 4,4/5 (Google, 3 400 avis)</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Recommandation :</strong> Souvent recommandé pour ses explications claires et ses dégustations</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Commentaire :</strong> Écomusée vivant sur la culture du cacao, balade dans le jardin et démonstrations</p>
+             </div>
            </div>
          `
       },
@@ -1042,6 +1104,10 @@ class PopupManager {
                  <i class="fas fa-location-arrow"></i>
                  Ouvrir la navigation
                </a>
+             </div>
+             <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+               <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Note :</strong> 4,2/5 (Google, 189 avis)</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Recommandation :</strong> Recommandé pour découvrir l'histoire du rhum et les traditions locales</p>
              </div>
            </div>
          `
@@ -1060,13 +1126,18 @@ class PopupManager {
                  Ouvrir la navigation
                </a>
              </div>
+             <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+               <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Note :</strong> 3,9/5 (Google, 370 avis)</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Recommandation :</strong> Recommandé pour son cadre verdoyant et son aspect culturel</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Commentaire :</strong> Ancienne « Maison du Bois », aujourd'hui parc botanique et musée des traditions</p>
+             </div>
            </div>
          `
       },
       memorialacte: {
         title: 'Mémorial ACTe',
         content: `
-           <h3 class="guide-popup-title"><i class="fas fa-monument guide-icon monument"></i>Mémorial ACTe<h3>
+           <h3 class="guide-popup-title"><i class="fas fa-monument guide-icon monument"></i>Mémorial ACTe</h3>
            <div class="guide-popup-content">
              <p><strong>Pointe-à-Pitre :</strong> Centre caribéen d'expressions et de mémoire de la traite.</p>
              <p>Un lieu de mémoire important pour comprendre l'histoire de la Guadeloupe et de la Caraïbe.</p>
@@ -1076,6 +1147,11 @@ class PopupManager {
                  <i class="fas fa-location-arrow"></i>
                  Ouvrir la navigation
                </a>
+             </div>
+             <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+               <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Note :</strong> 4,3/5 (Google, 4 496 avis)</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Recommandation :</strong> Lieu incontournable de mémoire sur l'esclavage, souvent cité comme visite essentielle en Guadeloupe</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Commentaire :</strong> Musée moderne et symbolique, expositions permanentes et temporaires, reconnu internationalement</p>
              </div>
            </div>
          `
@@ -1094,6 +1170,11 @@ class PopupManager {
                  Ouvrir la navigation
                </a>
              </div>
+             <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+               <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Note :</strong> 4,8/5 (Google, 1 596 avis)</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Recommandation :</strong> Très apprécié pour la qualité des bières artisanales et le cadre tropical</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Commentaire :</strong> Beer garden convivial au bord de la rivière, bières locales originales et ambiance musicale</p>
+             </div>
            </div>
          `
       },
@@ -1110,6 +1191,11 @@ class PopupManager {
                  <i class="fas fa-location-arrow"></i>
                  Ouvrir la navigation
                </a>
+             </div>
+             <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+               <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Note :</strong> 3,9/5 (Google, 2 500 avis)</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Recommandation :</strong> Considéré comme l'un des aquariums incontournables des Antilles</p>
+               <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Commentaire :</strong> Situé à la marina du Gosier, propose plus de 80 espèces de poissons et 50 espèces de coraux, avec bassins pédagogiques</p>
              </div>
            </div>
          `
@@ -1205,15 +1291,35 @@ class PopupManager {
            <div class="guide-popup-content">
              <h4><i class="fas fa-seedling guide-icon seedling"></i>Jardin Botanique de Deshaies</h4>
              <p>Promenade de 2h dans un cadre luxuriant.</p>
+             <div style="margin: 15px 0; padding: 10px; background: #f0f8f0; border-left: 3px solid #4caf50; border-radius: 3px;">
+               <p style="margin: 0; font-style: italic; font-size: 14px;"><strong style="font-style: italic;">Note :</strong> 4,7/5 (Google, 8 900 avis)</p>
+               <p style="margin: 5px 0 0 0; font-style: italic; font-size: 14px;"><strong style="font-style: italic;">Recommandation :</strong> Souvent décrit comme un « jardin remarquable » à visiter absolument</p>
+               <p style="margin: 5px 0 0 0; font-style: italic; font-size: 14px;"><strong style="font-style: italic;">Commentaire :</strong> Parc de 7 hectares avec flore tropicale, cascades, volière et restaurant panoramique</p>
+             </div>
 
              <h4><i class="fas fa-fort-awesome guide-icon fort"></i>Fort Delgrès (Basse-Terre)</h4>
              <p>Site historique majeur, visite gratuite.</p>
+             <div style="margin: 15px 0; padding: 10px; background: #f0f8f0; border-left: 3px solid #4caf50; border-radius: 3px;">
+               <p style="margin: 0; font-style: italic; font-size: 14px;"><strong style="font-style: italic;">Note :</strong> 4,2/5 (Google, 1 300 avis)</p>
+               <p style="margin: 5px 0 0 0; font-style: italic; font-size: 14px;"><strong style="font-style: italic;">Recommandation :</strong> Incontournable pour son rôle historique dans la lutte contre l'esclavage</p>
+               <p style="margin: 5px 0 0 0; font-style: italic; font-size: 14px;"><strong style="font-style: italic;">Commentaire :</strong> Ancien fort du XVIIᵉ siècle, classé monument historique, avec vue panoramique et expositions</p>
+             </div>
 
              <h4><i class="fas fa-shopping-basket guide-icon market"></i>Marché de Basse-Terre</h4>
              <p>Marché quotidien (sauf dimanche et lundi), particulièrement animé le samedi. Idéal pour épices, vanille et produits locaux.</p>
+             <div style="margin: 15px 0; padding: 10px; background: #f0f8f0; border-left: 3px solid #4caf50; border-radius: 3px;">
+               <p style="margin: 0; font-style: italic; font-size: 14px;"><strong style="font-style: italic;">Note :</strong> 3,8/5 (Google, 82 avis), 3,5/5 (TripAdvisor, 85 avis)</p>
+               <p style="margin: 5px 0 0 0; font-style: italic; font-size: 14px;"><strong style="font-style: italic;">Recommandation :</strong> Apprécié pour son authenticité, ses produits locaux (épices, fruits, légumes, poissons) et son ambiance traditionnelle</p>
+               <p style="margin: 5px 0 0 0; font-style: italic; font-size: 14px;"><strong style="font-style: italic;">Commentaire :</strong> Marché couvert emblématique en front de mer, coloré et animé, idéal pour découvrir la Guadeloupe authentique</p>
+             </div>
 
              <h4><i class="fas fa-shopping-basket guide-icon market"></i>Marché de Sainte-Anne et son village artisanal</h4>
              <p>Souvenirs et produits locaux.</p>
+             <div style="margin: 15px 0; padding: 10px; background: #f0f8f0; border-left: 3px solid #4caf50; border-radius: 3px;">
+               <p style="margin: 0; font-style: italic; font-size: 14px;"><strong style="font-style: italic;">Note :</strong> 4,2/5 (Google, 5 510 avis), 4,0/5 (TripAdvisor, 571 avis)</p>
+               <p style="margin: 5px 0 0 0; font-style: italic; font-size: 14px;"><strong style="font-style: italic;">Recommandation :</strong> Très recommandé pour son ambiance vivante, ses stands variés et son cadre balnéaire</p>
+               <p style="margin: 5px 0 0 0; font-style: italic; font-size: 14px;"><strong style="font-style: italic;">Commentaire :</strong> Marché artisanal et alimentaire au bord de la plage, réputé pour ses punchs, épices, fruits tropicaux et artisanat créole</p>
+             </div>
 
              <h4><i class="fas fa-mountain guide-icon mountain"></i>Pointe des Châteaux (Saint-François)</h4>
              <p>Paysages impressionnants rappelant la Bretagne.</p>

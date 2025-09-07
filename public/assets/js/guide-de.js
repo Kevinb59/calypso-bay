@@ -766,6 +766,10 @@ class PopupManager {
                 Navigation öffnen
               </a>
             </div>
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+              <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Bewertung:</strong> ≈ 4,8/5 auf Petit Futé (58 Bewertungen)</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Empfehlung:</strong> Ausgezeichnetes Renommee für Meeresprodukte – führende Marke, spezialisiert auf karibischen Räucherfisch, starke lokale Präsenz seit 1996</p>
+            </div>
           </div>
         `
       },
@@ -783,6 +787,10 @@ class PopupManager {
                 Navigation öffnen
               </a>
             </div>
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+              <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Bewertung:</strong> 4,1/5 (Google, 73 Bewertungen)</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Kommentar:</strong> Bäckerei-Konditorei im Einkaufszentrum von Pigeon, geschätzt für Vielfalt und Praktikabilität</p>
+            </div>
           </div>
         `
       },
@@ -798,6 +806,10 @@ class PopupManager {
                 <i class="fas fa-location-arrow"></i>
                 Navigation öffnen
               </a>
+            </div>
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+              <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Bewertung:</strong> 4,7/5 (Google, 15 Bewertungen)</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Kommentar:</strong> Lokaler Metzger-Traiteur (Fleisch, Gerichte zum Mitnehmen, lokale Produkte), gut bewertet für den Empfang</p>
             </div>
           </div>
         `
@@ -817,6 +829,10 @@ class PopupManager {
                 Navigation öffnen
               </a>
             </div>
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+              <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Bewertung:</strong> 4,7/5 (Google, 23 Bewertungen)</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Kommentar:</strong> Obst- und Gemüseladen mit Qualitätsprodukten, bekannt für die Beratung der Verkäuferin (z. B. Reifeauswahl)</p>
+            </div>
           </div>
         `
       },
@@ -832,6 +848,10 @@ class PopupManager {
                 <i class="fas fa-location-arrow"></i>
                 Navigation öffnen
               </a>
+            </div>
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+              <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Bewertung:</strong> 4,5/5 (Durchschnitt aus 1.018 geprüften Bewertungen)</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Kommentar:</strong> Raffinierte Küche, schöner Meerblick, ansprechend angerichtete Gerichte und herzlicher Service</p>
             </div>
           </div>
         `
@@ -849,6 +869,10 @@ class PopupManager {
                 Navigation öffnen
               </a>
             </div>
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+              <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Bewertung:</strong> Ca. 4,5/5 auf Google (201 Bewertungen, „Wundervoll") und 4,0/5 auf TripAdvisor (136 Bewertungen)</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Empfehlung:</strong> Häufig empfohlen für die Gastfreundschaft und die Servicequalität (Kellner Alexandre besonders geschätzt)</p>
+            </div>
           </div>
         `
       },
@@ -865,6 +889,11 @@ class PopupManager {
                 Navigation öffnen
               </a>
             </div>
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+              <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Bewertung:</strong> 4,7/5 auf TripAdvisor (438 Bewertungen)</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Empfehlung:</strong> „Super freundlich, frisches und lokales Essen" (Facebook-Bewertung)</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Kommentar:</strong> Kreative Speisekarte, die sich täglich ändert, frische lokale Produkte, gesellige Atmosphäre mit Terrasse und Punschbar</p>
+            </div>
           </div>
         `
       },
@@ -873,13 +902,18 @@ class PopupManager {
         content: `
           <h3 class="guide-popup-title"><i class="fas fa-utensils guide-icon restaurant"></i>Aux Deux Coquilles</h3>
           <div class="guide-popup-content">
-            <p>Gut und günstig, eher „lokal“.</p>
+            <p>Gut und günstig, eher „lokal".</p>
             <img src="images/guide/10.webp" alt="Aux Deux Coquilles – Restaurant"/>
             <div style="margin-top: 20px; text-align: center">
               <a href="geo:16.1581,-61.7761?q=Les+Deux+Coquilles+Restaurant+Bouillante" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                 <i class="fas fa-location-arrow"></i>
                 Navigation öffnen
               </a>
+            </div>
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+              <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Bewertung:</strong> 4,6/5 (TripAdvisor, 28 Bewertungen)</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Empfehlung:</strong> Gelistet unter den besten Adressen in Bouillante für großzügige traditionelle Küche und herzlichen Empfang mit Meerblick</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Kommentar:</strong> Einfache, reichhaltige kreolische Küche direkt am Meer, ein echtes geselliges Erlebnis</p>
             </div>
           </div>
         `
@@ -889,13 +923,18 @@ class PopupManager {
         content: `
           <h3 class="guide-popup-title"><i class="fas fa-fire guide-icon grill"></i>Franko Grill</h3>
           <div class="guide-popup-content">
-            <p>Gut und günstig, eher „lokal“.</p>
+            <p>Gut und günstig, eher „lokal".</p>
             <img src="images/guide/11.webp" alt="Franko Grill – Restaurant"/>
             <div style="margin-top: 20px; text-align: center">
               <a href="geo:16.1581,-61.7761?q=Franko+Grill+Restaurant+Bouillante" style="display: inline-flex; align-items: center; gap: 8px; padding: 15px 25px; background: #4caf50; color: white; text-decoration: none; border-radius: 25px; font-size: 16px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                 <i class="fas fa-location-arrow"></i>
                 Navigation öffnen
               </a>
+            </div>
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+              <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Bewertung:</strong> 4,8/5 auf Google (189 Bewertungen), 4,5/5 auf TripAdvisor (91 Bewertungen)</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Empfehlung:</strong> Sehr geschätzt für authentisches Grillen, zartes Fleisch und lokale Atmosphäre mit Musik und Punsch</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Kommentar:</strong> Tolles Preis-Leistungs-Verhältnis, großzügige Portionen, einfache und freundliche Atmosphäre</p>
             </div>
           </div>
         `
@@ -913,6 +952,11 @@ class PopupManager {
                 Navigation öffnen
               </a>
             </div>
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+              <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Bewertung:</strong> 4,6/5 (TripAdvisor, 70 Bewertungen) und ca. 4,7/5 (Google, 251 Bewertungen)</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Empfehlung:</strong> Als „Perle" beschrieben für seine Holzofenpizzen, hochwertige Zutaten und angenehme Atmosphäre</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Kommentar:</strong> Moderne Pizzeria-Rôtisserie am Meer, gesellige und schmackhafte italienische Küche</p>
+            </div>
           </div>
         `
       },
@@ -929,6 +973,10 @@ class PopupManager {
                 Navigation öffnen
               </a>
             </div>
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+              <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Bewertung:</strong> ≈ 3,0/5 (Google, 58 Bewertungen)</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Kommentar:</strong> Praktisch für Lieferung</p>
+            </div>
           </div>
         `
       },
@@ -944,6 +992,10 @@ class PopupManager {
                 <i class="fas fa-location-arrow"></i>
                 Navigation öffnen
               </a>
+            </div>
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+              <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Kommentar:</strong> Bar-/Pizzakonzept zum Mitnehmen oder Vor-Ort-Essen, mit Terrasse am Meer; Team wird als sehr freundlich beschrieben</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Empfehlung:</strong> Facebook-Bewertung: „Super Pizza mit toller Aussicht. Sehr freundliches Team. Ich empfehle es!"</p>
             </div>
           </div>
         `
@@ -983,6 +1035,11 @@ class PopupManager {
                 <i class="fas fa-location-arrow"></i>
                 Navigation öffnen
               </a>
+            </div>
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+              <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Bewertung:</strong> 4,8/5 (Google, 649 Bewertungen)</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Empfehlung:</strong> Sehr geschätzt für Sicherheit, Gastfreundschaft und Qualität der Ausrüstung</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Kommentar:</strong> Tauchzentrum in Malendure seit 1987, Referenz für die Erkundung des Cousteau-Reservats</p>
             </div>
           </div>
         `
@@ -1026,6 +1083,11 @@ class PopupManager {
                 Navigation öffnen
               </a>
             </div>
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+              <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Bewertung:</strong> 4,4/5 (Google, 3.400 Bewertungen)</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Empfehlung:</strong> Oft empfohlen für klare Erklärungen und großzügige Verkostungen</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Kommentar:</strong> Lebendiges Ökomuseum über Kakaoanbau, Gartenrundgang und Vorführungen</p>
+            </div>
           </div>
         `
       },
@@ -1042,6 +1104,10 @@ class PopupManager {
                 <i class="fas fa-location-arrow"></i>
                 Navigation öffnen
               </a>
+            </div>
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+              <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Bewertung:</strong> 4,2/5 (Google, 189 Bewertungen)</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Empfehlung:</strong> Empfohlen, um die Geschichte des Rums und lokale Traditionen zu entdecken</p>
             </div>
           </div>
         `
@@ -1060,6 +1126,11 @@ class PopupManager {
                 Navigation öffnen
               </a>
             </div>
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+              <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Bewertung:</strong> 3,9/5 (Google, 370 Bewertungen)</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Empfehlung:</strong> Empfohlen für grüne Umgebung und kulturellen Aspekt</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Kommentar:</strong> Ehemaliges „Maison du Bois", heute botanischer Park und Traditionsmuseum</p>
+            </div>
           </div>
         `
       },
@@ -1076,6 +1147,11 @@ class PopupManager {
                 <i class="fas fa-location-arrow"></i>
                 Navigation öffnen
               </a>
+            </div>
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+              <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Bewertung:</strong> 4,3/5 (Google, 4.496 Bewertungen)</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Empfehlung:</strong> Bedeutendes Erinnerungszentrum zur Sklaverei, oft als Muss in Guadeloupe genannt</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Kommentar:</strong> Modernes und symbolisches Museum mit Dauerausstellungen und Wechselausstellungen, international anerkannt</p>
             </div>
           </div>
         `
@@ -1094,6 +1170,11 @@ class PopupManager {
                 Navigation öffnen
               </a>
             </div>
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+              <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Bewertung:</strong> 4,8/5 (Google, 1.596 Bewertungen)</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Empfehlung:</strong> Sehr geschätzt für die Qualität der handwerklichen Biere und tropische Umgebung</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Kommentar:</strong> Geselliger Biergarten am Fluss, originelle lokale Biere und musikalische Atmosphäre</p>
+            </div>
           </div>
         `
       },
@@ -1110,6 +1191,11 @@ class PopupManager {
                 <i class="fas fa-location-arrow"></i>
                 Navigation öffnen
               </a>
+            </div>
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+              <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Bewertung:</strong> 3,9/5 (Google, 2.500 Bewertungen)</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Empfehlung:</strong> Gilt als eines der wichtigsten Aquarien der Karibik</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Kommentar:</strong> Am Yachthafen von Gosier gelegen, mit über 80 Fischarten und 50 Korallenarten, pädagogische Becken</p>
             </div>
           </div>
         `
@@ -1205,15 +1291,35 @@ class PopupManager {
           <div class="guide-popup-content">
             <h4><i class="fas fa-seedling guide-icon seedling"></i>Botanischer Garten von Deshaies</h4>
             <p>2-stündiger Spaziergang in einer üppigen Umgebung.</p>
+            <div style="margin: 15px 0; padding: 10px; background: #f0f8f0; border-left: 3px solid #4caf50; border-radius: 3px;">
+              <p style="margin: 0; font-style: italic; font-size: 14px;"><strong style="font-style: italic;">Bewertung:</strong> 4,7/5 (Google, 8.900 Bewertungen)</p>
+              <p style="margin: 5px 0 0 0; font-style: italic; font-size: 14px;"><strong style="font-style: italic;">Empfehlung:</strong> Oft als „bemerkenswerter Garten" beschrieben, unbedingt sehenswert</p>
+              <p style="margin: 5px 0 0 0; font-style: italic; font-size: 14px;"><strong style="font-style: italic;">Kommentar:</strong> 7 Hektar großer Park mit tropischer Flora, Wasserfällen, Voliere und Panoramarestaurant</p>
+            </div>
 
             <h4><i class="fas fa-fort-awesome guide-icon fort"></i>Fort Delgrès (Basse-Terre)</h4>
             <p>Bedeutende historische Stätte, kostenloser Besuch.</p>
+            <div style="margin: 15px 0; padding: 10px; background: #f0f8f0; border-left: 3px solid #4caf50; border-radius: 3px;">
+              <p style="margin: 0; font-style: italic; font-size: 14px;"><strong style="font-style: italic;">Bewertung:</strong> 4,2/5 (Google, 1.300 Bewertungen)</p>
+              <p style="margin: 5px 0 0 0; font-style: italic; font-size: 14px;"><strong style="font-style: italic;">Empfehlung:</strong> Unverzichtbar wegen seiner historischen Rolle im Kampf gegen die Sklaverei</p>
+              <p style="margin: 5px 0 0 0; font-style: italic; font-size: 14px;"><strong style="font-style: italic;">Kommentar:</strong> Festung aus dem 17. Jahrhundert, denkmalgeschützt, mit Panoramablick und Ausstellungen</p>
+            </div>
 
             <h4><i class="fas fa-shopping-basket guide-icon market"></i>Markt von Basse-Terre</h4>
             <p>Täglicher Markt (außer Sonntag und Montag), besonders lebhaft am Samstag. Ideal für Gewürze, Vanille und lokale Produkte.</p>
+            <div style="margin: 15px 0; padding: 10px; background: #f0f8f0; border-left: 3px solid #4caf50; border-radius: 3px;">
+              <p style="margin: 0; font-style: italic; font-size: 14px;"><strong style="font-style: italic;">Bewertung:</strong> 3,8/5 (Google, 82 Bewertungen), 3,5/5 (TripAdvisor, 85 Bewertungen)</p>
+              <p style="margin: 5px 0 0 0; font-style: italic; font-size: 14px;"><strong style="font-style: italic;">Empfehlung:</strong> Geschätzt für Authentizität, lokale Produkte (Gewürze, Obst, Gemüse, Fisch) und traditionelle Atmosphäre</p>
+              <p style="margin: 5px 0 0 0; font-style: italic; font-size: 14px;"><strong style="font-style: italic;">Kommentar:</strong> Ikonischer überdachter Markt am Meer, bunt und lebendig, ideal, um das authentische Guadeloupe zu erleben</p>
+            </div>
 
             <h4><i class="fas fa-shopping-basket guide-icon market"></i>Markt von Sainte-Anne und sein Kunsthandwerksdorf</h4>
             <p>Souvenirs und lokale Produkte.</p>
+            <div style="margin: 15px 0; padding: 10px; background: #f0f8f0; border-left: 3px solid #4caf50; border-radius: 3px;">
+              <p style="margin: 0; font-style: italic; font-size: 14px;"><strong style="font-style: italic;">Bewertung:</strong> 4,2/5 (Google, 5.510 Bewertungen), 4,0/5 (TripAdvisor, 571 Bewertungen)</p>
+              <p style="margin: 5px 0 0 0; font-style: italic; font-size: 14px;"><strong style="font-style: italic;">Empfehlung:</strong> Sehr empfohlen für seine lebhafte Atmosphäre, vielfältigen Stände und Lage am Meer</p>
+              <p style="margin: 5px 0 0 0; font-style: italic; font-size: 14px;"><strong style="font-style: italic;">Kommentar:</strong> Kunst- und Lebensmittelmarkt am Strand, bekannt für Punsch, tropische Früchte, Gewürze und kreolisches Kunsthandwerk</p>
+            </div>
 
             <h4><i class="fas fa-mountain guide-icon mountain"></i>Pointe des Châteaux (Saint-François)</h4>
             <p>Beeindruckende Landschaften, die an die Bretagne erinnern.</p>

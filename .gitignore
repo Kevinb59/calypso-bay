@@ -173,3 +173,9 @@ Thumbs.db
 *.gs
 calypso-bay-*.gs
 
+# Fichiers Markdown de documentation (à garder en local uniquement)
+index.md
+villa.md
+activites.md
+infos.md
+
