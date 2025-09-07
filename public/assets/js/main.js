@@ -630,7 +630,7 @@
       event.stopPropagation()
     })
     .prepend(
-      '<div class="modal" tabIndex="-1"><div class="inner"><img src="" /></div></div>'
+      '<div class="modal" tabIndex="-1"><div class="inner"><img src="" alt="Image de la galerie" /></div></div>'
     )
     .find('img')
     .on('load', function (event) {
