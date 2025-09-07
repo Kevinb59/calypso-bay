@@ -18,6 +18,21 @@
   line-height: 1.3 !important;
 }
 
+/* Correction pour l'avertissement Lighthouse : s'assurer que tous les h1 dans des éléments de sectioning ont une taille de police définie */
+section h1,
+article h1,
+aside h1,
+nav h1 {
+  font-size: 3rem !important;
+  line-height: 1.2 !important;
+}
+
+/* Exception pour la bannière qui a une taille spécifique */
+.panel.banner h1.major {
+  font-size: 2.2rem !important;
+  line-height: 1.3 !important;
+}
+
 /* ========================================================
    📅 BOUTONS DE NAVIGATION DU CALENDRIER - SANS BORDURES
 ======================================================== */
@@ -921,5 +936,22 @@ input[type='date']::-webkit-calendar-picker-indicator {
   .planning-blur-style {
     border-right: none;
     border-bottom: 1px solid var(--blur-border);
+  }
+}
+
+/* Correction pour l'avertissement Lighthouse : media query pour les h1 dans des éléments de sectioning */
+@media screen and (max-width: 736px) {
+  section h1,
+  article h1,
+  aside h1,
+  nav h1 {
+    font-size: 2.25rem !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Exception pour la bannière qui garde sa taille spécifique */
+  .panel.banner h1.major {
+    font-size: 2.2rem !important;
+    line-height: 1.3 !important;
   }
 }
