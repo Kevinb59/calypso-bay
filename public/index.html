@@ -67,7 +67,24 @@
 				"additionalType": "EntirePlace",
 				"occupancy": { "@type": "QuantitativeValue", "value": 6 },
 				"numberOfBedrooms": 3,
-				"numberOfRooms": 5
+				"numberOfRooms": 5,
+				"numberOfBathrooms": 3,
+				"bed": [
+					{ "@type": "BedDetails", "typeOfBed": "Queen",  "numberOfBeds": 2 },
+					{ "@type": "BedDetails", "typeOfBed": "Single", "numberOfBeds": 2 }
+				],
+				"amenityFeature": [
+					{"@type": "LocationFeatureSpecification","name":"Lave-linge","value":true},
+					{"@type": "LocationFeatureSpecification","name":"Lave-vaisselle","value":true},
+					{"@type": "LocationFeatureSpecification","name":"Télévision","value":true},
+					{"@type": "LocationFeatureSpecification","name":"Piscine à débordement","value":true},
+					{"@type": "LocationFeatureSpecification","name":"Terrasse privée","value":true},
+					{"@type": "LocationFeatureSpecification","name":"Barbecue","value":true},
+					{"@type": "LocationFeatureSpecification","name":"Jardin privé","value":true},
+					{"@type": "LocationFeatureSpecification","name":"Sans vis-à-vis","value":true},
+					{"@type": "LocationFeatureSpecification","name":"Coffre-fort","value":true},
+					{"@type": "LocationFeatureSpecification","name":"Logement de plain-pied","value":true}
+				]
 			},
 			"aggregateRating": {
 				"@type": "AggregateRating",
@@ -78,24 +95,22 @@
 				"reviewCount": 52
 			},
 			"review": [
-				{
-					"@type": "Review",
-					"itemReviewed": { "@type": "VacationRental", "name": "Calypso Bay" },
-					"reviewRating": { "@type":"Rating","ratingValue": 4.92,"bestRating": 5,"worstRating": 1 },
-					"author": { "@type":"Organization","name":"Airbnb" },
-					"reviewBody": "Villa exceptionnelle avec vue imprenable sur la mer",
-					"url": "https://www.airbnb.fr/rooms/718692761956767082",
-					"datePublished": "2025-09-06"
-				},
-				{
-					"@type": "Review",
-					"itemReviewed": { "@type": "VacationRental", "name": "Calypso Bay" },
-					"reviewRating": { "@type":"Rating","ratingValue": 4.75,"bestRating": 5,"worstRating": 1 },
-					"author": { "@type":"Organization","name":"Booking.com" },
-					"reviewBody": "Villa de luxe avec équipements de qualité",
-					"url": "https://www.booking.com/hotel/gp/calypso-bay.fr.html",
-					"datePublished": "2025-09-06"
-				}
+			{
+				"@type": "Review",
+				"reviewRating": { "@type": "Rating", "ratingValue": 4.92, "bestRating": 5, "worstRating": 1 },
+				"author": { "@type": "Organization", "name": "Airbnb" },
+				"reviewBody": "Villa exceptionnelle avec vue imprenable sur la mer",
+				"url": "https://www.airbnb.fr/rooms/718692761956767082",
+				"datePublished": "2025-09-10"
+			},
+			{
+				"@type": "Review",
+				"reviewRating": { "@type": "Rating", "ratingValue": 4.75, "bestRating": 5, "worstRating": 1 },
+				"author": { "@type": "Organization", "name": "Booking.com" },
+				"reviewBody": "Villa de luxe avec équipements de qualité",
+				"url": "https://www.booking.com/hotel/gp/calypso-bay.fr.html",
+				"datePublished": "2025-09-10"
+			}
 			],
 			"url": "https://www.calypso-bay.com",
 			"mainEntityOfPage": "https://www.calypso-bay.com/",
