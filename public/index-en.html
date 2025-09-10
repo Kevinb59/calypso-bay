@@ -19,7 +19,16 @@
 			"image": [
 				"https://www.calypso-bay.com/images/pic01.webp",
 				"https://www.calypso-bay.com/images/pic02.webp",
-				"https://www.calypso-bay.com/images/pic04.webp"
+				"https://www.calypso-bay.com/images/pic04.webp",
+				"https://www.calypso-bay.com/images/gallery/fulls/Autres/02.webp",
+				"https://www.calypso-bay.com/images/gallery/fulls/Chambre1/01.webp",
+				"https://www.calypso-bay.com/images/gallery/fulls/Chambre2/01.webp",
+				"https://www.calypso-bay.com/images/gallery/fulls/Chambre3/01.webp",
+				"https://www.calypso-bay.com/images/gallery/fulls/Espace-repas/04.webp",
+				"https://www.calypso-bay.com/images/gallery/fulls/Jardin/13.webp",
+				"https://www.calypso-bay.com/images/gallery/fulls/Piscine/06.webp",
+				"https://www.calypso-bay.com/images/gallery/fulls/Salon/06.webp",
+				"https://www.calypso-bay.com/images/gallery/fulls/Terasse/05.webp"
 			],
 			"address": {
 				"@type": "PostalAddress",
@@ -62,30 +71,46 @@
 			},
 			"aggregateRating": {
 				"@type": "AggregateRating",
-				"ratingValue": "4.8",
-				"bestRating": "5",
-				"worstRating": "1",
-				"ratingCount": "2"
+				"ratingValue": 4.8,
+				"bestRating": 5,
+				"worstRating": 1,
+				"ratingCount": 52,
+				"reviewCount": 52
 			},
 			"review": [
 				{
 					"@type": "Review",
-					"reviewRating": {"@type":"Rating","ratingValue":"4.92","bestRating":"5","worstRating":"1"},
-					"author": {"@type":"Organization","name":"Airbnb"},
+					"itemReviewed": { "@type": "VacationRental", "name": "Calypso Bay" },
+					"reviewRating": { "@type":"Rating","ratingValue": 4.92,"bestRating": 5,"worstRating": 1 },
+					"author": { "@type":"Organization","name":"Airbnb" },
 					"reviewBody": "Exceptional villa with stunning sea view",
 					"url": "https://www.airbnb.fr/rooms/718692761956767082",
 					"datePublished": "2025-09-06"
 				},
 				{
 					"@type": "Review",
-					"reviewRating": {"@type":"Rating","ratingValue":"9.5","bestRating":"10","worstRating":"1"},
-					"author": {"@type":"Organization","name":"Booking.com"},
+					"itemReviewed": { "@type": "VacationRental", "name": "Calypso Bay" },
+					"reviewRating": { "@type":"Rating","ratingValue": 4.75,"bestRating": 5,"worstRating": 1 },
+					"author": { "@type":"Organization","name":"Booking.com" },
 					"reviewBody": "Luxury villa with high-quality amenities",
 					"url": "https://www.booking.com/hotel/gp/calypso-bay.fr.html",
 					"datePublished": "2025-09-06"
 				}
 			],
 			"url": "https://www.calypso-bay.com",
+			"mainEntityOfPage": "https://www.calypso-bay.com/",
+			"hasMap": "https://www.google.com/maps/place/Calypso+Bay/@16.1517013,-61.7711117,1083m/data=!3m2!1e3!4b1!4m6!3m5!1s0x25229c922754d5a5:0x18e4d55d35c50457!8m2!3d16.1516962!4d-61.7685368!16s%2Fg%2F11yjlnbg1x",
+			"sameAs": [
+				"https://www.booking.com/hotel/gp/calypso-bay.fr.html",
+				"https://www.airbnb.fr/rooms/718692761956767082",
+				"https://www.gites.fr/gites_calypso-bay_bouillante_h5917350.htm",
+				"https://www.agoda.com/calypso-bay/hotel/bouillante-gp.html",
+				"https://fr.planetofhotels.com/guadeloupe/bouillante/calypso-bay",
+				"https://www.antilles-passion.com/nos-locations/calipso-bay/",
+				"https://www.bedandbreakfast.eu/fr/a/ioMW2qgt4QOa/calypso-bay",
+				"https://fr.readytotrip.com/hotels/Guadeloupe/Basse-Terre/Bouillante/calypso-bay/",
+				"https://www.google.com/maps/place/Calypso+Bay/@16.1517013,-61.7711117,1083m/data=!3m2!1e3!4b1!4m6!3m5!1s0x25229c922754d5a5:0x18e4d55d35c50457!8m2!3d16.1516962!4d-61.7685368!16s%2Fg%2F11yjlnbg1x"
+			],
 			"creator": {
 				"@type": "Organization",
 				"@id": "https://www.moriarty-design.fr/#org",
@@ -523,24 +548,45 @@
 									</a>
 								</li>
 
-								<li class="review-item">
-									<a href="https://www.booking.com/hotel/gp/calypso-bay.fr.html#tab-reviews" target="_blank" rel="noopener" class="review-link">
-										<img src="images/logos/BOOKING.webp" alt="Booking.com platform logo" class="logo-circle" loading="lazy" />
-										<div class="review-text">
-											<span>Booking</span>
-											<div class="review-row">
-												<span class="stars">
-													<i class="fas fa-star color1"></i>
-													<i class="fas fa-star color1"></i>
-													<i class="fas fa-star color1"></i>
-													<i class="fas fa-star color1"></i>
-													<i class="fas fa-star-half-alt color1"></i>
-												</span>
-												<span class="score">(9.5/10) – 44 reviews</span>
-											</div>
-										</div>
-									</a>
-								</li>
+						<li class="review-item">
+							<a href="https://www.booking.com/hotel/gp/calypso-bay.fr.html#tab-reviews" target="_blank" rel="noopener" class="review-link">
+								<img src="images/logos/BOOKING.webp" alt="Booking.com platform logo" class="logo-circle" loading="lazy" />
+								<div class="review-text">
+									<span>Booking</span>
+									<div class="review-row">
+										<span class="stars">
+											<i class="fas fa-star color1"></i>
+											<i class="fas fa-star color1"></i>
+											<i class="fas fa-star color1"></i>
+											<i class="fas fa-star color1"></i>
+											<i class="fas fa-star-half-alt color1"></i>
+										</span>
+										<span class="score">(4.75/5) – 46 reviews</span>
+									</div>
+								</div>
+							</a>
+						</li>
+
+						<li class="review-item">
+							<div class="review-link">
+								<div class="logo-circle" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.8em;">
+									<i class="fas fa-star"></i>
+								</div>
+								<div class="review-text">
+									<span>Overall rating</span>
+									<div class="review-row">
+										<span class="stars">
+											<i class="fas fa-star color1"></i>
+											<i class="fas fa-star color1"></i>
+											<i class="fas fa-star color1"></i>
+											<i class="fas fa-star color1"></i>
+											<i class="fas fa-star-half-alt color1"></i>
+										</span>
+										<span class="score">(4.8/5) – 52 reviews</span>
+									</div>
+								</div>
+							</div>
+						</li>
 							</ul>
 						</div>
 					</div>
