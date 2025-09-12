@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Calypso Bay — Visualiseur 3 iCal</title>
+    <style>
+      :root {
+        --bg: #0f172a; /* slate-900 */
+        --panel: #111827; /* gray-900  */
+        --muted: #94a3b8; /* slate-400 */
+        --text: #e5e7eb; /* gray-200  */
+        --grid: #334155; /* slate-700 */
+        --line: #64748b; /* slate-500 */
+        --col-w: 42px; /* largeur d'un jour */
+        --track-h: 40px; /* hauteur d'une piste */
+
+        --site: #10b981; /* emerald */
+        --airbnb: #ef4444; /* red */
+        --booking: #3b82f6; /* blue */
+        --gap: #f59e0b; /* amber for gap blocks if ever used */
+      }
+      html,
+      body {
+        height: 100%;
+        overflow-x: hidden;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font: 14px/1.4 system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+        overflow-y: auto;
+      }
+      .wrap {
+        max-width: 1200px;
+        margin: 24px auto;
+        padding: 0 16px;
+        min-height: calc(100vh - 48px);
+        box-sizing: border-box;
+      }
+      h1 {
+        font-size: 20px;
+        margin: 0 0 12px;
+      }
+      .panel {
+        background: var(--panel);
+        border: 1px solid #1f2937;
+        border-radius: 16px;
+        padding: 14px;
+      }
+
+      .controls {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 8px;
+        align-items: end;
+      }
+      .controls .field {
+        grid-column: span 12;
+      }
+      @media (min-width: 600px) {
+        .controls .field.sm-6 {
+          grid-column: span 6;
+        }
+        .controls .field.sm-4 {
+          grid-column: span 4;
+        }
+        .controls .field.sm-3 {
+          grid-column: span 3;
+        }
+        .controls .field.sm-2 {
+          grid-column: span 2;
+        }
+      }
+      .date-fields {
+        grid-column: span 12;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .date-field {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .date-field label {
+        margin: 0;
+        min-width: 60px;
+        flex-shrink: 0;
+      }
+      .date-field input {
+        flex: 1;
+        min-width: 250px;
+      }
+      .date-field-with-source {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .date-field-with-source .date-input-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex: 1;
+      }
+      .date-field-with-button {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .date-field-with-button .date-input-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex: 1;
+      }
+      .date-field-with-button .button-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+      }
+      .date-field-with-slider {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .date-field-with-slider .date-input-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex: 1;
+      }
+      .date-field-with-slider .slider-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+      }
+      .date-field-with-slider .slider-group label {
+        margin: 0;
+        min-width: 100px;
+        flex-shrink: 0;
+      }
+      .date-field-with-slider .slider-group input {
+        min-width: 120px;
+      }
+      label {
+        display: block;
+        font-size: 12px;
+        color: var(--muted);
+        margin: 0 0 6px;
+      }
+      input[type='date'],
+      input[type='url'],
+      input[type='text'],
+      textarea,
+      select {
+        width: 100%;
+        background: #0b1220;
+        color: var(--text);
+        border: 1px solid #1f2937;
+        border-radius: 10px;
+        padding: 8px 10px;
+        outline: none;
+      }
+      input[type='date'] {
+        padding: 4px 6px;
+        font-size: 12px;
+        min-width: 120px;
+        max-width: 140px;
+      }
+      textarea {
+        min-height: 90px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+      .btn {
+        background: #334155;
+        color: #fff;
+        border: 1px solid #475569;
+        padding: 8px 12px;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+      .btn.primary {
+        background: #2563eb;
+        border-color: #1d4ed8;
+      }
+      .btn.row {
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .legend {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        margin: 10px 0 0;
+      }
+      .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 999px;
+        display: inline-block;
+        margin-right: 6px;
+      }
+
+      /* Timeline */
+      .timeline {
+        margin-top: 16px;
+        border-radius: 16px;
+        border: 1px solid #1f2937;
+        overflow: hidden;
+        display: flex;
+      }
+      .timeline-fixed {
+        width: 180px;
+        background: #0b1220;
+        border-right: 1px solid #1f2937;
+        flex-shrink: 0;
+      }
+      .timeline-scrollable {
+        flex: 1;
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+      .tl-head {
+        display: grid;
+        grid-template-columns: repeat(var(--days), var(--col-w));
+        align-items: stretch;
+        background: #0b1220;
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        height: 44px;
+      }
+      .tl-body {
+        display: flex;
+        flex-direction: column;
+      }
+      .tl-fixed-header {
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0 10px;
+        border-bottom: 1px solid #1f2937;
+        color: #94a3b8;
+        font-size: 12px;
+        font-weight: 500;
+      }
+      .tl-fixed-labels {
+        display: flex;
+        flex-direction: column;
+      }
+      .tl-fixed-label {
+        height: var(--track-h);
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0 10px;
+        border-bottom: 1px dashed #1f2937;
+        color: #cbd5e1;
+        font-size: 12px;
+      }
+      .tl-grid {
+        position: relative;
+      }
+      .vertical-separator {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: rgba(255, 255, 255, 0.15);
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .tl-head .cell {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-left: 1px solid #1f2937;
+        color: #cbd5e1;
+        font-size: 12px;
+        text-align: center;
+        padding: 4px 2px;
+      }
+      .tl-head .cell div:first-child {
+        font-weight: 500;
+        line-height: 1.2;
+      }
+      .tl-head .cell div:last-child {
+        font-size: 10px;
+        opacity: 0.8;
+        line-height: 1;
+        margin-top: 1px;
+      }
+
+      .track {
+        position: relative;
+        height: var(--track-h);
+        border-bottom: 1px dashed #1f2937;
+        display: flex;
+        align-items: center;
+      }
+      .bar {
+        position: absolute;
+        height: 22px;
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        color: white;
+        filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.25));
+        white-space: nowrap;
+        padding: 0 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2;
+      }
+      .bar.site {
+        background: var(--site);
+      }
+      .bar.airbnb {
+        background: var(--airbnb);
+      }
+      .bar.booking {
+        background: var(--booking);
+      }
+      .bar.prix {
+        height: 16px;
+        border-radius: 8px;
+        font-size: 10px;
+        font-weight: 500;
+        padding: 0 0px;
+        min-width: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .bar.prix-225 {
+        background: #22c55e; /* vert */
+      }
+      .bar.prix-245 {
+        background: #3b82f6; /* bleu clair */
+      }
+      .bar.prix-275 {
+        background: #f97316; /* orange */
+      }
+      .bar.prix-340 {
+        background: #ef4444; /* rouge */
+      }
+      .bar.gap {
+        background: var(--gap);
+        color: black;
+      }
+
+      .todayline {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--line);
+        pointer-events: none;
+      }
+
+      /* Mise en évidence des colonnes */
+      .column-highlight {
+        background: rgba(59, 130, 246, 0.3) !important;
+        border-left: 2px solid #3b82f6 !important;
+        border-right: 2px solid #3b82f6 !important;
+      }
+      .tl-head .cell.column-highlight {
+        background: rgba(59, 130, 246, 0.3) !important;
+        color: #60a5fa !important;
+        font-weight: 600 !important;
+      }
+
+      .hint {
+        color: var(--muted);
+        font-size: 12px;
+        margin-top: 8px;
+      }
+      .flex {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="panel">
+        <div class="controls">
+          <div class="field date-fields">
+            <div class="date-field date-field-with-button">
+              <div class="date-input-group">
+                <label>Début</label>
+                <input id="inpStart" type="date" />
+              </div>
+              <div class="button-group">
+                <button id="btnLoad" class="btn primary">Rafraîchir</button>
+              </div>
+            </div>
+            <div class="date-field date-field-with-slider">
+              <div class="date-input-group">
+                <label>Fin</label>
+                <input id="inpEnd" type="date" />
+              </div>
+              <div class="slider-group">
+                <label>Largeur d'un jour</label>
+                <input
+                  id="inpColW"
+                  type="range"
+                  min="28"
+                  max="72"
+                  step="1"
+                  value="42"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="legend">
+          <span><i class="dot" style="background: var(--site)"></i>Site</span>
+          <span
+            ><i class="dot" style="background: var(--airbnb)"></i>Airbnb</span
+          >
+          <span
+            ><i class="dot" style="background: var(--booking)"></i>Booking</span
+          >
+          <span
+            ><i class="dot" style="background: #22c55e"></i>Basse saison</span
+          >
+          <span><i class="dot" style="background: #3b82f6"></i>Classique</span>
+          <span
+            ><i class="dot" style="background: #f97316"></i>Vacances
+            scolaires</span
+          >
+          <span
+            ><i class="dot" style="background: #ef4444"></i>Noël / Nouvel
+            an</span
+          >
+        </div>
+      </div>
+
+      <div class="timeline" id="timeline" hidden>
+        <div class="timeline-fixed" id="timelineFixed">
+          <div class="tl-fixed-header">Jour</div>
+          <div class="tl-fixed-labels" id="tlFixedLabels"></div>
+        </div>
+        <div class="timeline-scrollable">
+          <div class="tl-head" id="tlHead"></div>
+          <div class="tl-body">
+            <div class="tl-grid" id="tlGrid">
+              <div class="todayline" id="todayLine" style="display: none"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      ;(function () {
+        // --- Utils dates ---
+        const MS_DAY = 86400000
+        const tracks = ['site', 'airbnb', 'booking', 'prix']
+        const colors = {
+          site: 'var(--site)',
+          airbnb: 'var(--airbnb)',
+          booking: 'var(--booking)',
+          prix: '#8b5cf6' // violet pour les prix
+        }
+
+        function toISO(d) {
+          const x = new Date(d)
+          x.setHours(0, 0, 0, 0)
+          return `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(
+            2,
+            '0'
+          )}-${String(x.getDate()).padStart(2, '0')}`
+        }
+        function fromISO(iso) {
+          const [y, m, d] = iso.split('-').map(Number)
+          return new Date(y, m - 1, d, 12, 0, 0)
+        } // midi anti-DST
+        function clamp(v, min, max) {
+          return Math.max(min, Math.min(max, v))
+        }
+        function eachDay(startISO, endISO) {
+          // end exclu
+          let d = fromISO(startISO),
+            end = fromISO(endISO)
+          const out = []
+          while (d < end) {
+            out.push(toISO(d))
+            d = new Date(d.getTime() + MS_DAY)
+          }
+          return out
+        }
+
+        // --- ICS parsing minimal ---
+        function unfoldICS(text) {
+          return text.replace(/\r?\n[ \t]/g, '')
+        }
+        function parseICSText(text, source) {
+          const lines = unfoldICS(text).split(/\r?\n/)
+          let cur = null
+          const out = []
+          const push = () => {
+            if (!cur) return
+            const { DTSTART, DTEND, SUMMARY, UID } = cur
+            const s = parseICSDate(DTSTART),
+              e = parseICSDate(DTEND)
+            if (s && e && s < e) {
+              out.push({
+                source,
+                start: s,
+                end: e,
+                summary: SUMMARY || '',
+                uid: UID || ''
+              })
+            }
+            cur = null
+          }
+          for (const line of lines) {
+            if (!line) continue
+            if (line === 'BEGIN:VEVENT') {
+              cur = {}
+              continue
+            }
+            if (line === 'END:VEVENT') {
+              push()
+              continue
+            }
+            if (!cur) continue
+            const i = line.indexOf(':')
+            if (i < 0) continue
+            const left = line.slice(0, i),
+              val = decodeICS(line.slice(i + 1))
+            const prop = left.split(';')[0].toUpperCase()
+            cur[prop] = val
+          }
+          return out
+        }
+        function decodeICS(s) {
+          return s
+            .replace(/\\n/gi, '\n')
+            .replace(/\\,/g, ',')
+            .replace(/\\;/g, ';')
+            .replace(/\\\\/g, '\\')
+        }
+        function parseICSDate(v) {
+          if (!v) return null
+          const s = String(v).trim()
+          let m = s.match(/^(\d{4})(\d{2})(\d{2})$/)
+          if (m) return new Date(+m[1], +m[2] - 1, +m[3], 12, 0, 0)
+          m = s.match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z$/)
+          if (m)
+            return new Date(
+              Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6])
+            )
+          m = s.match(/^(\d{4})-(\d{2})-(\d{2})$/)
+          if (m) return new Date(+m[1], +m[2] - 1, +m[3], 12, 0, 0)
+          return new Date(s)
+        }
+
+        // --- CSV parsing des prix (expects headers: DATES, PRIX) ---
+        function parsePrixCSV(text) {
+          const norm = text
+            .replace(/^\uFEFF/, '')
+            .replace(/\r\n?/g, '\n')
+            .trim()
+          const lines = norm.split('\n').filter(Boolean)
+          if (!lines.length) return []
+
+          const headers = lines
+            .shift()
+            .split(',')
+            .map((h) => h.trim().toLowerCase())
+          const H = Object.fromEntries(headers.map((h, i) => [h, i]))
+
+          const hasDates = 'dates' in H
+          const hasPrix = 'prix' in H
+
+          if (!hasDates || !hasPrix)
+            throw new Error(
+              'CSV des prix doit contenir les colonnes DATES,PRIX'
+            )
+
+          const out = []
+          for (const line of lines) {
+            const cells = line.split(',')
+            const dateStr = (cells[H.dates] || '').trim()
+            const prixStr = (cells[H.prix] || '').trim()
+
+            if (!dateStr || !prixStr || prixStr === 'x') continue
+
+            // Parser la date française (ex: "mar. 05 août 2025")
+            const dateMatch = dateStr.match(
+              /(\d{1,2})\s+([a-zA-Zàâäéèêëïîôöùûüÿç]+)\s+(\d{4})/
+            )
+            if (!dateMatch) continue
+
+            const [, day, monthName, year] = dateMatch
+            const monthMap = {
+              janvier: 0,
+              février: 1,
+              mars: 2,
+              avril: 3,
+              mai: 4,
+              juin: 5,
+              juillet: 6,
+              août: 7,
+              septembre: 8,
+              octobre: 9,
+              novembre: 10,
+              décembre: 11
+            }
+            const month = monthMap[monthName.toLowerCase()]
+            if (month === undefined) {
+              console.log(
+                'Mois non reconnu:',
+                monthName,
+                'pour la date:',
+                dateStr
+              )
+              continue
+            }
+
+            const date = new Date(year, month, parseInt(day), 12, 0, 0)
+            const prix = parseInt(prixStr)
+
+            if (!isNaN(prix)) {
+              out.push({
+                date: date,
+                prix: prix
+              })
+              // Debug: afficher les dates parsées
+              console.log(
+                `Prix parsé: ${prix}€ pour ${dateStr} -> ${toISO(date)}`
+              )
+            }
+          }
+          return out
+        }
+
+        // --- CSV parsing (expects headers: source,type,status,startDate,endDate) ---
+        function parseCSV(text) {
+          const norm = text
+            .replace(/^\uFEFF/, '')
+            .replace(/\r\n?/g, '\n')
+            .trim()
+          const lines = norm.split('\n').filter(Boolean)
+          if (!lines.length) return []
+          const headers = lines
+            .shift()
+            .split(',')
+            .map((h) => h.trim().toLowerCase())
+          const H = Object.fromEntries(headers.map((h, i) => [h, i]))
+          const hasSrc = 'source' in H,
+            hasS = 'startdate' in H,
+            hasE = 'enddate' in H
+          if (!hasS || !hasE)
+            throw new Error(
+              'CSV doit contenir au minimum les colonnes startDate,endDate'
+            )
+          const out = []
+          for (const line of lines) {
+            const cells = line.split(',')
+            const src = hasSrc
+              ? (cells[H.source] || '').trim().toLowerCase()
+              : 'site'
+            const s = (cells[H.startdate] || '').trim()
+            const e = (cells[H.enddate] || '').trim()
+            const type = 'type' in H ? (cells[H.type] || '').trim() : ''
+            const status = 'status' in H ? (cells[H.status] || '').trim() : ''
+            const summary =
+              'summary' in H ? (cells[H.summary] || '').trim() : ''
+
+            if (!s || !e) continue
+            const sd = fromISO(s),
+              ed = fromISO(e)
+            if (sd < ed) {
+              const displaySummary =
+                summary || (type && status ? `${type} (${status})` : 'Reserved')
+              out.push({
+                source: src,
+                start: sd,
+                end: ed,
+                summary: displaySummary,
+                type: type || '',
+                status: status || '',
+                originalSummary: summary || ''
+              })
+            }
+          }
+          return out
+        }
+
+        // --- Rendering ---
+        const elTimeline = document.getElementById('timeline')
+        const elHead = document.getElementById('tlHead')
+        const elGrid = document.getElementById('tlGrid')
+        const elToday = document.getElementById('todayLine')
+        const elScrollable = document.querySelector('.timeline-scrollable')
+        const elFixedLabels = document.getElementById('tlFixedLabels')
+
+        function setCSSVar(name, value) {
+          document.documentElement.style.setProperty(name, value)
+        }
+
+        function buildTimeline(
+          events,
+          rangeStartISO,
+          rangeEndISO,
+          prixData = []
+        ) {
+          // Prepare
+          elTimeline.hidden = false
+
+          // Filtrer les événements pour ne garder que ceux dans la période
+          const rangeStart = fromISO(rangeStartISO)
+          const rangeEnd = fromISO(rangeEndISO)
+          const filteredEvents = events.filter((ev) => {
+            return ev.start < rangeEnd && ev.end > rangeStart
+          })
+
+          // Compute days
+          const days = eachDay(rangeStartISO, rangeEndISO) // end exclu
+          setCSSVar('--days', days.length)
+
+          // Calculate total width
+          const totalW = days.length * getColW()
+
+          // Header
+          elHead.innerHTML = ''
+          elHead.style.width = totalW + 'px'
+          days.forEach((iso, index) => {
+            const c = document.createElement('div')
+            c.className = 'cell'
+            c.style.cursor = 'pointer'
+            c.addEventListener('click', () => handleColumnClick(index))
+            const d = fromISO(iso)
+
+            const daySpan = document.createElement('div')
+            daySpan.textContent = d.toLocaleDateString('fr-FR', {
+              day: '2-digit'
+            })
+
+            const monthSpan = document.createElement('div')
+            monthSpan.textContent = d.toLocaleDateString('fr-FR', {
+              month: 'short'
+            })
+
+            c.appendChild(daySpan)
+            c.appendChild(monthSpan)
+            elHead.appendChild(c)
+          })
+
+          // Fixed labels
+          elFixedLabels.innerHTML = ''
+          tracks.forEach((t) => {
+            const rl = document.createElement('div')
+            rl.className = 'tl-fixed-label'
+            rl.textContent = t[0].toUpperCase() + t.slice(1)
+            elFixedLabels.appendChild(rl)
+          })
+
+          // Grid body
+          elGrid.innerHTML = ''
+          elGrid.style.setProperty('--col-w', getColW() + 'px')
+
+          // Create vertical separators
+          const colW = getColW()
+          for (let i = 1; i < days.length; i++) {
+            const separator = document.createElement('div')
+            separator.className = 'vertical-separator'
+            separator.style.left = i * colW + 'px'
+            elGrid.appendChild(separator)
+          }
+
+          // Draw tracks containers
+          const trackEls = {}
+          tracks.forEach((t, i) => {
+            const tr = document.createElement('div')
+            tr.className = 'track'
+            tr.style.width = totalW + 'px'
+            tr.dataset.source = t
+            elGrid.appendChild(tr)
+            trackEls[t] = tr
+          })
+
+          // Today line (if in range)
+          const nowIso = toISO(new Date())
+          const idx = days.indexOf(nowIso)
+          if (idx >= 0) {
+            elToday.style.display = 'block'
+            elToday.style.left = idx * getColW() + 'px'
+          } else elToday.style.display = 'none'
+
+          // Bars: absolutely positioned in their track
+          const leftBase = 0 // start of grid
+          for (const ev of filteredEvents) {
+            const sISO = toISO(ev.start),
+              eISO = toISO(ev.end) // all-day; end exclu
+            const si = days.indexOf(sISO),
+              ei = days.indexOf(eISO)
+            // partially out of range: compute pixel positions via clamps
+            const startIdx =
+              si < 0
+                ? Math.floor((ev.start - fromISO(rangeStartISO)) / MS_DAY)
+                : si
+            const endIdx =
+              ei < 0
+                ? Math.ceil((ev.end - fromISO(rangeStartISO)) / MS_DAY)
+                : ei
+            const colW = getColW()
+            // pixel: from half-day at start, to half-day at end
+            const left = leftBase + startIdx * colW + colW / 2
+            const width = Math.max(0, (endIdx - startIdx) * colW - colW / 2)
+            const t = tracks.includes(ev.source) ? ev.source : 'site'
+            const trEl = trackEls[t]
+            if (!trEl || width <= 0) continue
+            const bar = document.createElement('div')
+            bar.className = `bar ${t}`
+            bar.style.left = left + 'px'
+            bar.style.width = width + 'px'
+            bar.textContent = ''
+
+            // Créer le tooltip avec les informations du CSV
+            const source = ev.source || t
+            const type = ev.type || ''
+            const status = ev.status || ''
+            const originalSummary = ev.originalSummary || ''
+
+            let tooltipText = `Source: ${source}`
+            if (type) tooltipText += ` | Type: ${type}`
+            if (status) tooltipText += ` | Statut: ${status}`
+            if (originalSummary)
+              tooltipText += ` | Sommaire: ${originalSummary}`
+
+            bar.title = tooltipText
+            bar.style.cursor = 'pointer'
+            bar.addEventListener('click', (e) => {
+              e.stopPropagation()
+              // Calculer l'index de la colonne basé sur la position de la barre
+              const barLeft = parseInt(bar.style.left)
+              const colW = getColW()
+              const columnIndex = Math.round(barLeft / colW)
+              handleColumnClick(columnIndex)
+            })
+            trEl.appendChild(bar)
+          }
+
+          // Ajouter les prix comme barres dans la piste "prix"
+          const prixTrack = trackEls['prix']
+          if (prixTrack && prixData.length > 0) {
+            // Filtrer les prix dans la période
+            const filteredPrix = prixData.filter((p) => {
+              const prixDate = toISO(p.date)
+              return prixDate >= rangeStartISO && prixDate < rangeEndISO
+            })
+
+            for (const prix of filteredPrix) {
+              const prixDateISO = toISO(prix.date)
+              const dayIndex = days.indexOf(prixDateISO)
+              if (dayIndex >= 0) {
+                const colW = getColW()
+                const left = leftBase + dayIndex * colW
+                const width = colW // Barre de toute la largeur du jour
+
+                const prixBar = document.createElement('div')
+                // Assigner la classe CSS selon le prix
+                let prixClass = 'bar prix'
+                if (prix.prix === 225) prixClass += ' prix-225'
+                else if (prix.prix === 245) prixClass += ' prix-245'
+                else if (prix.prix === 275) prixClass += ' prix-275'
+                else if (prix.prix === 340) prixClass += ' prix-340'
+
+                prixBar.className = prixClass
+                prixBar.style.left = left + 'px'
+                prixBar.style.width = width + 'px'
+                prixBar.textContent = `${prix.prix}€`
+                prixBar.title = `Prix: ${prix.prix}€`
+                prixBar.style.cursor = 'pointer'
+                prixBar.addEventListener('click', (e) => {
+                  e.stopPropagation()
+                  handleColumnClick(dayIndex)
+                })
+
+                prixTrack.appendChild(prixBar)
+              }
+            }
+          }
+        }
+
+        function getColW() {
+          const r = document.getElementById('inpColW')
+          return Number(r.value || 42)
+        }
+
+        // --- Data loaders ---
+        async function loadData() {
+          let events = []
+          let prixData = []
+
+          // Charger les réservations
+          const url =
+            'https://docs.google.com/spreadsheets/d/e/2PACX-1vSwvUuLOZPWELzk4Kdc8uASTzdzLLU3D-QsvYl_O5hfoS7FUFmE0-fYbjqVcNJeiusv7mVAgfFmIpAj/pub?gid=191470409&single=true&output=csv'
+          const res = await fetch(url + '&v=' + Date.now(), {
+            cache: 'no-store'
+          })
+          if (!res.ok) throw new Error('CSV fetch failed ' + res.status)
+          const text = await res.text()
+          events = parseCSV(text)
+
+          // Charger les prix
+          const prixUrl =
+            'https://docs.google.com/spreadsheets/d/e/2PACX-1vSwvUuLOZPWELzk4Kdc8uASTzdzLLU3D-QsvYl_O5hfoS7FUFmE0-fYbjqVcNJeiusv7mVAgfFmIpAj/pub?gid=852347305&single=true&output=csv'
+          const prixRes = await fetch(prixUrl + '&v=' + Date.now(), {
+            cache: 'no-store'
+          })
+          if (prixRes.ok) {
+            const prixText = await prixRes.text()
+            prixData = parsePrixCSV(prixText)
+            console.log(`Prix rechargés: ${prixData.length} entrées`)
+          }
+
+          // Derive period
+          if (!events.length) throw new Error('Aucun événement chargé')
+          const startISO = document.getElementById('inpStart').value
+          const endISO = document.getElementById('inpEnd').value
+
+          if (!startISO || !endISO) {
+            // Si pas de dates définies, utiliser les dates des événements
+            const min = new Date(
+              Math.min(...events.map((e) => e.start.getTime()))
+            )
+            const max = new Date(
+              Math.max(...events.map((e) => e.end.getTime()))
+            )
+            const defaultStart = toISO(min)
+            const defaultEnd = toISO(new Date(max.getTime() + MS_DAY))
+            document.getElementById('inpStart').value = defaultStart
+            document.getElementById('inpEnd').value = defaultEnd
+            return loadData() // Recharger avec les dates par défaut
+          }
+
+          // Render
+          buildTimeline(events, startISO, endISO, prixData)
+
+          // Limiter le défilement aux dates affichées
+          setTimeout(() => {
+            const maxScroll = totalW - elScrollable.clientWidth
+            if (maxScroll > 0) {
+              elScrollable.style.maxWidth = '100%'
+              elScrollable.style.overflowX = 'auto'
+            } else {
+              elScrollable.style.overflowX = 'hidden'
+            }
+          }, 100)
+        }
+
+        // --- UI wiring ---
+        let selectedColumn = -1
+
+        // Gestion des clics sur les colonnes
+        function handleColumnClick(columnIndex) {
+          // Si on clique sur la même colonne, on désélectionne
+          if (selectedColumn === columnIndex) {
+            selectedColumn = -1
+          } else {
+            selectedColumn = columnIndex
+          }
+          updateColumnHighlight()
+        }
+
+        function updateColumnHighlight() {
+          // Supprimer toutes les mises en évidence
+          document.querySelectorAll('.column-highlight').forEach((el) => {
+            el.classList.remove('column-highlight')
+          })
+
+          // Ajouter la mise en évidence à la colonne sélectionnée
+          if (selectedColumn >= 0) {
+            // Mise en évidence de l'en-tête
+            const headerCells = document.querySelectorAll('.tl-head .cell')
+            if (headerCells[selectedColumn]) {
+              headerCells[selectedColumn].classList.add('column-highlight')
+            }
+
+            // Mise en évidence de toute la colonne dans chaque track
+            const tracks = document.querySelectorAll('.track')
+            tracks.forEach((track) => {
+              // Créer un élément de mise en évidence pour toute la colonne
+              const highlight = document.createElement('div')
+              highlight.className = 'column-highlight'
+              highlight.style.position = 'absolute'
+              highlight.style.top = '0'
+              highlight.style.bottom = '0'
+              highlight.style.left = selectedColumn * getColW() + 0.5 + 'px'
+              highlight.style.width = getColW() - 1 + 'px' // -1 pour éviter le débordement
+              highlight.style.pointerEvents = 'none'
+              highlight.style.zIndex = '1'
+              highlight.style.boxSizing = 'border-box'
+              track.appendChild(highlight)
+            })
+          }
+        }
+
+        document
+          .getElementById('btnLoad')
+          .addEventListener('click', async () => {
+            try {
+              await loadData()
+            } catch (err) {
+              alert(err.message || String(err))
+            }
+          })
+
+        // Rendre fonctionnelle la barre de réglage de largeur
+        document.getElementById('inpColW').addEventListener('input', () => {
+          const colW = getColW()
+          setCSSVar('--col-w', colW + 'px')
+
+          // Re-render la timeline si elle existe
+          if (!elTimeline.hidden) {
+            const startISO = document.getElementById('inpStart').value
+            const endISO = document.getElementById('inpEnd').value
+            if (startISO && endISO) {
+              // Recharger les données et re-render
+              loadData().catch(() => {})
+            }
+          }
+        })
+
+        // Set default dates (aujourd'hui → +1 an)
+        const now = new Date()
+        const startDef = now
+        const endDef = new Date(
+          now.getFullYear() + 1,
+          now.getMonth(),
+          now.getDate()
+        )
+        document.getElementById('inpStart').value = toISO(startDef)
+        document.getElementById('inpEnd').value = toISO(endDef)
+
+        // Charger automatiquement le CSV au démarrage
+        setTimeout(() => {
+          loadData().catch((err) => {
+            console.log('Erreur lors du chargement automatique:', err.message)
+          })
+        }, 500)
+      })()
+    </script>
+  </body>
+</html>

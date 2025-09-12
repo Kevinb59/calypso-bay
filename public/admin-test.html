@@ -1,0 +1,2331 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tableau de bord – Réservations & Visualiseur</title>
+
+    <!-- Favicons -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/logos/favicons/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/logos/favicons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/logos/favicons/favicon-16x16.png"
+    />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="shortcut icon" href="images/logos/favicons/favicon.ico" />
+    <style>
+      :root {
+        --bg: #0b0d10;
+        --panel: #ffffff;
+        --text: #0f172a;
+        --muted: #6b7280;
+        --primary: #5d3fd3;
+        --border: #e5e7eb;
+        --row: #f8fafc;
+        --badge-bg: #eef2ff;
+        --badge-text: #4338ca;
+        --radius: 14px;
+
+        /* Variables pour le visualiseur */
+        --grid: #334155;
+        --line: #64748b;
+        --col-w: 42px;
+        --track-h: 40px;
+        --site: #10b981;
+        --airbnb: #ef4444;
+        --booking: #3b82f6;
+        --gap: #f59e0b;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu,
+          Cantarell, Noto Sans, Helvetica, Arial, 'Apple Color Emoji',
+          'Segoe UI Emoji';
+        color: var(--text);
+      }
+      .container {
+        max-width: 1400px;
+        margin: 40px auto;
+        padding: 0 20px;
+        position: relative;
+        z-index: 1;
+      }
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        margin-bottom: 20px;
+      }
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 22px 22px 0 22px;
+      }
+      .title {
+        margin: 0;
+        font-size: 26px;
+        font-weight: 800;
+        letter-spacing: 0.2px;
+      }
+      .subtitle {
+        margin: 8px 0 18px 0;
+        color: var(--muted);
+      }
+      .filters {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .tabs {
+        display: flex;
+        gap: 2px;
+        padding: 0 22px;
+        border-bottom: 1px solid var(--border);
+        background: #fff;
+      }
+      .tab-btn {
+        padding: 12px 20px;
+        border: none;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+      .tab-btn:hover {
+        color: var(--text);
+        background: rgba(0, 0, 0, 0.02);
+      }
+      .tab-btn.active {
+        color: var(--primary);
+        border-bottom-color: var(--primary);
+        background: rgba(93, 63, 211, 0.05);
+      }
+      .sub-filters {
+        padding: 16px 22px 0 22px;
+        background: #fff;
+        border-bottom: none;
+      }
+      .sub-filter-group {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .input,
+      .select {
+        height: 36px;
+        padding: 6px 10px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: #fff;
+        color: var(--text);
+      }
+      .toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 22px 16px 22px;
+        border-bottom: none;
+        background: #fff;
+      }
+      .table-wrap {
+        overflow: auto;
+        background: #fff;
+        border-bottom-left-radius: var(--radius);
+        border-bottom-right-radius: var(--radius);
+        border-bottom: none;
+      }
+      .card-footer {
+        padding: 12px 22px 18px 22px;
+        border-top: 1px solid var(--border);
+        text-align: center;
+        color: var(--muted);
+        font-size: 13px;
+        border-bottom-left-radius: var(--radius);
+        border-bottom-right-radius: var(--radius);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        border-bottom-left-radius: var(--radius);
+        border-bottom-right-radius: var(--radius);
+        border-bottom: none;
+      }
+      thead th {
+        text-align: left;
+        font-weight: 700;
+        color: var(--muted);
+        padding: 12px 16px;
+        border-bottom: none;
+        position: sticky;
+        top: 0;
+        background: #f8fafc;
+      }
+      /* Alignement spécifique des colonnes */
+      thead th:nth-child(3), /* Arrivée */
+       thead th:nth-child(4), /* Départ */
+       thead th:nth-child(5), /* Nuits */
+       thead th:nth-child(6), /* Adulte(s) */
+       thead th:nth-child(7), /* Enfant(s) */
+       thead th:nth-child(9) {
+        /* Action */
+        text-align: center;
+      }
+      thead th:nth-child(8) {
+        /* Prix */
+        text-align: right;
+      }
+      tbody td {
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--border);
+        background: #fff;
+      }
+      /* Supprimer les bordures qui créent les "marqueurs" en L */
+      tbody tr:last-child td {
+        border-bottom: none;
+      }
+      tbody tr:last-child td:first-child {
+        border-bottom-left-radius: var(--radius);
+      }
+      tbody tr:last-child td:last-child {
+        border-bottom-right-radius: var(--radius);
+      }
+      /* Alignement spécifique des cellules */
+      tbody td:nth-child(3), /* Arrivée */
+       tbody td:nth-child(4), /* Départ */
+       tbody td:nth-child(5), /* Nuits */
+       tbody td:nth-child(6), /* Adulte(s) */
+       tbody td:nth-child(7), /* Enfant(s) */
+       tbody td:nth-child(9) {
+        /* Action */
+        text-align: center;
+      }
+      tbody td:nth-child(8) {
+        /* Prix */
+        text-align: right;
+      }
+      tbody tr:hover td {
+        background: var(--row);
+      }
+      /* Ligne avec demande d'annulation en attente */
+      tbody tr.cancel-pending td {
+        background: rgba(239, 68, 68, 0.1) !important;
+      }
+      tbody tr.cancel-pending:hover td {
+        background: rgba(239, 68, 68, 0.15) !important;
+      }
+      /* Ligne avec séjour en cours */
+      tbody tr.current-stay td {
+        background: rgba(34, 197, 94, 0.1) !important;
+      }
+      tbody tr.current-stay:hover td {
+        background: rgba(34, 197, 94, 0.15) !important;
+      }
+      /* Ligne avec séjour terminé (plus d'un jour) */
+      tbody tr.past-stay {
+        opacity: 0.4;
+      }
+      tbody tr.past-stay:hover {
+        opacity: 0.6;
+      }
+      .pay-dots {
+        display: inline-flex;
+        gap: 6px;
+        margin-left: 8px;
+        vertical-align: middle;
+      }
+      .pay-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #cbd5e1;
+        box-shadow: inset 0 0 0 1px #94a3b8;
+      }
+      .pay-dot.on {
+        background: #16a34a;
+        box-shadow: inset 0 0 0 1px #15803d;
+      }
+      .pay-dot.refunded {
+        background: #3b82f6;
+        box-shadow: inset 0 0 0 1px #2563eb;
+      }
+      .badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 12px;
+      }
+      .b-pending {
+        background: #fff7ed;
+        color: #9a3412;
+      }
+      .b-accepted {
+        background: #ecfeff;
+        color: #155e75;
+      }
+      .b-depositPay {
+        background: #ecfdf5;
+        color: #065f46;
+      }
+      .b-refused {
+        background: #fef2f2;
+        color: #991b1b;
+      }
+      .b-canceled {
+        background: #dc2626;
+        color: #ffffff;
+      }
+      .b-balancePay {
+        background: #eef2ff;
+        color: #3730a3;
+      }
+      .btn {
+        height: 32px;
+        padding: 0 12px;
+        border: 1px solid var(--border);
+        background: #fff;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-primary {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+      }
+      .login-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+      }
+      .login-card {
+        background: #fff;
+        padding: 18px;
+        border-radius: 12px;
+        width: 360px;
+        border: 1px solid var(--border);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+      .login-card h3 {
+        margin: 0 0 10px 0;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .detail-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 10001;
+      }
+      /* Loader global */
+      .loader-overlay {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 11000;
+        background: rgba(15, 23, 42, 0.08);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 220ms ease;
+      }
+      .loader-overlay.on {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .loader {
+        width: 64px;
+        height: 64px;
+        border: 4px solid rgba(255, 255, 255, 0.6);
+        border-top-color: #5d3fd3;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05) inset;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .detail-card {
+        width: 720px;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        overflow: hidden;
+      }
+      .detail-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 18px;
+        border-bottom: 1px solid var(--border);
+      }
+      .detail-body {
+        padding: 12px 18px 18px 18px;
+        max-height: 70vh;
+        overflow: auto;
+      }
+      .detail-actions {
+        padding: 18px 18px 18px 18px;
+        display: flex;
+        gap: 10px;
+        border-top: 1px solid var(--border);
+        margin-top: 12px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px 16px;
+      }
+      .grid div {
+        padding: 6px 8px;
+        background: #f8fafc;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .grid label {
+        display: block;
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 4px;
+      }
+      .btn-danger {
+        background: #ef4444;
+        color: #fff;
+        border-color: #ef4444;
+      }
+      .btn-danger:hover {
+        background: #dc2626;
+        border-color: #dc2626;
+      }
+
+      /* Styles pour les checkboxes personnalisées */
+      .refund-options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        flex: 1;
+      }
+      .checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 6px;
+        transition: background-color 0.2s ease;
+      }
+      .checkbox-label:hover {
+        background: rgba(0, 0, 0, 0.02);
+      }
+      .checkbox-label input[type='checkbox'] {
+        display: none;
+      }
+      .checkmark {
+        width: 18px;
+        height: 18px;
+        border: 2px solid var(--border);
+        border-radius: 4px;
+        position: relative;
+        transition: all 0.2s ease;
+      }
+      .checkbox-label input[type='checkbox']:checked + .checkmark {
+        background: var(--primary);
+        border-color: var(--primary);
+      }
+      .checkbox-label input[type='checkbox']:checked + .checkmark::after {
+        content: '✓';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+      }
+      .label-text {
+        font-size: 14px;
+        color: var(--text);
+      }
+
+      /* Background from Uiverse.io by chase2k25 (renamed classes to avoid conflicts) */
+      .bg-container {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        background: #181c21;
+        display: flex;
+        align-items: stretch;
+        justify-content: stretch;
+      }
+      .pattern-bg {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: repeating-linear-gradient(
+          135deg,
+          #232526 0px,
+          #232526 60px,
+          #23252699 70px,
+          #414345 130px
+        );
+      }
+      .cube-svg {
+        position: absolute;
+        width: 200%;
+        height: 200%;
+        left: -30%;
+        top: -20%;
+        background: transparent;
+        opacity: 0.7;
+        z-index: 1;
+        animation: cubeMove 18s linear infinite alternate;
+      }
+      @keyframes cubeMove {
+        from {
+          transform: translateY(0) scale(1);
+        }
+        to {
+          transform: translateY(-20%) scale(1.02) rotate(1deg);
+        }
+      }
+
+      /* Styles pour le visualiseur de calendriers */
+      .visualizer-controls {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 8px;
+        align-items: end;
+        padding: 16px 22px;
+        background: #fff;
+        border-bottom: 1px solid var(--border);
+      }
+      .visualizer-controls .field {
+        grid-column: span 12;
+      }
+      @media (min-width: 600px) {
+        .visualizer-controls .field.sm-6 {
+          grid-column: span 6;
+        }
+        .visualizer-controls .field.sm-4 {
+          grid-column: span 4;
+        }
+        .visualizer-controls .field.sm-3 {
+          grid-column: span 3;
+        }
+        .visualizer-controls .field.sm-2 {
+          grid-column: span 2;
+        }
+      }
+      .date-fields {
+        grid-column: span 12;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .date-field {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .date-field label {
+        margin: 0;
+        min-width: 60px;
+        flex-shrink: 0;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .date-field input {
+        width: 140px;
+        min-width: 140px;
+        max-width: 140px;
+        height: 36px;
+        padding: 6px 10px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: #fff;
+        color: var(--text);
+      }
+      .date-field-with-button {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        justify-content: space-between;
+      }
+      .date-field-with-button .date-input-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+      }
+      .date-field-with-button .button-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+        margin-left: auto;
+      }
+      .date-field-with-slider {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        justify-content: space-between;
+      }
+      .date-field-with-slider .date-input-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+      }
+      .date-field-with-slider .slider-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+        margin-left: auto;
+      }
+      .date-field-with-slider .slider-group label {
+        margin: 0;
+        min-width: 100px;
+        flex-shrink: 0;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .date-field-with-slider .slider-group input {
+        min-width: 120px;
+      }
+
+      .legend {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        margin: 10px 0 0;
+        padding: 0 22px;
+      }
+      .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 999px;
+        display: inline-block;
+        margin-right: 6px;
+      }
+
+      /* Timeline */
+      .timeline {
+        margin-top: 16px;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        overflow: hidden;
+        display: flex;
+        background: #fff;
+      }
+      .timeline-fixed {
+        width: 180px;
+        background: #f8fafc;
+        border-right: 1px solid var(--border);
+        flex-shrink: 0;
+      }
+      .timeline-scrollable {
+        flex: 1;
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+      .tl-head {
+        display: grid;
+        grid-template-columns: repeat(var(--days), var(--col-w));
+        align-items: stretch;
+        background: #f8fafc;
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        height: 44px;
+      }
+      .tl-body {
+        display: flex;
+        flex-direction: column;
+      }
+      .tl-fixed-header {
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0 10px;
+        border-bottom: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 500;
+      }
+      .tl-fixed-labels {
+        display: flex;
+        flex-direction: column;
+      }
+      .tl-fixed-label {
+        height: var(--track-h);
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0 10px;
+        border-bottom: 1px dashed var(--border);
+        color: var(--text);
+        font-size: 12px;
+      }
+      .tl-grid {
+        position: relative;
+      }
+      .vertical-separator {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: rgba(0, 0, 0, 0.1);
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .tl-head .cell {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-left: 1px solid var(--border);
+        color: var(--text);
+        font-size: 12px;
+        text-align: center;
+        padding: 4px 2px;
+      }
+      .tl-head .cell div:first-child {
+        font-weight: 500;
+        line-height: 1.2;
+      }
+      .tl-head .cell div:last-child {
+        font-size: 10px;
+        opacity: 0.8;
+        line-height: 1;
+        margin-top: 1px;
+      }
+
+      .track {
+        position: relative;
+        height: var(--track-h);
+        border-bottom: 1px dashed var(--border);
+        display: flex;
+        align-items: center;
+      }
+      .bar {
+        position: absolute;
+        height: 22px;
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        color: white;
+        filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.25));
+        white-space: nowrap;
+        padding: 0 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2;
+      }
+      .bar.site {
+        background: var(--site);
+      }
+      .bar.airbnb {
+        background: var(--airbnb);
+      }
+      .bar.booking {
+        background: var(--booking);
+      }
+      .bar.prix {
+        height: 16px;
+        border-radius: 8px;
+        font-size: 10px;
+        font-weight: 500;
+        padding: 0 0px;
+        min-width: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .bar.prix-225 {
+        background: #22c55e; /* vert */
+      }
+      .bar.prix-245 {
+        background: #3b82f6; /* bleu clair */
+      }
+      .bar.prix-275 {
+        background: #f97316; /* orange */
+      }
+      .bar.prix-340 {
+        background: #ef4444; /* rouge */
+      }
+      .bar.gap {
+        background: var(--gap);
+        color: black;
+      }
+
+      .todayline {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--line);
+        pointer-events: none;
+      }
+
+      /* Mise en évidence des colonnes */
+      .column-highlight {
+        background: rgba(59, 130, 246, 0.3) !important;
+        border-left: 2px solid #3b82f6 !important;
+        border-right: 2px solid #3b82f6 !important;
+      }
+      .tl-head .cell.column-highlight {
+        background: rgba(59, 130, 246, 0.3) !important;
+        color: #60a5fa !important;
+        font-weight: 600 !important;
+      }
+
+      .hint {
+        color: var(--muted);
+        font-size: 12px;
+        margin-top: 8px;
+      }
+      .flex {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loader" class="loader-overlay"><div class="loader"></div></div>
+    <div class="bg-container">
+      <div class="pattern-bg">
+        <svg
+          preserveAspectRatio="xMidYMid slice"
+          height="100%"
+          width="100%"
+          class="cube-svg"
+          viewBox="0 0 120 104"
+        >
+          <defs>
+            <linearGradient y2="100%" x2="100%" y1="0%" x1="0%" id="cube-dark">
+              <stop stop-color="#232526" offset="0%"></stop>
+              <stop stop-color="#414345" offset="100%"></stop>
+            </linearGradient>
+            <linearGradient y2="0%" x2="100%" y1="100%" x1="0%" id="cube-mid">
+              <stop stop-color="#4b6cb7" offset="0%"></stop>
+              <stop stop-color="#182848" offset="100%"></stop>
+            </linearGradient>
+            <linearGradient y2="100%" x2="0%" y1="0%" x1="100%" id="cube-light">
+              <stop stop-color="#a8edea" offset="0%"></stop>
+              <stop stop-color="#fed6e3" offset="100%"></stop>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+    </div>
+    <div class="container">
+      <!-- Section Réservations -->
+      <div class="card">
+        <div class="header">
+          <div>
+            <h1 class="title">Tableau de bord – Réservations</h1>
+            <div class="subtitle">
+              Suivi complet des séjours, paiements et annulations
+            </div>
+          </div>
+          <div class="filters">
+            <input id="filterText" class="input" placeholder="Filtrer" />
+            <select id="filterStatus" class="select">
+              <option value="">Tous les statuts</option>
+              <option value="pending">En attente</option>
+              <option value="accepted">Acceptée</option>
+              <option value="depositPay">Acompte OK</option>
+              <option value="refused">Refusée</option>
+              <option value="canceled">Annulée</option>
+              <option value="balancePay">Solde OK</option>
+            </select>
+          </div>
+        </div>
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="actives">Actives</button>
+          <button class="tab-btn" data-tab="archives">Archives</button>
+          <button class="tab-btn" data-tab="all">Toutes</button>
+        </div>
+        <div class="sub-filters">
+          <div id="activesSubFilters" class="sub-filter-group">
+            <select id="activesFilter" class="select">
+              <option value="all">Tout</option>
+              <option value="current">En cours</option>
+              <option value="future">Futures</option>
+            </select>
+          </div>
+          <div
+            id="archivesSubFilters"
+            class="sub-filter-group"
+            style="display: none"
+          >
+            <select id="archivesFilter" class="select">
+              <option value="1month">1 mois</option>
+              <option value="3months">3 mois</option>
+              <option value="6months">6 mois</option>
+              <option value="1year">1 an</option>
+              <option value="all">Tout</option>
+            </select>
+          </div>
+        </div>
+        <div class="toolbar">
+          <div class="muted">Tri par arrivée croissante</div>
+          <button id="refreshBtn" class="btn">Rafraîchir</button>
+        </div>
+        <div class="table-wrap">
+          <table id="table">
+            <thead>
+              <tr>
+                <th>Statut</th>
+                <th>Client</th>
+                <th>Arrivée</th>
+                <th>Départ</th>
+                <th>Nuits</th>
+                <th>Adulte(s)</th>
+                <th>Enfant(s)</th>
+                <th>Prix</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <div class="card-footer">Calypso Bay Reservations Dashboard</div>
+        </div>
+      </div>
+
+      <!-- Section Visualiseur de calendriers -->
+      <div class="card">
+        <div class="header">
+          <div>
+            <h1 class="title">Visualiseur de calendriers</h1>
+            <div class="subtitle">
+              Vue d'ensemble des réservations et tarifs
+            </div>
+          </div>
+        </div>
+        <div class="visualizer-controls">
+          <div class="field date-fields">
+            <div class="date-field date-field-with-button">
+              <div class="date-input-group">
+                <label>Début</label>
+                <input id="inpStart" type="date" />
+              </div>
+              <div class="button-group">
+                <button id="btnLoad" class="btn">Rafraîchir</button>
+              </div>
+            </div>
+            <div class="date-field date-field-with-slider">
+              <div class="date-input-group">
+                <label>Fin</label>
+                <input id="inpEnd" type="date" />
+              </div>
+              <div class="slider-group">
+                <label>Largeur d'un jour</label>
+                <input
+                  id="inpColW"
+                  type="range"
+                  min="28"
+                  max="72"
+                  step="1"
+                  value="42"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="legend">
+          <span><i class="dot" style="background: var(--site)"></i>Site</span>
+          <span
+            ><i class="dot" style="background: var(--airbnb)"></i>Airbnb</span
+          >
+          <span
+            ><i class="dot" style="background: var(--booking)"></i>Booking</span
+          >
+          <span
+            ><i class="dot" style="background: #22c55e"></i>Basse saison</span
+          >
+          <span><i class="dot" style="background: #3b82f6"></i>Classique</span>
+          <span
+            ><i class="dot" style="background: #f97316"></i>Vacances
+            scolaires</span
+          >
+          <span
+            ><i class="dot" style="background: #ef4444"></i>Noël / Nouvel
+            an</span
+          >
+        </div>
+
+        <div class="timeline" id="timeline" hidden>
+          <div class="timeline-fixed" id="timelineFixed">
+            <div class="tl-fixed-header">Jour</div>
+            <div class="tl-fixed-labels" id="tlFixedLabels"></div>
+          </div>
+          <div class="timeline-scrollable">
+            <div class="tl-head" id="tlHead"></div>
+            <div class="tl-body">
+              <div class="tl-grid" id="tlGrid">
+                <div
+                  class="todayline"
+                  id="todayLine"
+                  style="display: none"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Login modal -->
+    <div id="login" class="login-modal">
+      <div class="login-card">
+        <h3>Connexion administrateur</h3>
+        <div class="muted" style="margin-bottom: 10px">
+          Entrez la clé d'accès pour consulter les réservations.
+        </div>
+        <div style="display: flex; gap: 8px">
+          <input
+            id="adminKey"
+            class="input"
+            type="password"
+            placeholder="ADMIN_KEY"
+            style="flex: 1"
+          />
+          <button id="loginBtn" class="btn btn-primary">Se connecter</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detail modal -->
+    <div id="detailModal" class="detail-modal">
+      <div class="detail-card">
+        <div class="detail-head">
+          <h3 style="margin: 0">Détails de la réservation</h3>
+          <button id="detailClose" class="btn">Fermer</button>
+        </div>
+        <div class="detail-body">
+          <div id="detailContent" class="grid"></div>
+        </div>
+        <div class="detail-actions">
+          <div class="refund-options">
+            <label class="checkbox-label">
+              <input type="checkbox" id="refundDepositCheck" />
+              <span class="checkmark"></span>
+              <span class="label-text">Rembourser l'acompte</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="refundBalanceCheck" />
+              <span class="checkmark"></span>
+              <span class="label-text">Rembourser le solde</span>
+            </label>
+          </div>
+          <button id="refundBtn" class="btn btn-danger" disabled>
+            Effectuer le(s) remboursement(s)
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirmation modal -->
+    <div id="confirmModal" class="detail-modal">
+      <div class="detail-card" style="width: 480px">
+        <div class="detail-head">
+          <h3 style="margin: 0">Confirmation de remboursement</h3>
+          <button id="confirmClose" class="btn">Fermer</button>
+        </div>
+        <div class="detail-body">
+          <p>
+            Êtes-vous sûr de vouloir effectuer le(s) remboursement(s) suivant(s)
+            ?
+          </p>
+          <div id="confirmRefunds"></div>
+        </div>
+        <div class="detail-actions">
+          <button id="confirmCancel" class="btn">Annuler</button>
+          <button id="confirmProceed" class="btn btn-danger">
+            Confirmer le(s) remboursement(s)
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // === ADMIN FUNCTIONALITY ===
+      const API_LIST = '/api/admin?action=list'
+      const API_DETAIL = '/api/admin?action=detail'
+      let ADMIN_KEY = ''
+      let currentRows = []
+      let currentTab = 'actives'
+      let currentSubFilter = 'all'
+
+      function frStatus(s) {
+        return s === 'pending'
+          ? 'En attente'
+          : s === 'accepted'
+          ? 'Acceptée'
+          : s === 'depositPay'
+          ? 'Acompte OK'
+          : s === 'refused'
+          ? 'Refusée'
+          : s === 'canceled'
+          ? 'Annulée'
+          : s === 'balancePay'
+          ? 'Solde OK'
+          : s || ''
+      }
+      function badgeClass(s) {
+        return s === 'pending'
+          ? 'b-pending'
+          : s === 'accepted'
+          ? 'b-accepted'
+          : s === 'depositPay'
+          ? 'b-depositPay'
+          : s === 'refused'
+          ? 'b-refused'
+          : s === 'canceled'
+          ? 'b-canceled'
+          : s === 'balancePay'
+          ? 'b-balancePay'
+          : ''
+      }
+      function fmtDate(d) {
+        const t = new Date(d)
+        return isNaN(t) ? d || '' : t.toLocaleDateString('fr-FR')
+      }
+      function fmtMoney(n) {
+        return (
+          Number(n || 0).toLocaleString('fr-FR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          }) + ' €'
+        )
+      }
+
+      async function fetchRows(q = '') {
+        showLoader(true)
+        const r = await fetch(
+          API_LIST + (q ? `&q=${encodeURIComponent(q)}` : ''),
+          {
+            headers: { 'x-admin-key': ADMIN_KEY }
+          }
+        )
+        const j = await r.json()
+        showLoader(false)
+        if (j.status !== 'success') throw new Error(j.message || 'Erreur')
+        return j.data || []
+      }
+
+      function renderRows(rows) {
+        const tbody = document.querySelector('#table tbody')
+        const status = document.getElementById('filterStatus').value
+        const text = document
+          .getElementById('filterText')
+          .value.trim()
+          .toLowerCase()
+        let data = rows
+
+        // Filtrage par onglet principal
+        const now = new Date()
+        const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
+
+        if (currentTab === 'actives') {
+          // Réservations actives : futures + en cours + terminées depuis moins d'1 mois
+          data = data.filter((r) => {
+            const endDate = new Date(r.endDate)
+            return endDate >= oneMonthAgo
+          })
+        } else if (currentTab === 'archives') {
+          // Réservations archivées : terminées depuis plus d'1 mois
+          data = data.filter((r) => {
+            const endDate = new Date(r.endDate)
+            return endDate < oneMonthAgo
+          })
+        }
+        // currentTab === 'all' : pas de filtrage
+
+        // Filtrage par sous-filtre
+        if (currentTab === 'actives' && currentSubFilter !== 'all') {
+          if (currentSubFilter === 'current') {
+            // Séjours en cours uniquement
+            data = data.filter((r) => {
+              const startDate = new Date(r.startDate)
+              const endDate = new Date(r.endDate)
+              return now >= startDate && now <= endDate
+            })
+          } else if (currentSubFilter === 'future') {
+            // Séjours futurs uniquement
+            data = data.filter((r) => {
+              const startDate = new Date(r.startDate)
+              return now < startDate
+            })
+          }
+        } else if (currentTab === 'archives' && currentSubFilter !== 'all') {
+          const periods = {
+            '1month': 30,
+            '3months': 90,
+            '6months': 180,
+            '1year': 365
+          }
+          const daysAgo = periods[currentSubFilter]
+          const periodAgo = new Date(
+            now.getTime() - daysAgo * 24 * 60 * 60 * 1000
+          )
+
+          data = data.filter((r) => {
+            const endDate = new Date(r.endDate)
+            return endDate >= periodAgo
+          })
+        }
+
+        // Filtrage par statut
+        if (status) data = data.filter((r) => r.status === status)
+
+        // Filtrage par texte
+        if (text) {
+          data = data.filter((r) =>
+            `${r.name || ''} ${r.email || ''} ${r.token || ''}`
+              .toLowerCase()
+              .includes(text)
+          )
+        }
+
+        data = data.sort(
+          (a, b) => new Date(a.startDate) - new Date(b.startDate)
+        )
+        tbody.innerHTML = data
+          .map((r) => {
+            // Logique complète pour les pastilles de paiement
+            const depositAmount = Number(r.depositAmount || 0)
+            const balanceAmount = Number(r.balanceAmount || 0)
+            const depositRefundedAmount = Number(r.depositRefundedAmount || 0)
+            const balanceRefundedAmount = Number(r.balanceRefundedAmount || 0)
+
+            // Vérifier si les paiements ont été effectués
+            const depositPaid =
+              depositAmount > 0 &&
+              (r.depositAt ||
+                r.status === 'depositPay' ||
+                r.status === 'balancePay')
+            const balancePaid = balanceAmount > 0 && r.balancePaidAt
+
+            // Vérifier si des remboursements ont été effectués
+            const depositRefunded = depositRefundedAmount > 0
+            const balanceRefunded = balanceRefundedAmount > 0
+
+            // Vérifier si demande d'annulation en attente ou validée
+            const hasCancelPending =
+              r.cancelStatus === 'pending' || r.cancelStatus === 'validated'
+
+            // Vérifier si séjour en cours
+            const now = new Date()
+            const startDate = new Date(r.startDate)
+            const endDate = new Date(r.endDate)
+            const isCurrentStay =
+              startDate && endDate && now >= startDate && now <= endDate
+
+            // Vérifier si séjour terminé (plus d'un jour)
+            const oneDayMs = 24 * 60 * 60 * 1000
+            const isPastStay = endDate && now - endDate > oneDayMs
+
+            // Classes CSS conditionnelles
+            const rowClasses = []
+            if (hasCancelPending) rowClasses.push('cancel-pending')
+            if (isCurrentStay) rowClasses.push('current-stay')
+            if (isPastStay) rowClasses.push('past-stay')
+            const classAttr =
+              rowClasses.length > 0 ? ` class="${rowClasses.join(' ')}"` : ''
+
+            return `
+          <tr${classAttr}>
+            <td><span class="badge ${badgeClass(r.status)}">${frStatus(
+              r.status
+            )}</span></td>
+            <td>${r.name || ''}</td>
+            <td>${fmtDate(r.startDate)}</td>
+            <td>${fmtDate(r.endDate)}</td>
+            <td>${r.nbNights || 0}</td>
+            <td>${r.nbAdults || 0}</td>
+            <td>${r.nbChilds || 0}</td>
+                         <td>${fmtMoney(
+                           r.priceTotal
+                         )}<span class="pay-dots"><span class="pay-dot ${
+              depositRefunded ? 'refunded' : depositPaid ? 'on' : ''
+            }" title="${
+              depositRefunded
+                ? 'Acompte remboursé'
+                : depositPaid
+                ? 'Acompte payé'
+                : 'Acompte non payé'
+            }"></span><span class="pay-dot ${
+              balanceRefunded ? 'refunded' : balancePaid ? 'on' : ''
+            }" title="${
+              balanceRefunded
+                ? 'Solde remboursé'
+                : balancePaid
+                ? 'Solde payé'
+                : 'Solde non payé'
+            }"></span></span></td>
+            <td><button class="btn btn-primary" data-token="${
+              r.token
+            }" data-action="detail">Détails</button></td>
+          </tr>
+        `
+          })
+          .join('')
+      }
+
+      async function openDetail(token) {
+        showLoader(true)
+        const r = await fetch(
+          API_DETAIL + `&token=${encodeURIComponent(token)}`,
+          { headers: { 'x-admin-key': ADMIN_KEY } }
+        )
+        const j = await r.json()
+        showLoader(false)
+        if (j.status !== 'success') {
+          alert(j.message || 'Erreur')
+          return
+        }
+        const d = j.data || {}
+        const labelMap = {
+          timestamp: 'Créé le',
+          id: 'Token',
+          status: 'Statut',
+          name: 'Nom',
+          email: 'Email',
+          tel: 'Téléphone',
+          userMessage: 'Message',
+          nbAdults: 'Adultes',
+          nbChilds: 'Enfants',
+          nbNights: 'Nuits',
+          priceNights: 'Total nuits (€)',
+          priceClean: 'Ménage (€)',
+          priceTax: 'Taxes (€)',
+          priceTotal: 'Total (€)',
+          startDate: 'Arrivée',
+          endDate: 'Départ',
+          depositAt: 'Acompte à',
+          depositAmount: 'Montant acompte (€)',
+          depositPaymentIntentId: 'PI Acompte',
+          depositRefundedAmount: 'Acompte remboursé (€)',
+          depositRefundIds: 'Refund IDs',
+          address: 'Adresse',
+          postal: 'Code postal',
+          country: 'Pays',
+          city: 'Ville',
+          finalMessage: 'Message final',
+          childAge1: 'Âge enfant 1',
+          childAge2: 'Âge enfant 2',
+          childAge3: 'Âge enfant 3',
+          childAge4: 'Âge enfant 4',
+          childAge5: 'Âge enfant 5',
+          balanceDueAt: 'Échéance solde',
+          balanceAmount: 'Montant solde (€)',
+          balancePaymentIntentId: 'PI Solde',
+          balancePaidAt: 'Solde payé à',
+          balanceRefundedAmount: 'Solde remboursé (€)',
+          balanceRefundIds: 'Refund IDs',
+          cancelRequestedAt: 'Annulation demandée à',
+          cancelReason: 'Motif annulation',
+          cancelStatus: 'Statut annulation',
+          cancelledAt: 'Annulation validée à',
+          managerNotes: 'Notes gestionnaire'
+        }
+        const dateKeys = [
+          'timestamp',
+          'startDate',
+          'endDate',
+          'depositAt',
+          'balanceDueAt',
+          'balancePaidAt',
+          'cancelRequestedAt',
+          'cancelledAt'
+        ]
+        const ensureHours = (k, v) => {
+          if (!v) return v
+          const dt = new Date(v)
+          if (isNaN(dt)) return v
+          if (k === 'startDate') dt.setHours(15, 0, 0, 0)
+          if (k === 'endDate') dt.setHours(10, 0, 0, 0)
+          return dt
+        }
+        if (d.startDate) d.startDate = ensureHours('startDate', d.startDate)
+        if (d.endDate) d.endDate = ensureHours('endDate', d.endDate)
+        const fmtDateTime = (v) => {
+          const dt = new Date(v)
+          if (isNaN(dt)) return v
+          const pad = (n) => String(n).padStart(2, '0')
+          return `${pad(dt.getDate())}/${pad(
+            dt.getMonth() + 1
+          )}/${dt.getFullYear()} ${pad(dt.getHours())}:${pad(dt.getMinutes())}`
+        }
+        const container = document.getElementById('detailContent')
+        const entries = Object.entries(d).filter(
+          ([k, v]) => v !== '' && v != null
+        )
+        container.innerHTML = entries
+          .map(([k, v]) => {
+            let val = Array.isArray(v) ? v.join(', ') : v
+            if (dateKeys.includes(k)) val = fmtDateTime(v)
+            const label = labelMap[k] || k
+            return `<div><label>${label}</label><div>${val}</div></div>`
+          })
+          .join('')
+        // Rendre visible et actions
+        document.getElementById('detailModal').style.display = 'flex'
+
+        // Gestion des checkboxes de remboursement
+        const depositCheck = document.getElementById('refundDepositCheck')
+        const balanceCheck = document.getElementById('refundBalanceCheck')
+        const refundBtn = document.getElementById('refundBtn')
+
+        // Réinitialiser les checkboxes
+        depositCheck.checked = false
+        balanceCheck.checked = false
+        refundBtn.disabled = true
+
+        // Mettre à jour les labels avec les dates limites
+        const depositLabel =
+          depositCheck.parentElement.querySelector('.label-text')
+        const balanceLabel =
+          balanceCheck.parentElement.querySelector('.label-text')
+
+        if (d.startDate) {
+          const lim = new Date(d.startDate)
+          lim.setMonth(lim.getMonth() - 3)
+          const pad = (n) => String(n).padStart(2, '0')
+          const limStr = `${pad(lim.getDate())}/${pad(
+            lim.getMonth() + 1
+          )}/${lim.getFullYear()}`
+          depositLabel.textContent = `Rembourser l'acompte (date limite: ${limStr})`
+        }
+
+        // Logique complète pour les remboursements
+        const depositAmount = Number(d.depositAmount || 0)
+        const balanceAmount = Number(d.balanceAmount || 0)
+        const depositRefundedAmount = Number(d.depositRefundedAmount || 0)
+        const balanceRefundedAmount = Number(d.balanceRefundedAmount || 0)
+
+        // Vérifier si les paiements ont été effectués
+        const depositPaid =
+          depositAmount > 0 &&
+          (d.depositAt ||
+            d.status === 'depositPay' ||
+            d.status === 'balancePay')
+        const balancePaid = balanceAmount > 0 && d.balancePaidAt
+
+        // Vérifier si les remboursements sont possibles
+        const canRefundDeposit = depositPaid && depositRefundedAmount === 0
+        const canRefundBalance = balancePaid && balanceRefundedAmount === 0
+
+        // Mettre à jour les labels et états des checkboxes
+        if (depositPaid) {
+          if (depositRefundedAmount > 0) {
+            depositLabel.textContent = `Rembourser l'acompte (déjà remboursé)`
+            depositCheck.disabled = true
+          } else {
+            depositLabel.textContent = `Rembourser l'acompte (${fmtMoney(
+              depositAmount
+            )})`
+            depositCheck.disabled = false
+          }
+        } else {
+          depositLabel.textContent = `Rembourser l'acompte (non payé)`
+          depositCheck.disabled = true
+        }
+
+        if (balancePaid) {
+          if (balanceRefundedAmount > 0) {
+            balanceLabel.textContent = `Rembourser le solde (déjà remboursé)`
+            balanceCheck.disabled = true
+          } else {
+            balanceLabel.textContent = `Rembourser le solde (${fmtMoney(
+              balanceAmount
+            )})`
+            balanceCheck.disabled = false
+          }
+        } else {
+          balanceLabel.textContent = `Rembourser le solde (non payé)`
+          balanceCheck.disabled = true
+        }
+
+        // Stocker les données pour le remboursement
+        window.currentReservationData = d
+        console.log('Données de réservation stockées:', d)
+      }
+
+      function showLoader(on) {
+        const el = document.getElementById('loader')
+        if (on) {
+          el.classList.add('on')
+          document.documentElement.style.overflow = 'hidden'
+        } else {
+          el.classList.remove('on')
+          document.documentElement.style.overflow = ''
+        }
+      }
+
+      // Login
+      async function doLogin() {
+        ADMIN_KEY = document.getElementById('adminKey').value.trim()
+        if (!ADMIN_KEY) return
+        localStorage.setItem('ADMIN_KEY', ADMIN_KEY)
+        document.getElementById('login').style.display = 'none'
+        currentRows = await fetchRows()
+        renderRows(currentRows)
+      }
+
+      // Autologin via localStorage ou query ?key=
+      ;(function () {
+        showLoader(true)
+        const p = new URLSearchParams(location.search)
+        const key = p.get('key') || localStorage.getItem('ADMIN_KEY') || ''
+        if (key) {
+          document.getElementById('adminKey').value = key
+          doLogin().finally(() => showLoader(false))
+        } else {
+          showLoader(false)
+        }
+      })()
+
+      // === VISUALIZER FUNCTIONALITY ===
+      ;(function () {
+        // --- Utils dates ---
+        const MS_DAY = 86400000
+        const tracks = ['site', 'airbnb', 'booking', 'prix']
+        const colors = {
+          site: 'var(--site)',
+          airbnb: 'var(--airbnb)',
+          booking: 'var(--booking)',
+          prix: '#8b5cf6' // violet pour les prix
+        }
+
+        function toISO(d) {
+          const x = new Date(d)
+          x.setHours(0, 0, 0, 0)
+          return `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(
+            2,
+            '0'
+          )}-${String(x.getDate()).padStart(2, '0')}`
+        }
+        function fromISO(iso) {
+          const [y, m, d] = iso.split('-').map(Number)
+          return new Date(y, m - 1, d, 12, 0, 0)
+        } // midi anti-DST
+        function clamp(v, min, max) {
+          return Math.max(min, Math.min(max, v))
+        }
+        function eachDay(startISO, endISO) {
+          // end exclu
+          let d = fromISO(startISO),
+            end = fromISO(endISO)
+          const out = []
+          while (d < end) {
+            out.push(toISO(d))
+            d = new Date(d.getTime() + MS_DAY)
+          }
+          return out
+        }
+
+        // --- CSV parsing minimal ---
+        function unfoldICS(text) {
+          return text.replace(/\r?\n[ \t]/g, '')
+        }
+        function parseICSText(text, source) {
+          const lines = unfoldICS(text).split(/\r?\n/)
+          let cur = null
+          const out = []
+          const push = () => {
+            if (!cur) return
+            const { DTSTART, DTEND, SUMMARY, UID } = cur
+            const s = parseICSDate(DTSTART),
+              e = parseICSDate(DTEND)
+            if (s && e && s < e) {
+              out.push({
+                source,
+                start: s,
+                end: e,
+                summary: SUMMARY || '',
+                uid: UID || ''
+              })
+            }
+            cur = null
+          }
+          for (const line of lines) {
+            if (!line) continue
+            if (line === 'BEGIN:VEVENT') {
+              cur = {}
+              continue
+            }
+            if (line === 'END:VEVENT') {
+              push()
+              continue
+            }
+            if (!cur) continue
+            const i = line.indexOf(':')
+            if (i < 0) continue
+            const left = line.slice(0, i),
+              val = decodeICS(line.slice(i + 1))
+            const prop = left.split(';')[0].toUpperCase()
+            cur[prop] = val
+          }
+          return out
+        }
+        function decodeICS(s) {
+          return s
+            .replace(/\\n/gi, '\n')
+            .replace(/\\,/g, ',')
+            .replace(/\\;/g, ';')
+            .replace(/\\\\/g, '\\')
+        }
+        function parseICSDate(v) {
+          if (!v) return null
+          const s = String(v).trim()
+          let m = s.match(/^(\d{4})(\d{2})(\d{2})$/)
+          if (m) return new Date(+m[1], +m[2] - 1, +m[3], 12, 0, 0)
+          m = s.match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z$/)
+          if (m)
+            return new Date(
+              Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6])
+            )
+          m = s.match(/^(\d{4})-(\d{2})-(\d{2})$/)
+          if (m) return new Date(+m[1], +m[2] - 1, +m[3], 12, 0, 0)
+          return new Date(s)
+        }
+
+        // --- CSV parsing des prix (expects headers: DATES, PRIX) ---
+        function parsePrixCSV(text) {
+          const norm = text
+            .replace(/^\uFEFF/, '')
+            .replace(/\r\n?/g, '\n')
+            .trim()
+          const lines = norm.split('\n').filter(Boolean)
+          if (!lines.length) return []
+
+          const headers = lines
+            .shift()
+            .split(',')
+            .map((h) => h.trim().toLowerCase())
+          const H = Object.fromEntries(headers.map((h, i) => [h, i]))
+
+          const hasDates = 'dates' in H
+          const hasPrix = 'prix' in H
+
+          if (!hasDates || !hasPrix)
+            throw new Error(
+              'CSV des prix doit contenir les colonnes DATES,PRIX'
+            )
+
+          const out = []
+          for (const line of lines) {
+            const cells = line.split(',')
+            const dateStr = (cells[H.dates] || '').trim()
+            const prixStr = (cells[H.prix] || '').trim()
+
+            if (!dateStr || !prixStr || prixStr === 'x') continue
+
+            // Parser la date française (ex: "mar. 05 août 2025")
+            const dateMatch = dateStr.match(
+              /(\d{1,2})\s+([a-zA-Zàâäéèêëïîôöùûüÿç]+)\s+(\d{4})/
+            )
+            if (!dateMatch) continue
+
+            const [, day, monthName, year] = dateMatch
+            const monthMap = {
+              janvier: 0,
+              février: 1,
+              mars: 2,
+              avril: 3,
+              mai: 4,
+              juin: 5,
+              juillet: 6,
+              août: 7,
+              septembre: 8,
+              octobre: 9,
+              novembre: 10,
+              décembre: 11
+            }
+            const month = monthMap[monthName.toLowerCase()]
+            if (month === undefined) {
+              console.log(
+                'Mois non reconnu:',
+                monthName,
+                'pour la date:',
+                dateStr
+              )
+              continue
+            }
+
+            const date = new Date(year, month, parseInt(day), 12, 0, 0)
+            const prix = parseInt(prixStr)
+
+            if (!isNaN(prix)) {
+              out.push({
+                date: date,
+                prix: prix
+              })
+              // Debug: afficher les dates parsées
+              console.log(
+                `Prix parsé: ${prix}€ pour ${dateStr} -> ${toISO(date)}`
+              )
+            }
+          }
+          return out
+        }
+
+        // --- CSV parsing (expects headers: source,type,status,startDate,endDate) ---
+        function parseCSV(text) {
+          const norm = text
+            .replace(/^\uFEFF/, '')
+            .replace(/\r\n?/g, '\n')
+            .trim()
+          const lines = norm.split('\n').filter(Boolean)
+          if (!lines.length) return []
+          const headers = lines
+            .shift()
+            .split(',')
+            .map((h) => h.trim().toLowerCase())
+          const H = Object.fromEntries(headers.map((h, i) => [h, i]))
+          const hasSrc = 'source' in H,
+            hasS = 'startdate' in H,
+            hasE = 'enddate' in H
+          if (!hasS || !hasE)
+            throw new Error(
+              'CSV doit contenir au minimum les colonnes startDate,endDate'
+            )
+          const out = []
+          for (const line of lines) {
+            const cells = line.split(',')
+            const src = hasSrc
+              ? (cells[H.source] || '').trim().toLowerCase()
+              : 'site'
+            const s = (cells[H.startdate] || '').trim()
+            const e = (cells[H.enddate] || '').trim()
+            const type = 'type' in H ? (cells[H.type] || '').trim() : ''
+            const status = 'status' in H ? (cells[H.status] || '').trim() : ''
+            const summary =
+              'summary' in H ? (cells[H.summary] || '').trim() : ''
+
+            if (!s || !e) continue
+            const sd = fromISO(s),
+              ed = fromISO(e)
+            if (sd < ed) {
+              const displaySummary =
+                summary || (type && status ? `${type} (${status})` : 'Reserved')
+              out.push({
+                source: src,
+                start: sd,
+                end: ed,
+                summary: displaySummary,
+                type: type || '',
+                status: status || '',
+                originalSummary: summary || ''
+              })
+            }
+          }
+          return out
+        }
+
+        // --- Rendering ---
+        const elTimeline = document.getElementById('timeline')
+        const elHead = document.getElementById('tlHead')
+        const elGrid = document.getElementById('tlGrid')
+        const elToday = document.getElementById('todayLine')
+        const elScrollable = document.querySelector('.timeline-scrollable')
+        const elFixedLabels = document.getElementById('tlFixedLabels')
+
+        function setCSSVar(name, value) {
+          document.documentElement.style.setProperty(name, value)
+        }
+
+        function buildTimeline(
+          events,
+          rangeStartISO,
+          rangeEndISO,
+          prixData = []
+        ) {
+          // Prepare
+          elTimeline.hidden = false
+
+          // Filtrer les événements pour ne garder que ceux dans la période
+          const rangeStart = fromISO(rangeStartISO)
+          const rangeEnd = fromISO(rangeEndISO)
+          const filteredEvents = events.filter((ev) => {
+            return ev.start < rangeEnd && ev.end > rangeStart
+          })
+
+          // Compute days
+          const days = eachDay(rangeStartISO, rangeEndISO) // end exclu
+          setCSSVar('--days', days.length)
+
+          // Calculate total width
+          const totalW = days.length * getColW()
+
+          // Header
+          elHead.innerHTML = ''
+          elHead.style.width = totalW + 'px'
+          days.forEach((iso, index) => {
+            const c = document.createElement('div')
+            c.className = 'cell'
+            c.style.cursor = 'pointer'
+            c.addEventListener('click', () => handleColumnClick(index))
+            const d = fromISO(iso)
+
+            const daySpan = document.createElement('div')
+            daySpan.textContent = d.toLocaleDateString('fr-FR', {
+              day: '2-digit'
+            })
+
+            const monthSpan = document.createElement('div')
+            monthSpan.textContent = d.toLocaleDateString('fr-FR', {
+              month: 'short'
+            })
+
+            c.appendChild(daySpan)
+            c.appendChild(monthSpan)
+            elHead.appendChild(c)
+          })
+
+          // Fixed labels
+          elFixedLabels.innerHTML = ''
+          tracks.forEach((t) => {
+            const rl = document.createElement('div')
+            rl.className = 'tl-fixed-label'
+            rl.textContent = t[0].toUpperCase() + t.slice(1)
+            elFixedLabels.appendChild(rl)
+          })
+
+          // Grid body
+          elGrid.innerHTML = ''
+          elGrid.style.setProperty('--col-w', getColW() + 'px')
+
+          // Create vertical separators
+          const colW = getColW()
+          for (let i = 1; i < days.length; i++) {
+            const separator = document.createElement('div')
+            separator.className = 'vertical-separator'
+            separator.style.left = i * colW + 'px'
+            elGrid.appendChild(separator)
+          }
+
+          // Draw tracks containers
+          const trackEls = {}
+          tracks.forEach((t, i) => {
+            const tr = document.createElement('div')
+            tr.className = 'track'
+            tr.style.width = totalW + 'px'
+            tr.dataset.source = t
+            elGrid.appendChild(tr)
+            trackEls[t] = tr
+          })
+
+          // Today line (if in range)
+          const nowIso = toISO(new Date())
+          const idx = days.indexOf(nowIso)
+          if (idx >= 0) {
+            elToday.style.display = 'block'
+            elToday.style.left = idx * getColW() + 'px'
+          } else elToday.style.display = 'none'
+
+          // Bars: absolutely positioned in their track
+          const leftBase = 0 // start of grid
+          for (const ev of filteredEvents) {
+            const sISO = toISO(ev.start),
+              eISO = toISO(ev.end) // all-day; end exclu
+            const si = days.indexOf(sISO),
+              ei = days.indexOf(eISO)
+            // partially out of range: compute pixel positions via clamps
+            const startIdx =
+              si < 0
+                ? Math.floor((ev.start - fromISO(rangeStartISO)) / MS_DAY)
+                : si
+            const endIdx =
+              ei < 0
+                ? Math.ceil((ev.end - fromISO(rangeStartISO)) / MS_DAY)
+                : ei
+            const colW = getColW()
+            // pixel: from half-day at start, to half-day at end
+            const left = leftBase + startIdx * colW + colW / 2
+            const width = Math.max(0, (endIdx - startIdx) * colW)
+            const t = tracks.includes(ev.source) ? ev.source : 'site'
+            const trEl = trackEls[t]
+            if (!trEl || width <= 0) continue
+            const bar = document.createElement('div')
+            bar.className = `bar ${t}`
+            bar.style.left = left + 'px'
+            bar.style.width = width + 'px'
+            bar.textContent = ''
+
+            // Créer le tooltip avec les informations du CSV
+            const source = ev.source || t
+            const type = ev.type || ''
+            const status = ev.status || ''
+            const originalSummary = ev.originalSummary || ''
+
+            let tooltipText = `Source: ${source}`
+            if (type) tooltipText += ` | Type: ${type}`
+            if (status) tooltipText += ` | Statut: ${status}`
+            if (originalSummary)
+              tooltipText += ` | Sommaire: ${originalSummary}`
+
+            bar.title = tooltipText
+            bar.style.cursor = 'pointer'
+            bar.addEventListener('click', (e) => {
+              e.stopPropagation()
+              // Calculer l'index de la colonne basé sur la position de la barre
+              const barLeft = parseInt(bar.style.left)
+              const colW = getColW()
+              const columnIndex = Math.round(barLeft / colW)
+              handleColumnClick(columnIndex)
+            })
+            trEl.appendChild(bar)
+          }
+
+          // Ajouter les prix comme barres dans la piste "prix"
+          const prixTrack = trackEls['prix']
+          if (prixTrack && prixData.length > 0) {
+            // Filtrer les prix dans la période
+            const filteredPrix = prixData.filter((p) => {
+              const prixDate = toISO(p.date)
+              return prixDate >= rangeStartISO && prixDate < rangeEndISO
+            })
+
+            for (const prix of filteredPrix) {
+              const prixDateISO = toISO(prix.date)
+              const dayIndex = days.indexOf(prixDateISO)
+              if (dayIndex >= 0) {
+                const colW = getColW()
+                const left = leftBase + dayIndex * colW + colW * 0.1 // Décalage de 10% depuis la gauche
+                const width = colW * 0.8 // Barre de 80% de la largeur du jour
+
+                const prixBar = document.createElement('div')
+                // Assigner la classe CSS selon le prix
+                let prixClass = 'bar prix'
+                if (prix.prix === 225) prixClass += ' prix-225'
+                else if (prix.prix === 245) prixClass += ' prix-245'
+                else if (prix.prix === 275) prixClass += ' prix-275'
+                else if (prix.prix === 340) prixClass += ' prix-340'
+
+                prixBar.className = prixClass
+                prixBar.style.left = left + 'px'
+                prixBar.style.width = width + 'px'
+                prixBar.textContent = `${prix.prix}€`
+                prixBar.title = `Prix: ${prix.prix}€`
+                prixBar.style.cursor = 'pointer'
+                prixBar.addEventListener('click', (e) => {
+                  e.stopPropagation()
+                  handleColumnClick(dayIndex)
+                })
+
+                prixTrack.appendChild(prixBar)
+              }
+            }
+          }
+        }
+
+        function getColW() {
+          const r = document.getElementById('inpColW')
+          return Number(r.value || 42)
+        }
+
+        // --- Data loaders ---
+        async function loadData() {
+          let events = []
+          let prixData = []
+
+          // Charger les réservations
+          const url =
+            'https://docs.google.com/spreadsheets/d/e/2PACX-1vSwvUuLOZPWELzk4Kdc8uASTzdzLLU3D-QsvYl_O5hfoS7FUFmE0-fYbjqVcNJeiusv7mVAgfFmIpAj/pub?gid=191470409&single=true&output=csv'
+          const res = await fetch(url + '&v=' + Date.now(), {
+            cache: 'no-store'
+          })
+          if (!res.ok) throw new Error('CSV fetch failed ' + res.status)
+          const text = await res.text()
+          events = parseCSV(text)
+
+          // Charger les prix
+          const prixUrl =
+            'https://docs.google.com/spreadsheets/d/e/2PACX-1vSwvUuLOZPWELzk4Kdc8uASTzdzLLU3D-QsvYl_O5hfoS7FUFmE0-fYbjqVcNJeiusv7mVAgfFmIpAj/pub?gid=852347305&single=true&output=csv'
+          const prixRes = await fetch(prixUrl + '&v=' + Date.now(), {
+            cache: 'no-store'
+          })
+          if (prixRes.ok) {
+            const prixText = await prixRes.text()
+            prixData = parsePrixCSV(prixText)
+            console.log(`Prix rechargés: ${prixData.length} entrées`)
+          }
+
+          // Derive period
+          if (!events.length) throw new Error('Aucun événement chargé')
+          const startISO = document.getElementById('inpStart').value
+          const endISO = document.getElementById('inpEnd').value
+
+          if (!startISO || !endISO) {
+            // Si pas de dates définies, utiliser les dates des événements
+            const min = new Date(
+              Math.min(...events.map((e) => e.start.getTime()))
+            )
+            const max = new Date(
+              Math.max(...events.map((e) => e.end.getTime()))
+            )
+            const defaultStart = toISO(min)
+            const defaultEnd = toISO(new Date(max.getTime() + MS_DAY))
+            document.getElementById('inpStart').value = defaultStart
+            document.getElementById('inpEnd').value = defaultEnd
+            return loadData() // Recharger avec les dates par défaut
+          }
+
+          // Render
+          buildTimeline(events, startISO, endISO, prixData)
+
+          // Limiter le défilement aux dates affichées
+          setTimeout(() => {
+            const maxScroll = totalW - elScrollable.clientWidth
+            if (maxScroll > 0) {
+              elScrollable.style.maxWidth = '100%'
+              elScrollable.style.overflowX = 'auto'
+            } else {
+              elScrollable.style.overflowX = 'hidden'
+            }
+          }, 100)
+        }
+
+        // --- UI wiring ---
+        let selectedColumn = -1
+
+        // Gestion des clics sur les colonnes
+        function handleColumnClick(columnIndex) {
+          // Si on clique sur la même colonne, on désélectionne
+          if (selectedColumn === columnIndex) {
+            selectedColumn = -1
+          } else {
+            selectedColumn = columnIndex
+          }
+          updateColumnHighlight()
+        }
+
+        function updateColumnHighlight() {
+          // Supprimer toutes les mises en évidence
+          document.querySelectorAll('.column-highlight').forEach((el) => {
+            el.classList.remove('column-highlight')
+          })
+
+          // Ajouter la mise en évidence à la colonne sélectionnée
+          if (selectedColumn >= 0) {
+            // Mise en évidence de l'en-tête
+            const headerCells = document.querySelectorAll('.tl-head .cell')
+            if (headerCells[selectedColumn]) {
+              headerCells[selectedColumn].classList.add('column-highlight')
+            }
+
+            // Mise en évidence de toute la colonne dans chaque track
+            const tracks = document.querySelectorAll('.track')
+            tracks.forEach((track) => {
+              // Créer un élément de mise en évidence pour toute la colonne
+              const highlight = document.createElement('div')
+              highlight.className = 'column-highlight'
+              highlight.style.position = 'absolute'
+              highlight.style.top = '0'
+              highlight.style.bottom = '0'
+              highlight.style.left = selectedColumn * getColW() + 0.5 + 'px'
+              highlight.style.width = getColW() - 1 + 'px' // -1 pour éviter le débordement
+              highlight.style.pointerEvents = 'none'
+              highlight.style.zIndex = '1'
+              highlight.style.boxSizing = 'border-box'
+              track.appendChild(highlight)
+            })
+          }
+        }
+
+        document
+          .getElementById('btnLoad')
+          .addEventListener('click', async () => {
+            try {
+              await loadData()
+            } catch (err) {
+              alert(err.message || String(err))
+            }
+          })
+
+        // Rendre fonctionnelle la barre de réglage de largeur
+        document.getElementById('inpColW').addEventListener('input', () => {
+          const colW = getColW()
+          setCSSVar('--col-w', colW + 'px')
+
+          // Re-render la timeline si elle existe
+          if (!elTimeline.hidden) {
+            const startISO = document.getElementById('inpStart').value
+            const endISO = document.getElementById('inpEnd').value
+            if (startISO && endISO) {
+              // Recharger les données et re-render
+              loadData().catch(() => {})
+            }
+          }
+        })
+
+        // Set default dates (aujourd'hui → +1 an)
+        const now = new Date()
+        const startDef = now
+        const endDef = new Date(
+          now.getFullYear() + 1,
+          now.getMonth(),
+          now.getDate()
+        )
+        document.getElementById('inpStart').value = toISO(startDef)
+        document.getElementById('inpEnd').value = toISO(endDef)
+
+        // Charger automatiquement le CSV au démarrage
+        setTimeout(() => {
+          loadData().catch((err) => {
+            console.log('Erreur lors du chargement automatique:', err.message)
+          })
+        }, 500)
+      })()
+
+      // === EVENT LISTENERS ===
+      // Admin events
+      document.getElementById('loginBtn').addEventListener('click', doLogin)
+      document.getElementById('adminKey').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') doLogin()
+      })
+
+      // Events pour les modals
+      document.getElementById('detailClose').addEventListener('click', () => {
+        document.getElementById('detailModal').style.display = 'none'
+      })
+      document.getElementById('confirmClose').addEventListener('click', () => {
+        document.getElementById('confirmModal').style.display = 'none'
+      })
+      document.getElementById('confirmCancel').addEventListener('click', () => {
+        document.getElementById('confirmModal').style.display = 'none'
+      })
+
+      // Gestion des checkboxes de remboursement
+      document
+        .getElementById('refundDepositCheck')
+        .addEventListener('change', updateRefundButton)
+      document
+        .getElementById('refundBalanceCheck')
+        .addEventListener('change', updateRefundButton)
+
+      function updateRefundButton() {
+        const depositCheck = document.getElementById('refundDepositCheck')
+        const balanceCheck = document.getElementById('refundBalanceCheck')
+        const refundBtn = document.getElementById('refundBtn')
+
+        refundBtn.disabled = !depositCheck.checked && !balanceCheck.checked
+      }
+
+      // Gestion du bouton de remboursement
+      document.getElementById('refundBtn').addEventListener('click', () => {
+        const depositCheck = document.getElementById('refundDepositCheck')
+        const balanceCheck = document.getElementById('refundBalanceCheck')
+
+        if (!depositCheck.checked && !balanceCheck.checked) return
+
+        // Vérifier que les données de réservation sont disponibles
+        if (
+          !window.currentReservationData ||
+          !window.currentReservationData.id
+        ) {
+          alert(
+            'Erreur: Données de réservation manquantes. Veuillez fermer et rouvrir les détails.'
+          )
+          return
+        }
+
+        // Afficher le modal de confirmation
+        const confirmRefunds = document.getElementById('confirmRefunds')
+        const refunds = []
+
+        if (depositCheck.checked) {
+          refunds.push(
+            `• Acompte: ${fmtMoney(
+              window.currentReservationData.depositAmount
+            )}`
+          )
+        }
+        if (balanceCheck.checked) {
+          refunds.push(
+            `• Solde: ${fmtMoney(window.currentReservationData.balanceAmount)}`
+          )
+        }
+
+        confirmRefunds.innerHTML = refunds
+          .map(
+            (r) =>
+              `<div style="margin: 8px 0; padding: 8px; background: #f8fafc; border-radius: 6px;">${r}</div>`
+          )
+          .join('')
+
+        document.getElementById('confirmModal').style.display = 'flex'
+      })
+
+      // Gestion de la confirmation finale
+      document
+        .getElementById('confirmProceed')
+        .addEventListener('click', async () => {
+          const depositCheck = document.getElementById('refundDepositCheck')
+          const balanceCheck = document.getElementById('refundBalanceCheck')
+
+          try {
+            showLoader(true)
+
+            // Vérifier que les données de réservation sont disponibles
+            if (
+              !window.currentReservationData ||
+              !window.currentReservationData.id
+            ) {
+              throw new Error('Données de réservation manquantes')
+            }
+
+            console.log('Données de remboursement:', {
+              token: window.currentReservationData.id,
+              refundDeposit: depositCheck.checked,
+              refundBalance: balanceCheck.checked
+            })
+
+            // Appel API pour effectuer les remboursements (VERSION RÉELLE)
+            const response = await fetch('/api/refund', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'x-admin-key': ADMIN_KEY
+              },
+              body: JSON.stringify({
+                token: window.currentReservationData.id,
+                refundDeposit: depositCheck.checked,
+                refundBalance: balanceCheck.checked
+              })
+            })
+
+            const result = await response.json()
+
+            if (result.status === 'success') {
+              alert('Remboursement(s) effectué(s) avec succès !')
+
+              // Fermer les modals
+              document.getElementById('confirmModal').style.display = 'none'
+              document.getElementById('detailModal').style.display = 'none'
+
+              // Recharger les données pour afficher les pastilles bleues
+              console.log('Rechargement des données après remboursement...')
+              currentRows = await fetchRows()
+              renderRows(currentRows)
+              console.log('Données rechargées, pastilles mises à jour')
+            } else {
+              throw new Error(result.error || 'Erreur lors du remboursement')
+            }
+          } catch (err) {
+            alert('Erreur lors du remboursement: ' + err.message)
+          } finally {
+            showLoader(false)
+          }
+        })
+
+      document.addEventListener('click', (ev) => {
+        const btn = ev.target.closest('button[data-action="detail"]')
+        if (btn) openDetail(btn.getAttribute('data-token'))
+      })
+
+      document
+        .getElementById('refreshBtn')
+        .addEventListener('click', async () => {
+          currentRows = await fetchRows()
+          renderRows(currentRows)
+        })
+      document
+        .getElementById('filterText')
+        .addEventListener('input', () => renderRows(currentRows))
+      document
+        .getElementById('filterStatus')
+        .addEventListener('change', () => renderRows(currentRows))
+
+      // Gestion des onglets
+      document.addEventListener('click', (ev) => {
+        const tabBtn = ev.target.closest('.tab-btn')
+        if (tabBtn) {
+          const tab = tabBtn.getAttribute('data-tab')
+          if (tab !== currentTab) {
+            // Mettre à jour l'onglet actif
+            document
+              .querySelectorAll('.tab-btn')
+              .forEach((btn) => btn.classList.remove('active'))
+            tabBtn.classList.add('active')
+            currentTab = tab
+
+            // Réinitialiser le sous-filtre
+            currentSubFilter = 'all'
+
+            // Afficher/masquer les sous-filtres appropriés
+            document.getElementById('activesSubFilters').style.display =
+              tab === 'actives' ? 'block' : 'none'
+            document.getElementById('archivesSubFilters').style.display =
+              tab === 'archives' ? 'block' : 'none'
+
+            // Réinitialiser les sélecteurs
+            document.getElementById('activesFilter').value = 'all'
+            document.getElementById('archivesFilter').value = '1month'
+
+            // Re-rendre les données
+            renderRows(currentRows)
+          }
+        }
+      })
+
+      // Gestion des sous-filtres
+      document
+        .getElementById('activesFilter')
+        .addEventListener('change', (e) => {
+          currentSubFilter = e.target.value
+          renderRows(currentRows)
+        })
+
+      document
+        .getElementById('archivesFilter')
+        .addEventListener('change', (e) => {
+          currentSubFilter = e.target.value
+          renderRows(currentRows)
+        })
+    </script>
+  </body>
+</html>

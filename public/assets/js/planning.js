@@ -1,3 +1,26 @@
+// --- Helpers dates sûrs (évite les off-by-one/DST) ---
+const MIN_NIGHTS = 6
+
+function fromISODate(iso) {
+  // "2025-10-01" -> Date locale à 12:00 (anti-DST)
+  const [y, m, d] = iso.split('-').map(Number)
+  return new Date(y, m - 1, d, 12, 0, 0)
+}
+
+function startOfDay(d) {
+  const x = new Date(d)
+  x.setHours(0, 0, 0, 0)
+  return x
+}
+
+function toISO(d) {
+  const x = startOfDay(d)
+  const y = x.getFullYear()
+  const m = String(x.getMonth() + 1).padStart(2, '0')
+  const dd = String(x.getDate()).padStart(2, '0')
+  return `${y}-${m}-${dd}`
+}
+
 // 🌐 Détection de langue
 const page = window.location.pathname
 let lang = 'fr'
@@ -57,33 +80,150 @@ const daysByLang = {
 }
 
 // 📄 Données de planning
-const csvUrl =
-  // 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSEDTcen1gulUUFxzIX3-Mr5fCJZsmlp83UPmXCP89mSgIwARJg9JgwbEGmg8f8HCm2c-WnsmaA-Kup/pub?gid=0&single=true&output=csv'
+const pricingCsvUrl =
   'https://docs.google.com/spreadsheets/d/e/2PACX-1vSwvUuLOZPWELzk4Kdc8uASTzdzLLU3D-QsvYl_O5hfoS7FUFmE0-fYbjqVcNJeiusv7mVAgfFmIpAj/pub?gid=852347305&single=true&output=csv'
+
+const blockedPeriodsCsvUrl =
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vSwvUuLOZPWELzk4Kdc8uASTzdzLLU3D-QsvYl_O5hfoS7FUFmE0-fYbjqVcNJeiusv7mVAgfFmIpAj/pub?gid=1564082532&single=true&output=csv'
 
 let currentMonth = new Date().getMonth()
 let currentYear = new Date().getFullYear()
 let planningData = {}
+let blockedPeriods = [] // [{ start: Date, end: Date, reason?: 'gap<min' }]
+let endAllowedStartSet = new Set() // Set<YYYY-MM-DD> des débuts de bloc autorisés (gap ≥ MIN_NIGHTS)
 let selectedStart = null
 let selectedEnd = null
 
-// 📥 Récupération CSV
-async function fetchPlanning() {
-  const res = await fetch(csvUrl)
+// 📥 Récupération des données de tarification
+async function fetchPricingData() {
+  const cacheBuster = Date.now()
+  const res = await fetch(`${pricingCsvUrl}&v=${cacheBuster}`, {
+    cache: 'no-store'
+  })
   const text = await res.text()
   const rows = text
     .trim()
     .split('\n')
     .slice(1)
     .map((r) => r.split(','))
+
+  planningData = {}
   rows.forEach(([rawDate, rawValue]) => {
     const cleanDate = rawDate.trim().replace(/^"|"$/g, '')
     // Normaliser les espaces multiples dans les dates
-    const normalizedDate = cleanDate.replace(/\s+/g, ' ')
+    const normalizedDate = cleanDate.replace(/\s+/g, ' ').toLowerCase()
     const cleanValue = rawValue?.trim().toLowerCase()
     planningData[normalizedDate] = cleanValue
   })
-  renderCalendar(currentMonth, currentYear)
+}
+
+// 📥 Périodes bloquées depuis CAL_EXPORT (et gaps < 6 nuits) — parsing robuste
+async function fetchBlockedPeriods() {
+  const sep = blockedPeriodsCsvUrl.includes('?') ? '&' : '?'
+  const res = await fetch(`${blockedPeriodsCsvUrl}${sep}v=${Date.now()}`, {
+    cache: 'no-store'
+  })
+  const raw = await res.text()
+
+  // 1) Normaliser (BOM, CRLF → LF), trim global
+  const text = raw
+    .replace(/^\uFEFF/, '')
+    .replace(/\r\n?/g, '\n')
+    .trim()
+
+  // 2) Lignes non vides, on saute l'en-tête
+  const lines = text.split('\n').filter(Boolean)
+  if (!lines.length) {
+    blockedPeriods = []
+    endAllowedStartSet = new Set()
+    return
+  }
+  const rows = lines.slice(1)
+
+  // 3) Parser 2 colonnes "start,end" en coupant à la PREMIÈRE virgule
+  const periodsRaw = []
+  for (const line of rows) {
+    const idx = line.indexOf(',')
+    if (idx === -1) continue // ligne invalide
+    const rawStart = line.slice(0, idx)
+    const rawEnd = line.slice(idx + 1)
+
+    // trim + déquote
+    const s = rawStart.trim().replace(/^"|"$/g, '')
+    const e = rawEnd.trim().replace(/^"|"$/g, '')
+    if (!s || !e) continue
+
+    const start = fromISODate(s)
+    const end = fromISODate(e)
+    if (isNaN(start) || isNaN(end) || start >= end) continue
+
+    periodsRaw.push({ start, end }) // end EXCLU
+  }
+
+  // 4) Dédupliquer (au cas où) puis trier
+  const key = (p) =>
+    `${p.start.getFullYear()}-${String(p.start.getMonth() + 1).padStart(
+      2,
+      '0'
+    )}-${String(p.start.getDate()).padStart(
+      2,
+      '0'
+    )}|${p.end.getFullYear()}-${String(p.end.getMonth() + 1).padStart(
+      2,
+      '0'
+    )}-${String(p.end.getDate()).padStart(2, '0')}`
+  const map = new Map()
+  for (const p of periodsRaw) map.set(key(p), p)
+  const periods = Array.from(map.values()).sort((a, b) => a.start - b.start)
+
+  // 5) Gaps < MIN_NIGHTS
+  const gapBlocks = []
+  for (let i = 1; i < periods.length; i++) {
+    const prevEnd = startOfDay(periods[i - 1].end)
+    const nextStart = startOfDay(periods[i].start)
+    const nights = Math.round((nextStart - prevEnd) / 86400000)
+    if (nights > 0 && nights < MIN_NIGHTS) {
+      gapBlocks.push({
+        start: new Date(periods[i - 1].end),
+        end: new Date(periods[i].start),
+        reason: 'gap<min'
+      })
+    }
+  }
+
+  // 6) Fusion finale (réels + gaps)
+  blockedPeriods = periods.concat(gapBlocks)
+
+  // 7) Start autorisés (gap >= MIN_NIGHTS)
+  endAllowedStartSet = new Set()
+  for (let i = 1; i < periods.length; i++) {
+    const prevEnd = startOfDay(periods[i - 1].end)
+    const nextStart = startOfDay(periods[i].start)
+    const nights = Math.round((nextStart - prevEnd) / 86400000)
+    if (nights >= MIN_NIGHTS) endAllowedStartSet.add(toISO(nextStart))
+  }
+}
+
+// 📥 Récupération complète des données
+async function fetchPlanning() {
+  try {
+    await Promise.all([fetchPricingData(), fetchBlockedPeriods()])
+    renderCalendar(currentMonth, currentYear)
+  } catch (error) {
+    console.error('Erreur lors du chargement des données:', error)
+    // En cas d'erreur, on affiche quand même le calendrier avec les données existantes
+    renderCalendar(currentMonth, currentYear)
+  }
+}
+
+// 🔎 Jour bloqué si STRICTEMENT à l'intérieur d'une plage [start, end)
+function isDateBlocked(date) {
+  const d = startOfDay(date)
+  return blockedPeriods.some(({ start, end }) => {
+    const s = startOfDay(start)
+    const e = startOfDay(end) // end exclu
+    return d >= s && d < e // on bloque le jour de début de la plage (gap compris)
+  })
 }
 
 // 🔄 Réinitialise la sélection
@@ -97,7 +237,7 @@ function resetSelection(keepCalendar = false) {
 
 // 📅 Gère clic sur date
 function handleDateClick(dateObj, event) {
-  const MIN_NIGHTS = 6
+  // (utilise le MIN_NIGHTS global en haut du fichier)
 
   if (!selectedStart || (selectedStart && selectedEnd)) {
     selectedStart = dateObj
@@ -113,6 +253,12 @@ function handleDateClick(dateObj, event) {
     let hasInvalid = false
 
     while (current < dateObj) {
+      // Vérifier si la date est dans une période bloquée
+      if (isDateBlocked(current)) {
+        hasInvalid = true
+        break
+      }
+
       const key = current
         .toLocaleDateString('fr-FR', {
           weekday: 'short',
@@ -216,15 +362,27 @@ function renderCalendar(month, year) {
     const value = planningData[dayStr] || ''
     const isReserved = value === 'x'
     const isAvailable = value && !isReserved
+    const isBlocked = isDateBlocked(displayDate)
+    const iso = toISO(displayDate)
+    const isStartAllowed = endAllowedStartSet.has(iso) // début de bloc autorisé (gap >= 6)
+    const allowEndOnBlockStart = selectedStart && !selectedEnd && isStartAllowed
 
     if (isPast && !isToday) {
       cell.classList.add('unavailable')
     } else if (isReserved) {
       cell.classList.add('reserved')
-    } else if (isAvailable) {
-      cell.classList.add('available')
+    } else if (isBlocked) {
+      if (isStartAllowed) {
+        // Début de bloc avec trou suffisant -> vert dès la visu
+        cell.classList.add('available', 'end-only')
+        cell.title = 'Départ possible'
+      } else {
+        // Milieu de bloc OU début avec gap<6 -> gris
+        cell.classList.add('unavailable')
+      }
     } else {
-      cell.classList.add('unavailable')
+      // Jour réellement libre
+      cell.classList.add('available')
     }
 
     if (isToday) {
@@ -250,12 +408,26 @@ function renderCalendar(month, year) {
 
     const priceLabel = document.createElement('div')
     priceLabel.className = 'price-label'
-    if (isAvailable && !isPast) priceLabel.textContent = `${value} €`
+    if (
+      isAvailable &&
+      !isPast &&
+      (!isBlocked || isStartAllowed) &&
+      !isNaN(parseFloat(value))
+    ) {
+      priceLabel.textContent = `${value} €`
+    }
 
     cell.appendChild(dayLabel)
     if (priceLabel.textContent) cell.appendChild(priceLabel)
 
-    if (!isPast && !isReserved && !isNaN(parseFloat(value))) {
+    if (
+      !isPast &&
+      !isReserved &&
+      // autorisé si non bloqué, OU si début de bloc réel et on finit une sélection
+      (!isBlocked || allowEndOnBlockStart) &&
+      // si prix absent, on tolère quand même pour un "départ possible"
+      (!isNaN(parseFloat(value)) || allowEndOnBlockStart)
+    ) {
       cell.addEventListener('click', (e) => handleDateClick(displayDate, e))
     }
 
