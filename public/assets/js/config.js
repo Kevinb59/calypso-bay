@@ -3,7 +3,7 @@
 // ========================================================
 
 // MODE CONSTRUCTION : Changez "true" en "false" pour désactiver
-const CONSTRUCTION_MODE = true
+const CONSTRUCTION_MODE = false
 
 // ========================================================
 // 📅 CONFIGURATION DU PLANNING
