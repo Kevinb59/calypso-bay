@@ -1523,6 +1523,8 @@
           document.getElementById('adminKey').value = key
           doLogin().finally(() => showLoader(false))
         } else {
+          // Afficher le modal de login si aucune clé n'est fournie
+          document.getElementById('login').style.display = 'flex'
           showLoader(false)
         }
       })()
