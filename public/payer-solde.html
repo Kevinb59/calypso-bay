@@ -972,9 +972,13 @@
               })} €`
             : '—'
         document.getElementById('deposit-percent').textContent =
-          total > 0 ? `${Math.round((deposit / total) * 100)}%` : '0%'
+          displayTotal > 0
+            ? `${Math.round((deposit / displayTotal) * 100)}%`
+            : '0%'
         document.getElementById('progress-fill').style.width =
-          total > 0 ? `${Math.min(100, (deposit / total) * 100)}%` : '0%'
+          displayTotal > 0
+            ? `${Math.min(100, (deposit / displayTotal) * 100)}%`
+            : '0%'
 
         // Traduire le texte du bouton avec le montant
         if (balance > 0) {
