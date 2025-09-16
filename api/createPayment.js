@@ -39,10 +39,28 @@ export default async function handler(req, res) {
           .json({ error: "Montant total manquant pour l'acompte" })
       }
 
-      // Calculer l'acompte: pour les tests on autorise un pourcentage configurable
+      // Récupérer les détails de la réservation pour obtenir la taxe de séjour
+      const resp = await fetch(
+        `${GAS_URL}?action=getReservation&token=${encodeURIComponent(token)}`,
+        { method: 'GET', headers: { 'Content-Type': 'application/json' } }
+      )
+      if (!resp.ok) {
+        return res.status(500).json({ error: 'Erreur GAS' })
+      }
+      const result = await resp.json()
+      if (result.status !== 'success') {
+        return res
+          .status(400)
+          .json({ error: result.message || 'Réservation introuvable' })
+      }
+      const data = result.data || {}
+      const priceTax = Number(data.priceTax || 0)
+
+      // Calculer l'acompte: 10% de (priceTotal - priceTax) au lieu de priceTotal
       const percent = Number(process.env.DEPOSIT_PERCENT || '10')
       const minEur = Number(process.env.DEPOSIT_MIN_EUR || '0.5')
-      let computed = Number(totalAmount) * (percent / 100)
+      const amountWithoutTax = Number(totalAmount) - priceTax
+      let computed = amountWithoutTax * (percent / 100)
       if (isNaN(computed) || computed <= 0) {
         computed = minEur
       }
@@ -109,8 +127,10 @@ export default async function handler(req, res) {
       }
       const data = result.data || {}
       const total = Number(data.priceTotal || 0)
+      const priceTax = Number(data.priceTax || 0)
       const deposit = Number(data.depositAmount || 0)
-      const balance = Math.max(0, total - deposit)
+      // Calculer le solde: (priceTotal - priceTax - acompte) au lieu de (priceTotal - acompte)
+      const balance = Math.max(0, total - priceTax - deposit)
       amount = Math.round(balance * 100)
 
       if (amount <= 0) {

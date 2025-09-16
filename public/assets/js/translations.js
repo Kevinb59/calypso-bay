@@ -173,7 +173,9 @@ window.translations = {
         processing: 'Traitement en cours...',
         calculating: 'Calcul en cours...',
         disclaimer:
-          "Paiement sécurisé via Stripe. Aucune donnée bancaire n'est stockée par Calypso Bay."
+          "Paiement sécurisé via Stripe. Aucune donnée bancaire n'est stockée par Calypso Bay.",
+        tourist_tax_note:
+          'La taxe de séjour de {amount} € sera à remettre en liquide à la concierge à votre arrivée.'
       },
 
       // Messages de validation
@@ -249,7 +251,9 @@ window.translations = {
         confirming: 'Confirmation…',
         confirmed: 'Paiement confirmé ✔',
         disclaimer:
-          "Paiement sécurisé via Stripe. Aucune donnée bancaire n'est stockée par Calypso Bay."
+          "Paiement sécurisé via Stripe. Aucune donnée bancaire n'est stockée par Calypso Bay.",
+        tourist_tax_note:
+          'La taxe de séjour de {amount} € sera à remettre en liquide à la concierge à votre arrivée.'
       },
 
       // Messages de verrouillage
@@ -515,7 +519,9 @@ window.translations = {
         processing: 'Processing...',
         calculating: 'Calculating...',
         disclaimer:
-          'Secure payment via Stripe. No banking data is stored by Calypso Bay.'
+          'Secure payment via Stripe. No banking data is stored by Calypso Bay.',
+        tourist_tax_note:
+          'The tourist tax of {amount} € will be paid in cash to the concierge upon arrival.'
       },
 
       // Messages de validation
@@ -591,7 +597,9 @@ window.translations = {
         confirming: 'Confirming...',
         confirmed: 'Payment confirmed ✔',
         disclaimer:
-          'Secure payment via Stripe. No banking data is stored by Calypso Bay.'
+          'Secure payment via Stripe. No banking data is stored by Calypso Bay.',
+        tourist_tax_note:
+          'The tourist tax of {amount} € will be paid in cash to the concierge upon arrival.'
       },
 
       // Messages de verrouillage
@@ -858,7 +866,9 @@ window.translations = {
         processing: 'Wird verarbeitet...',
         calculating: 'Wird berechnet...',
         disclaimer:
-          'Sichere Zahlung über Stripe. Keine Bankdaten werden von Calypso Bay gespeichert.'
+          'Sichere Zahlung über Stripe. Keine Bankdaten werden von Calypso Bay gespeichert.',
+        tourist_tax_note:
+          'Die Kurtaxe von {amount} € wird bei der Ankunft bar an die Concierge bezahlt.'
       },
 
       // Messages de validation
@@ -934,7 +944,9 @@ window.translations = {
         confirming: 'Wird bestätigt…',
         confirmed: 'Zahlung bestätigt ✔',
         disclaimer:
-          'Sichere Zahlung über Stripe. Keine Bankdaten werden von Calypso Bay gespeichert.'
+          'Sichere Zahlung über Stripe. Keine Bankdaten werden von Calypso Bay gespeichert.',
+        tourist_tax_note:
+          'Die Kurtaxe von {amount} € wird bei der Ankunft bar an die Concierge bezahlt.'
       },
 
       // Messages de verrouillage
