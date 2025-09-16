@@ -936,7 +936,10 @@
         if (!data) return
 
         const total = Number(data.priceTotal || 0)
+        const priceTax = Number(data.priceTax || 0)
         const deposit = Number(data.depositAmount || 0)
+        // Afficher le total sans la taxe de séjour
+        const displayTotal = total - priceTax
         const balance = Math.max(0, total - deposit)
 
         const t = window.translations[currentLang]['payer-solde']
@@ -948,8 +951,8 @@
             : 'fr-FR'
 
         document.getElementById('total-amount').textContent =
-          total > 0
-            ? `${total.toLocaleString(locale, {
+          displayTotal > 0
+            ? `${displayTotal.toLocaleString(locale, {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
               })} €`

@@ -1610,13 +1610,19 @@
 
       function calculatePaymentAmount(data) {
         let totalAmount = data.priceTotal
+        const priceTax = data.priceTax || 0
+
+        // Afficher le total sans la taxe de séjour
+        const displayTotal = totalAmount - priceTax
 
         if (totalAmount && totalAmount > 0) {
           const percent = window.appConfig?.DEPOSIT_PERCENT ?? 10
           const minEur = window.appConfig?.DEPOSIT_MIN_EUR ?? 0.5
-          let depositAmount = totalAmount * (percent / 100)
+          // Calculer l'acompte sur le total sans taxe
+          let depositAmount = displayTotal * (percent / 100)
           if (!depositAmount || depositAmount <= 0) depositAmount = minEur
           if (depositAmount < minEur) depositAmount = minEur
+          // Le solde restant inclut la taxe de séjour
           const remainingAmount = totalAmount - depositAmount
 
           const locale =
@@ -1627,7 +1633,7 @@
               : 'fr-FR'
           document.getElementById(
             'total-amount'
-          ).textContent = `${totalAmount.toLocaleString(locale, {
+          ).textContent = `${displayTotal.toLocaleString(locale, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
           })} €`
@@ -1647,7 +1653,7 @@
           const progressFill = document.getElementById('progress-fill')
           const progressPercentage = Math.min(
             100,
-            (depositAmount / totalAmount) * 100
+            (depositAmount / displayTotal) * 100
           )
           progressFill.style.width = `${progressPercentage}%`
 
