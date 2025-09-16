@@ -166,13 +166,13 @@
         display: flex;
         align-items: center;
         gap: 12px;
-        color: #3b82f6;
+        color: #ffffff;
         font-size: 0.95rem;
         font-weight: 500;
       }
       .tax-notice-content i {
         font-size: 1.1rem;
-        color: #3b82f6;
+        color: #ffffff;
       }
       .payment-section::before {
         content: '';
@@ -874,6 +874,18 @@
               total (un montant minimum peut être appliqué pour les tests). Le
               solde sera à régler au plus tard 7 jours avant votre arrivée.
             </p>
+
+            <!-- Message taxe de séjour -->
+            <div
+              id="tourist-tax-notice"
+              class="tourist-tax-notice"
+              style="display: none"
+            >
+              <div class="tax-notice-content">
+                <i class="fas fa-info-circle"></i>
+                <span id="tourist-tax-text"></span>
+              </div>
+            </div>
           </div>
           <div class="inner">
             <div class="payment-card">
@@ -903,18 +915,6 @@
                     >Solde restant après acompte</span
                   >
                   <span id="remaining-amount">Calcul en cours...</span>
-                </div>
-              </div>
-
-              <!-- Message taxe de séjour -->
-              <div
-                id="tourist-tax-notice"
-                class="tourist-tax-notice"
-                style="display: none"
-              >
-                <div class="tax-notice-content">
-                  <i class="fas fa-info-circle"></i>
-                  <span id="tourist-tax-text"></span>
                 </div>
               </div>
 

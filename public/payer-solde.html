@@ -48,6 +48,28 @@
         backdrop-filter: blur(20px);
         border: 1px solid rgba(255, 255, 255, 0.3);
       }
+
+      /* Message taxe de séjour */
+      .tourist-tax-notice {
+        margin: 20px 0;
+        padding: 15px 20px;
+        background: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        border-radius: 12px;
+        backdrop-filter: blur(10px);
+      }
+      .tax-notice-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #ffffff;
+        font-size: 0.95rem;
+        font-weight: 500;
+      }
+      .tax-notice-content i {
+        font-size: 1.1rem;
+        color: #ffffff;
+      }
       .reservation-details {
         padding: 8px 10px;
         margin-top: 1px;
@@ -431,6 +453,18 @@
               Renseignez votre carte pour régler le solde restant de votre
               réservation.
             </p>
+
+            <!-- Message taxe de séjour -->
+            <div
+              id="tourist-tax-notice"
+              class="tourist-tax-notice"
+              style="display: none"
+            >
+              <div class="tax-notice-content">
+                <i class="fas fa-info-circle"></i>
+                <span id="tourist-tax-text"></span>
+              </div>
+            </div>
           </div>
           <div class="inner">
             <div class="payment-card">
@@ -827,6 +861,9 @@
 
           // Mettre à jour les verrouillages avec la nouvelle langue
           applyPaymentLocks(window.reservationData)
+
+          // Mettre à jour le message de la taxe de séjour
+          updateTouristTaxNotice(window.reservationData)
         }
       }
 
@@ -884,6 +921,9 @@
 
           // Appliquer les verrouillages de paiement
           applyPaymentLocks(d)
+
+          // Afficher le message de la taxe de séjour
+          updateTouristTaxNotice(d)
         } catch (e) {
           console.error('💥 Erreur lors du chargement des données:', e)
           // Au lieu de bloquer, on continue avec des données vides
@@ -1074,6 +1114,40 @@
           btnText.textContent = t.payment.submit_button
         }
       })
+
+      /**
+       * Met à jour le message de la taxe de séjour
+       */
+      function updateTouristTaxNotice(data) {
+        const touristTaxNotice = document.getElementById('tourist-tax-notice')
+        const touristTaxText = document.getElementById('tourist-tax-text')
+
+        if (touristTaxNotice && touristTaxText && data && data.priceTax > 0) {
+          const t = window.translations[currentLang]?.['payer-solde']
+          const taxText =
+            t?.payment?.tourist_tax_note ||
+            'La taxe de séjour de {amount} € sera à remettre en liquide à la concierge à votre arrivée.'
+
+          const locale =
+            currentLang === 'de'
+              ? 'de-DE'
+              : currentLang === 'en'
+              ? 'en-GB'
+              : 'fr-FR'
+          const formattedTaxAmount = data.priceTax.toLocaleString(locale, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          })
+
+          touristTaxText.textContent = taxText.replace(
+            '{amount}',
+            formattedTaxAmount
+          )
+          touristTaxNotice.style.display = 'block'
+        } else if (touristTaxNotice) {
+          touristTaxNotice.style.display = 'none'
+        }
+      }
     </script>
   </body>
 </html>
