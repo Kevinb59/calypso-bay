@@ -940,7 +940,7 @@
         const deposit = Number(data.depositAmount || 0)
         // Afficher le total sans la taxe de séjour
         const displayTotal = total - priceTax
-        const balance = Math.max(0, total - deposit)
+        const balance = Math.max(0, total - deposit - priceTax)
 
         const t = window.translations[currentLang]['payer-solde']
         const locale =

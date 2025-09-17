@@ -129,8 +129,8 @@ export default async function handler(req, res) {
       const total = Number(data.priceTotal || 0)
       const priceTax = Number(data.priceTax || 0)
       const deposit = Number(data.depositAmount || 0)
-      // Calculer le solde: (priceTotal - acompte) car le solde doit inclure la taxe de séjour
-      const balance = Math.max(0, total - deposit)
+      // Calculer le solde: (priceTotal - acompte - taxe de séjour) car la taxe de séjour se règle en liquide sur place
+      const balance = Math.max(0, total - deposit - priceTax)
       amount = Math.round(balance * 100)
 
       if (amount <= 0) {
