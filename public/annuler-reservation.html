@@ -494,15 +494,7 @@
 
           // Récapitulatif complet avec traductions
           const recapEl = document.getElementById('reservation-recap')
-          const recapBalanceAmount = Number(
-            d.balanceAmount ||
-              Math.max(
-                0,
-                Number(d.priceTotal || 0) -
-                  Number(d.depositAmount || 0) -
-                  Number(d.priceTax || 0)
-              )
-          )
+          const recapBalanceAmount = Number(d.balanceAmount || 0)
           const dataForRecap = { ...d, balanceAmount: recapBalanceAmount }
           recapEl.innerHTML = translateRecapContent(dataForRecap, currentLang)
 
@@ -601,13 +593,7 @@
           const recapEl = document.getElementById('reservation-recap')
           if (recapEl && !recapEl.textContent.includes('Chargement')) {
             const balanceAmount = Number(
-              window.reservationData.balanceAmount ||
-                Math.max(
-                  0,
-                  Number(window.reservationData.priceTotal || 0) -
-                    Number(window.reservationData.depositAmount || 0) -
-                    Number(window.reservationData.priceTax || 0)
-                )
+              window.reservationData.balanceAmount || 0
             )
             const dataForRecap = { ...window.reservationData, balanceAmount }
             recapEl.innerHTML = translateRecapContent(dataForRecap, currentLang)
