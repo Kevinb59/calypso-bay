@@ -385,7 +385,7 @@
                data.status === 'balancePay' ? 'green' : 'red'
              }">${data.status === 'balancePay' ? '✅' : '❌'} ${
             common.balance
-          } ${fmtMoney(data.balanceAmount || 0)} ${common.currency}</span>
+          } ${fmtMoney(data.balanceAmount)} ${common.currency}</span>
            </div>`
         )
       }
