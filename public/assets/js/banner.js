@@ -2,6 +2,14 @@
 // Ce fichier rend la bannière compatible multi‑langues tout en
 // conservant le format FR pour les clés du planning (CSV/JSON).
 
+// Fonction pour formater les dates en format API sans décalage de fuseau horaire
+function formatDateForAPI(date) {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
+
 // Détection de la langue depuis l'URL
 const _path = window.location.pathname
 let _lang = 'fr'
@@ -466,8 +474,8 @@ function sendReservationRequest() {
     priceClean: cleaningFee,
     priceTax: taxTotal,
     priceTotal: total,
-    startDate: selectedStart.toISOString().split('T')[0],
-    endDate: selectedEnd.toISOString().split('T')[0],
+    startDate: formatDateForAPI(selectedStart),
+    endDate: formatDateForAPI(selectedEnd),
     lang: _lang,
     recap
   })

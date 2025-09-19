@@ -494,20 +494,8 @@
 
           // Récapitulatif complet avec traductions
           const recapEl = document.getElementById('reservation-recap')
-          console.log('DEBUG - d object:', d)
-          console.log(
-            'DEBUG - d.balanceAmount:',
-            d.balanceAmount,
-            'type:',
-            typeof d.balanceAmount
-          )
           const recapBalanceAmount = Number(d.balanceAmount || 0)
-          console.log('DEBUG - recapBalanceAmount:', recapBalanceAmount)
           const dataForRecap = { ...d, balanceAmount: recapBalanceAmount }
-          console.log(
-            'DEBUG - dataForRecap.balanceAmount:',
-            dataForRecap.balanceAmount
-          )
           recapEl.innerHTML = translateRecapContent(dataForRecap, currentLang)
 
           const start = new Date(d.startDate)
