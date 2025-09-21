@@ -662,7 +662,15 @@ class PopupManager {
               <h3 class="guide-popup-title"><i class="fas fa-car guide-icon car"></i>Loueurs de voiture</h3>
               <div class="guide-popup-content">
                 <p><strong>Conseil :</strong> Réservez à l'avance, surtout en haute saison.</p>
-                <h4><i class="fas fa-building guide-icon building"></i>Loueurs recommandés</h4>
+                <h4><i class="fas fa-building guide-icon building"></i>Loueur recommandé</h4>
+                <ul>
+                  <li><strong><a href="https://www.pro-rent.com/" target="_blank" style="color: var(--color-primary); text-decoration: none;">PRO-rent</a> :</strong> Le meilleur loueur est PRO-rent à Jarry. C'est le meilleur rapport qualité/prix, une entreprise locale qui est très sérieuse. Ils viennent nous chercher à l'aéroport en navette sur un appel de notre part, et les locations s'effectuent via le net.</li>
+                </ul>
+                <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+                  <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Note :</strong> 4,6/5 (Google, 314 avis)</p>
+                  <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Recommandation :</strong> Entreprise locale sérieuse avec excellent rapport qualité-prix</p>
+                </div>
+                <h4 style="margin-top: 30px"><i class="fas fa-building guide-icon building"></i>Autres loueurs</h4>
                 <ul>
                   <li><strong><a href="https://www.hertzantilles.com/fr/location-de-voiture-guadeloupe" target="_blank" style="color: var(--color-primary); text-decoration: none;">Hertz</a> :</strong> Aéroport Pôle Caraïbes</li>
                   <li><strong><a href="https://www.avis.fr/" target="_blank" style="color: var(--color-primary); text-decoration: none;">Avis</a> :</strong> Aéroport et Pointe-à-Pitre</li>
@@ -689,30 +697,6 @@ class PopupManager {
               </ul>
             </div>
           `
-      },
-      navette: {
-        title: 'Navette',
-        content: `
-             <h3 class="guide-popup-title"><i class="fas fa-shuttle-van guide-icon shuttle"></i>Navette</h3>
-             <div class="guide-popup-content">
-               <h4><i class="fas fa-plane guide-icon plane"></i>Services de navette</h4>
-               <p>Services privés disponibles depuis l'aéroport Pôle Caraïbes.</p>
-               <h4><i class="fas fa-info-circle guide-icon info"></i>Options disponibles</h4>
-               <ul>
-                 <li><strong>Navettes privées :</strong> Transport direct vers votre destination</li>
-                 <li><strong>Navettes partagées :</strong> Plus économique, trajet avec d'autres voyageurs</li>
-                 <li><strong>Réservation :</strong> Recommandée à l'avance</li>
-                 <li><strong>Flexibilité :</strong> Horaires adaptés aux vols</li>
-               </ul>
-               <h4><i class="fas fa-clock guide-icon clock"></i>Avantages</h4>
-               <ul>
-                 <li>Pas besoin de conduire après un long vol</li>
-                 <li>Prix souvent plus avantageux que le taxi</li>
-                 <li>Service porte à porte</li>
-                 <li>Chauffeur professionnel connaissant la région</li>
-               </ul>
-             </div>
-           `
       },
       carrefour: {
         title: 'Carrefour Market',
@@ -1139,7 +1123,7 @@ class PopupManager {
         content: `
            <h3 class="guide-popup-title"><i class="fas fa-monument guide-icon monument"></i>Mémorial ACTe</h3>
            <div class="guide-popup-content">
-             <p><strong>Pointe-à-Pitre :</strong> Centre caribéen d'expressions et de mémoire de la traite.</p>
+             <p><strong>Pointe-à-Pitre :</strong> Centre caribéen d'expressions et de mémoire de la traite des esclaves.</p>
              <p>Un lieu de mémoire important pour comprendre l'histoire de la Guadeloupe et de la Caraïbe.</p>
              <img src="images/guide/54.webp" alt="Mémorial ACTe - Pointe-à-Pitre"/>
              <div style="margin-top: 20px; text-align: center">
@@ -1341,6 +1325,14 @@ class PopupManager {
              <p><strong>Services :</strong> Retrait en magasin, réservation en ligne possible</p>
              <p><strong>Conseil :</strong> La carte vitale fonctionne comme en métropole. Pensez à emporter vos médicaments habituels et une trousse de premiers soins.</p>
 
+             <h4 style="margin-top: 20px"><i class="fas fa-user-md guide-icon doctor"></i>Autres professionnels de santé</h4>
+             <p>Dans la ZAC de Losteau, vous trouverez également :</p>
+             <ul>
+               <li><strong>Médecin généraliste</strong></li>
+               <li><strong>Dentiste</strong></li>
+               <li><strong>Vétérinaire</strong></li>
+             </ul>
+
              <img src="images/guide/15.webp" alt="La pharmacie de Losteau"/>
 
              <h4 style="margin-top: 30px"><i class="fas fa-phone guide-icon phone"></i>Numéros d'urgence</h4>
@@ -1357,6 +1349,12 @@ class PopupManager {
              <p><strong>Téléphone :</strong> +590 590 80 49 00</p>
              <p><strong>Site web :</strong> <a href="https://ch-mauriceselbonne.fr" target="_blank" style="color: var(--color-primary); text-decoration: none;">ch-mauriceselbonne.fr</a></p>
              <p><strong>Services :</strong> Hôpital spécialisé avec services d'urgence</p>
+
+             <h4 style="margin-top: 20px"><i class="fas fa-hospital guide-icon hospital"></i>Centres Hospitaliers Universitaires (CHU)</h4>
+             <ul>
+               <li><strong>CHU de Pointe-à-Pitre</strong> - Centre hospitalier principal de la Guadeloupe</li>
+               <li><strong>CHU de Basse-Terre</strong> - Centre hospitalier de Basse-Terre</li>
+             </ul>
 
              <img src="images/guide/16.webp" alt="Hôpital Maurice Selbonne"/>
 
@@ -1521,6 +1519,40 @@ class PopupManager {
            </div>
          `
       },
+      assainissement: {
+        title: "Le système d'assainissement",
+        content: `
+           <h3 class="guide-popup-title"><i class="fas fa-recycle guide-icon recycle"></i>Le système d'assainissement</h3>
+           <div class="guide-popup-content">
+             <p>Contrairement à une fosse septique classique, l'installation est équipée d'un <strong>système de traitement par filtres compacts en fibres de coco</strong>.</p>
+             <p>Ce dispositif assure une épuration efficace des eaux usées, à condition de respecter quelques règles essentielles.</p>
+
+             <h4><i class="fas fa-cogs guide-icon cogs"></i>Fonctionnement</h4>
+             <p>Les eaux usées arrivent d'abord dans un compartiment de fosse septique où les matières solides se déposent.</p>
+             <p>Les effluents passent ensuite par un préfiltre puis sont répartis grâce à des rampes de dispersion dans un massif filtrant en fibre de coco.</p>
+             <p>La fibre de coco retient les impuretés et permet la dégradation biologique, avant le rejet final des eaux traitées.</p>
+
+             <h4><i class="fas fa-exclamation-triangle guide-icon warning"></i>Points importants pour l'utilisateur</h4>
+             <p>Le système nécessite un entretien régulier pour garantir son bon fonctionnement.</p>
+             <p><strong>Il est formellement interdit d'y jeter du papier toilette humide (type Fess'net) ou des lingettes.</strong></p>
+             <ul>
+               <li>Le papier toilette classique se désagrège correctement et est évacué sans problème.</li>
+               <li>En revanche, les lingettes et papiers « spéciaux » s'accumulent dans les filtres, les bouchent et provoquent une panne du système.</li>
+             </ul>
+
+             <h4><i class="fas fa-exclamation-circle guide-icon warning"></i>En cas d'obstruction, cela peut entraîner :</h4>
+             <ul>
+               <li>une panne du dispositif d'épuration,</li>
+               <li>des odeurs désagréables dans l'habitation et ses abords,</li>
+               <li>une intervention technique coûteuse.</li>
+             </ul>
+
+             <div style="margin-top: 20px; padding: 15px; background: #e8f5e8; border-left: 4px solid #4caf50; border-radius: 5px;">
+               <p style="margin: 0; font-weight: bold; color: #2e7d32;"><i class="fas fa-check-circle"></i> À retenir : seuls les déchets organiques et le papier toilette classique doivent être jetés dans les WC.</p>
+             </div>
+           </div>
+         `
+      },
       'saison-cyclonique': {
         title: 'Saison cyclonique',
         content: `
@@ -1556,14 +1588,6 @@ class PopupManager {
                <li>Fermez les volets métalliques de protection et les persiennes</li>
              </ul>
 
-             <h5 style="color: #9c27b0; margin-top: 20px"><i class="fas fa-circle" style="color: #9c27b0"></i>Alerte Violette : Confinez-vous</h5>
-             <ul>
-               <li>Essayez de rester calmes, la situation va évoluer rapidement</li>
-               <li>Restez réfugiés dans la pièce sécurisée</li>
-               <li>N'en sortez que lorsque tout est redevenu calme à l'extérieur</li>
-               <li>Écoutez la radio pour les messages des autorités</li>
-             </ul>
-
              <h5 style="color: #f44336; margin-top: 20px"><i class="fas fa-circle" style="color: #f44336"></i>Alerte Rouge : Intégrez les abris</h5>
              <ul>
                <li>Assurez-vous que les volets soient bien fermés</li>
@@ -1573,6 +1597,14 @@ class PopupManager {
                <li><strong>Proscrivez totalement les déplacements en voiture</strong></li>
                <li>Si besoin d'intégrer le sous-sol, coupez l'électricité au préalable</li>
                <li>Coupez momentanément l'arrivée d'eau (manettes perpendiculaires aux tuyaux)</li>
+             </ul>
+
+             <h5 style="color: #9c27b0; margin-top: 20px"><i class="fas fa-circle" style="color: #9c27b0"></i>Alerte Violette : Confinez-vous</h5>
+             <ul>
+               <li>Essayez de rester calmes, la situation va évoluer rapidement</li>
+               <li>Restez réfugiés dans la pièce sécurisée</li>
+               <li>N'en sortez que lorsque tout est redevenu calme à l'extérieur</li>
+               <li>Écoutez la radio pour les messages des autorités</li>
              </ul>
            </div>
          `
@@ -1991,6 +2023,10 @@ const locations = {
   'Chez Adèle': {
     coordinates: '16.1581,-61.7761',
     address: 'Chez+Adèle+Bouillante'
+  },
+  'PRO-rent': {
+    coordinates: '16.1581,-61.7761',
+    address: 'PRO-rent+Jarry+Guadeloupe'
   },
   'La Touna': {
     coordinates: '16.1581,-61.7761',

@@ -662,7 +662,15 @@ class PopupManager {
           <h3 class="guide-popup-title"><i class="fas fa-car guide-icon car"></i>Autovermietungen</h3>
           <div class="guide-popup-content">
             <p><strong>Tipp :</strong> Buchen Sie im Voraus, besonders in der Hochsaison.</p>
-            <h4><i class="fas fa-building guide-icon building"></i>Empfohlene Anbieter</h4>
+            <h4><i class="fas fa-building guide-icon building"></i>Empfohlener Anbieter</h4>
+            <ul>
+              <li><strong><a href="https://www.pro-rent.com/" target="_blank" style="color: var(--color-primary); text-decoration: none;">PRO-rent</a> :</strong> Der beste Autovermieter ist PRO-rent in Jarry. Es ist das beste Preis-Leistungs-Verhältnis, ein seriöses lokales Unternehmen. Sie holen uns auf unseren Anruf hin mit einem Shuttle vom Flughafen ab, und die Vermietungen erfolgen online.</li>
+            </ul>
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+              <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Bewertung :</strong> 4,6/5 (Google, 314 Bewertungen)</p>
+              <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Empfehlung :</strong> Seriöses lokales Unternehmen mit ausgezeichnetem Preis-Leistungs-Verhältnis</p>
+            </div>
+            <h4 style="margin-top: 30px"><i class="fas fa-building guide-icon building"></i>Andere Vermieter</h4>
             <ul>
               <li><strong><a href="https://www.hertzantilles.com/fr/location-de-voiture-guadeloupe" target="_blank" style="color: var(--color-primary); text-decoration: none;">Hertz</a> :</strong> Flughafen Pôle Caraïbes</li>
               <li><strong><a href="https://www.avis.fr/" target="_blank" style="color: var(--color-primary); text-decoration: none;">Avis</a> :</strong> Flughafen und Pointe-à-Pitre</li>
@@ -686,30 +694,6 @@ class PopupManager {
               <li>Festpreis vom Flughafen nach Bouillante</li>
               <li>Möglichkeit, die Fahrt mit anderen Reisenden zu teilen</li>
               <li>Zahlung in bar oder per Karte</li>
-            </ul>
-          </div>
-        `
-      },
-      navette: {
-        title: 'Shuttle',
-        content: `
-          <h3 class="guide-popup-title"><i class="fas fa-shuttle-van guide-icon shuttle"></i>Shuttle</h3>
-          <div class="guide-popup-content">
-            <h4><i class="fas fa-plane guide-icon plane"></i>Shuttle-Services</h4>
-            <p>Private Services sind vom Flughafen Pôle Caraïbes aus verfügbar.</p>
-            <h4><i class="fas fa-info-circle guide-icon info"></i>Verfügbare Optionen</h4>
-            <ul>
-              <li><strong>Private Shuttles :</strong> Direkter Transport zu Ihrem Ziel</li>
-              <li><strong>Geteilte Shuttles :</strong> Günstiger, Fahrt mit anderen Reisenden</li>
-              <li><strong>Buchung :</strong> Im Voraus empfohlen</li>
-              <li><strong>Flexibilität :</strong> Fahrpläne angepasst an die Flüge</li>
-            </ul>
-            <h4><i class="fas fa-clock guide-icon clock"></i>Vorteile</h4>
-            <ul>
-              <li>Kein Autofahren nach einem langen Flug</li>
-              <li>Oft günstiger als ein Taxi</li>
-              <li>Haustür-zu-Haustür-Service</li>
-              <li>Professioneller Fahrer mit Ortskenntnis</li>
             </ul>
           </div>
         `
@@ -1341,6 +1325,14 @@ class PopupManager {
             <p><strong>Dienstleistungen :</strong> Abholung in der Apotheke, Online-Reservierung möglich</p>
             <p><strong>Tipp :</strong> Die Carte Vitale funktioniert wie in Frankreich. Denken Sie daran, Ihre üblichen Medikamente und eine Erste-Hilfe-Ausrüstung mitzunehmen.</p>
 
+            <h4 style="margin-top: 20px"><i class="fas fa-user-md guide-icon doctor"></i>Andere Gesundheitsfachkräfte</h4>
+            <p>In der ZAC de Losteau finden Sie auch :</p>
+            <ul>
+              <li><strong>Allgemeinmediziner</strong></li>
+              <li><strong>Zahnarzt</strong></li>
+              <li><strong>Tierarzt</strong></li>
+            </ul>
+
             <img src="images/guide/15.webp" alt="Apotheke von Losteau"/>
 
             <h4 style="margin-top: 30px"><i class="fas fa-phone guide-icon phone"></i>Notrufnummern</h4>
@@ -1357,6 +1349,12 @@ class PopupManager {
             <p><strong>Telefon :</strong> +590 590 80 49 00</p>
             <p><strong>Website :</strong> <a href="https://ch-mauriceselbonne.fr" target="_blank" style="color: var(--color-primary); text-decoration: none;">ch-mauriceselbonne.fr</a></p>
             <p><strong>Dienstleistungen :</strong> Fachkrankenhaus mit Notaufnahme</p>
+
+            <h4 style="margin-top: 20px"><i class="fas fa-hospital guide-icon hospital"></i>Universitätskliniken (CHU)</h4>
+            <ul>
+              <li><strong>CHU de Pointe-à-Pitre</strong> - Hauptkrankenhauszentrum von Guadeloupe</li>
+              <li><strong>CHU de Basse-Terre</strong> - Krankenhauszentrum von Basse-Terre</li>
+            </ul>
 
             <img src="images/guide/16.webp" alt="Krankenhaus Maurice Selbonne"/>
 
@@ -1521,6 +1519,40 @@ class PopupManager {
           </div>
         `
       },
+      assainissement: {
+        title: 'Das Abwassersystem',
+        content: `
+          <h3 class="guide-popup-title"><i class="fas fa-recycle guide-icon recycle"></i>Das Abwassersystem</h3>
+          <div class="guide-popup-content">
+            <p>Im Gegensatz zu einer herkömmlichen Klärgrube ist die Anlage mit einem <strong>Behandlungssystem mit kompakten Kokosfaserfiltern</strong> ausgestattet.</p>
+            <p>Diese Vorrichtung gewährleistet eine wirksame Abwasserbehandlung, vorausgesetzt, dass einige wesentliche Regeln befolgt werden.</p>
+
+            <h4><i class="fas fa-cogs guide-icon cogs"></i>Funktionsweise</h4>
+            <p>Das Abwasser gelangt zunächst in ein Klärgrubenkompartiment, wo sich die festen Stoffe absetzen.</p>
+            <p>Die Abwässer durchlaufen dann einen Vorfilter und werden über Verteilungsrampen in eine Kokosfaser-Filtermasse verteilt.</p>
+            <p>Die Kokosfaser hält Verunreinigungen zurück und ermöglicht den biologischen Abbau, bevor das behandelte Wasser endgültig abgeleitet wird.</p>
+
+            <h4><i class="fas fa-exclamation-triangle guide-icon warning"></i>Wichtige Punkte für den Benutzer</h4>
+            <p>Das System erfordert regelmäßige Wartung, um ordnungsgemäßen Betrieb zu gewährleisten.</p>
+            <p><strong>Es ist strengstens verboten, feuchtes Toilettenpapier (wie Fess'net) oder Feuchttücher hineinzuwerfen.</strong></p>
+            <ul>
+              <li>Herkömmliches Toilettenpapier zerfällt ordnungsgemäß und wird problemlos abgeführt.</li>
+              <li>Feuchttücher und "besondere" Papiere sammeln sich dagegen in den Filtern an, verstopfen sie und verursachen einen Systemausfall.</li>
+            </ul>
+
+            <h4><i class="fas fa-exclamation-circle guide-icon warning"></i>Bei Verstopfung kann dies zu folgenden Problemen führen:</h4>
+            <ul>
+              <li>Ausfall der Behandlungsanlage,</li>
+              <li>unangenehme Gerüche in der Wohnung und ihrer Umgebung,</li>
+              <li>kostspielige technische Intervention.</li>
+            </ul>
+
+            <div style="margin-top: 20px; padding: 15px; background: #e8f5e8; border-left: 4px solid #4caf50; border-radius: 5px;">
+              <p style="margin: 0; font-weight: bold; color: #2e7d32;"><i class="fas fa-check-circle"></i> Zu beachten: Nur organische Abfälle und herkömmliches Toilettenpapier sollten in die Toilette geworfen werden.</p>
+            </div>
+          </div>
+        `
+      },
       'saison-cyclonique': {
         title: 'Hurrikansaison',
         content: `
@@ -1556,14 +1588,6 @@ class PopupManager {
         <li>Schließen Sie die Metallschutzläden und Fensterläden</li>
       </ul>
 
-      <h5 style="color: #9c27b0; margin-top: 20px"><i class="fas fa-circle" style="color: #9c27b0"></i>Violetter Alarm: Bleiben Sie im Haus</h5>
-      <ul>
-        <li>Versuchen Sie, ruhig zu bleiben – die Situation wird sich schnell ändern</li>
-        <li>Bleiben Sie im Schutzraum</li>
-        <li>Verlassen Sie ihn erst, wenn draußen wieder Ruhe eingekehrt ist</li>
-        <li>Hören Sie Radio, um die Mitteilungen der Behörden zu verfolgen</li>
-      </ul>
-
       <h5 style="color: #f44336; margin-top: 20px"><i class="fas fa-circle" style="color: #f44336"></i>Roter Alarm: Gehen Sie in die Schutzräume</h5>
       <ul>
         <li>Stellen Sie sicher, dass alle Fensterläden geschlossen sind</li>
@@ -1573,6 +1597,14 @@ class PopupManager {
         <li><strong>Fahrten mit dem Auto sind strikt verboten</strong></li>
         <li>Falls Sie in den Keller gehen müssen, schalten Sie vorher den Strom ab</li>
         <li>Unterbrechen Sie vorübergehend die Wasserversorgung (Hebel senkrecht zu den Rohren)</li>
+      </ul>
+
+      <h5 style="color: #9c27b0; margin-top: 20px"><i class="fas fa-circle" style="color: #9c27b0"></i>Violetter Alarm: Bleiben Sie im Haus</h5>
+      <ul>
+        <li>Versuchen Sie, ruhig zu bleiben – die Situation wird sich schnell ändern</li>
+        <li>Bleiben Sie im Schutzraum</li>
+        <li>Verlassen Sie ihn erst, wenn draußen wieder Ruhe eingekehrt ist</li>
+        <li>Hören Sie Radio, um die Mitteilungen der Behörden zu verfolgen</li>
       </ul>
     </div>
   `
@@ -1991,6 +2023,10 @@ const locations = {
   'Chez Adèle': {
     coordinates: '16.1581,-61.7761',
     address: 'Chez+Adèle+Bouillante+Guadeloupe'
+  },
+  'PRO-rent': {
+    coordinates: '16.1581,-61.7761',
+    address: 'PRO-rent+Jarry+Guadeloupe'
   },
   'La Touna': {
     coordinates: '16.1581,-61.7761',

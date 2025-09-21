@@ -662,7 +662,15 @@ class PopupManager {
       <h3 class="guide-popup-title"><i class="fas fa-car guide-icon car"></i>Car Rentals</h3>
       <div class="guide-popup-content">
         <p><strong>Tip:</strong> Book in advance, especially during high season.</p>
-        <h4><i class="fas fa-building guide-icon building"></i>Recommended companies</h4>
+        <h4><i class="fas fa-building guide-icon building"></i>Recommended company</h4>
+        <ul>
+          <li><strong><a href="https://www.pro-rent.com/" target="_blank" style="color: var(--color-primary); text-decoration: none;">PRO-rent</a>:</strong> The best rental company is PRO-rent in Jarry. It offers the best value for money, a serious local company. They pick us up at the airport by shuttle on our call, and rentals are done online.</li>
+        </ul>
+        <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #4caf50; border-radius: 5px;">
+          <p style="margin: 0; font-style: italic;"><strong style="font-style: italic;">Rating:</strong> 4.6/5 (Google, 314 reviews)</p>
+          <p style="margin: 5px 0 0 0; font-style: italic;"><strong style="font-style: italic;">Recommendation:</strong> Serious local company with excellent value for money</p>
+        </div>
+        <h4 style="margin-top: 30px"><i class="fas fa-building guide-icon building"></i>Other rental companies</h4>
         <ul>
           <li><strong><a href="https://www.hertzantilles.com/fr/location-de-voiture-guadeloupe" target="_blank" style="color: var(--color-primary); text-decoration: none;">Hertz</a>:</strong> Pôle Caraïbes Airport</li>
           <li><strong><a href="https://www.avis.fr/" target="_blank" style="color: var(--color-primary); text-decoration: none;">Avis</a>:</strong> Airport & Pointe-à-Pitre</li>
@@ -686,30 +694,6 @@ class PopupManager {
           <li>Fixed price from airport to Bouillante</li>
           <li>Option to share the ride with other travelers</li>
           <li>Payment by cash or card</li>
-        </ul>
-      </div>
-    `
-      },
-      navette: {
-        title: 'Shuttle',
-        content: `
-      <h3 class="guide-popup-title"><i class="fas fa-shuttle-van guide-icon shuttle"></i>Shuttle</h3>
-      <div class="guide-popup-content">
-        <h4><i class="fas fa-plane guide-icon plane"></i>Shuttle Services</h4>
-        <p>Private services available from Pôle Caraïbes Airport.</p>
-        <h4><i class="fas fa-info-circle guide-icon info"></i>Options</h4>
-        <ul>
-          <li><strong>Private shuttles:</strong> Direct transfer to your destination</li>
-          <li><strong>Shared shuttles:</strong> Cheaper, ride with other travelers</li>
-          <li><strong>Reservation:</strong> Recommended in advance</li>
-          <li><strong>Flexibility:</strong> Schedules adapted to flights</li>
-        </ul>
-        <h4><i class="fas fa-clock guide-icon clock"></i>Advantages</h4>
-        <ul>
-          <li>No need to drive after a long flight</li>
-          <li>Often cheaper than taxis</li>
-          <li>Door-to-door service</li>
-          <li>Professional driver familiar with the area</li>
         </ul>
       </div>
     `
@@ -1341,6 +1325,14 @@ class PopupManager {
              <p><strong>Services:</strong> In-store pickup, online booking possible</p>
              <p><strong>Advice:</strong> The carte vitale works as in mainland France. Remember to bring your usual medications and a first aid kit.</p>
 
+             <h4 style="margin-top: 20px"><i class="fas fa-user-md guide-icon doctor"></i>Other Healthcare Professionals</h4>
+             <p>In the ZAC de Losteau, you will also find:</p>
+             <ul>
+               <li><strong>General practitioner</strong></li>
+               <li><strong>Dentist</strong></li>
+               <li><strong>Veterinarian</strong></li>
+             </ul>
+
              <img src="images/guide/15.webp" alt="La pharmacie de Losteau"/>
 
              <h4 style="margin-top: 30px"><i class="fas fa-phone guide-icon phone"></i>Emergency Numbers</h4>
@@ -1357,6 +1349,12 @@ class PopupManager {
              <p><strong>Phone:</strong> +590 590 80 49 00</p>
              <p><strong>Website:</strong> <a href="https://ch-mauriceselbonne.fr" target="_blank" style="color: var(--color-primary); text-decoration: none;">ch-mauriceselbonne.fr</a></p>
              <p><strong>Services:</strong> Specialized hospital with emergency services</p>
+
+             <h4 style="margin-top: 20px"><i class="fas fa-hospital guide-icon hospital"></i>University Hospital Centers (CHU)</h4>
+             <ul>
+               <li><strong>CHU de Pointe-à-Pitre</strong> - Main hospital center of Guadeloupe</li>
+               <li><strong>CHU de Basse-Terre</strong> - Hospital center of Basse-Terre</li>
+             </ul>
 
              <img src="images/guide/16.webp" alt="Hôpital Maurice Selbonne"/>
 
@@ -1521,6 +1519,40 @@ class PopupManager {
            </div>
          `
       },
+      assainissement: {
+        title: 'The Sanitation System',
+        content: `
+           <h3 class="guide-popup-title"><i class="fas fa-recycle guide-icon recycle"></i>The Sanitation System</h3>
+           <div class="guide-popup-content">
+             <p>Unlike a conventional septic tank, the installation is equipped with a <strong>treatment system using compact coconut fiber filters</strong>.</p>
+             <p>This device ensures effective wastewater treatment, provided that a few essential rules are respected.</p>
+
+             <h4><i class="fas fa-cogs guide-icon cogs"></i>Operation</h4>
+             <p>Wastewater first arrives in a septic tank compartment where solid matter settles.</p>
+             <p>The effluents then pass through a pre-filter and are distributed via dispersion ramps into a coconut fiber filtering mass.</p>
+             <p>Coconut fiber retains impurities and allows biological degradation, before the final discharge of treated water.</p>
+
+             <h4><i class="fas fa-exclamation-triangle guide-icon warning"></i>Important points for the user</h4>
+             <p>The system requires regular maintenance to ensure proper operation.</p>
+             <p><strong>It is strictly forbidden to throw wet toilet paper (like Fess'net) or wipes into it.</strong></p>
+             <ul>
+               <li>Conventional toilet paper disintegrates properly and is evacuated without problem.</li>
+               <li>On the other hand, wipes and "special" papers accumulate in the filters, clog them and cause system failure.</li>
+             </ul>
+
+             <h4><i class="fas fa-exclamation-circle guide-icon warning"></i>In case of obstruction, this can lead to:</h4>
+             <ul>
+               <li>failure of the treatment device,</li>
+               <li>unpleasant odors in the dwelling and its surroundings,</li>
+               <li>costly technical intervention.</li>
+             </ul>
+
+             <div style="margin-top: 20px; padding: 15px; background: #e8f5e8; border-left: 4px solid #4caf50; border-radius: 5px;">
+               <p style="margin: 0; font-weight: bold; color: #2e7d32;"><i class="fas fa-check-circle"></i> To remember: only organic waste and conventional toilet paper should be thrown into the toilet.</p>
+             </div>
+           </div>
+         `
+      },
       'saison-cyclonique': {
         title: 'Cyclone Season',
         content: `
@@ -1556,14 +1588,6 @@ class PopupManager {
                <li>Close protective metal shutters and blinds</li>
              </ul>
 
-             <h5 style="color: #9c27b0; margin-top: 20px"><i class="fas fa-circle" style="color: #9c27b0"></i>Purple Alert: Confine yourself</h5>
-             <ul>
-               <li>Try to stay calm, the situation will evolve quickly</li>
-               <li>Stay sheltered in the secure room</li>
-               <li>Only go out when everything has become calm outside</li>
-               <li>Listen to the radio for messages from authorities</li>
-             </ul>
-
              <h5 style="color: #f44336; margin-top: 20px"><i class="fas fa-circle" style="color: #f44336"></i>Red Alert: Enter shelters</h5>
              <ul>
                <li>Make sure shutters are properly closed</li>
@@ -1573,6 +1597,14 @@ class PopupManager {
                <li><strong>Totally prohibit car travel</strong></li>
                <li>If you need to enter the basement, cut off electricity beforehand</li>
                <li>Temporarily cut off the water supply (handles perpendicular to pipes)</li>
+             </ul>
+
+             <h5 style="color: #9c27b0; margin-top: 20px"><i class="fas fa-circle" style="color: #9c27b0"></i>Purple Alert: Confine yourself</h5>
+             <ul>
+               <li>Try to stay calm, the situation will evolve quickly</li>
+               <li>Stay sheltered in the secure room</li>
+               <li>Only go out when everything has become calm outside</li>
+               <li>Listen to the radio for messages from authorities</li>
              </ul>
            </div>
          `
@@ -1991,6 +2023,10 @@ const locations = {
   'Chez Adèle': {
     coordinates: '16.1581,-61.7761',
     address: 'Chez+Adèle+Bouillante+Guadeloupe'
+  },
+  'PRO-rent': {
+    coordinates: '16.1581,-61.7761',
+    address: 'PRO-rent+Jarry+Guadeloupe'
   },
   'La Touna': {
     coordinates: '16.1581,-61.7761',
