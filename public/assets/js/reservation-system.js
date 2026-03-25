@@ -102,7 +102,8 @@ function translateRecapContent(data, lang) {
       {
         day: '2-digit',
         month: 'long',
-        year: 'numeric'
+        year: 'numeric',
+        timeZone: 'UTC'
       }
     )
 
