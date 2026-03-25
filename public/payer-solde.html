@@ -716,6 +716,30 @@
         updateTranslationsAfterLoad()
       }
 
+      /**
+       * parseDateOnly
+       * 1) Purpose:
+       *    Transformer une chaîne `YYYY-MM-DD` en `Date` sans décalage de fuseau
+       *    (local) pour un affichage identique partout.
+       * 2) Key variables:
+       *    - dateString: valeur date-only reçue depuis l'API
+       *    - year/monthIndex/day: composantes numériques
+       * 3) Logic flow:
+       *    - split `YYYY-MM-DD`
+       *    - construire `new Date(year, monthIndex, day, 12,0,0,0)`
+       *      pour réduire le risque d'off-by-one (DST/UTC)
+       */
+      function parseDateOnly(dateString) {
+        const parts = String(dateString || '').split('-')
+        if (parts.length !== 3) return new Date(dateString)
+
+        const year = parseInt(parts[0], 10)
+        const monthIndex = parseInt(parts[1], 10) - 1
+        const day = parseInt(parts[2], 10)
+
+        return new Date(year, monthIndex, day, 12, 0, 0, 0)
+      }
+
       // Fonction pour traduire les éléments dynamiques du récapitulatif
       function translateRecapContent(data, lang) {
         if (!data) {
@@ -750,8 +774,8 @@
 
         // Vérifier si on a les dates avant de les afficher
         if (data.startDate && data.endDate) {
-          const s = new Date(data.startDate)
-          const e = new Date(data.endDate)
+          const s = parseDateOnly(data.startDate)
+          const e = parseDateOnly(data.endDate)
           const fmtDate = (dt) =>
             dt.toLocaleDateString(
               lang === 'de' ? 'de-DE' : lang === 'en' ? 'en-GB' : 'fr-FR',
@@ -1010,7 +1034,7 @@
 
           // 1. Vérifier si la réservation a expiré (priorité absolue)
           if (data.endDate) {
-            const endDate = new Date(data.endDate)
+            const endDate = parseDateOnly(data.endDate)
             const today = new Date()
             today.setHours(0, 0, 0, 0) // Remettre à minuit pour la comparaison
 

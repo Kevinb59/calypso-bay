@@ -57,6 +57,30 @@ function translatePage(lang) {
   updateTranslationsAfterLoad()
 }
 
+/**
+ * parseDateOnly
+ * 1) Purpose:
+ *    Convertir `YYYY-MM-DD` en `Date` local "stabilisé" pour que l'affichage
+ *    ne décale pas d'un jour selon le fuseau horaire (Canada/UTC, etc.).
+ * 2) Key variables:
+ *    - dateString: chaîne de date-only venant de l'API
+ *    - year/monthIndex/day: composantes numériques
+ * 3) Logic flow:
+ *    - split la chaîne `YYYY-MM-DD`
+ *    - construire `new Date(year, monthIndex, day, 12,0,0,0)`
+ *      (12:00 réduit les risques autour des transitions DST)
+ */
+function parseDateOnly(dateString) {
+  const parts = String(dateString || '').split('-')
+  if (parts.length !== 3) return new Date(dateString)
+
+  const year = parseInt(parts[0], 10)
+  const monthIndex = parseInt(parts[1], 10) - 1
+  const day = parseInt(parts[2], 10)
+
+  return new Date(year, monthIndex, day, 12, 0, 0, 0)
+}
+
 // Fonction pour traduire les éléments dynamiques du récapitulatif
 function translateRecapContent(data, lang) {
   const common = window.translations[lang].common
@@ -68,8 +92,8 @@ function translateRecapContent(data, lang) {
         maximumFractionDigits: 2
       }
     )
-  const s = new Date(data.startDate)
-  const e = new Date(data.endDate)
+  const s = parseDateOnly(data.startDate)
+  const e = parseDateOnly(data.endDate)
   const fmtDate = (dt) =>
     dt.toLocaleDateString(
       lang === 'de' ? 'de-DE' : lang === 'en' ? 'en-GB' : 'fr-FR',
@@ -190,7 +214,7 @@ async function load() {
     const dataForRecap = { ...d, balanceAmount: recapBalanceAmount }
     recapEl.innerHTML = translateRecapContent(dataForRecap, currentLang)
 
-    const start = new Date(d.startDate)
+    const start = parseDateOnly(d.startDate)
     const now = new Date()
     const diffDays = Math.ceil((start - now) / (1000 * 60 * 60 * 24))
     const t = window.translations[currentLang]['annuler-reservation']

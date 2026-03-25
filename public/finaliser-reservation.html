@@ -1108,6 +1108,30 @@
         updateTranslationsAfterLoad()
       }
 
+      /**
+       * parseDateOnly
+       * 1) Purpose:
+       *    Transformer une chaîne `YYYY-MM-DD` en `Date` "sans décalage" (local),
+       *    pour que l'affichage soit identique quel que soit le fuseau horaire.
+       * 2) Key variables:
+       *    - dateString: la chaîne de date-only reçue depuis l'API (Sheet/GAS)
+       *    - year/month/day: composantes numériques
+       * 3) Logic flow:
+       *    - split en `year-month-day`
+       *    - construire `new Date(year, monthIndex, day, 12,0,0,0)`
+       *      (12:00 réduit le risque de "off-by-one" autour des changements DST)
+       */
+      function parseDateOnly(dateString) {
+        const parts = String(dateString || '').split('-')
+        if (parts.length !== 3) return new Date(dateString)
+
+        const year = parseInt(parts[0], 10)
+        const monthIndex = parseInt(parts[1], 10) - 1 // mois 0-indexé
+        const day = parseInt(parts[2], 10)
+
+        return new Date(year, monthIndex, day, 12, 0, 0, 0)
+      }
+
       // Fonction pour traduire les éléments dynamiques du récapitulatif
       function translateRecapContent(data, lang) {
         const common = window.translations[lang].common
@@ -1119,8 +1143,8 @@
               maximumFractionDigits: 2
             }
           )
-        const s = new Date(data.startDate)
-        const e = new Date(data.endDate)
+        const s = parseDateOnly(data.startDate)
+        const e = parseDateOnly(data.endDate)
         const fmtDate = (dt) =>
           dt.toLocaleDateString(
             lang === 'de' ? 'de-DE' : lang === 'en' ? 'en-GB' : 'fr-FR',
@@ -1440,7 +1464,7 @@
 
           // 1. Vérifier si la réservation a expiré (priorité absolue)
           if (data.endDate) {
-            const endDate = new Date(data.endDate)
+            const endDate = parseDateOnly(data.endDate)
             const today = new Date()
             today.setHours(0, 0, 0, 0) // Remettre à minuit pour la comparaison
 
@@ -1905,8 +1929,8 @@
           return t?.details?.no_details || 'Aucun détail'
         }
 
-        const startDate = new Date(data.startDate)
-        const endDate = new Date(data.endDate)
+        const startDate = parseDateOnly(data.startDate)
+        const endDate = parseDateOnly(data.endDate)
 
         const formatDate = (date) => {
           return date.toLocaleDateString(
