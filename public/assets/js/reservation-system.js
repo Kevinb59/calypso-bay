@@ -103,7 +103,7 @@ function translateRecapContent(data, lang) {
         day: '2-digit',
         month: 'long',
         year: 'numeric',
-        timeZone: 'UTC'
+        // On laisse le fuseau local pour garantir un affichage "date-only"
       }
     )
 
