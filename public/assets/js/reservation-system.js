@@ -66,17 +66,19 @@ function translatePage(lang) {
  *    - dateString: chaîne de date-only venant de l'API
  *    - year/monthIndex/day: composantes numériques
  * 3) Logic flow:
- *    - split la chaîne `YYYY-MM-DD`
+ *    - extraire `YYYY-MM-DD` avec une regex (supporte des suffixes : time, guillemets, etc.)
  *    - construire `new Date(year, monthIndex, day, 12,0,0,0)`
  *      (12:00 réduit les risques autour des transitions DST)
  */
 function parseDateOnly(dateString) {
-  const parts = String(dateString || '').split('-')
-  if (parts.length !== 3) return new Date(dateString)
+  const s = String(dateString || '')
+  // Supporte : "2027-03-11", '"2027-03-11"', ou "2027-03-11T00:00:00Z"
+  const m = s.match(/(\d{4})-(\d{2})-(\d{2})/)
+  if (!m) return new Date(dateString)
 
-  const year = parseInt(parts[0], 10)
-  const monthIndex = parseInt(parts[1], 10) - 1
-  const day = parseInt(parts[2], 10)
+  const year = parseInt(m[1], 10)
+  const monthIndex = parseInt(m[2], 10) - 1
+  const day = parseInt(m[3], 10)
 
   return new Date(year, monthIndex, day, 12, 0, 0, 0)
 }
